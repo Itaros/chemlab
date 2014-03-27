@@ -1,0 +1,28 @@
+[
+{
+  "modid": "hoelib",
+  "name": "HOEnvironment",
+  "description": "Toolkit to create server-optimized minecraft machinery.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["Itaros"],
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["Forge"]
+},
+{
+  "modid": "chemlab",
+  "name": "ChemLab",
+  "description": "This mods adds the ability to toy with items at molecular level. It will make you suffer too! xD",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": [ "Itaros" ],
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["Forge","hoelib"]
+}
+]
