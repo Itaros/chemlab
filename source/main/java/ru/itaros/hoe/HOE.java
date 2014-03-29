@@ -1,9 +1,15 @@
 package ru.itaros.hoe;
 
 
+import org.apache.logging.log4j.Level;
+
 import ru.itaros.api.hoe.IHOEInterfacer;
+import ru.itaros.hoe.interfacer.HOEInterfacer;
 import ru.itaros.hoe.proxy.HOEProxy;
+import ru.itaros.hoe.proxy.HOEServer;
+import ru.itaros.hoe.registries.HOEIORegistry;
 import ru.itaros.hoe.threading.HOEThreadController;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
@@ -26,15 +32,29 @@ public class HOE {
     //	}
     //}
     
+    private HOEIORegistry ioregistry;
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-    	interfacer=proxy.getInterfacer();
+    	ioregistry =new HOEIORegistry();
+    	interfacer=new HOEInterfacer();
     }    
     
     @EventHandler
     public void serverInit(FMLServerAboutToStartEvent event)
     {
+    	//Hack to load correct proxy	
+    	try {
+			Class<?> integrated = (Class<?>) Class.forName("IntegratedServer");
+			if(integrated.isInstance(event.getServer())){
+	    		proxy = new HOEServer();
+	    		FMLLog.log(Level.INFO, "HOE PROXY HACK ELEVATED!");
+	    	}
+		} catch (ClassNotFoundException e) {
+			//NOP. Fail Silently. This class doesn't exist on server
+		}    	
+    	
 		proxy.initHOE();
     } 
     @EventHandler

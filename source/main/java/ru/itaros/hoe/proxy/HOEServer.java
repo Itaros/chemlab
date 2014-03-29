@@ -20,6 +20,7 @@ public class HOEServer extends HOEProxy {
 		HOE.setController(null);
 	}
 
+	@Deprecated
 	@Override
 	public IHOEInterfacer getInterfacer() {
 		return new HOEInterfacer();

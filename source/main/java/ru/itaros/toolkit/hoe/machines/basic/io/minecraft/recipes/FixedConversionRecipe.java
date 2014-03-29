@@ -1,5 +1,6 @@
 package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class FixedConversionRecipe extends Recipe {
@@ -21,7 +22,7 @@ public class FixedConversionRecipe extends Recipe {
 	protected ItemStack[] gridOutput;
 	
 	protected int timeReq;
-	protected int powerReq;
+	protected int powerReq;//TODO: is not used
 	
 	@Override
 	public int getIncomingSlots() {
@@ -30,5 +31,29 @@ public class FixedConversionRecipe extends Recipe {
 	@Override
 	public int getOutcomingSlots() {
 		return gridOutput.length;
+	}
+	
+	@Override
+	public Item[] getIncomingStricttypes() {
+		Item[] result = new Item[gridInput.length];
+		int x = -1;
+		for(ItemStack stack : gridInput){
+			x++;
+			result[x]=stack.getItem();
+		}
+		return result;
+	}
+	@Override
+	public Item[] getOutcomingStricttypes() {
+		Item[] result = new Item[gridOutput.length];
+		int x = -1;
+		for(ItemStack stack : gridOutput){
+			x++;
+			result[x]=stack.getItem();
+		}
+		return result;
+	}
+	public int getTicksRequared() {
+		return timeReq;
 	}
 }

@@ -4,7 +4,7 @@ import ru.itaros.api.hoe.IHOEInterfacer;
 import ru.itaros.hoe.interfacer.HOEInterfacer;
 import ru.itaros.hoe.interfacer.HOEInterfacerDummy;
 
-public class HOEClient extends HOEServer {
+public class HOEClient extends HOEProxy {
 	@Override
 	public void initHOE() {
 		//NOP

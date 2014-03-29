@@ -13,6 +13,8 @@ public class HOEThread extends Thread implements IHOEThread{
 	
 	public HOEThread(){
 		super();
+		this.setName("HOE Thread");
+		
 		
 		timing();//Preheat
 		

@@ -8,10 +8,11 @@ public class HOEData {
 	public HOEData getChild(){
 		return child;
 	}
-	protected void spawnChild() {
+	protected HOEData spawnChild() {
 		Class<? extends HOEData> mytype = this.getClass();
 		try {
 			child = mytype.getConstructor(HOEData.class).newInstance(this);
+			return child;
 		} catch (Exception e){
 			//Something very bad happened! %_%
 			throw new RuntimeException(e);

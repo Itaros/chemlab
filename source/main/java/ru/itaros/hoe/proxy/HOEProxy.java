@@ -8,6 +8,7 @@ public abstract class HOEProxy {
 
 	public abstract void shutdownHOE();
 
+	@Deprecated
 	public abstract IHOEInterfacer getInterfacer();
 
 }

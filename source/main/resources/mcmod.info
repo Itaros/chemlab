@@ -10,7 +10,8 @@
   "authors": ["Itaros"],
   "logoFile": "",
   "screenshots": [],
-  "dependencies": ["Forge"]
+  "dependencies": ["Forge"],
+  "dependants": ["chemlab"]
 },
 {
   "modid": "chemlab",
@@ -23,6 +24,7 @@
   "authors": [ "Itaros" ],
   "logoFile": "",
   "screenshots": [],
+  "requiredMods": ["Forge","hoelib"],
   "dependencies": ["Forge","hoelib"]
 }
 ]

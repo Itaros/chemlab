@@ -1,5 +1,9 @@
 package ru.itaros.api.hoe.internal;
 
+import java.lang.reflect.InvocationTargetException;
+
+import ru.itaros.api.hoe.registries.IIORegistry;
+
 /*
  * !ATTENTION!
  * !IT IS NOT ADVISED TO EXTEND HOEIO IN FIRST PLACE!
@@ -36,16 +40,14 @@ public abstract class HOEIO {
 	protected void allowToStart(){
 		isAllowedToStart=true;
 	}
-	//Execution
-	private int ticksAccumulated=0;
-	public int getTicks(){
-		return ticksAccumulated;
-	}
-	public void incrementTick(){
-		ticksAccumulated++;
-	}
-	public void voidTicks(){
-		ticksAccumulated=0;
-	}
+
 	public abstract void tick(HOEData data);
+	//TODO: HOE-style exception
+	public static IIORegistry getIORegistry(){
+		try{
+		return (IIORegistry) Class.forName("ru.itaros.hoe.registries.HOEIORegistry").getMethod("getInstance").invoke(null);
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
+	}
 }
