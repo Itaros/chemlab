@@ -1,7 +1,5 @@
 package ru.itaros.chemlab.client.ui.common;
 
-import ru.itaros.chemlab.client.ui.GUIBiogrinder;
-import ru.itaros.chemlab.minecraft.tileentity.BiogrinderTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.debug.RecipeSetSlot;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ReadonlySlot;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
@@ -49,9 +47,7 @@ public class HOEContainer extends Container {
     }	
     
     
-	public static Class<? extends GUIHOEClassicalMachine> getGUIType() {
-		return GUIBiogrinder.class;
-	}	   
+
     
 
 }

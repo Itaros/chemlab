@@ -2,7 +2,6 @@ package ru.itaros.chemlab.client.ui.common;
 
 import org.lwjgl.opengl.GL11;
 
-import ru.itaros.chemlab.minecraft.tileentity.BiogrinderTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 import net.minecraft.client.gui.inventory.GuiContainer;
