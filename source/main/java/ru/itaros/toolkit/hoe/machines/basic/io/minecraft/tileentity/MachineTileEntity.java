@@ -169,6 +169,7 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 	}
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
+		if(slot==1){return false;}
 		return true;
 	}
 	
@@ -224,7 +225,7 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 			HOEMachineIO io = client.getIO();
 			if(io!=null){
 				//CLIENTSIDE TICK in MTA
-				io.tick(client);
+				//io.tick(client);
 				updateRO();
 			}
 		}		

@@ -311,6 +311,13 @@ public class HOEMachineData extends HOEData{
 		}else{
 			return "N/A";
 		}
+	}
+	public String getOutboundAmount() {
+		if(outcoming_depot!=null && outcoming_depot.length>0){
+			return String.valueOf(outcoming_depot[0]);
+		}else{
+			return "N/A";
+		}		
 	}	
 
 

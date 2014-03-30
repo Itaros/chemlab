@@ -9,8 +9,9 @@ public class FixedConversionRecipe extends Recipe {
 	(
 			int timeReq,
 			int powerReq,
-			ItemStack[] gridInput,ItemStack[] gridOutput
+			ItemStack[] gridInput,ItemStack[] gridOutput, String name
 	){
+		super(name);
 		this.gridInput=gridInput;
 		this.gridOutput=gridOutput;
 		

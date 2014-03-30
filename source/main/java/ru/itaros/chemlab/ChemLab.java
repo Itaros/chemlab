@@ -2,9 +2,11 @@ package ru.itaros.chemlab;
 
 import org.apache.logging.log4j.Level;
 
-import ru.itaros.chemlab.client.ui.GUIHandler;
+import ru.itaros.chemlab.client.ui.common.GUIHandler;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.chemlab.loader.BlockLoader;
+import ru.itaros.chemlab.loader.GUILoader;
+import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.chemlab.loader.recipes.RecipesLoader;
 import ru.itaros.chemlab.loader.tileentity.TileEntityLoader;
 import ru.itaros.chemlab.proxy.Proxy;
@@ -43,16 +45,19 @@ public class ChemLab
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+    	GUILoader.loadGUIs();
+    	
     	new ChemLabCreativeTab();//There is forgebug somewhere close
     	
  		BlockLoader.loadBlocks();
+ 		ItemLoader.loadItems();
 		iocollection = TileEntityLoader.load();   	
     	
     }     
     @EventHandler
     public void Init(FMLInitializationEvent event)
     {
-
+    	
     }
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
