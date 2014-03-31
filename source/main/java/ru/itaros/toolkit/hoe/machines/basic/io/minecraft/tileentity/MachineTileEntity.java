@@ -106,6 +106,7 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 			client=(HOEMachineData) server.getChild();
 
 		}else{
+			//TODO: Fix this for INTEGRATED SERVER CONTEXT
 			//Client configuration is simplier	
 			//It just WAITS for it to be passed over network
 		}

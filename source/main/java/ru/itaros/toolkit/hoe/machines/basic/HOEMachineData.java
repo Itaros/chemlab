@@ -290,7 +290,8 @@ public class HOEMachineData extends HOEData{
 				return product;
 			}else{
 				//Nothing to pull
-				return outbound_synchro;
+				continue;
+				//return outbound_synchro;
 			}
 		}
 		//Nothing to pull from full assortment
