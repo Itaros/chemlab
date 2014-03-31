@@ -195,7 +195,7 @@ public class HOEMachineData extends HOEData{
 		//Power
 		power=nbt.getInteger("power");
 		maxpower=nbt.getInteger("maxpower");
-		FMLLog.log(Level.INFO, "Maxpower was:"+maxpower);
+		//FMLLog.log(Level.INFO, "Maxpower was:"+maxpower);
 		//Ticks
 		ticksRequared=nbt.getInteger("ticksRequared");
 		ticksAccumulated=nbt.getInteger("ticksAccumulated");
@@ -268,25 +268,33 @@ public class HOEMachineData extends HOEData{
 		}
 		for(int x = 0; x < outcoming_depot.length; x++){
 			if(outcoming_stricttype[x]==null){continue;}
+			
 			if(outcoming_depot[x]>0){
 				ItemStack product = outbound_synchro;
 				if(product==null){
 					product = new ItemStack(outcoming_stricttype[x],outcoming_depot[x]);
 					outcoming_depot[x]-=product.stackSize;//Allowing RaceConditions!
 				}else{
+					
+					if(outcoming_stricttype[x]!=reqtype){continue;}//Do not try to shift physical form of items, lol
+					
 					if(outcoming_depot[x]<=max){
 						max=outcoming_depot[x];
 					}else{
-						max=max;
+						max=max;//LOL, dummy to remind me of something I already forgot
 					}
 					outcoming_depot[x]-=max;//Allowing RaceConditions!
 					product.stackSize+=max;
 				}
 				
 				return product;
+			}else{
+				//Nothing to pull
+				return outbound_synchro;
 			}
 		}
-		return null;
+		//Nothing to pull from full assortment
+		return outbound_synchro;
 	}
 	
 	

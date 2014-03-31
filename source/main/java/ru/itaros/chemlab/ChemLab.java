@@ -6,6 +6,7 @@ import ru.itaros.chemlab.client.ui.common.GUIHandler;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.chemlab.loader.GUILoader;
+import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.chemlab.loader.recipes.RecipesLoader;
 import ru.itaros.chemlab.loader.tileentity.TileEntityLoader;
@@ -48,6 +49,8 @@ public class ChemLab
     	GUILoader.loadGUIs();
     	
     	new ChemLabCreativeTab();//There is forgebug somewhere close
+    
+    	HOEFluidLoader.load();
     	
  		BlockLoader.loadBlocks();
  		ItemLoader.loadItems();

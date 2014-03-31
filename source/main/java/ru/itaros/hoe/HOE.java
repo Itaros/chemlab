@@ -7,6 +7,7 @@ import ru.itaros.api.hoe.IHOEInterfacer;
 import ru.itaros.hoe.interfacer.HOEInterfacer;
 import ru.itaros.hoe.proxy.HOEProxy;
 import ru.itaros.hoe.proxy.HOEServer;
+import ru.itaros.hoe.registries.HOEFluidRegistry;
 import ru.itaros.hoe.registries.HOEIORegistry;
 import ru.itaros.hoe.threading.HOEThreadController;
 import cpw.mods.fml.common.FMLLog;
@@ -32,11 +33,13 @@ public class HOE {
     //	}
     //}
     
+    private HOEFluidRegistry hoefluidregistry;
     private HOEIORegistry ioregistry;
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+    	hoefluidregistry=new HOEFluidRegistry();
     	ioregistry =new HOEIORegistry();
     	interfacer=new HOEInterfacer();
     }    

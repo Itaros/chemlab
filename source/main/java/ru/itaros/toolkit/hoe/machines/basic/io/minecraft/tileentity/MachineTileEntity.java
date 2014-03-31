@@ -173,21 +173,23 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 		return true;
 	}
 	
-	@Override
-	public ItemStack decrStackSize(int slot, int amount) {
-		ItemStack result = null;
-		switch(slot){
-		case 0:
-			inbound_synchro.stackSize-=amount;
-			result=inbound_synchro.copy();
-			break;
-		case 1:
-			outbound_synchro.stackSize-=amount;
-			result=outbound_synchro.copy();
-			break;
-		}	
-		return result;
-	}
+	
+    @Override
+    public ItemStack decrStackSize(int slot, int amt) {
+            ItemStack stack = getStackInSlot(slot);
+            if (stack != null) {
+                    if (stack.stackSize <= amt) {
+                            setInventorySlotContents(slot, null);
+                    } else {
+                            stack = stack.splitStack(amt);
+                            if (stack.stackSize == 0) {
+                                    setInventorySlotContents(slot, null);
+                            }
+                    }
+            }
+            return stack;
+    }	
+
 	@Override
 	public ItemStack getStackInSlotOnClosing(int slot) {
 		return null;//Do not drops
