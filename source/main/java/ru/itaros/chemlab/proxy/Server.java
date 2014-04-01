@@ -13,4 +13,10 @@ public class Server extends Proxy {
 		linker=new HOELinker();
 	}
 	
+	@Override
+	public void openProgrammerGUI() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

@@ -7,4 +7,7 @@ public abstract class Proxy {
 	public abstract void initLinker();
 	public abstract HOELinker getLinker();
 	
+	
+	public abstract  void openProgrammerGUI();
+	
 }

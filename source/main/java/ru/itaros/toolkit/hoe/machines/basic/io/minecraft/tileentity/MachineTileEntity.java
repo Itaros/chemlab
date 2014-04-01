@@ -1,8 +1,10 @@
 package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ru.itaros.api.hoe.HOEAbstractLinker;
+import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.hoe.HOE;
 import ru.itaros.hoe.proxy.HOEServer;
@@ -10,6 +12,7 @@ import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ProgrammerSlot;
+import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -176,9 +179,17 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 			
 		case ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT:
 			programmerStack=stack;
+			programmatorScreenLauncher();
 			break;
 			
 		}		
+	}
+	private void programmatorScreenLauncher() {
+		if(programmerStack!=null && programmerStack.getItem()==ItemLoader.programmer){
+			
+			ChemLab.proxy.openProgrammerGUI();
+		}
+		
 	}
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
