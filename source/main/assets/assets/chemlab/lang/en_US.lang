@@ -1,0 +1,15 @@
+itemGroup.ChemLab=ChemLab Common
+
+item.chemlab:Programmer.name=Hardware Programmer
+
+tile.chemlab:machinebiogrinder.name=Biogrinder
+tile.chemlab:machinecentrifugalextractor.name=Centrifugal Extractor
+
+item.chemlab:Woodchips.name=Woodchips
+item.chemlab:WoodchipClump.name=Woodchip Clumps
+item.chemlab:LignocelluloseFlakes.name=Lignocellulose Flakes
+
+
+item.chemlab:hvlc-empty.name=Empty Hi-Volume Liquid Cell
+item.chemlab:hvlc-water-natural.name=Water Hi-Volume Liquid Cell
+item.chemlab:hvlc-extractives-cellulo-high.name=Wood Extractives Hi-Volume Liquid Cell
