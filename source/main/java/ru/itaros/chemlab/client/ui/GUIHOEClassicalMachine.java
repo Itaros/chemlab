@@ -20,7 +20,7 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 	protected InventoryPlayer playerInv;
 	private ResourceLocation background;
 	protected int x;
-
+	protected int y;
 	@Override
 	public void initGui() {
 		background = new ResourceLocation("chemlab","textures/gui/generichoemachine.png");
@@ -29,7 +29,7 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 		super.initGui();
 	}
 
-	protected int y;
+	
 
 	public GUIHOEClassicalMachine(Container par1Container) {
 		super(par1Container);
