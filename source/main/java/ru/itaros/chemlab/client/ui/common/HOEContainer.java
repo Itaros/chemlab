@@ -1,6 +1,7 @@
 package ru.itaros.chemlab.client.ui.common;
 
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.debug.RecipeSetSlot;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ProgrammerSlot;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ReadonlySlot;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,6 +11,8 @@ import net.minecraft.inventory.Slot;
 
 public class HOEContainer extends Container {
 
+	ProgrammerSlot psio;
+	
 	public HOEContainer(InventoryPlayer playerInv, MachineTileEntity tile){
 		//this(playerInv,(BiogrinderTileEntity)tile);
 		
@@ -19,7 +22,8 @@ public class HOEContainer extends Container {
 		addSlotToContainer(new ReadonlySlot(tile,-1,48,36));//INBOUND 1
 		addSlotToContainer(new ReadonlySlot(tile,-2,112,36));//OUTBOUND 1
 		
-		addSlotToContainer(new RecipeSetSlot(tile,10,17,42));//OUTBOUND
+		psio = new ProgrammerSlot(tile,17,29);
+		addSlotToContainer(psio);//PROGRAMMER IO
 
 		bindPlayerInventory(playerInv);		
 	}

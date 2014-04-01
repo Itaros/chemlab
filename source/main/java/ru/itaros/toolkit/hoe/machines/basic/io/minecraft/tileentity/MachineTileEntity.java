@@ -3,11 +3,13 @@ package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ru.itaros.api.hoe.HOEAbstractLinker;
+import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.hoe.HOE;
 import ru.itaros.hoe.proxy.HOEServer;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ProgrammerSlot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -22,7 +24,7 @@ import net.minecraft.world.World;
 
 public abstract class MachineTileEntity extends TileEntity implements IInventory{
 
-	
+	ItemStack programmerStack=null;
 	
 	
 	@Override
@@ -148,7 +150,10 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 		case -1:
 			return inbound_ro;
 		case -2:
-			return outbound_ro;			
+			return outbound_ro;		
+			
+		case ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT:
+			return programmerStack;
 			
 		}
 		return null;
@@ -162,15 +167,31 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 		case 1:
 			outbound_synchro=stack;
 			break;
+			//TODO: remove
 		case 10://DEBUG RECIPE SETTER
 			Item[] items = new Item[]{stack.getItem()};
 			getSuperIO().setRecipe(server,items);
 			break;
+			
+			
+		case ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT:
+			programmerStack=stack;
+			break;
+			
 		}		
 	}
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
 		if(slot==1){return false;}
+		
+		if(slot==ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT){
+			if(stack.getItem()==ItemLoader.programmer){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
 		return true;
 	}
 	

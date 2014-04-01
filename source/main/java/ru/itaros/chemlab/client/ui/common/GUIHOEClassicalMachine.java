@@ -35,6 +35,15 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 	public GUIHOEClassicalMachine(Container par1Container) {
 		super(par1Container);
 	}
+	
+	@Override
+	public boolean doesGuiPauseGame() {
+		return false;
+	}	
+	
+
+
+
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2,
