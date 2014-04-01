@@ -187,7 +187,7 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 	private void programmatorScreenLauncher() {
 		if(programmerStack!=null && programmerStack.getItem()==ItemLoader.programmer){
 			
-			ChemLab.proxy.openProgrammerGUI();
+			ChemLab.proxy.openProgrammerGUI(this);
 		}
 		
 	}
