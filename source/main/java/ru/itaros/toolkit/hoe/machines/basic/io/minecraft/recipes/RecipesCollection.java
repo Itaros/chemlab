@@ -31,6 +31,13 @@ public class RecipesCollection {
 
 	protected Recipe[] recipes;
 
+	public Recipe[] getRecipes(){
+		return recipes;
+	}
+	public int getRecipesAmount(){
+		return recipes.length;
+	}
+	
 	public Recipe findIncomingPattern(Item[] items) {
 		Recipe result=null;
 		for(Recipe r : recipes){
