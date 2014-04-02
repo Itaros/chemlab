@@ -6,6 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.elements.Tab;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
@@ -16,7 +17,7 @@ public class GUIToolProgrammer extends GuiScreen {
 		tile=te;
 	}
 	
-    protected int xSize = 186;
+    protected int xSize = 187;
     protected int ySize = 198;
 	
 	
@@ -31,15 +32,35 @@ public class GUIToolProgrammer extends GuiScreen {
 	public void initGui() {
 		background = new ResourceLocation("chemlab","textures/gui/programmerui.png");
 		
-		int taboffset = -15;
+		int taboffset = -17;
 		int tabheight = 19 + 3;
 		int i = 1;
-		tabs.add(new Tab(0+taboffset,0+(tabheight*i),190,2,17,19));
+		Tab temp;
+		temp = new Tab(0+taboffset,0+(tabheight*i),190,2,19,20,193,53);
+		infotab=temp;
+		temp.setActive(true);
+		activeTab=temp;
+		tabs.add(temp);//Info
+		i++;
+		temp = new Tab(0+taboffset,0+(tabheight*i),190,2,19,20,208,53);
+		recipetab=temp;
+		tabs.add(temp);//Recipe
+		i++;		
+		temp = new Tab(0+taboffset,0+(tabheight*i),190,2,19,20,208,68);
+		statstab=temp;
+		tabs.add(temp);//Stats
+		i++;	
+		temp = new Tab(0+taboffset,0+(tabheight*i),190,2,19,20,193,68);
+		securitytab=temp;
+		tabs.add(temp);//Security
+		i++;			
 		
 		super.initGui();
 	}	
 	ArrayList<Tab> tabs = new ArrayList<Tab>();
 	
+	
+	private Tab infotab,recipetab,statstab,securitytab;
 	
 	
 	
@@ -52,17 +73,35 @@ public class GUIToolProgrammer extends GuiScreen {
 	}
 
 
-
-
-
-
 	@Override
-	protected void mouseClicked(int par1, int par2, int par3) {
-		// TODO Auto-generated method stub
-		super.mouseClicked(par1, par2, par3);
+	protected void mouseMovedOrUp(int x2, int y2,
+			int p_146286_3_) {
+		
+		//clickTabs(x2,y2,p_146286_3_,x,y);
+		
+		super.mouseMovedOrUp(x2, y2, p_146286_3_);
+	}
+	@Override
+	protected void mouseClicked(int x2, int y2, int button) {
+
+		clickTabs(x2,y2,button,x,y);
+		
+		super.mouseClicked(x2, y2, button);
 	}
 
 
+	private Tab activeTab=null;
+	
+	private void clickTabs(int x2, int y2, int button,int x, int y) {
+		for(Tab t:tabs){
+			if(t.isIn(x2-x,y2-y)){
+				this.mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+				if(activeTab!=null){activeTab.setActive(false);}
+				t.setActive(true);
+				activeTab=t;
+			}
+		}
+	}
 	private void drawTabs(int x,int y) {
 		for(Tab t:tabs){
 			t.draw(this,x,y);
