@@ -1,5 +1,7 @@
 package ru.itaros.chemlab;
 
+import java.util.EnumMap;
+
 import org.apache.logging.log4j.Level;
 
 import ru.itaros.chemlab.client.ui.common.GUIHandler;
@@ -10,6 +12,9 @@ import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.chemlab.loader.recipes.RecipesLoader;
 import ru.itaros.chemlab.loader.tileentity.TileEntityLoader;
+import ru.itaros.chemlab.network.ChemLabChannel;
+import ru.itaros.chemlab.network.IPacketCodecDescriptor;
+import ru.itaros.chemlab.network.NetworkChannel;
 import ru.itaros.chemlab.proxy.Proxy;
 import ru.itaros.chemlab.proxy.Server;
 import ru.itaros.toolkit.hoe.io.IOCollectionHelper;
@@ -22,6 +27,10 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.network.FMLEmbeddedChannel;
+import cpw.mods.fml.common.network.FMLOutboundHandler;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = ChemLab.MODID, version = ChemLab.VERSION, dependencies="required-after:hoelib")
 public class ChemLab
@@ -43,9 +52,18 @@ public class ChemLab
     	return iocollection;
     }
     
+    //TODO: should move channels to a different class
+    EnumMap<Side, FMLEmbeddedChannel> channels;
+    public void SendPacketAsClientToServer(IPacketCodecDescriptor descriptor){
+    	channels.get(Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.TOSERVER);
+    	channels.get(Side.CLIENT).writeOutbound(descriptor);
+    }
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+    	channels = NetworkRegistry.INSTANCE.newChannel("chemlabchannel", new ChemLabChannel());
+    	
     	GUILoader.loadGUIs();
     	
     	new ChemLabCreativeTab();//There is forgebug somewhere close

@@ -28,10 +28,6 @@ public abstract class HOEMachineIO extends HOEIO{
 
 	public abstract void configureData(HOEData data);
 
-	public void setRecipe(HOEMachineData server, Item[] items) {
-		if(server==null){return;}//No way on CLIENT
-		RecipesCollection collection = getRecipesCollection();
-		Recipe rep = collection.findIncomingPattern(items);
-		server.setRecipe(rep);
-	}
+
+	
 }

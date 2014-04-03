@@ -1,0 +1,78 @@
+package ru.itaros.chemlab.network.packets;
+
+import cpw.mods.fml.common.network.ByteBufUtils;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
+import io.netty.buffer.ByteBuf;
+import io.netty.handler.codec.string.StringEncoder;
+import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
+import ru.itaros.chemlab.network.IPacketCodecDescriptor;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+
+public class SetHOEMachineRecipePacket implements IPacketCodecDescriptor {
+
+	//DATA
+	int x,y,z;
+	int dim;
+	String rectoken;
+	//ACCESSORS
+	public void execute(){
+		World w = DimensionManager.getWorld(dim);
+		TileEntity tile = w.getTileEntity(x, y, z);
+		if(tile==null){return;}
+		if(tile instanceof MachineTileEntity){
+			//Trying to get recipe
+			IHOERecipeRegistry repreg = Recipe.getRecipeRegistry();
+			Recipe r = repreg.get(rectoken);//TODO: CAN CRASH SERVER. Need to discard on error.
+			//Setting
+			MachineTileEntity me = (MachineTileEntity)tile;
+			me.trySetRecipe(r);
+			
+		}else{
+			return;
+		}
+	}
+	//EXEC
+	public SetHOEMachineRecipePacket(){} //we need this for the packet decoding
+	public SetHOEMachineRecipePacket(MachineTileEntity tile, Recipe r){
+		//Getting coordinates
+		x = tile.xCoord;
+		y = tile.yCoord;
+		z = tile.zCoord;
+		World w = tile.getWorldObj();
+		dim = w.provider.dimensionId;
+		//Preparing recipe for marshalling
+		rectoken = r.getName();
+		
+		//TODO: needs to validate if hardware programmer is available and has rights
+	}
+	//
+	
+	public static int getInternalCodecID() {
+		return 0;
+	}
+
+	@Override
+	public void readBytes(ByteBuf bytes) {
+		x=bytes.readInt();
+		y=bytes.readInt();
+		z=bytes.readInt();
+		dim=bytes.readInt();
+		rectoken = ByteBufUtils.readUTF8String(bytes);
+	}
+
+	@Override
+	public void writeBytes(ByteBuf bytes) {
+		bytes.writeInt(x);
+		bytes.writeInt(y);
+		bytes.writeInt(z);
+		bytes.writeInt(dim);
+		
+		//TODO: change to ASCII to be more compact
+		ByteBufUtils.writeUTF8String(bytes, rectoken);
+
+	}
+
+}

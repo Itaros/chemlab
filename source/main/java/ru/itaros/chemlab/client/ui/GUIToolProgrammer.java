@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 
+import ru.itaros.chemlab.ChemLab;
+import ru.itaros.chemlab.network.packets.SetHOEMachineRecipePacket;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.elements.Tab;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
@@ -78,7 +80,7 @@ public class GUIToolProgrammer extends GuiScreen {
 		this.drawGuiContainerBackgroundLayer(par3, par1, par2);
 		
 		if(activeTab==recipetab){
-			this.drawRecipes();
+			this.drawRecipes(0,0,0);
 		}
 		
 		super.drawScreen(par1, par2, par3);
@@ -86,7 +88,10 @@ public class GUIToolProgrammer extends GuiScreen {
 
 
 	private int currentPage = 0;
-	private void drawRecipes() {
+	private void drawRecipes(int operation, int x2, int y2) {
+		//opertation:
+		//0 = DRAW
+		//1 = CLICKSIGN
 		
 		RecipesCollection repcol = tile.getSuperIO().getRecipesCollection();
 		//TODO: If there is no col - show "NO RECIPES AVAILABLE. THIS IS A BUG!"
@@ -108,32 +113,52 @@ public class GUIToolProgrammer extends GuiScreen {
 		//Drawing
 		int i=-1;
 		for(int xp = rangeStart; xp < rangeEnd; xp++){
-			i++;
-			GL11.glDisable(GL11.GL_LIGHTING);
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			this.mc.renderEngine.bindTexture(overlay);
-			this.drawTexturedModalRect(xi+x, yi+y+(ystep*i), 0, 0, osx, osy);
-			GL11.glEnable(GL11.GL_LIGHTING);
-			
-			Recipe r = repcol.getRecipes()[xp];
-			
-			//TODO: This shit should be all precached
-			//Drawing incomings
-			int inc_offset=-1;
-			for(Item item : r.getIncomingStricttypes()){
-				inc_offset++;
-				ItemStack stack_inc = new ItemStack(item);
-				drawItemStack(stack_inc, x+xi+60-10-(inc_offset*(16+2)), y+yi+18+(ystep*i), null);
+			if(operation == 0){
+				i++;
+				GL11.glDisable(GL11.GL_LIGHTING);
+				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+				this.mc.renderEngine.bindTexture(overlay);
+				this.drawTexturedModalRect(xi+x, yi+y+(ystep*i), 0, 0, osx, osy);
+				GL11.glEnable(GL11.GL_LIGHTING);
+				
+				Recipe r = repcol.getRecipes()[xp];
+				
+				//TODO: This shit should be all precached
+				//Drawing incomings
+				int inc_offset=-1;
+				for(Item item : r.getIncomingStricttypes()){
+					inc_offset++;
+					ItemStack stack_inc = new ItemStack(item);
+					drawItemStack(stack_inc, x+xi+60-10-(inc_offset*(16+2)), y+yi+18+(ystep*i), null);
+				}
+				//Drawing outcomings
+				int out_offset=-1;
+				for(Item item : r.getOutcomingStricttypes()){
+					out_offset++;
+					ItemStack stack_out = new ItemStack(item);
+					drawItemStack(stack_out, x+xi+97+10+(out_offset*(16+2)), y+yi+18+(ystep*i), null);
+				}			
+				
+			}else if(operation==1){
+				int ox = x2-x;
+				int oy = y2-y;
+				
+				int initx=xi;
+				int inity=yi+(ystep*i);
+				
+				
+				if(ox>initx && ox<initx+osx){
+					if(oy>inity && oy<inity+osy){
+						//Clicked
+						Recipe r = repcol.getRecipes()[xp];
+						this.mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+						//tile.trySetRecipe(r);//Should be sended to server
+						//Clicking is always done on a client, you know xD
+						ChemLab.getInstance().SendPacketAsClientToServer(new SetHOEMachineRecipePacket(tile,r));
+					}
+				}
+				
 			}
-			//Drawing outcomings
-			int out_offset=-1;
-			for(Item item : r.getOutcomingStricttypes()){
-				out_offset++;
-				ItemStack stack_out = new ItemStack(item);
-				drawItemStack(stack_out, x+xi+97+10+(out_offset*(16+2)), y+yi+18+(ystep*i), null);
-			}			
-			
-			
 		}
 		//60/18
 		
@@ -167,6 +192,7 @@ public class GUIToolProgrammer extends GuiScreen {
 	protected void mouseClicked(int x2, int y2, int button) {
 
 		clickTabs(x2,y2,button,x,y);
+		drawRecipes(1,x2,y2);
 		
 		super.mouseClicked(x2, y2, button);
 	}

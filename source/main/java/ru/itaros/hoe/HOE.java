@@ -9,6 +9,7 @@ import ru.itaros.hoe.proxy.HOEProxy;
 import ru.itaros.hoe.proxy.HOEServer;
 import ru.itaros.hoe.registries.HOEFluidRegistry;
 import ru.itaros.hoe.registries.HOEIORegistry;
+import ru.itaros.hoe.registries.HOERecipeRegistry;
 import ru.itaros.hoe.threading.HOEThreadController;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
@@ -35,12 +36,14 @@ public class HOE {
     
     private HOEFluidRegistry hoefluidregistry;
     private HOEIORegistry ioregistry;
+    private HOERecipeRegistry reciperegistrry;
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
     	hoefluidregistry=new HOEFluidRegistry();
     	ioregistry =new HOEIORegistry();
+    	reciperegistrry=new HOERecipeRegistry();
     	interfacer=new HOEInterfacer();
     }    
     

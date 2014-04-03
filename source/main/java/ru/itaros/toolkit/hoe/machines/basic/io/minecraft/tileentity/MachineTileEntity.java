@@ -12,6 +12,7 @@ import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ProgrammerSlot;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -170,11 +171,7 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 		case 1:
 			outbound_synchro=stack;
 			break;
-			//TODO: remove
-		case 10://DEBUG RECIPE SETTER
-			Item[] items = new Item[]{stack.getItem()};
-			getSuperIO().setRecipe(server,items);
-			break;
+
 			
 			
 		case ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT:
@@ -300,6 +297,12 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 	
 	
 	
+	
+	public void trySetRecipe(Recipe r){
+		if(server!=null){
+			server.setRecipe(r);
+		}
+	}
 	
 	
 	
