@@ -19,6 +19,7 @@ public class SetHOEMachineRecipePacket implements IPacketCodecDescriptor {
 	String rectoken;
 	//ACCESSORS
 	public void execute(){
+		System.out.println("ATTEMPTING TO CHANGE RECIPE");
 		World w = DimensionManager.getWorld(dim);
 		TileEntity tile = w.getTileEntity(x, y, z);
 		if(tile==null){return;}
@@ -29,7 +30,7 @@ public class SetHOEMachineRecipePacket implements IPacketCodecDescriptor {
 			//Setting
 			MachineTileEntity me = (MachineTileEntity)tile;
 			me.trySetRecipe(r);
-			
+			System.out.println("RECIPE CHANGED");
 		}else{
 			return;
 		}

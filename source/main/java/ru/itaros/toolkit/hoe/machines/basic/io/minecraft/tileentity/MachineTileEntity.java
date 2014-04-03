@@ -177,6 +177,7 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 		case ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT:
 			programmerStack=stack;
 			programmatorScreenLauncher();
+			programmerStack=null;//TODO: DEBUG!!!
 			break;
 			
 		}		
