@@ -4,11 +4,12 @@ item.chemlab:Programmer.name=Hardware Programmer
 
 tile.chemlab:machinebiogrinder.name=Biogrinder
 tile.chemlab:machinecentrifugalextractor.name=Centrifugal Extractor
+tile.chemlab:machinewasher.name=Industrial Washer
 
 item.chemlab:Woodchips.name=Woodchips
 item.chemlab:WoodchipClump.name=Woodchip Clumps
 item.chemlab:LignocelluloseFlakes.name=Lignocellulose Flakes
-
+item.chemlab:PureLignocelluloseFlakes.name=Pure Lignocellulose Flakes
 
 item.chemlab:hvlc-empty.name=Empty Hi-Volume Liquid Cell
 item.chemlab:hvlc-water-natural.name=Water Hi-Volume Liquid Cell

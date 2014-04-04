@@ -9,9 +9,11 @@ import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionRecipe;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
 
-public class DebugRecipes {
+public class WoodChainRecipes {
 	public static RecipesCollection biogrinderRecipes;
 	public static RecipesCollection centrifugalExtractorRecipes;
+	public static RecipesCollection washerRecipes;
+	
 	public static void load(){
 		//PRECONFIG
 		HOEFluid water = HOEFluidLoader.water_natural;
@@ -41,6 +43,19 @@ public class DebugRecipes {
 		//Collection
 		centrifugalExtractorRecipes = new RecipesCollection(fcr3);
 		centrifugalExtractorRecipes.register();
+		
+		
+		//======Washer======
+		//FCR 4 (WATER+LIGNOCELLULOSE->PURE LIGNOCELLULOSE+EXTRACTIVES(LOW))
+		//TODO: Make diluted extractives
+		name = "chemlab.centrextractor.[water+lignocellulose->purelignocellulose+lextractives]";
+		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(water)),new ItemStack(ItemLoader.lignocelluloseflakes)};
+		outcoming = new ItemStack[]{new ItemStack(ItemLoader.purelignocelluloseflakes),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.cellulosal_extractives_high))};
+		FixedConversionRecipe fcr4 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		//Collection
+		washerRecipes = new RecipesCollection(fcr4);
+		washerRecipes.register();		
+		
 		
 	}
 }

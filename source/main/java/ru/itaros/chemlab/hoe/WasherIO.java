@@ -6,7 +6,8 @@ import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
 
-public class CentrifugalExtractorIO extends HOEMachineIO {
+public class WasherIO extends HOEMachineIO {
+
 	public static final int MAXPOWER = 1000;
 	public static final int INCOMING_PORTS		=	2;
 	public static final int OUTCOMING_PORTS	=	2;
@@ -14,10 +15,10 @@ public class CentrifugalExtractorIO extends HOEMachineIO {
 	
 	@Override
 	public RecipesCollection getRecipesCollection() {
-		return WoodChainRecipes.centrifugalExtractorRecipes;
+		return WoodChainRecipes.washerRecipes;
 	}	
 	
-	public CentrifugalExtractorIO(){
+	public WasherIO(){
 		this.setReq(INCOMING_PORTS, OUTCOMING_PORTS);
 		this.allowToStart();
 	}

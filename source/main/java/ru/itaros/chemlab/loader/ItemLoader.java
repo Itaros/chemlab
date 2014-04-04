@@ -5,6 +5,7 @@ import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.items.HiVolumeLiquidCellEmpty;
 import ru.itaros.chemlab.items.LignocelluloseFlakes;
 import ru.itaros.chemlab.items.Programmer;
+import ru.itaros.chemlab.items.PureLignocelluloseFlakes;
 import ru.itaros.chemlab.items.WoodchipClump;
 import ru.itaros.chemlab.items.Woodchips;
 import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
@@ -19,6 +20,7 @@ public class ItemLoader {
 	public static WoodchipClump woodchipclump;
 	
 	public static LignocelluloseFlakes lignocelluloseflakes;
+	public static PureLignocelluloseFlakes purelignocelluloseflakes;
 	
 	public static void loadItems(){
 		programmer = new Programmer();
@@ -34,6 +36,8 @@ public class ItemLoader {
 		lignocelluloseflakes = new LignocelluloseFlakes();
 		GameRegistry.registerItem(lignocelluloseflakes,lignocelluloseflakes.getUnlocalizedName());	
 		
+		purelignocelluloseflakes = new PureLignocelluloseFlakes();
+		GameRegistry.registerItem(purelignocelluloseflakes,purelignocelluloseflakes.getUnlocalizedName());	
 		
 		emptyhvlc = new HiVolumeLiquidCellEmpty();
 		GameRegistry.registerItem(emptyhvlc,emptyhvlc.getUnlocalizedName());

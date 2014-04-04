@@ -1,10 +1,7 @@
 package ru.itaros.chemlab.hoe;
 
-import org.apache.logging.log4j.Level;
-
-import cpw.mods.fml.common.FMLLog;
 import ru.itaros.api.hoe.internal.HOEData;
-import ru.itaros.chemlab.loader.recipes.DebugRecipes;
+import ru.itaros.chemlab.loader.recipes.WoodChainRecipes;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
@@ -17,7 +14,7 @@ public class BiogrinderIO extends HOEMachineIO {
 	
 	@Override
 	public RecipesCollection getRecipesCollection() {
-		return DebugRecipes.biogrinderRecipes;
+		return WoodChainRecipes.biogrinderRecipes;
 	}	
 	
 	public BiogrinderIO(){
@@ -26,7 +23,6 @@ public class BiogrinderIO extends HOEMachineIO {
 	}
 	@Override
 	protected void produce(HOEData data) {
-		FMLLog.log(Level.INFO,"PRODUCTION!");
 		HOEMachineData hm = (HOEMachineData) data;
 		if(hm.decrementResources()){
 			hm.incrementProduction();
