@@ -1,5 +1,7 @@
 package ru.itaros.chemlab.client.ui.common;
 
+import java.lang.reflect.Method;
+
 import org.lwjgl.opengl.GL11;
 
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
@@ -7,6 +9,7 @@ import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileE
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
@@ -24,11 +27,15 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 
 	@Override
 	public void initGui() {
+		
+		
 		background = new ResourceLocation("chemlab","textures/gui/generichoemachine.png");
 		
 		
 		super.initGui();
 	}
+
+
 
 	protected int y;
 
@@ -70,8 +77,12 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 				
 				
 				//Iteminfo
-				fontRendererObj.drawString(tile.getClientData().getInboundAmount(),x+47+2,y+37,0xFFFFFF);
-				fontRendererObj.drawString(tile.getClientData().getOutboundAmount(),x+112+2,y+37,0xFFFFFF);
+				//fontRendererObj.drawString(tile.getClientData().getInboundAmount(),x+47+2,y+37,0xFFFFFF);
+				//fontRendererObj.drawString(tile.getClientData().getOutboundAmount(),x+112+2,y+37,0xFFFFFF);
+				
+				//ItemStack input = tile.getClientData().getInboundRO();
+				//this.TRANSFORMED_drawItemStack(input, x+47+2,y+37, null);
+				
 				//112,36
 				
 			}

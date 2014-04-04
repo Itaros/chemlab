@@ -10,6 +10,7 @@ import cpw.mods.fml.common.FMLLog;
 import ru.itaros.api.hoe.exceptions.HOEWrongSyncDirection;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.api.hoe.internal.HOEIO;
+import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionRecipe;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
@@ -115,6 +116,8 @@ public class HOEMachineData extends HOEData{
 		this.outcoming_slots=parent.outcoming_slots;
 		this.incoming_depot=new int[incoming_slots];
 		this.outcoming_depot=new int[outcoming_slots];
+		//Mimicking recipe
+		this.recipe=parent.recipe;
 	}
 	
 	
@@ -151,14 +154,7 @@ public class HOEMachineData extends HOEData{
 	
 	public void setRecipe(Recipe recipe){
 		if(recipe!=null){
-			//TODO: recipe should do that on its own. Polymorphism, fuck that
-			if(recipe instanceof FixedConversionRecipe){
-				FixedConversionRecipe fcr = (FixedConversionRecipe)recipe;
-				ticksRequared=fcr.getTicksRequared();
-			}
-			
-			incoming_stricttype=recipe.getIncomingStricttypes();
-			outcoming_stricttype=recipe.getOutcomingStricttypes();
+			applyRecipeParametrics(recipe);
 			this.recipe=recipe;
 			this.isRecipeSet=true;
 			sync();
@@ -166,6 +162,22 @@ public class HOEMachineData extends HOEData{
 			//TODO: Null recipe(recipe remover)
 		}
 	}
+	
+	private void applyRecipeParametrics(Recipe recipe){
+		if(recipe!=null){
+					//TODO: recipe should do that on its own. Polymorphism, fuck that
+			if(recipe instanceof FixedConversionRecipe){
+				FixedConversionRecipe fcr = (FixedConversionRecipe)recipe;
+				ticksRequared=fcr.getTicksRequared();
+			}
+			
+			incoming_stricttype=recipe.getIncomingStricttypes();
+			outcoming_stricttype=recipe.getOutcomingStricttypes();
+		}else{
+			//TODO: Null recipe(recipe remover)
+		}
+	}
+	
 	
 	
 	//NBT
@@ -187,6 +199,11 @@ public class HOEMachineData extends HOEData{
 		nbt.setIntArray("incoming_depot", incoming_depot);
 		nbt.setIntArray("outcoming_depot", outcoming_depot);
 		//Types are configured by recipe to reduce network congestion
+		String reptoken = "";
+		if(recipe!=null){
+			reptoken = recipe.getName();
+		}
+		nbt.setString("reptoken", reptoken);
 	}
 	public void readNBT(NBTTagCompound nbt) {
 		//Slot allocators cfg
@@ -206,7 +223,17 @@ public class HOEMachineData extends HOEData{
 		incoming_depot=nbt.getIntArray("incoming_depot");
 		outcoming_depot=nbt.getIntArray("outcoming_depot");
 		//Types are configured by recipe to reduce network congestion		
+		IHOERecipeRegistry repreg = Recipe.getRecipeRegistry();
+		String reptoken = nbt.getString("reptoken");
+		recipe=repreg.get(reptoken);
+		unfoldStricttypesByRecipe();
 	}	
+	/*
+	 * Client method to slightly lower network GUI congestion
+	 */
+	private void unfoldStricttypesByRecipe() {
+		applyRecipeParametrics(recipe);
+	}
 	public static HOEMachineData generateFromNBT(NBTTagCompound nbt){
 		HOEMachineData data = new HOEMachineData();
 		data.readNBT(nbt);
@@ -299,7 +326,7 @@ public class HOEMachineData extends HOEData{
 	}
 	
 	
-	//TODO: Pass originals to modify them
+	//TODO: Pass originals to modify them for performance
 	public ItemStack getInboundRO() {
 		if(incoming_stricttype!=null && incoming_stricttype.length>0 && incoming_stricttype[0]!=null){
 			return new ItemStack(incoming_stricttype[0],incoming_depot[0]);

@@ -25,7 +25,11 @@ public class HOERecipeRegistry implements IHOERecipeRegistry {
 
 	@Override
 	public Recipe get(String mnemonic) {
-		return recipes.get(mnemonic);
+		if(recipes.containsKey(mnemonic)){
+			return recipes.get(mnemonic);
+		}else{
+			return null;
+		}
 	}
 
 }
