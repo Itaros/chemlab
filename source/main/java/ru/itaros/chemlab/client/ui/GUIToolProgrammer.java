@@ -113,8 +113,8 @@ public class GUIToolProgrammer extends GuiScreen {
 		//Drawing
 		int i=-1;
 		for(int xp = rangeStart; xp < rangeEnd; xp++){
+			i++;
 			if(operation == 0){
-				i++;
 				GL11.glDisable(GL11.GL_LIGHTING);
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 				this.mc.renderEngine.bindTexture(overlay);
