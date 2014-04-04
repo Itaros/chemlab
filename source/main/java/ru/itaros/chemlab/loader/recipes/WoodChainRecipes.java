@@ -13,6 +13,8 @@ public class WoodChainRecipes {
 	public static RecipesCollection biogrinderRecipes;
 	public static RecipesCollection centrifugalExtractorRecipes;
 	public static RecipesCollection washerRecipes;
+	public static RecipesCollection impregnatorRecipes;
+	
 	
 	public static void load(){
 		//PRECONFIG
@@ -54,7 +56,17 @@ public class WoodChainRecipes {
 		FixedConversionRecipe fcr4 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
 		//Collection
 		washerRecipes = new RecipesCollection(fcr4);
-		washerRecipes.register();		
+		washerRecipes.register();
+		
+		//======Impregnator======
+		//FCR 5 (WATER+PURE LIGNOCELLULOSE->IMPREGNATED LIGNOCELLULOSE+EMPTY CELL)
+		name = "chemlab.centrextractor.[purelignocellulose+water->impregnatedlignocellulose+emptycell]";
+		incoming = new ItemStack[]{new ItemStack(ItemLoader.purelignocelluloseflakes),new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
+		outcoming = new ItemStack[]{new ItemStack(ItemLoader.impregnatedlignocelluloseflakes),new ItemStack(ItemLoader.emptyhvlc)};
+		FixedConversionRecipe fcr5 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		//Collection
+		impregnatorRecipes = new RecipesCollection(fcr5);
+		impregnatorRecipes.register();		
 		
 		
 	}

@@ -3,6 +3,7 @@ package ru.itaros.chemlab.loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.items.HiVolumeLiquidCellEmpty;
+import ru.itaros.chemlab.items.ImpregnatedLignocellulose;
 import ru.itaros.chemlab.items.LignocelluloseFlakes;
 import ru.itaros.chemlab.items.Programmer;
 import ru.itaros.chemlab.items.PureLignocelluloseFlakes;
@@ -21,6 +22,8 @@ public class ItemLoader {
 	
 	public static LignocelluloseFlakes lignocelluloseflakes;
 	public static PureLignocelluloseFlakes purelignocelluloseflakes;
+	public static ImpregnatedLignocellulose impregnatedlignocelluloseflakes;
+	
 	
 	public static void loadItems(){
 		programmer = new Programmer();
@@ -38,6 +41,10 @@ public class ItemLoader {
 		
 		purelignocelluloseflakes = new PureLignocelluloseFlakes();
 		GameRegistry.registerItem(purelignocelluloseflakes,purelignocelluloseflakes.getUnlocalizedName());	
+		
+		impregnatedlignocelluloseflakes = new ImpregnatedLignocellulose();
+		GameRegistry.registerItem(impregnatedlignocelluloseflakes,impregnatedlignocelluloseflakes.getUnlocalizedName());	
+				
 		
 		emptyhvlc = new HiVolumeLiquidCellEmpty();
 		GameRegistry.registerItem(emptyhvlc,emptyhvlc.getUnlocalizedName());
