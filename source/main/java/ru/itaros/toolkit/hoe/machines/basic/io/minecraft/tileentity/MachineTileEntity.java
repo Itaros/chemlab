@@ -258,7 +258,7 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 			HOEMachineIO io = client.getIO();
 			if(io!=null){
 				//CLIENTSIDE TICK in MTA
-				//io.tick(client);
+				io.tick(client);
 				updateRO();
 			}
 		}		

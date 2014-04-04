@@ -233,6 +233,7 @@ public class HOEMachineData extends HOEData{
 	 */
 	private void unfoldStricttypesByRecipe() {
 		applyRecipeParametrics(recipe);
+		if(recipe!=null){isRecipeSet=true;}else{isRecipeSet=false;}
 	}
 	public static HOEMachineData generateFromNBT(NBTTagCompound nbt){
 		HOEMachineData data = new HOEMachineData();
