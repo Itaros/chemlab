@@ -191,6 +191,7 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 	}
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
+		if(slot<0){return false;}//There is no way to push something into chamber
 		if(slot==1){return false;}
 		
 		if(slot==ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT){
@@ -207,6 +208,7 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 	
     @Override
     public ItemStack decrStackSize(int slot, int amt) {
+    	if(slot<0){return (ItemStack)null;}//You can't take from client inbound
             ItemStack stack = getStackInSlot(slot);
             if (stack != null) {
                     if (stack.stackSize <= amt) {
