@@ -4,6 +4,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.items.HiVolumeLiquidCellEmpty;
 import ru.itaros.chemlab.items.ImpregnatedWoodFibers;
+import ru.itaros.chemlab.items.ImpregnatedWoodFibersPellet;
 import ru.itaros.chemlab.items.WoodFiberFlakes;
 import ru.itaros.chemlab.items.Programmer;
 import ru.itaros.chemlab.items.PureWoodFiberFlakes;
@@ -23,6 +24,7 @@ public class ItemLoader {
 	public static WoodFiberFlakes lignocelluloseflakes;
 	public static PureWoodFiberFlakes purelignocelluloseflakes;
 	public static ImpregnatedWoodFibers impregnatedlignocelluloseflakes;
+	public static ImpregnatedWoodFibersPellet impregnatedwoodfiberspellet;
 	
 	
 	public static void loadItems(){
@@ -45,9 +47,15 @@ public class ItemLoader {
 		impregnatedlignocelluloseflakes = new ImpregnatedWoodFibers();
 		GameRegistry.registerItem(impregnatedlignocelluloseflakes,impregnatedlignocelluloseflakes.getUnlocalizedName());	
 				
+		impregnatedwoodfiberspellet = new ImpregnatedWoodFibersPellet();
+		GameRegistry.registerItem(impregnatedwoodfiberspellet,impregnatedwoodfiberspellet.getUnlocalizedName());	
+				
+				
 		
 		emptyhvlc = new HiVolumeLiquidCellEmpty();
 		GameRegistry.registerItem(emptyhvlc,emptyhvlc.getUnlocalizedName());
+		
+		
 		
 		loadAutoItems();
 		

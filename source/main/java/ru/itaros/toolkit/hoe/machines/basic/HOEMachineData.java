@@ -273,7 +273,7 @@ public class HOEMachineData extends HOEData{
 
 	public boolean pushResource(ItemStack temp) {
 		if(temp==null){return false;}
-		for(int x = 0; x < incoming_depot.length; x++){
+		for(int x = 0; x < incoming_stricttype.length; x++){
 			if(incoming_stricttype[x]==null){continue;}
 			if(incoming_depot[x]<64){
 				if(incoming_stricttype[x].getUnlocalizedName().equals(temp.getItem().getUnlocalizedName())){
@@ -294,7 +294,7 @@ public class HOEMachineData extends HOEData{
 			max = 64-outbound_synchro.stackSize;
 			if(max<=0){return outbound_synchro;}
 		}
-		for(int x = 0; x < outcoming_depot.length; x++){
+		for(int x = 0; x < outcoming_stricttype.length; x++){
 			if(outcoming_stricttype[x]==null){continue;}
 			
 			if(outcoming_depot[x]>0){

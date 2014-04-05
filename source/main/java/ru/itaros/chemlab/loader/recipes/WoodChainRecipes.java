@@ -14,6 +14,7 @@ public class WoodChainRecipes {
 	public static RecipesCollection centrifugalExtractorRecipes;
 	public static RecipesCollection washerRecipes;
 	public static RecipesCollection impregnatorRecipes;
+	public static RecipesCollection pressRecipes;
 	
 	
 	public static void load(){
@@ -50,7 +51,7 @@ public class WoodChainRecipes {
 		//======Washer======
 		//FCR 4 (WATER+LIGNOCELLULOSE->PURE LIGNOCELLULOSE+EXTRACTIVES(LOW))
 		//TODO: Make diluted extractives
-		name = "chemlab.centrextractor.[water+lignocellulose->purelignocellulose+lextractives]";
+		name = "chemlab.washer.[water+lignocellulose->purelignocellulose+lextractives]";
 		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(water)),new ItemStack(ItemLoader.lignocelluloseflakes)};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.purelignocelluloseflakes),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.cellulosal_extractives_high))};
 		FixedConversionRecipe fcr4 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
@@ -60,13 +61,24 @@ public class WoodChainRecipes {
 		
 		//======Impregnator======
 		//FCR 5 (WATER+PURE LIGNOCELLULOSE->IMPREGNATED LIGNOCELLULOSE+EMPTY CELL)
-		name = "chemlab.centrextractor.[purelignocellulose+water->impregnatedlignocellulose+emptycell]";
+		name = "chemlab.impregnator.[purelignocellulose+water->impregnatedlignocellulose+emptycell]";
 		incoming = new ItemStack[]{new ItemStack(ItemLoader.purelignocelluloseflakes),new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.impregnatedlignocelluloseflakes),new ItemStack(ItemLoader.emptyhvlc)};
 		FixedConversionRecipe fcr5 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
 		//Collection
 		impregnatorRecipes = new RecipesCollection(fcr5);
 		impregnatorRecipes.register();		
+		
+		
+		//======Press======
+		//FCR 6 (IMPREGNATED LIGNOCELLULOSE->IMPREGNATED LIGNOCELLULOSE PELLETS)
+		name = "chemlab.press.[impregnatedlignocellulose->impregnatedlignocellulosepellet]";
+		incoming = new ItemStack[]{new ItemStack(ItemLoader.impregnatedlignocelluloseflakes)};
+		outcoming = new ItemStack[]{new ItemStack(ItemLoader.impregnatedwoodfiberspellet)};
+		FixedConversionRecipe fcr6 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		//Collection
+		pressRecipes = new RecipesCollection(fcr6);
+		pressRecipes.register();			
 		
 		
 	}

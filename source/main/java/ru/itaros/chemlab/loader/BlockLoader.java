@@ -4,6 +4,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import ru.itaros.chemlab.blocks.machines.Biogrinder;
 import ru.itaros.chemlab.blocks.machines.CentrifugalExtractor;
 import ru.itaros.chemlab.blocks.machines.Impregnator;
+import ru.itaros.chemlab.blocks.machines.Press;
 import ru.itaros.chemlab.blocks.machines.Washer;
 
 public class BlockLoader {
@@ -12,6 +13,7 @@ public class BlockLoader {
 	public static CentrifugalExtractor centriextractor;
 	public static Washer washer;
 	public static Impregnator impregnator;
+	public static Press press;
 	
 	
 	public static void loadBlocks(){
@@ -26,7 +28,10 @@ public class BlockLoader {
 		
 		impregnator = new Impregnator();
 		GameRegistry.registerBlock(impregnator ,impregnator.getUnlocalizedNameRaw());
-				
+			
+		press = new Press();
+		GameRegistry.registerBlock(press ,press.getUnlocalizedNameRaw());
+					
 		
 	}
 }
