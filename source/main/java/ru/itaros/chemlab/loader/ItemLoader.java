@@ -3,10 +3,10 @@ package ru.itaros.chemlab.loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.items.HiVolumeLiquidCellEmpty;
-import ru.itaros.chemlab.items.ImpregnatedLignocellulose;
-import ru.itaros.chemlab.items.LignocelluloseFlakes;
+import ru.itaros.chemlab.items.ImpregnatedWoodFibers;
+import ru.itaros.chemlab.items.WoodFiberFlakes;
 import ru.itaros.chemlab.items.Programmer;
-import ru.itaros.chemlab.items.PureLignocelluloseFlakes;
+import ru.itaros.chemlab.items.PureWoodFiberFlakes;
 import ru.itaros.chemlab.items.WoodchipClump;
 import ru.itaros.chemlab.items.Woodchips;
 import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
@@ -20,9 +20,9 @@ public class ItemLoader {
 	public static Woodchips woodchips;
 	public static WoodchipClump woodchipclump;
 	
-	public static LignocelluloseFlakes lignocelluloseflakes;
-	public static PureLignocelluloseFlakes purelignocelluloseflakes;
-	public static ImpregnatedLignocellulose impregnatedlignocelluloseflakes;
+	public static WoodFiberFlakes lignocelluloseflakes;
+	public static PureWoodFiberFlakes purelignocelluloseflakes;
+	public static ImpregnatedWoodFibers impregnatedlignocelluloseflakes;
 	
 	
 	public static void loadItems(){
@@ -36,13 +36,13 @@ public class ItemLoader {
 		woodchipclump = new WoodchipClump();
 		GameRegistry.registerItem(woodchipclump, woodchipclump.getUnlocalizedName());	
 		
-		lignocelluloseflakes = new LignocelluloseFlakes();
+		lignocelluloseflakes = new WoodFiberFlakes();
 		GameRegistry.registerItem(lignocelluloseflakes,lignocelluloseflakes.getUnlocalizedName());	
 		
-		purelignocelluloseflakes = new PureLignocelluloseFlakes();
+		purelignocelluloseflakes = new PureWoodFiberFlakes();
 		GameRegistry.registerItem(purelignocelluloseflakes,purelignocelluloseflakes.getUnlocalizedName());	
 		
-		impregnatedlignocelluloseflakes = new ImpregnatedLignocellulose();
+		impregnatedlignocelluloseflakes = new ImpregnatedWoodFibers();
 		GameRegistry.registerItem(impregnatedlignocelluloseflakes,impregnatedlignocelluloseflakes.getUnlocalizedName());	
 				
 		

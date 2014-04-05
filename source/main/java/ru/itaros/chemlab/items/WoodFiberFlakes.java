@@ -3,9 +3,9 @@ package ru.itaros.chemlab.items;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import net.minecraft.item.Item;
 
-public class LignocelluloseFlakes extends Item {
+public class WoodFiberFlakes extends Item {
 
-	public LignocelluloseFlakes(){
+	public WoodFiberFlakes(){
 		super();
 		this.setUnlocalizedName("chemlab:"+getClass().getSimpleName());
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());

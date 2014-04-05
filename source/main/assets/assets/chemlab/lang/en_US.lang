@@ -10,9 +10,9 @@ tile.chemlab:machineimpregnator.name=High Pressure Impregnation Chamber
 
 item.chemlab:Woodchips.name=Woodchips
 item.chemlab:WoodchipClump.name=Woodchip Clumps
-item.chemlab:LignocelluloseFlakes.name=Lignocellulose Flakes
-item.chemlab:PureLignocelluloseFlakes.name=Pure Lignocellulose Flakes
-item.chemlab:ImpregnatedLignocellulose.name=Impregnated Lignocellulose
+item.chemlab:WoodFiberFlakes.name=Wood Fiber Flakes
+item.chemlab:PureWoodFiberFlakes.name=Pure Wood Fiber Flakes
+item.chemlab:ImpregnatedWoodFibers.name=Impregnated Wood Fibers
 
 item.chemlab:hvlc-empty.name=Empty Hi-Volume Liquid Cell
 item.chemlab:hvlc-water-natural.name=Water Hi-Volume Liquid Cell

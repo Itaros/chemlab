@@ -3,8 +3,8 @@ package ru.itaros.chemlab.items;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import net.minecraft.item.Item;
 
-public class ImpregnatedLignocellulose extends Item {
-	public ImpregnatedLignocellulose(){
+public class ImpregnatedWoodFibers extends Item {
+	public ImpregnatedWoodFibers(){
 		super();
 		this.setUnlocalizedName("chemlab:"+getClass().getSimpleName());
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
