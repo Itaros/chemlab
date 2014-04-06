@@ -15,11 +15,13 @@ public class WoodChainRecipes {
 	public static RecipesCollection washerRecipes;
 	public static RecipesCollection impregnatorRecipes;
 	public static RecipesCollection pressRecipes;
+	public static RecipesCollection steamboilerRecipes;
 	
 	
 	public static void load(){
 		//PRECONFIG
 		HOEFluid water = HOEFluidLoader.water_natural;
+		HOEFluid steam_pressurized = HOEFluidLoader.steam_pressurized;
 		
 		//======BIOGRINDER======
 		//FCR 1 (LOGS -> WOODCHIPS)
@@ -79,6 +81,16 @@ public class WoodChainRecipes {
 		//Collection
 		pressRecipes = new RecipesCollection(fcr6);
 		pressRecipes.register();			
+		
+		//======Steam Boiler======
+		//FCR 7 (WATER->PRESSURIZED STEAM)
+		name = "chemlab.steamboiler[water->steam-pressurized]";
+		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
+		outcoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(steam_pressurized))};
+		FixedConversionRecipe fcr7 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		steamboilerRecipes = new RecipesCollection(fcr7);
+		steamboilerRecipes.register();
+		
 		
 		
 	}

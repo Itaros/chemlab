@@ -1,11 +1,7 @@
 package ru.itaros.chemlab.loader;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import ru.itaros.chemlab.blocks.machines.Biogrinder;
-import ru.itaros.chemlab.blocks.machines.CentrifugalExtractor;
-import ru.itaros.chemlab.blocks.machines.Impregnator;
-import ru.itaros.chemlab.blocks.machines.Press;
-import ru.itaros.chemlab.blocks.machines.Washer;
+import ru.itaros.chemlab.blocks.machines.*;
 
 public class BlockLoader {
 	
@@ -14,6 +10,7 @@ public class BlockLoader {
 	public static Washer washer;
 	public static Impregnator impregnator;
 	public static Press press;
+	public static SteamBoiler steamboiler;
 	
 	
 	public static void loadBlocks(){
@@ -31,7 +28,9 @@ public class BlockLoader {
 			
 		press = new Press();
 		GameRegistry.registerBlock(press ,press.getUnlocalizedNameRaw());
-					
+			
+		steamboiler = new SteamBoiler();
+		GameRegistry.registerBlock(steamboiler,steamboiler.getUnlocalizedNameRaw());
 		
 	}
 }

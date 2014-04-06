@@ -1,10 +1,6 @@
 package ru.itaros.chemlab.loader;
 
-import ru.itaros.chemlab.client.ui.BiogrinderContainer;
-import ru.itaros.chemlab.client.ui.CentrifugalExtractorContainer;
-import ru.itaros.chemlab.client.ui.ImpregnatorContainer;
-import ru.itaros.chemlab.client.ui.PressContainer;
-import ru.itaros.chemlab.client.ui.WasherContainer;
+import ru.itaros.chemlab.client.ui.*;
 import ru.itaros.chemlab.client.ui.common.GUIHandler;
 
 public class GUILoader {
@@ -15,7 +11,8 @@ public class GUILoader {
 				CentrifugalExtractorContainer.class,
 				WasherContainer.class,
 				ImpregnatorContainer.class,
-				PressContainer.class
+				PressContainer.class,
+				SteamBoilerContainer.class
 				);
 	}
 	

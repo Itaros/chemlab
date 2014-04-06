@@ -1,16 +1,8 @@
 package ru.itaros.chemlab.loader.tileentity;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import ru.itaros.chemlab.hoe.BiogrinderIO;
-import ru.itaros.chemlab.hoe.CentrifugalExtractorIO;
-import ru.itaros.chemlab.hoe.ImpregnatorIO;
-import ru.itaros.chemlab.hoe.PressIO;
-import ru.itaros.chemlab.hoe.WasherIO;
-import ru.itaros.chemlab.minecraft.tileentity.BiogrinderTileEntity;
-import ru.itaros.chemlab.minecraft.tileentity.CentrifugalExtractorTileEntity;
-import ru.itaros.chemlab.minecraft.tileentity.ImpregnatorTileEntity;
-import ru.itaros.chemlab.minecraft.tileentity.PressTileEntity;
-import ru.itaros.chemlab.minecraft.tileentity.WasherTileEntity;
+import ru.itaros.chemlab.hoe.*;
+import ru.itaros.chemlab.minecraft.tileentity.*;
 import ru.itaros.toolkit.hoe.io.IOCollectionHelper;
 
 public class TileEntityLoader {
@@ -21,7 +13,8 @@ public class TileEntityLoader {
     			new CentrifugalExtractorIO(),
     			new WasherIO(),
     			new ImpregnatorIO(),
-    			new PressIO()
+    			new PressIO(),
+    			new SteamBoilerIO()
     			);
 		iocollection.registerInHOE();
 		
@@ -32,6 +25,7 @@ public class TileEntityLoader {
 		GameRegistry.registerTileEntity(WasherTileEntity.class, WasherTileEntity.class.getName());
 		GameRegistry.registerTileEntity(ImpregnatorTileEntity.class, ImpregnatorTileEntity.class.getName());
 		GameRegistry.registerTileEntity(PressTileEntity.class, PressTileEntity.class.getName());
+		GameRegistry.registerTileEntity(SteamBoilerTileEntity.class, SteamBoilerTileEntity.class.getName());
 		
 		return iocollection;
 	}

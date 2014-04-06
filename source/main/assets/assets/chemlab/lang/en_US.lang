@@ -7,6 +7,7 @@ tile.chemlab:machinecentrifugalextractor.name=Centrifugal Extractor
 tile.chemlab:machinewasher.name=Industrial Washer
 tile.chemlab:machineimpregnator.name=High Pressure Impregnation Chamber
 tile.chemlab:machinepress.name=Industrial Press
+tile.chemlab:machinesteamboiler.name=Steam Boiler
 
 item.chemlab:Woodchips.name=Woodchips
 item.chemlab:WoodchipClump.name=Woodchip Clumps
@@ -18,3 +19,4 @@ item.chemlab:ImpregnatedWoodFibersPellet.name=Impregnated Wood Fibers Pellet
 item.chemlab:hvlc-empty.name=Empty Hi-Volume Liquid Cell
 item.chemlab:hvlc-water-natural.name=Water Hi-Volume Liquid Cell
 item.chemlab:hvlc-extractives-cellulo-high.name=Wood Extractives Hi-Volume Liquid Cell
+item.chemlab:hvlc-steam-pressurized.name=§cSteam§r Hi-Volume Liquid Cell
