@@ -8,6 +8,7 @@ tile.chemlab:machinewasher.name=Industrial Washer
 tile.chemlab:machineimpregnator.name=High Pressure Impregnation Chamber
 tile.chemlab:machinepress.name=Industrial Press
 tile.chemlab:machinesteamboiler.name=Steam Boiler
+tile.chemlab:machinesteamexplosionunit.name=Steam Explosion Unit
 
 item.chemlab:Woodchips.name=Woodchips
 item.chemlab:WoodchipClump.name=Woodchip Clumps
@@ -15,8 +16,12 @@ item.chemlab:WoodFiberFlakes.name=Wood Fiber Flakes
 item.chemlab:PureWoodFiberFlakes.name=Pure Wood Fiber Flakes
 item.chemlab:ImpregnatedWoodFibers.name=Impregnated Wood Fibers
 item.chemlab:ImpregnatedWoodFibersPellet.name=Impregnated Wood Fibers Pellet
+item.chemlab:ExplodedWoodFibers.name=Exploded Wood Fibers
+item.chemlab:WashedLignocellulose.name=Washed Lignocellulose
 
 item.chemlab:hvlc-empty.name=Empty Hi-Volume Liquid Cell
 item.chemlab:hvlc-water-natural.name=Water Hi-Volume Liquid Cell
 item.chemlab:hvlc-extractives-cellulo-high.name=Wood Extractives Hi-Volume Liquid Cell
 item.chemlab:hvlc-steam-pressurized.name=§cSteam§r Hi-Volume Liquid Cell
+item.chemlab:hvlc-polyose-proteined.name=Polyose Hi-Volume Liquid Cell
+item.chemlab:hvlc-sodiumhydroxide-solution.name=NaOH Solution Hi-Volume Liquid Cell

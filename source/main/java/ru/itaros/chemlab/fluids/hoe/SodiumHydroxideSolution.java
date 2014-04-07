@@ -2,18 +2,17 @@ package ru.itaros.chemlab.fluids.hoe;
 
 import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
 
-public class PressurizedSteam extends HOEFluid {
+public class SodiumHydroxideSolution extends HOEFluid {
 
-	
-	//Item should use getItemDisplayName for coloring
 	@Override
 	public String getUnlocalizedName() {
-		return "chemlab:steam-pressurized";
+		return "chemlab:sodiumhydroxide-solution";
 	}
 
 	@Override
 	public int getColor() {
-		return 0xFFFFFF;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

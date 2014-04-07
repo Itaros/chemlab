@@ -16,12 +16,15 @@ public class WoodChainRecipes {
 	public static RecipesCollection impregnatorRecipes;
 	public static RecipesCollection pressRecipes;
 	public static RecipesCollection steamboilerRecipes;
+	public static RecipesCollection steamexplosionunitRecipes;
 	
 	
 	public static void load(){
 		//PRECONFIG
 		HOEFluid water = HOEFluidLoader.water_natural;
 		HOEFluid steam_pressurized = HOEFluidLoader.steam_pressurized;
+		HOEFluid naoh = HOEFluidLoader.sodiumhydroxide_solution;
+
 		
 		//======BIOGRINDER======
 		//FCR 1 (LOGS -> WOODCHIPS)
@@ -57,9 +60,15 @@ public class WoodChainRecipes {
 		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(water)),new ItemStack(ItemLoader.lignocelluloseflakes)};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.purelignocelluloseflakes),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.cellulosal_extractives_high))};
 		FixedConversionRecipe fcr4 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		//FCR 4-1 (EXPLODED WOOD FIBERS + NaOH SOL -> WASHED LIGNOCELLULOSE + POLYOSE WARET SOLUTION)
+		//TODO: Make diluted extractives
+		name = "chemlab.washer.[explwoddfibr+naohs->washdlgnclls+polws]";
+		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(naoh)),new ItemStack(ItemLoader.explodedwoodfibers)};
+		outcoming = new ItemStack[]{new ItemStack(ItemLoader.washedlignocellulose),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.polyose_proteined_solution))};
+		FixedConversionRecipe fcr4_1 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
 		//Collection
-		washerRecipes = new RecipesCollection(fcr4);
-		washerRecipes.register();
+		washerRecipes = new RecipesCollection(fcr4,fcr4_1);
+		washerRecipes.register();		
 		
 		//======Impregnator======
 		//FCR 5 (WATER+PURE LIGNOCELLULOSE->IMPREGNATED LIGNOCELLULOSE+EMPTY CELL)
@@ -91,6 +100,14 @@ public class WoodChainRecipes {
 		steamboilerRecipes = new RecipesCollection(fcr7);
 		steamboilerRecipes.register();
 		
+		//======Steam Explosion Unit======
+		//FCR 8 (PRESSURIZED STEAM+IMPREGNATED LIGNOCELLULOSE PELLETS->EXPLODED WOOD FIBERS+EMPTY CELL)
+		name ="chemlab.steamexplosionunit[steam-pressurized+impregnatedlignocellulosepellet->explodedwoodfibers+emptycell]";
+		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(steam_pressurized)),new ItemStack(ItemLoader.impregnatedwoodfiberspellet)};
+		outcoming = new ItemStack[]{new ItemStack(ItemLoader.explodedwoodfibers),new ItemStack(ItemLoader.emptyhvlc)};
+		FixedConversionRecipe fcr8 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		steamexplosionunitRecipes = new RecipesCollection(fcr8);
+		steamexplosionunitRecipes.register();		
 		
 		
 	}

@@ -11,6 +11,7 @@ public class BlockLoader {
 	public static Impregnator impregnator;
 	public static Press press;
 	public static SteamBoiler steamboiler;
+	public static SteamExplosionUnit steamexplosionunit;
 	
 	
 	public static void loadBlocks(){
@@ -31,6 +32,10 @@ public class BlockLoader {
 			
 		steamboiler = new SteamBoiler();
 		GameRegistry.registerBlock(steamboiler,steamboiler.getUnlocalizedNameRaw());
+		
+		steamexplosionunit = new SteamExplosionUnit();
+		GameRegistry.registerBlock(steamexplosionunit,steamexplosionunit.getUnlocalizedNameRaw());
+		
 		
 	}
 }

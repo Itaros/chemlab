@@ -14,7 +14,8 @@ public class TileEntityLoader {
     			new WasherIO(),
     			new ImpregnatorIO(),
     			new PressIO(),
-    			new SteamBoilerIO()
+    			new SteamBoilerIO(),
+    			new SteamExplosionUnitIO()
     			);
 		iocollection.registerInHOE();
 		
@@ -26,6 +27,7 @@ public class TileEntityLoader {
 		GameRegistry.registerTileEntity(ImpregnatorTileEntity.class, ImpregnatorTileEntity.class.getName());
 		GameRegistry.registerTileEntity(PressTileEntity.class, PressTileEntity.class.getName());
 		GameRegistry.registerTileEntity(SteamBoilerTileEntity.class, SteamBoilerTileEntity.class.getName());
+		GameRegistry.registerTileEntity(SteamExplosionUnitTileEntity.class, SteamExplosionUnitTileEntity.class.getName());
 		
 		return iocollection;
 	}

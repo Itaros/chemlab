@@ -12,7 +12,8 @@ public class GUILoader {
 				WasherContainer.class,
 				ImpregnatorContainer.class,
 				PressContainer.class,
-				SteamBoilerContainer.class
+				SteamBoilerContainer.class,
+				SteamExplosionUnitContainer.class
 				);
 	}
 	
