@@ -47,32 +47,4 @@ public class RecipesCollection {
 		return recipes.length;
 	}
 	
-	public Recipe findIncomingPattern(Item[] items) {
-		Recipe result=null;
-		for(Recipe r : recipes){
-			boolean isValid=true;
-			Item[] stricts = r.getIncomingStricttypes();
-			//Starting aligned search
-			for(Item iC:items){
-				boolean isIterationPassed=false;
-				for(Item sC:stricts){
-					if(iC.getUnlocalizedName().equals(sC.getUnlocalizedName())){
-						isIterationPassed=true;
-						return r;//THIS IS A TOTAL SHIT I DONT FUCKING KNOW HOW THAT WORKS NOW ANYWAYS
-					}
-					//if(!stricts[x].getUnlocalizedName().equals(items[x].getUnlocalizedName())){
-					//	isValid=false;break;
-					//}
-				}
-				
-				if(isIterationPassed==false){
-					isValid=false;
-					break;
-				}
-				
-			}
-			if(isValid){return r;}
-		}
-		return result;
-	}
 }

@@ -22,6 +22,15 @@ public class HOEMachines implements IHOEJob {
 		}
 	}
 
+	/*
+	 * Injects precreated custom data. Usefull for 'special' machines
+	 */
+	public void injectCustomData(HOEMachineData data){
+		machines.add(data);
+	}
+	/*
+	 * Creates and injects basic HOEMachineData
+	 */
 	public HOEMachineData generateMachineData() {
 		HOEMachineData data = new HOEMachineData();
 		machines.add(data);

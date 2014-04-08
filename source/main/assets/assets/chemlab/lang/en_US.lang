@@ -9,6 +9,12 @@ tile.chemlab:machineimpregnator.name=High Pressure Impregnation Chamber
 tile.chemlab:machinepress.name=Industrial Press
 tile.chemlab:machinesteamboiler.name=Steam Boiler
 tile.chemlab:machinesteamexplosionunit.name=Steam Explosion Unit
+tile.chemlab:machinecrusher.name=Crusher Unit
+tile.chemlab:machinediaphelectr.name=Diaphragmal Electrolyzer
+tile.chemlab:machinefurnace.name=Electric Hi-Temperature Furnace
+
+tile.chemlab:ore.halite.name=Halite
+tile.chemlab:ore.platinum.name=Native Platinum Ore
 
 item.chemlab:Woodchips.name=Woodchips
 item.chemlab:WoodchipClump.name=Woodchip Clumps
@@ -22,6 +28,27 @@ item.chemlab:ImpregnatedLignocellulose.name=Impregnated Lignocellulose
 item.chemlab:PressedLignocellulose.name=Pressed Lignocellulose Pellet
 item.chemlab:DecomposedLignocellulose.name=Decomposed Lignocellulose
 
+item.chemlab:CrushedOre-oreIron.name=Crushed Low-grade Iron Ore
+item.chemlab:CrushedOre-oreGold.name=Crushed Low-grade Gold Ore
+item.chemlab:CrushedOre-oreCoal.name=Crushed Coal Ore
+item.chemlab:CrushedOre-orePlatinum.name=Crushed Native Platinum Ore
+item.chemlab:CrushedOre-oreSerpentineAsbestos.name=Crushed White Asbestos
+item.chemlab:CrushedOre-oreAmphiboleAsbestos.name=Crushed Amphibole Asbestos
+
+item.chemlab:asbestos-diaphragm.name=White Asbestos Diaphragm
+item.chemlab:graphite_anode.name=Graphite Anode
+
+item.chemlab:dust.sand.name=Sand Dust
+item.chemlab:dust.stone.name=Stone Dust
+item.chemlab:dust.gold.name=Gold Dust
+item.chemlab:dust.platinum.name=Platinum Dust
+
+tile.chemlab:asbestosmineral.Crocidolite.name=Crocidolite Ore
+tile.chemlab:asbestosmineral.Tremolite.name=Tremolite Ore
+tile.chemlab:asbestosmineral.Anthophyllite.name=Anthophyllite Ore
+tile.chemlab:asbestosmineral.Actinolite.name=Actinolite Ore
+tile.chemlab:asbestosmineral.Serpentinite.name=Serpentite Ore
+
 item.chemlab:hvlc-empty.name=Empty Hi-Volume Liquid Cell
 item.chemlab:hvlc-water-natural.name=Water Hi-Volume Liquid Cell
 item.chemlab:hvlc-extractives-cellulo-high.name=Wood Extractives Hi-Volume Liquid Cell
@@ -30,3 +57,32 @@ item.chemlab:hvlc-polyose-proteined.name=Polyose Hi-Volume Liquid Cell
 item.chemlab:hvlc-sodiumhydroxide-solution.name=NaOH Solution Hi-Volume Liquid Cell
 item.chemlab:hvlc-cellulose-wet.name=Wet Cellulose Hi-Volume Liquid Cell
 item.chemlab:hvlc-lignin-wet.name=Wet Lignin Hi-Volume Liquid Cell
+item.chemlab:hvlc-nacl-solution.name=NaCl Solution Hi-Volume Liquid Cell
+item.chemlab:hvlc-h2-gas.name=Hydrogene Hi-Volume Liquid Cell
+item.chemlab:hvlc-cl2-gas.name=Chlorine Hi-Volume Liquid Cell
+
+recipe.crusher.oreIron.name=Crush Native Iron Cluster Ore
+recipe.crusher.oreGold.name=Crush Native Gold Cluster Ore
+recipe.crusher.oreCoal.name=Crush Coal Ore
+recipe.crusher.orePlatinum.name=Crush Native Platinum Ore
+recipe.crusher.oreSerpentineAsbestos.name=Crush Serpentine Asbestos Ore
+recipe.crusher.oreAmphiboleAsbestos.name=Crush Amphibole Asbestos Ore
+recipe.steamexplunit.decomplignoellulose.name=Decompose Lignocellulose Pellet
+recipe.steamexplunit.explodedwood.name=Decompose Woodfibers Pellet
+recipe.steamboiler.steam.name=Boil Water
+recipe.press.pressedlignocelluloset.name=Make Pellet from Lignocellulose
+recipe.press.fiberpellet.name=Make Pellet from Wood Fibers
+recipe.impregnator.lignocellulose.name=Impregnate Lignocellulose
+recipe.impregnator.woodfibers.name=Impregnate Woodfibers
+recipe.washer.halite.name=Dissolve Halite
+recipe.washer.proteined.name=Extract Proteins and Polyoses
+recipe.washer.lignocellulose.name=Wash Wood Fibers
+recipe.centrext.ligninocellulose.name=Extract Lignin and Cellulose
+recipe.centrext.extractives.name=Extract Wood Extractives
+recipe.biogrinder.crushchips.name=Cut Woodchips
+recipe.biogrinder.crushlogs.name=Grind Logs
+recipe.diaelectr.naoh.name=Electrolyse NaCl
+recipe.centrext.crushedgold.name=Separate Gold from Stone
+
+
+

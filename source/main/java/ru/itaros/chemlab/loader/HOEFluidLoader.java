@@ -1,6 +1,5 @@
 package ru.itaros.chemlab.loader;
 
-import ru.itaros.chemlab.fluids.hoe.CellulosalExtractives;
 import ru.itaros.chemlab.fluids.hoe.*;
 import ru.itaros.hoe.registries.HOEFluidRegistry;
 import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
@@ -16,6 +15,12 @@ public class HOEFluidLoader {
 	public static WetLignin wet_lignin;
 	public static WetCellulose wet_cellulose;
 	
+	public static NaClSolution nacl_solution;
+	public static ChlorineGas cl2_gas;
+	public static HydrogenGas h2_gas;
+	
+	public static Air air;
+	public static AirCompressed air_compressed;
 	
 	public static void load(){
 		//TODO: should be API interface
@@ -43,6 +48,25 @@ public class HOEFluidLoader {
 		registry.register(wet_cellulose);
 				
 				
+		nacl_solution = new NaClSolution();
+		registry.register(nacl_solution);
+		
+		//naoh_solution = new NaOHSolution();
+		//registry.register(naoh_solution);
+		
+		cl2_gas = new ChlorineGas();
+		registry.register(cl2_gas);
+		
+		h2_gas = new HydrogenGas();
+		registry.register(h2_gas);
 				
+		
+		air = new Air();
+		registry.register(air);
+		air_compressed = new AirCompressed();
+		registry.register(air_compressed);
+		
+		
+		
 	}
 }

@@ -1,8 +1,10 @@
 package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes;
 
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public abstract class Recipe {
 
@@ -17,8 +19,8 @@ public abstract class Recipe {
 	public abstract int getIncomingSlots();
 	public abstract int getOutcomingSlots();
 	
-	public abstract Item[] getIncomingStricttypes();
-	public abstract Item[] getOutcomingStricttypes();
+	public abstract ItemStack[] getIncomingStricttypes();
+	public abstract ItemStack[] getOutcomingStricttypes();
 	
 	
 	//TODO: HOE-style exception
@@ -37,5 +39,19 @@ public abstract class Recipe {
 	public abstract void consumeResources(HOEMachineData hoeMachineData);
 
 	public abstract void incrementProduction(HOEMachineData hoeMachineData);
+	
+	
+	private String unlocalizedName="";
+	public Recipe setUnlocalizedName(String name){
+		unlocalizedName = "recipe."+name;
+		return this;
+	}
+	public String getLocalizedName(){
+		if(unlocalizedName==""){
+			return "error.notset.name";
+		}
+		String r = LanguageRegistry.instance().getStringLocalization(unlocalizedName+".name");
+		if(r==""){return unlocalizedName;}else{return r;}
+	}
 	
 }

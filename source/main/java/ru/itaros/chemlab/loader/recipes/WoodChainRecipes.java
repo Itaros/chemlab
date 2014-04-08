@@ -1,8 +1,12 @@
 package ru.itaros.chemlab.loader.recipes;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
+import ru.itaros.chemlab.items.ore.Dust;
+import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
@@ -32,11 +36,13 @@ public class WoodChainRecipes {
 		ItemStack[] incoming = new ItemStack[]{new ItemStack(Block.getBlockFromName("log2"))};
 		ItemStack[] outcoming = new ItemStack[]{new ItemStack(ItemLoader.woodchips)};
 		FixedConversionRecipe fcr1 = new FixedConversionRecipe(20,100,incoming,outcoming,name);
+		fcr1.setUnlocalizedName("biogrinder.crushlogs");
 		//FCR 2 (WOODCHIPS -> WOODCHIPCLUMP)
 		name = "chemlab.biogrinder.[woodchips->woodchipclump]";
 		incoming = new ItemStack[]{new ItemStack(ItemLoader.woodchips)};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.woodchipclump)};
 		FixedConversionRecipe fcr2 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		fcr2.setUnlocalizedName("biogrinder.crushchips");
 		//Collection
 		biogrinderRecipes = new RecipesCollection(fcr1,fcr2);
 		biogrinderRecipes.register();
@@ -48,13 +54,18 @@ public class WoodChainRecipes {
 		incoming = new ItemStack[]{new ItemStack(ItemLoader.woodchipclump),new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.lignocelluloseflakes),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.cellulosal_extractives_high))};
 		FixedConversionRecipe fcr3 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		fcr3.setUnlocalizedName("centrext.extractives");
 		//FCR 3-1 (WATERCELLS+)
 		name = "chemlab.centrextractor.[emptycell+decomplgnclls->wlnh+wclls]";
 		incoming = new ItemStack[]{new ItemStack(ItemLoader.emptyhvlc),new ItemStack(ItemLoader.decomposedlignocellulose),new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
 		outcoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.wet_cellulose)),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.wet_lignin))};
 		FixedConversionRecipe fcr3_1 = new FixedConversionRecipe(20,100,incoming,outcoming,name);			
+		fcr3_1.setUnlocalizedName("centrext.ligninocellulose");
+		//FCR 3-2 (CRUSHED NATIVE GOLD->STONE DUST+GOLD DUST)
+		FixedConversionRecipe fcr3_2 = getRecipeForNativeCrushedGold();
+		FixedConversionRecipe fcr3_3 = getRecipeForNativeCrushedPyrite();
 		//Collection
-		centrifugalExtractorRecipes = new RecipesCollection(fcr3,fcr3_1);
+		centrifugalExtractorRecipes = new RecipesCollection(fcr3,fcr3_1,fcr3_2,fcr3_3);
 		centrifugalExtractorRecipes.register();
 		
 		
@@ -65,14 +76,22 @@ public class WoodChainRecipes {
 		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(water)),new ItemStack(ItemLoader.lignocelluloseflakes)};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.purelignocelluloseflakes),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.cellulosal_extractives_high))};
 		FixedConversionRecipe fcr4 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		fcr4.setUnlocalizedName("washer.lignocellulose");
 		//FCR 4-1 (EXPLODED WOOD FIBERS + NaOH SOL -> WASHED LIGNOCELLULOSE + POLYOSE WARET SOLUTION)
 		//TODO: Make diluted extractives
 		name = "chemlab.washer.[explwoddfibr+naohs->washdlgnclls+polws]";
 		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(naoh)),new ItemStack(ItemLoader.explodedwoodfibers)};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.washedlignocellulose),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.polyose_proteined_solution))};
 		FixedConversionRecipe fcr4_1 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		fcr4_1.setUnlocalizedName("washer.proteined");
+		//FCR 4-2 (Halite washing)
+		incoming = new ItemStack[]{new ItemStack(BlockLoader.oreHalite),new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
+		outcoming = new ItemStack[]{OreDictionary.getOres("dustSand").get(0).copy(),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.nacl_solution))};
+		FixedConversionRecipe fcr4_2 = new FixedConversionRecipe(20,100,incoming,outcoming);		
+		fcr4_2.setUnlocalizedName("washer.halite");		
+		
 		//Collection
-		washerRecipes = new RecipesCollection(fcr4,fcr4_1);
+		washerRecipes = new RecipesCollection(fcr4,fcr4_1,fcr4_2);
 		washerRecipes.register();		
 		
 		//======Impregnator======
@@ -81,12 +100,14 @@ public class WoodChainRecipes {
 		incoming = new ItemStack[]{new ItemStack(ItemLoader.purelignocelluloseflakes),new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.impregnatedlignocelluloseflakes),new ItemStack(ItemLoader.emptyhvlc)};
 		FixedConversionRecipe fcr5 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		fcr5.setUnlocalizedName("impregnator.woodfibers");		
 		//FCR 5-1 (WATER+PURE LIGNOCELLULOSE->IMPREGNATED LIGNOCELLULOSE+EMPTY CELL)
 		name = "chemlab.impregnator.[wshdlgnclc+naoh->imprglngc+emptycell]";
 		incoming = new ItemStack[]{new ItemStack(ItemLoader.washedlignocellulose),new ItemStack(HiVolumeLiquidCell.getByFluid(naoh))};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.impregnatedlignocellulose),new ItemStack(ItemLoader.emptyhvlc)};
 		FixedConversionRecipe fcr5_1 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
-				
+		fcr5_1.setUnlocalizedName("impregnator.lignocellulose");
+		
 		//Collection
 		impregnatorRecipes = new RecipesCollection(fcr5,fcr5_1);
 		impregnatorRecipes.register();		
@@ -98,11 +119,13 @@ public class WoodChainRecipes {
 		incoming = new ItemStack[]{new ItemStack(ItemLoader.impregnatedlignocelluloseflakes)};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.impregnatedwoodfiberspellet)};
 		FixedConversionRecipe fcr6 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		fcr6.setUnlocalizedName("press.fiberpellet");
 		//FCR 6-1 (IMPREGNATED LIGNOCELLULOSE->IMPREGNATED LIGNOCELLULOSE PELLETS)
 		name = "chemlab.press.[imprglngc->prsdlgncls]";
 		incoming = new ItemStack[]{new ItemStack(ItemLoader.impregnatedlignocellulose)};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.pressedlignocellulose)};
 		FixedConversionRecipe fcr6_1 = new FixedConversionRecipe(20,100,incoming,outcoming,name);			
+		fcr6_1.setUnlocalizedName("press.pressedlignocelluloset");
 		//Collection
 		pressRecipes = new RecipesCollection(fcr6,fcr6_1);
 		pressRecipes.register();			
@@ -113,6 +136,7 @@ public class WoodChainRecipes {
 		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
 		outcoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(steam_pressurized))};
 		FixedConversionRecipe fcr7 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		fcr7.setUnlocalizedName("steamboiler.steam");
 		//Collection
 		steamboilerRecipes = new RecipesCollection(fcr7);
 		steamboilerRecipes.register();
@@ -123,15 +147,54 @@ public class WoodChainRecipes {
 		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(steam_pressurized)),new ItemStack(ItemLoader.impregnatedwoodfiberspellet)};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.explodedwoodfibers),new ItemStack(ItemLoader.emptyhvlc)};
 		FixedConversionRecipe fcr8 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		fcr8.setUnlocalizedName("steamexplunit.explodedwood");
 		//FCR 8-1 (PRESSURIZED STEAM+PRESSED LIGNOCELLULOSE ->DECOMPOSED LIGNOCELLULOSE + EMPTY CELL)
 		name ="chemlab.steamexplosionunit[steam-pressurized+prsdlngcl->dcmpslgncls+empty_cell]";
 		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(steam_pressurized)),new ItemStack(ItemLoader.pressedlignocellulose)};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.decomposedlignocellulose),new ItemStack(ItemLoader.emptyhvlc)};
 		FixedConversionRecipe fcr8_1 = new FixedConversionRecipe(20,100,incoming,outcoming,name);				
+		fcr8_1.setUnlocalizedName("steamexplunit.decomplignoellulose");
 		//Collection
 		steamexplosionunitRecipes = new RecipesCollection(fcr8,fcr8_1);
 		steamexplosionunitRecipes.register();		
 		
 		
 	}
+
+
+	private static FixedConversionRecipe getRecipeForNativeCrushedGold() {
+		FixedConversionRecipe fcr;
+		
+		ItemStack goldDust = OreDictionary.getOres("dustGold").get(0).copy();
+		ItemStack stoneDust = OreDictionary.getOres("dustStone").get(0).copy();
+		
+		ItemStack[] i = new ItemStack[]{OreDictionary.getOres("crushedGold").get(0).copy()};
+		ItemStack[] o = new ItemStack[]{goldDust,stoneDust};
+		
+		//TODO: facility to validate FCRs before injection
+		
+		fcr = new FixedConversionRecipe(500, 10, i, o);
+		fcr.setUnlocalizedName("centrext.crushedgold");
+		
+		return fcr;
+	}
+	private static FixedConversionRecipe getRecipeForNativeCrushedPyrite() {
+		FixedConversionRecipe fcr;
+		
+		ItemStack pyriteDust = OreDictionary.getOres("dustPyrite").get(0).copy();
+		ItemStack stoneDust = OreDictionary.getOres("dustStone").get(0).copy();
+		
+		ItemStack[] i = new ItemStack[]{OreDictionary.getOres("crushedPyrite").get(0).copy()};
+		ItemStack[] o = new ItemStack[]{pyriteDust,stoneDust};
+		
+		//TODO: facility to validate FCRs before injection
+		
+		fcr = new FixedConversionRecipe(500, 10, i, o);
+		fcr.setUnlocalizedName("centrext.crushedpyrite");
+		
+		return fcr;
+	}	
+	
+	
+	
 }

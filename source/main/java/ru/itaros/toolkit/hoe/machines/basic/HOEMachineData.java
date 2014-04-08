@@ -26,8 +26,9 @@ public class HOEMachineData extends HOEData{
 	private int[] incoming_depot;
 	private int[] outcoming_depot;
 	
-	private Item[] incoming_stricttype;//HARDBIBNDED
-	private Item[] outcoming_stricttype;//HARDBIBNDED
+	private ItemStack[] incoming_stricttype;//HARDBIBNDED
+	private ItemStack[] outcoming_stricttype;//HARDBIBNDED	
+	
 	
 	private int power;
 	private int maxpower;
@@ -98,7 +99,9 @@ public class HOEMachineData extends HOEData{
 		return isConfigured;
 	}
 	
-	
+	/*
+	 * Reflection autocaster
+	 */
 	public HOEMachineData(HOEData parent){
 		this((HOEMachineData)parent);
 		//Reflection autocaster
@@ -135,8 +138,8 @@ public class HOEMachineData extends HOEData{
 	private void init(){
 		incoming_depot=new int[incoming_slots];
 		outcoming_depot=new int[outcoming_slots];
-		incoming_stricttype=new Item[incoming_slots];
-		outcoming_stricttype=new Item[outcoming_slots];
+		incoming_stricttype=new ItemStack[incoming_slots];
+		outcoming_stricttype=new ItemStack[outcoming_slots];
 	}
 
 	public HOEMachineIO getIO() {
@@ -235,8 +238,19 @@ public class HOEMachineData extends HOEData{
 		applyRecipeParametrics(recipe);
 		if(recipe!=null){isRecipeSet=true;}else{isRecipeSet=false;}
 	}
-	public static HOEMachineData generateFromNBT(NBTTagCompound nbt){
-		HOEMachineData data = new HOEMachineData();
+	public static HOEMachineData generateFromNBT(String refltype, NBTTagCompound nbt){
+		//HOEMachineData data = new HOEMachineData();
+		HOEMachineData data=null;
+		if(refltype==""){
+			data = new HOEMachineData();
+		}else{
+			try{
+				data = (HOEMachineData) Class.forName(refltype).getConstructor().newInstance();
+			}catch(Exception e){
+				System.err.println("REFL: "+refltype);
+				throw new RuntimeException(e);//TODO: Data lookup failure exception
+			}
+		}
 		data.readNBT(nbt);
 		return data;
 	}
@@ -247,13 +261,27 @@ public class HOEMachineData extends HOEData{
 	public boolean decrementResources() {
 		if(recipe==null){return false;}
 		//Here we check if it is possible to produce something with those available resources
-		if(recipe.checkResources(this)){
+		if(recipe.checkResources(this) && HOEDataStateCheck()){
 			recipe.consumeResources(this);
+			HOEDataUpdateState();
 			return true;//There are enough resources and run is completed
 		}else{
 			return false;//Not enough resources
 		}
 	}
+	/*
+	 * Override it to provide special requirements to run production process
+	 */
+	protected boolean HOEDataStateCheck(){
+		return true;
+	}
+	/*
+	 * Override it to provide requirements change after each production cycle
+	 */
+	protected void HOEDataUpdateState(){
+		;
+	}
+	
 	public boolean checkStorage() {
 		//Checking storage capabilities
 		if(recipe==null){return false;}//No storage if there is no recipe
@@ -264,9 +292,18 @@ public class HOEMachineData extends HOEData{
 		if(temp==null){return false;}
 		for(int x = 0; x < incoming_stricttype.length; x++){
 			if(incoming_stricttype[x]==null){continue;}
-			if(incoming_depot[x]<64){
-				if(incoming_stricttype[x].getUnlocalizedName().equals(temp.getItem().getUnlocalizedName())){
-					incoming_depot[x]+=temp.stackSize;
+			if(incoming_depot[x]<=temp.getMaxStackSize()){
+				Item originType=incoming_stricttype[x].getItem();
+				Item sourceType=temp.getItem();
+				int originMeta = incoming_stricttype[x].getItemDamage();
+				int sourceMeta = temp.getItemDamage();
+				if(originType==sourceType && originMeta==sourceMeta){
+				//if(incoming_stricttype[x].getUnlocalizedName().equals(temp.getItem().getUnlocalizedName())){
+					
+					int diff=temp.getMaxStackSize()-incoming_depot[x];
+					
+					incoming_depot[x]+=diff;
+					temp.stackSize-=diff;
 					return true;
 				}
 			}
@@ -277,9 +314,11 @@ public class HOEMachineData extends HOEData{
 	}	
 	public ItemStack pullProduct(ItemStack outbound_synchro) {
 		Item reqtype=null;
+		int reqmeta=0;
 		int max=64;
 		if(outbound_synchro!=null){
 			reqtype=outbound_synchro.getItem();
+			reqmeta=outbound_synchro.getItemDamage();
 			max = 64-outbound_synchro.stackSize;
 			if(max<=0){return outbound_synchro;}
 		}
@@ -289,11 +328,11 @@ public class HOEMachineData extends HOEData{
 			if(outcoming_depot[x]>0){
 				ItemStack product = outbound_synchro;
 				if(product==null){
-					product = new ItemStack(outcoming_stricttype[x],outcoming_depot[x]);
+					product = outcoming_stricttype[x].copy();product.stackSize=outcoming_depot[x];
 					outcoming_depot[x]-=product.stackSize;//Allowing RaceConditions!
 				}else{
 					
-					if(outcoming_stricttype[x]!=reqtype){continue;}//Do not try to shift physical form of items, lol
+					if((outcoming_stricttype[x].getItem()!=reqtype & outcoming_stricttype[x].getItemDamage()==reqmeta)){continue;}//Do not try to shift physical form of items, lol
 					
 					if(outcoming_depot[x]<=max){
 						max=outcoming_depot[x];
@@ -319,14 +358,16 @@ public class HOEMachineData extends HOEData{
 	//TODO: Pass originals to modify them for performance
 	public ItemStack getInboundRO() {
 		if(incoming_stricttype!=null && incoming_stricttype.length>0 && incoming_stricttype[0]!=null){
-			return new ItemStack(incoming_stricttype[0],incoming_depot[0]);
+			ItemStack rslt = incoming_stricttype[0].copy();rslt.stackSize=incoming_depot[0];
+			return rslt;
 		}else{
 			return null;
 		}
 	}
 	public ItemStack getOutboundRO() {
 		if(outcoming_stricttype!=null && outcoming_stricttype.length>0 && outcoming_stricttype[0]!=null){
-			return new ItemStack(outcoming_stricttype[0],outcoming_depot[0]);
+			ItemStack rslt = outcoming_stricttype[0].copy();rslt.stackSize=outcoming_depot[0];
+			return rslt;
 		}else{
 			return null;
 		}

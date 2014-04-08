@@ -65,7 +65,8 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 		NBTTagCompound nbt = host.getCompoundTag("hoemdata");
 		
 		//DUMMY: ASSUMING THIS IS A CLIENT
-		client=HOEMachineData.generateFromNBT(nbt);
+		String refltype=nbt.getString("refltype");
+		client=HOEMachineData.generateFromNBT(refltype,nbt);
 		
 
 	}	
@@ -74,6 +75,7 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 		NBTTagCompound nbt = new NBTTagCompound();
 		if(server!=null){
 			//HOE is alive and this is a server
+			nbt.setString("refltype", server.getClass().getName());
 			server.writeNBT(nbt);
 		}else if(client!=null){
 			//HOE is dead or this is a client
@@ -91,8 +93,8 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 	
 	private HOEMachineIO hoeio;
 	
-	private HOEMachineData server;
-	private HOEMachineData client;
+	protected HOEMachineData server;
+	protected HOEMachineData client;
 	
 	public HOEMachineData getClientData(){
 		return client;
@@ -104,7 +106,7 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 		hoeio = getSuperIO();
 		if(HOE.proxy instanceof HOEServer){
 			HOEMachines machines = ((HOEMachines)getLinker().getJob());
-			server=machines.generateMachineData();
+			server=acquareData(machines);
 			
 			
 			hoeio.configureData(server);
@@ -118,6 +120,9 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 		}
 	}
 	
+	protected HOEMachineData acquareData(HOEMachines machines){
+		return machines.generateMachineData();
+	}
 
 
 	//INVENTORY	
@@ -282,9 +287,12 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 		if(server!=null){
 			if(inbound_synchro!=null){
 				ItemStack temp = inbound_synchro;
-				inbound_synchro=null;
 				if(!server.pushResource(temp)){
 					//FAILED!
+				}else{
+					if(inbound_synchro.stackSize==0){
+						inbound_synchro=null;//Kill unused stack
+					}
 				}
 			}
 		}

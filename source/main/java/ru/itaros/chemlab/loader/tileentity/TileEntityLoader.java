@@ -15,7 +15,12 @@ public class TileEntityLoader {
     			new ImpregnatorIO(),
     			new PressIO(),
     			new SteamBoilerIO(),
-    			new SteamExplosionUnitIO()
+    			new SteamExplosionUnitIO(),
+    			new CrusherIO(),
+    			new DiaphragmalElectrolyzerIO(),
+    			new FurnaceIO(),
+    			new AirCollectorIO(),
+    			new FluidCompressorIO()
     			);
 		iocollection.registerInHOE();
 		
@@ -28,6 +33,12 @@ public class TileEntityLoader {
 		GameRegistry.registerTileEntity(PressTileEntity.class, PressTileEntity.class.getName());
 		GameRegistry.registerTileEntity(SteamBoilerTileEntity.class, SteamBoilerTileEntity.class.getName());
 		GameRegistry.registerTileEntity(SteamExplosionUnitTileEntity.class, SteamExplosionUnitTileEntity.class.getName());
+		GameRegistry.registerTileEntity(CrusherTileEntity.class, CrusherTileEntity.class.getName());
+		GameRegistry.registerTileEntity(DiaphragmalElectrolyzerTileEntity.class,DiaphragmalElectrolyzerTileEntity.class.getName());
+		GameRegistry.registerTileEntity(FurnaceTileEntity.class,FurnaceTileEntity.class.getName());
+		GameRegistry.registerTileEntity(AirCollectorTileEntity.class,AirCollectorTileEntity.class.getName());
+		GameRegistry.registerTileEntity(FluidCompressorTileEntity.class,FluidCompressorTileEntity.class.getName());
+		
 		
 		return iocollection;
 	}

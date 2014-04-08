@@ -6,11 +6,47 @@ import net.minecraft.item.ItemStack;
 
 public class FixedConversionRecipe extends Recipe {
 	
+	
+	public FixedConversionRecipe(
+			int timeReq,
+			int powerReq,
+			ItemStack input,
+			ItemStack output
+	){	
+		this(timeReq,powerReq,new ItemStack[]{input},new ItemStack[]{output});
+	}
+	
+	public FixedConversionRecipe(
+			int timeReq,
+			int powerReq,
+			ItemStack[] gridInput,
+			ItemStack[] gridOutput
+	){
+		this(timeReq,powerReq,gridInput,gridOutput,helperGenerateName(gridInput,gridOutput));
+	}
+	private static String helperGenerateName(
+			ItemStack[] in,
+			ItemStack[] out
+	){
+		//TODO: this "name" stuff should be internal id as int
+		String ins="";
+		for(ItemStack i:in){
+			ins+=i.getUnlocalizedName().hashCode()+",";
+		}
+		ins+="->";
+		for(ItemStack o:out){
+			ins+=o.getUnlocalizedName().hashCode()+",";
+		}		
+		
+		String s = "hoe:"+ins;
+		return s;
+	}
 	public FixedConversionRecipe
 	(
 			int timeReq,
 			int powerReq,
-			ItemStack[] gridInput,ItemStack[] gridOutput, String name
+			ItemStack[] gridInput,
+			ItemStack[] gridOutput, String name
 	){
 		super(name);
 		this.gridInput=gridInput;
@@ -36,24 +72,12 @@ public class FixedConversionRecipe extends Recipe {
 	}
 	
 	@Override
-	public Item[] getIncomingStricttypes() {
-		Item[] result = new Item[gridInput.length];
-		int x = -1;
-		for(ItemStack stack : gridInput){
-			x++;
-			result[x]=stack.getItem();
-		}
-		return result;
+	public ItemStack[] getIncomingStricttypes() {
+		return gridInput;
 	}
 	@Override
-	public Item[] getOutcomingStricttypes() {
-		Item[] result = new Item[gridOutput.length];
-		int x = -1;
-		for(ItemStack stack : gridOutput){
-			x++;
-			result[x]=stack.getItem();
-		}
-		return result;
+	public ItemStack[] getOutcomingStricttypes() {
+		return gridOutput;
 	}
 	public int getTicksRequared() {
 		return timeReq;

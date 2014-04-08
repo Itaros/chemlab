@@ -1,7 +1,25 @@
 package ru.itaros.chemlab.loader;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ru.itaros.chemlab.items.*;
+import ru.itaros.chemlab.items.ore.CrushedOre;
+import ru.itaros.chemlab.items.ore.Dust;
+import ru.itaros.chemlab.items.refactorable.DecomposedLignocellulose;
+import ru.itaros.chemlab.items.refactorable.ExplodedWoodFibers;
+import ru.itaros.chemlab.items.refactorable.ImpregnatedLignocellulose;
+import ru.itaros.chemlab.items.refactorable.ImpregnatedWoodFibers;
+import ru.itaros.chemlab.items.refactorable.ImpregnatedWoodFibersPellet;
+import ru.itaros.chemlab.items.refactorable.PressedLignocellulose;
+import ru.itaros.chemlab.items.refactorable.PureWoodFiberFlakes;
+import ru.itaros.chemlab.items.refactorable.WashedLignocellulose;
+import ru.itaros.chemlab.items.refactorable.WoodFiberFlakes;
+import ru.itaros.chemlab.items.refactorable.WoodchipClump;
+import ru.itaros.chemlab.items.refactorable.Woodchips;
 import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
 
 public class ItemLoader {
@@ -23,6 +41,8 @@ public class ItemLoader {
 	public static PressedLignocellulose pressedlignocellulose;
 	public static DecomposedLignocellulose decomposedlignocellulose;
 	
+	public static DegradableItem asbestos_diaphragm;
+	public static DegradableItem graphite_anode;
 	
 	public static void loadItems(){
 		programmer = new Programmer();
@@ -69,22 +89,104 @@ public class ItemLoader {
 		
 		
 		
-		
-		
 		loadAutoItems();
+		
+		asbestosDiahpragmRegistration();
+		electrodesRegistration();
 		
 	}
 
 	
-	private static void loadAutoItems() {
-		//This method is unsafe.
-		//Waiting for Player to fix FML skipper
+
+	private static void electrodesRegistration(){
+		graphite_anode = new DegradableItem("graphite_anode", 500);
+		GameRegistry.registerItem(graphite_anode,graphite_anode.getUnlocalizedName());
 		
-		hiVolumeLiquidCellAutoloader();
+		
+		
+		
+	}
+	
+	
+	private static void asbestosDiahpragmRegistration() {
+		asbestos_diaphragm=new DegradableItem("asbestos-diaphragm", 100);
+		GameRegistry.registerItem(asbestos_diaphragm,asbestos_diaphragm.getUnlocalizedName());
+		
+		GameRegistry.addShapedRecipe(new ItemStack(asbestos_diaphragm), 
+				"XXX",
+				"X0X",
+				"XXX",
+				'X',OreDictionary.getOres("crushedSerpentineAsbestos").get(0));
 		
 	}
 
 
+
+
+
+	private static void loadAutoItems() {
+		//This method is unsafe.
+		//Waiting for Player to fix FML skipper
+		
+		crushedOreAutoloader();
+		
+		dustsAutoloader();
+		
+		hiVolumeLiquidCellAutoloader();
+		
+		
+		
+	}
+	
+	
+
+	private static void dustsAutoloader(){
+		ArrayList<Dust> d = new ArrayList<Dust>();
+		
+		d.add(new Dust("sand",4));
+		d.add(new Dust("stone",-1));
+		
+		checkAndAddDust(d,"gold",-1);
+		checkAndAddDust(d,"platinum",-1);
+		checkAndAddDust(d,"pyrite",-1);
+		
+		for(Dust i:d){
+			GameRegistry.registerItem(i,i.getUnlocalizedName());
+			OreDictionary.registerOre(i.getOredictName(), i);
+		}
+	}
+	
+	private static void checkAndAddDust(List<Dust> l, String subname, int backcraft){
+		String dm = subname.substring(0, 1).toUpperCase() + subname.substring(1);
+		String dict = "dust"+dm;
+		
+		if(OreDictionary.getOres(dict).size()==0){
+			l.add(new Dust(subname,backcraft));
+		}
+		
+	}
+	
+	public static final String[] knownOres = {
+		//VANILLA
+		"oreIron",
+		"oreGold",
+		"oreCoal",
+		
+		//CHEMLAB
+		"oreSerpentineAsbestos",
+		"oreAmphiboleAsbestos",
+		"orePlatinum",
+		"orePyrite"
+	};	
+
+	private static void crushedOreAutoloader(){
+		for(String orename:knownOres){
+			CrushedOre crushed = new CrushedOre(orename);
+			GameRegistry.registerItem(crushed,crushed.getUnlocalizedName());
+			OreDictionary.registerOre(crushed.getDictNameAsCrushed(), crushed);
+		}
+	}
+	
 	private static void hiVolumeLiquidCellAutoloader() {
 		HOEFluid[] all = HOEFluid.getFluidRegistry().all();
 		for(HOEFluid f : all){

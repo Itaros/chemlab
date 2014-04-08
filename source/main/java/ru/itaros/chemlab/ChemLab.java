@@ -17,6 +17,7 @@ import ru.itaros.chemlab.network.IPacketCodecDescriptor;
 import ru.itaros.chemlab.network.NetworkChannel;
 import ru.itaros.chemlab.proxy.Proxy;
 import ru.itaros.chemlab.proxy.Server;
+import ru.itaros.chemlab.worldgen.WorldGenerator;
 import ru.itaros.toolkit.hoe.io.IOCollectionHelper;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
@@ -30,6 +31,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.FMLOutboundHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = ChemLab.MODID, version = ChemLab.VERSION, dependencies="required-after:hoelib")
@@ -78,7 +80,7 @@ public class ChemLab
     @EventHandler
     public void Init(FMLInitializationEvent event)
     {
-    	
+    	GameRegistry.registerWorldGenerator(new WorldGenerator(), 100);
     }
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)

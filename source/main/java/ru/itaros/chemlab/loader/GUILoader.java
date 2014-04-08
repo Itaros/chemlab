@@ -5,6 +5,7 @@ import ru.itaros.chemlab.client.ui.common.GUIHandler;
 
 public class GUILoader {
 	
+	@SuppressWarnings("unchecked")
 	public static void loadGUIs(){
 		GUIHandler.registerGUIs(
 				BiogrinderContainer.class,
@@ -13,7 +14,12 @@ public class GUILoader {
 				ImpregnatorContainer.class,
 				PressContainer.class,
 				SteamBoilerContainer.class,
-				SteamExplosionUnitContainer.class
+				SteamExplosionUnitContainer.class,
+				CrusherContainer.class,
+				DiaphragmalElectrolyzerContainer.class,
+				FurnaceContainer.class,
+				AirCollectorContainer.class,
+				FluidCompressorContainer.class
 				);
 	}
 	
