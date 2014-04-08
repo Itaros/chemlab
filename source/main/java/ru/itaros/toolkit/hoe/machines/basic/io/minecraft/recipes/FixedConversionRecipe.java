@@ -1,5 +1,6 @@
 package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes;
 
+import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -56,5 +57,42 @@ public class FixedConversionRecipe extends Recipe {
 	}
 	public int getTicksRequared() {
 		return timeReq;
+	}
+	
+	//Storage operations
+	@Override
+	public boolean checkStorage(HOEMachineData data) {
+		for(int i = 0; i<gridOutput.length;i++){
+			int gridOvershoot = gridOutput[i].stackSize;
+			int maxstack = gridOutput[i].getMaxStackSize();
+			int indexedAmount = data.getOutboundAmountByIndex(i);
+			if(indexedAmount+gridOvershoot>maxstack){return false;}
+		}
+		return true;
+	}
+	@Override
+	public boolean checkResources(HOEMachineData data) {
+		for(int i = 0; i<gridInput.length;i++){
+			int gridReq = gridInput[i].stackSize;
+			int indexedAmount = data.getInboundAmountByIndex(i);
+			if(indexedAmount-gridReq<0){
+				return false;
+			}
+		}
+		return true;
+	}
+	@Override
+	public void consumeResources(HOEMachineData data) {
+		for(int i = 0; i<gridInput.length;i++){
+			int gridReq = gridInput[i].stackSize;
+			 data.decrementInboundAmountByIndex(i,gridReq);
+		}
+	}
+	@Override
+	public void incrementProduction(HOEMachineData data) {
+		for(int i = 0; i<gridOutput.length;i++){
+			int gridSurp = gridOutput[i].stackSize;
+			 data.incrementOutboundAmountByIndex(i,gridSurp);
+		}
 	}
 }

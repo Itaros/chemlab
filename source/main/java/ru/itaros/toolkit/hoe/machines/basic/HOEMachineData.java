@@ -241,34 +241,23 @@ public class HOEMachineData extends HOEData{
 		return data;
 	}
 	public void incrementProduction() {
-		//Incrementing
-		for(int x = 0 ; x < outcoming_depot.length; x++){
-			//recipe.
-			outcoming_depot[x]+=1;
-		}
+		if(recipe==null){return;}
+		recipe.incrementProduction(this);
 	}
 	public boolean decrementResources() {
-		for(int x = 0 ; x < incoming_depot.length; x++){
-			if(incoming_depot[x]<=0){
-				return false;
-			}
-		}	
-		//Decrementing
-		for(int x = 0 ; x < incoming_depot.length; x++){
-			//recipe.
-			incoming_depot[x]+=-1;
-		}		
-		
-		return true;
+		if(recipe==null){return false;}
+		//Here we check if it is possible to produce something with those available resources
+		if(recipe.checkResources(this)){
+			recipe.consumeResources(this);
+			return true;//There are enough resources and run is completed
+		}else{
+			return false;//Not enough resources
+		}
 	}
 	public boolean checkStorage() {
 		//Checking storage capabilities
-		for(int x = 0 ; x < outcoming_depot.length; x++){
-			if(outcoming_depot[x]>64){
-				return false;
-			}
-		}
-		return true;
+		if(recipe==null){return false;}//No storage if there is no recipe
+		return recipe.checkStorage(this);
 	}
 
 	public boolean pushResource(ItemStack temp) {
@@ -355,6 +344,38 @@ public class HOEMachineData extends HOEData{
 		}else{
 			return "N/A";
 		}		
+	}
+	
+	//Storage
+	
+	public int getOutboundAmountByIndex(int index) {
+		if(index<outcoming_depot.length){
+			return outcoming_depot[index];
+		}else{
+			return 500;//INVALID INDEX TOCKEN
+		}
+	}
+	public int getInboundAmountByIndex(int index) {
+		if(index<incoming_depot.length){
+			return incoming_depot[index];
+		}else{
+			return -500;//INVALID INDEX TOCKEN
+		}		
+	}
+	public void decrementInboundAmountByIndex(int index, int amount) {
+		if(index<incoming_depot.length){
+			incoming_depot[index]-=amount;
+		}else{
+			//TODO: Exception?
+		}	
+	}
+	public void incrementOutboundAmountByIndex(int index, int amount) {
+		if(index<outcoming_depot.length){
+			outcoming_depot[index]+=amount;
+		}else{
+			//TODO: Exception?
+		}
+		
 	}	
 
 

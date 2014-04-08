@@ -1,6 +1,7 @@
 package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes;
 
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
+import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import net.minecraft.item.Item;
 
 public abstract class Recipe {
@@ -28,5 +29,13 @@ public abstract class Recipe {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public abstract boolean checkStorage(HOEMachineData hoeMachineData);
+
+	public abstract boolean checkResources(HOEMachineData hoeMachineData);
+
+	public abstract void consumeResources(HOEMachineData hoeMachineData);
+
+	public abstract void incrementProduction(HOEMachineData hoeMachineData);
 	
 }
