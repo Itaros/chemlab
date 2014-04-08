@@ -8,7 +8,7 @@ import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollecti
 
 public class CentrifugalExtractorIO extends HOEMachineIO {
 	public static final int MAXPOWER = 1000;
-	public static final int INCOMING_PORTS		=	2;
+	public static final int INCOMING_PORTS		=	3;
 	public static final int OUTCOMING_PORTS	=	2;
 	
 	

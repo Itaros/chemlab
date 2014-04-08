@@ -13,6 +13,9 @@ public class HOEFluidLoader {
 	public static PolyoseWaterSolution polyose_proteined_solution;
 	public static SodiumHydroxideSolution sodiumhydroxide_solution;
 	
+	public static WetLignin wet_lignin;
+	public static WetCellulose wet_cellulose;
+	
 	
 	public static void load(){
 		//TODO: should be API interface
@@ -33,8 +36,13 @@ public class HOEFluidLoader {
 		sodiumhydroxide_solution = new SodiumHydroxideSolution();
 		registry.register(sodiumhydroxide_solution);
 		
+		wet_lignin=new WetLignin();
+		registry.register(wet_lignin);
 		
-		
-		
+		wet_cellulose=new WetCellulose();
+		registry.register(wet_cellulose);
+				
+				
+				
 	}
 }

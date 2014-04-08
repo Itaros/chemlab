@@ -19,6 +19,9 @@ public class ItemLoader {
 	public static ImpregnatedWoodFibersPellet impregnatedwoodfiberspellet;
 	public static ExplodedWoodFibers explodedwoodfibers;
 	public static WashedLignocellulose washedlignocellulose;
+	public static ImpregnatedLignocellulose impregnatedlignocellulose;
+	public static PressedLignocellulose pressedlignocellulose;
+	public static DecomposedLignocellulose decomposedlignocellulose;
 	
 	
 	public static void loadItems(){
@@ -50,11 +53,20 @@ public class ItemLoader {
 		washedlignocellulose = new WashedLignocellulose();
 		GameRegistry.registerItem(washedlignocellulose,washedlignocellulose.getUnlocalizedName());
 			
-				
+		impregnatedlignocellulose = new ImpregnatedLignocellulose();
+		GameRegistry.registerItem(impregnatedlignocellulose,impregnatedlignocellulose.getUnlocalizedName());
+		
+		pressedlignocellulose = new PressedLignocellulose();
+		GameRegistry.registerItem(pressedlignocellulose,pressedlignocellulose.getUnlocalizedName());
+		
+		decomposedlignocellulose = new DecomposedLignocellulose();
+		GameRegistry.registerItem(decomposedlignocellulose,decomposedlignocellulose.getUnlocalizedName());
+		
 		
 		
 		emptyhvlc = new HiVolumeLiquidCellEmpty();
 		GameRegistry.registerItem(emptyhvlc,emptyhvlc.getUnlocalizedName());
+		
 		
 		
 		

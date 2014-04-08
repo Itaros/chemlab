@@ -48,8 +48,13 @@ public class WoodChainRecipes {
 		incoming = new ItemStack[]{new ItemStack(ItemLoader.woodchipclump),new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.lignocelluloseflakes),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.cellulosal_extractives_high))};
 		FixedConversionRecipe fcr3 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		//FCR 3-1 (WATERCELLS+)
+		name = "chemlab.centrextractor.[emptycell+decomplgnclls->wlnh+wclls]";
+		incoming = new ItemStack[]{new ItemStack(ItemLoader.emptyhvlc),new ItemStack(ItemLoader.decomposedlignocellulose),new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
+		outcoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.wet_cellulose)),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.wet_lignin))};
+		FixedConversionRecipe fcr3_1 = new FixedConversionRecipe(20,100,incoming,outcoming,name);			
 		//Collection
-		centrifugalExtractorRecipes = new RecipesCollection(fcr3);
+		centrifugalExtractorRecipes = new RecipesCollection(fcr3,fcr3_1);
 		centrifugalExtractorRecipes.register();
 		
 		
@@ -76,8 +81,14 @@ public class WoodChainRecipes {
 		incoming = new ItemStack[]{new ItemStack(ItemLoader.purelignocelluloseflakes),new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.impregnatedlignocelluloseflakes),new ItemStack(ItemLoader.emptyhvlc)};
 		FixedConversionRecipe fcr5 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		//FCR 5-1 (WATER+PURE LIGNOCELLULOSE->IMPREGNATED LIGNOCELLULOSE+EMPTY CELL)
+		name = "chemlab.impregnator.[wshdlgnclc+naoh->imprglngc+emptycell]";
+		incoming = new ItemStack[]{new ItemStack(ItemLoader.washedlignocellulose),new ItemStack(HiVolumeLiquidCell.getByFluid(naoh))};
+		outcoming = new ItemStack[]{new ItemStack(ItemLoader.impregnatedlignocellulose),new ItemStack(ItemLoader.emptyhvlc)};
+		FixedConversionRecipe fcr5_1 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+				
 		//Collection
-		impregnatorRecipes = new RecipesCollection(fcr5);
+		impregnatorRecipes = new RecipesCollection(fcr5,fcr5_1);
 		impregnatorRecipes.register();		
 		
 		
@@ -87,8 +98,13 @@ public class WoodChainRecipes {
 		incoming = new ItemStack[]{new ItemStack(ItemLoader.impregnatedlignocelluloseflakes)};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.impregnatedwoodfiberspellet)};
 		FixedConversionRecipe fcr6 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		//FCR 6-1 (IMPREGNATED LIGNOCELLULOSE->IMPREGNATED LIGNOCELLULOSE PELLETS)
+		name = "chemlab.press.[imprglngc->prsdlgncls]";
+		incoming = new ItemStack[]{new ItemStack(ItemLoader.impregnatedlignocellulose)};
+		outcoming = new ItemStack[]{new ItemStack(ItemLoader.pressedlignocellulose)};
+		FixedConversionRecipe fcr6_1 = new FixedConversionRecipe(20,100,incoming,outcoming,name);			
 		//Collection
-		pressRecipes = new RecipesCollection(fcr6);
+		pressRecipes = new RecipesCollection(fcr6,fcr6_1);
 		pressRecipes.register();			
 		
 		//======Steam Boiler======
@@ -97,6 +113,7 @@ public class WoodChainRecipes {
 		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
 		outcoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(steam_pressurized))};
 		FixedConversionRecipe fcr7 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		//Collection
 		steamboilerRecipes = new RecipesCollection(fcr7);
 		steamboilerRecipes.register();
 		
@@ -106,7 +123,13 @@ public class WoodChainRecipes {
 		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(steam_pressurized)),new ItemStack(ItemLoader.impregnatedwoodfiberspellet)};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.explodedwoodfibers),new ItemStack(ItemLoader.emptyhvlc)};
 		FixedConversionRecipe fcr8 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
-		steamexplosionunitRecipes = new RecipesCollection(fcr8);
+		//FCR 8-1 (PRESSURIZED STEAM+PRESSED LIGNOCELLULOSE ->DECOMPOSED LIGNOCELLULOSE + EMPTY CELL)
+		name ="chemlab.steamexplosionunit[steam-pressurized+prsdlngcl->dcmpslgncls+empty_cell]";
+		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(steam_pressurized)),new ItemStack(ItemLoader.pressedlignocellulose)};
+		outcoming = new ItemStack[]{new ItemStack(ItemLoader.decomposedlignocellulose),new ItemStack(ItemLoader.emptyhvlc)};
+		FixedConversionRecipe fcr8_1 = new FixedConversionRecipe(20,100,incoming,outcoming,name);				
+		//Collection
+		steamexplosionunitRecipes = new RecipesCollection(fcr8,fcr8_1);
 		steamexplosionunitRecipes.register();		
 		
 		

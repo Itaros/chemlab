@@ -18,6 +18,9 @@ item.chemlab:ImpregnatedWoodFibers.name=Impregnated Wood Fibers
 item.chemlab:ImpregnatedWoodFibersPellet.name=Impregnated Wood Fibers Pellet
 item.chemlab:ExplodedWoodFibers.name=Exploded Wood Fibers
 item.chemlab:WashedLignocellulose.name=Washed Lignocellulose
+item.chemlab:ImpregnatedLignocellulose.name=Impregnated Lignocellulose
+item.chemlab:PressedLignocellulose.name=Pressed Lignocellulose Pellet
+item.chemlab:DecomposedLignocellulose.name=Decomposed Lignocellulose
 
 item.chemlab:hvlc-empty.name=Empty Hi-Volume Liquid Cell
 item.chemlab:hvlc-water-natural.name=Water Hi-Volume Liquid Cell
@@ -25,3 +28,5 @@ item.chemlab:hvlc-extractives-cellulo-high.name=Wood Extractives Hi-Volume Liqui
 item.chemlab:hvlc-steam-pressurized.name=§cSteam§r Hi-Volume Liquid Cell
 item.chemlab:hvlc-polyose-proteined.name=Polyose Hi-Volume Liquid Cell
 item.chemlab:hvlc-sodiumhydroxide-solution.name=NaOH Solution Hi-Volume Liquid Cell
+item.chemlab:hvlc-cellulose-wet.name=Wet Cellulose Hi-Volume Liquid Cell
+item.chemlab:hvlc-lignin-wet.name=Wet Lignin Hi-Volume Liquid Cell
