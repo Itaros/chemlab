@@ -38,6 +38,14 @@ public class RecipesCollection {
 		
 	}
 
+	public void injectAfter(Recipe... newOnes){
+		Recipe[] o = recipes;
+		Recipe[] n = newOnes;
+		recipes = new Recipe[o.length+n.length];
+		System.arraycopy(o, 0, recipes, 0, o.length);
+		System.arraycopy(n, 0, recipes, o.length, n.length);
+	}
+	
 	protected Recipe[] recipes;
 
 	public Recipe[] getRecipes(){

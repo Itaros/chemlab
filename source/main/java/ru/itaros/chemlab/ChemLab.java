@@ -10,7 +10,7 @@ import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.chemlab.loader.GUILoader;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.chemlab.loader.ItemLoader;
-import ru.itaros.chemlab.loader.recipes.RecipesLoader;
+import ru.itaros.chemlab.loader.RecipesLoader;
 import ru.itaros.chemlab.loader.tileentity.TileEntityLoader;
 import ru.itaros.chemlab.network.ChemLabChannel;
 import ru.itaros.chemlab.network.IPacketCodecDescriptor;

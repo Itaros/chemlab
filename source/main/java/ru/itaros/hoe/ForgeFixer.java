@@ -1,30 +1,18 @@
-package ru.itaros.chemlab.loader.recipes;
+package ru.itaros.hoe;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 import net.minecraftforge.oredict.OreDictionary;
+import cpw.mods.fml.common.registry.GameRegistry;
 
-public class RecipesLoader {
-	public static void load(){
-		forgeOreDictFix();
-		
-		CrusherRecipes.load();
-		FurnaceRecipes.load();
-		
-		WoodChainRecipes.load();
-		DiaphragmalElectrolyzerRecipes.load();
-		
-		AirCollectorRecipes.load();
-		FluidCompressorRecipes.load();
-	}
-
+public class ForgeFixer {
 	
 	private static final String[] forgeFix = {
 		"Iron","Gold"
-	};
+	};	
 	
-	//TODO: MoveToHOE
-	private static void forgeOreDictFix() {
+	
+	
+	public static void forgeOreDictFix() {
 		for(String s : forgeFix){
 			if(OreDictionary.getOres("ingot"+s).size()==0){
 				String ingotName = s.toLowerCase()+"_ingot";

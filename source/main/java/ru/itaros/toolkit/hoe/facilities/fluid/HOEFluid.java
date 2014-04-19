@@ -38,6 +38,16 @@ public abstract class HOEFluid {
 	public abstract int getColor();
 
 	
+	public enum TempShift {
+		cooled,
+		heated,
+		normal
+	}
+	
+	public TempShift getTemperature(){
+		return TempShift.normal;
+	}
+	
 	
 	
 	//TODO: HOE-style exception

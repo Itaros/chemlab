@@ -251,7 +251,7 @@ public class HOEMachineData extends HOEData{
 				throw new RuntimeException(e);//TODO: Data lookup failure exception
 			}
 		}
-		data.readNBT(nbt);
+		//data.readNBT(nbt);
 		return data;
 	}
 	public void incrementProduction() {
@@ -301,7 +301,7 @@ public class HOEMachineData extends HOEData{
 				//if(incoming_stricttype[x].getUnlocalizedName().equals(temp.getItem().getUnlocalizedName())){
 					
 					int diff=temp.getMaxStackSize()-incoming_depot[x];
-					
+					if(diff==0){return false;}
 					incoming_depot[x]+=diff;
 					temp.stackSize-=diff;
 					return true;
@@ -417,6 +417,14 @@ public class HOEMachineData extends HOEData{
 			//TODO: Exception?
 		}
 		
+	}
+	
+	public ItemStack getStricttypeByIndex(int injectorTypeOffset) {
+		if(injectorTypeOffset>=incoming_stricttype.length){
+			return null;
+		}else{
+			return incoming_stricttype[injectorTypeOffset];
+		}
 	}	
 
 

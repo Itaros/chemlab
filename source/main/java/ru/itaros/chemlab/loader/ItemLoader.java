@@ -44,6 +44,10 @@ public class ItemLoader {
 	public static DegradableItem asbestos_diaphragm;
 	public static DegradableItem graphite_anode;
 	
+	public static DegradableItem platinum_catalization_grid;
+	
+	public static ChemLabItem ferricoxide;
+	
 	public static void loadItems(){
 		programmer = new Programmer();
 		GameRegistry.registerItem(programmer,programmer.getUnlocalizedName());
@@ -88,15 +92,35 @@ public class ItemLoader {
 		GameRegistry.registerItem(emptyhvlc,emptyhvlc.getUnlocalizedName());
 		
 		
+		ferricoxide = new ChemLabItem("ferricoxide");
+		GameRegistry.registerItem(ferricoxide,ferricoxide.getUnlocalizedName());
+		
 		
 		loadAutoItems();
 		
 		asbestosDiahpragmRegistration();
 		electrodesRegistration();
 		
+		platinumCatalyserRegistration();
+		
 	}
 
 	
+
+	private static void platinumCatalyserRegistration() {
+		platinum_catalization_grid = new DegradableItem("platinum_catalization_grid", 64*2);
+		GameRegistry.registerItem(platinum_catalization_grid,platinum_catalization_grid.getUnlocalizedName());
+		
+		GameRegistry.addShapedRecipe(new ItemStack(platinum_catalization_grid),
+				"0X0",
+				"XYX",
+				"0X0",
+				'X',OreDictionary.getOres("dustPlatinum").get(0),
+				'Y',OreDictionary.getOres("ingotIron").get(0)
+				);
+	}
+
+
 
 	private static void electrodesRegistration(){
 		graphite_anode = new DegradableItem("graphite_anode", 500);

@@ -20,7 +20,10 @@ public class TileEntityLoader {
     			new DiaphragmalElectrolyzerIO(),
     			new FurnaceIO(),
     			new AirCollectorIO(),
-    			new FluidCompressorIO()
+    			new FluidCompressorIO(),
+    			new TurboexpanderIO(),
+    			new EvaporationUnitIO(),
+    			new CatalyticTankIO()
     			);
 		iocollection.registerInHOE();
 		
@@ -38,7 +41,9 @@ public class TileEntityLoader {
 		GameRegistry.registerTileEntity(FurnaceTileEntity.class,FurnaceTileEntity.class.getName());
 		GameRegistry.registerTileEntity(AirCollectorTileEntity.class,AirCollectorTileEntity.class.getName());
 		GameRegistry.registerTileEntity(FluidCompressorTileEntity.class,FluidCompressorTileEntity.class.getName());
-		
+		GameRegistry.registerTileEntity(TurboexpanderTileEntity.class,TurboexpanderTileEntity.class.getName());
+		GameRegistry.registerTileEntity(EvaporationUnitTileEntity.class,EvaporationUnitTileEntity.class.getName());
+		GameRegistry.registerTileEntity(CatalyticTankTileEntity.class,CatalyticTankTileEntity.class.getName());
 		
 		return iocollection;
 	}

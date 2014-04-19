@@ -3,6 +3,7 @@ package ru.itaros.chemlab.loader;
 import ru.itaros.chemlab.fluids.hoe.*;
 import ru.itaros.hoe.registries.HOEFluidRegistry;
 import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
+import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluidStack;
 
 public class HOEFluidLoader {
 	
@@ -21,6 +22,17 @@ public class HOEFluidLoader {
 	
 	public static Air air;
 	public static AirCompressed air_compressed;
+	public static AirLiquid air_liquid;
+	
+	public static OxygenGas oxygen_gas;
+	public static NitrogenGas nitrogen_gas;
+	
+	public static SulphurDioxideGas sulphurdioxide_gas;
+	public static SulphurTrioxideGas sulphurtrioxide_gas;
+	
+	public static SulphuricAcidSolution sulphuricacid_solution;
+	
+	private static HOEFluidStack[] composition_air;
 	
 	public static void load(){
 		//TODO: should be API interface
@@ -65,8 +77,33 @@ public class HOEFluidLoader {
 		registry.register(air);
 		air_compressed = new AirCompressed();
 		registry.register(air_compressed);
+		air_liquid = new AirLiquid();
+		registry.register(air_liquid);
 		
 		
+		nitrogen_gas = new NitrogenGas();
+		registry.register(nitrogen_gas);
+		oxygen_gas = new OxygenGas();
+		registry.register(oxygen_gas);		
 		
+		sulphurdioxide_gas = new SulphurDioxideGas();
+		registry.register(sulphurdioxide_gas);
+		
+		sulphurtrioxide_gas = new SulphurTrioxideGas();
+		registry.register(sulphurtrioxide_gas);
+		
+		sulphuricacid_solution = new SulphuricAcidSolution();
+		registry.register(sulphuricacid_solution);
+		
+		//compositions
+		composition_air = new HOEFluidStack[]{
+			new HOEFluidStack(nitrogen_gas,4),
+			new HOEFluidStack(oxygen_gas,1)
+		};
+		
+	}
+
+	public static HOEFluidStack[] getAirComposition() {
+		return composition_air;
 	}
 }

@@ -19,7 +19,10 @@ public class GUILoader {
 				DiaphragmalElectrolyzerContainer.class,
 				FurnaceContainer.class,
 				AirCollectorContainer.class,
-				FluidCompressorContainer.class
+				FluidCompressorContainer.class,
+				TurboexpanderContainer.class,
+				EvaporationUnitContainer.class,
+				CatalyticTankContainer.class
 				);
 	}
 	

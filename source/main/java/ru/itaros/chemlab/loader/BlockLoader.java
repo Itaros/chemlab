@@ -22,7 +22,9 @@ public class BlockLoader {
 	public static Furnace furnace;
 	public static AirCollector aircollector;
 	public static FluidCompressor fluidcompressor;
-	
+	public static Turboexpander turboexpander;
+	public static EvaporationUnit evaporationunit;
+	public static CatalyticTank cattank;
 	
 	public static OreHalite oreHalite;
 	public static OreMetal orePlatinum;
@@ -67,6 +69,15 @@ public class BlockLoader {
 		
 		fluidcompressor = new FluidCompressor();
 		GameRegistry.registerBlock(fluidcompressor,fluidcompressor.getUnlocalizedNameRaw());
+		
+		turboexpander= new Turboexpander();
+		GameRegistry.registerBlock(turboexpander, turboexpander.getUnlocalizedNameRaw());
+		
+		evaporationunit = new EvaporationUnit();
+		GameRegistry.registerBlock(evaporationunit, evaporationunit.getUnlocalizedNameRaw());
+		
+		cattank = new CatalyticTank();
+		GameRegistry.registerBlock(cattank,cattank.getUnlocalizedNameRaw());
 		
 		
 		//Ores

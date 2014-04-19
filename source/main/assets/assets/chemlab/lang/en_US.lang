@@ -12,9 +12,16 @@ tile.chemlab:machinesteamexplosionunit.name=Steam Explosion Unit
 tile.chemlab:machinecrusher.name=Crusher Unit
 tile.chemlab:machinediaphelectr.name=Diaphragmal Electrolyzer
 tile.chemlab:machinefurnace.name=Electric Hi-Temperature Furnace
+tile.chemlab:machineevaporationunit.name=Evaporation Unit
+tile.chemlab:machinecattank.name=Catalization Tank
+tile.chemlab:machineturboexpander.name=Turboexpander
+tile.chemlab:machinefluidcompressor.name=Fluid Compressor
+tile.chemlab:machineaircollector.name=Air Collector
 
 tile.chemlab:ore.halite.name=Halite
 tile.chemlab:ore.platinum.name=Native Platinum Ore
+tile.chemlab:ore.pyrite.name=Pyrite Ore
+
 
 item.chemlab:Woodchips.name=Woodchips
 item.chemlab:WoodchipClump.name=Woodchip Clumps
@@ -37,6 +44,7 @@ item.chemlab:CrushedOre-oreAmphiboleAsbestos.name=Crushed Amphibole Asbestos
 
 item.chemlab:asbestos-diaphragm.name=White Asbestos Diaphragm
 item.chemlab:graphite_anode.name=Graphite Anode
+item.chemlab:platinum_catalization_grid.name=Platinum Catalization Grid
 
 item.chemlab:dust.sand.name=Sand Dust
 item.chemlab:dust.stone.name=Stone Dust
@@ -60,6 +68,16 @@ item.chemlab:hvlc-lignin-wet.name=Wet Lignin Hi-Volume Liquid Cell
 item.chemlab:hvlc-nacl-solution.name=NaCl Solution Hi-Volume Liquid Cell
 item.chemlab:hvlc-h2-gas.name=Hydrogene Hi-Volume Liquid Cell
 item.chemlab:hvlc-cl2-gas.name=Chlorine Hi-Volume Liquid Cell
+item.chemlab:hvlc-air.name=Air Hi-Volume Liquid Cell
+item.chemlab:hvlc-air.compressed.name=Compressed Air Hi-Volume Liquid Cell
+item.chemlab:hvlc-air.liquid.name=Liquid Air Hi-Volume Liquid Cell
+item.chemlab:hvlc-nitrogen-gas.name=Nitrogen Hi-Volume Liquid Cell
+item.chemlab:hvlc-oxygen-gas.name=Oxygen Hi-Volume Liquid Cell
+item.chemlab:hvlc-sulphurdioxide-gas.name=Sulphur Dioxide Hi-Volume Liquid Cell
+item.chemlab:hvlc-sulphurtrioxide-gas.name=Sulphur Trioxide Hi-Volume Liquid Cell
+item.chemlab:hvlc-sulphuricacid-solution.name=Sulphuric Acid Hi-Volume Liquid Cell
+
+item.genericitem.ferricoxide.name=Ferric Oxide
 
 recipe.crusher.oreIron.name=Crush Native Iron Cluster Ore
 recipe.crusher.oreGold.name=Crush Native Gold Cluster Ore
@@ -83,6 +101,7 @@ recipe.biogrinder.crushchips.name=Cut Woodchips
 recipe.biogrinder.crushlogs.name=Grind Logs
 recipe.diaelectr.naoh.name=Electrolyse NaCl
 recipe.centrext.crushedgold.name=Separate Gold from Stone
+recipe.cattank.sulphurtrioxide.name=Oxidise Sulphur Dioxide to Trioxide
 
 
 

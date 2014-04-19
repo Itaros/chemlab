@@ -3,6 +3,7 @@ package ru.itaros.hoe;
 
 import org.apache.logging.log4j.Level;
 
+import ru.itaros.api.hoe.IHOEContextDetector.FMLContext;
 import ru.itaros.api.hoe.IHOEInterfacer;
 import ru.itaros.hoe.interfacer.HOEInterfacer;
 import ru.itaros.hoe.proxy.HOEProxy;
@@ -38,28 +39,31 @@ public class HOE {
     private HOEIORegistry ioregistry;
     private HOERecipeRegistry reciperegistrry;
     
+    private ContextDetector contextdetector;
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+    	contextdetector = new ContextDetector();
+    	
+    	ForgeFixer.forgeOreDictFix();
+    	
     	hoefluidregistry=new HOEFluidRegistry();
     	ioregistry =new HOEIORegistry();
     	reciperegistrry=new HOERecipeRegistry();
     	interfacer=new HOEInterfacer();
+    	
     }    
     
     @EventHandler
     public void serverInit(FMLServerAboutToStartEvent event)
     {
+    	contextdetector.requestContextData(event);
     	//Hack to load correct proxy	
-    	try {
-			Class<?> integrated = (Class<?>) Class.forName("IntegratedServer");
-			if(integrated.isInstance(event.getServer())){
-	    		proxy = new HOEServer();
-	    		FMLLog.log(Level.INFO, "HOE PROXY HACK ELEVATED!");
-	    	}
-		} catch (ClassNotFoundException e) {
-			//NOP. Fail Silently. This class doesn't exist on server
-		}    	
+    	if(contextdetector.getContext()==FMLContext.DEDICATED){
+	    	proxy = new HOEServer();
+	    	FMLLog.log(Level.INFO, "HOE PROXY HACK ELEVATED!");
+    	}
     	
 		proxy.initHOE();
     } 

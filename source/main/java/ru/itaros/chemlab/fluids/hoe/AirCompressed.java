@@ -4,7 +4,7 @@ import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
 import ru.itaros.toolkit.hoe.facilities.fluid.IFluidExpandable;
 
-public class AirCompressed extends HOEFluid implements IFluidExpandable {
+public class AirCompressed extends Air implements IFluidExpandable {
 
 	@Override
 	public String getUnlocalizedName() {
@@ -18,7 +18,7 @@ public class AirCompressed extends HOEFluid implements IFluidExpandable {
 
 	@Override
 	public HOEFluid getExpandedForm() {
-		return HOEFluidLoader.air;
+		return HOEFluidLoader.air_liquid;
 	}
 
 	@Override

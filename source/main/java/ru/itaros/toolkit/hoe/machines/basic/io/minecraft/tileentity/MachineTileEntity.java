@@ -1,11 +1,16 @@
 package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity;
 
+import org.apache.logging.log4j.Level;
+
 import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ru.itaros.api.hoe.HOEAbstractLinker;
+import ru.itaros.api.hoe.IHOEContextDetector.FMLContext;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.loader.ItemLoader;
+import ru.itaros.hoe.ContextDetector;
 import ru.itaros.hoe.HOE;
 import ru.itaros.hoe.proxy.HOEServer;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
@@ -16,6 +21,7 @@ import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,7 +32,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 
-public abstract class MachineTileEntity extends TileEntity implements IInventory{
+public abstract class MachineTileEntity extends TileEntity implements ISidedInventory{
 
 	ItemStack programmerStack=null;
 	
@@ -50,6 +56,7 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
+		//System.out.println("Deserializing TE: "+this.getClass().getSimpleName());
 		readServerState(nbt);
 	}
 
@@ -66,9 +73,18 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 		
 		//DUMMY: ASSUMING THIS IS A CLIENT
 		String refltype=nbt.getString("refltype");
-		client=HOEMachineData.generateFromNBT(refltype,nbt);
-		
-
+		if(server==null){
+			server=HOEMachineData.generateFromNBT(refltype,nbt);
+		}
+		this.getSuperIO().configureData(server);
+		server.readNBT(nbt);
+		//client = (HOEMachineData) server.getChild();//For some reason this is not working
+		if(ContextDetector.getInstance().getContext()==FMLContext.INTEGRATED){
+			client = server;//ONLY IF IT IS CLIENT!
+		}else if(ContextDetector.getInstance().getContext()==FMLContext.DEDICATED){
+			client = (HOEMachineData) server.getChild();
+			server.sync();
+		}
 	}	
 
 	private void writeServerState(NBTTagCompound host) {
@@ -199,6 +215,18 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 		if(slot<0){return false;}//There is no way to push something into chamber
 		if(slot==1){return false;}
 		
+		if(slot==0){
+			//Injector slot
+			ItemStack possible = getStricttypeByOffsetIndex();
+			if(possible!=null && (possible.getItem()==stack.getItem() & possible.getItemDamage()==stack.getItemDamage())){
+				return true;
+			}
+			if(possible==null){
+				return true;
+			}
+			return false;
+		}
+		
 		if(slot==ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT){
 			if(stack.getItem()==ItemLoader.programmer){
 				return true;
@@ -207,21 +235,25 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 			}
 		}
 		
+		
 		return true;
 	}
 	
 	
-    @Override
+
+	@Override
     public ItemStack decrStackSize(int slot, int amt) {
     	if(slot<0){return (ItemStack)null;}//You can't take from client inbound
             ItemStack stack = getStackInSlot(slot);
             if (stack != null) {
                     if (stack.stackSize <= amt) {
                             setInventorySlotContents(slot, null);
+                            
                     } else {
                             stack = stack.splitStack(amt);
                             if (stack.stackSize == 0) {
                                     setInventorySlotContents(slot, null);
+                                   
                             }
                     }
             }
@@ -244,6 +276,7 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 	public int getInventoryStackLimit() {
 		return 64;
 	}
+	
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer var1) {
 		return true;
@@ -256,6 +289,29 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 	}
 	
 	
+	private static final int[] synchroportAccessIndices = {0,1};
+	
+	@Override
+	public int[] getAccessibleSlotsFromSide(int side) {
+		return synchroportAccessIndices;
+	}
+	@Override
+	public boolean canInsertItem(int slot, ItemStack item, int side) {
+		if(slot==0){
+			return !lastPushFailed;//Cant insert if failed
+		}else{
+			return false;
+		}
+	}
+	@Override
+	public boolean canExtractItem(int slot, ItemStack item, int side) {
+		if(slot==0){
+			return lastPushFailed;
+		}else{
+			//1
+			return true;
+		}
+	}
 	
 	
 	//Sync
@@ -273,8 +329,26 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 	}
 	@Override
 	public boolean canUpdate() {
-		return true;//SHOULD BE FALSE ON SERVER	
+		FMLContext context = ContextDetector.getInstance().getContext();
+		if(context == FMLContext.DEDICATED){
+			return false;
+		}else{
+			return true;
+		}
 	}
+	
+	
+    private ItemStack getStricttypeByOffsetIndex() {
+    	if(server!=null){
+    		ItemStack result = server.getStricttypeByIndex(injectorTypeOffset);
+    		if(result==null){
+    			injectorTypeOffset=0;
+    		}
+    		return result;
+    	}
+    	return null;
+	}	
+	
 	public void pullFromHOE() {
 		if(server!=null){
 
@@ -283,17 +357,31 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 		}
 		
 	}
+	
+	private int injectorTypeOffset=0;
+	private boolean lastPushFailed=false;
 	public void pushToHOE() {
 		if(server!=null){
 			if(inbound_synchro!=null){
+				if(inbound_synchro.stackSize<=0){inbound_synchro=null;return;}
 				ItemStack temp = inbound_synchro;
 				if(!server.pushResource(temp)){
 					//FAILED!
-				}else{
-					if(inbound_synchro.stackSize==0){
-						inbound_synchro=null;//Kill unused stack
+					if(!lastPushFailed){
+						FMLLog.log(Level.INFO, "Last Push failed! by"+this.getClass().getName());
+						injectorTypeOffset++;
+						lastPushFailed=true;
 					}
+				}else{
+					//lastPushFailed=false;//Push succeeded. There is no need in that flag
+					if(inbound_synchro.stackSize<=0){
+						inbound_synchro=null;//Kill unused stack
+						
+					}
+					setInventorySlotContents(0, inbound_synchro);//Sync backtrip
 				}
+			}else{
+				lastPushFailed=false;
 			}
 		}
 		
@@ -314,6 +402,7 @@ public abstract class MachineTileEntity extends TileEntity implements IInventory
 			server.setRecipe(r);
 		}
 	}
+	
 	
 	
 	
