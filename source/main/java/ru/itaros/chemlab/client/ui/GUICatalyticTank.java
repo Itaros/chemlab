@@ -4,11 +4,11 @@ import net.minecraft.entity.player.InventoryPlayer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.minecraft.tileentity.CatalyticTankTileEntity;
 import ru.itaros.chemlab.minecraft.tileentity.DiaphragmalElectrolyzerTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 
 public class GUICatalyticTank extends GUIHOEClassicalMachine {
 
-	public GUICatalyticTank(InventoryPlayer playerInv, MachineTileEntity tile){
+	public GUICatalyticTank(InventoryPlayer playerInv, MachineCrafterTileEntity tile){
 		this(playerInv,(CatalyticTankTileEntity)tile);
 	}
 	private GUICatalyticTank(InventoryPlayer playerInv, CatalyticTankTileEntity tile) {

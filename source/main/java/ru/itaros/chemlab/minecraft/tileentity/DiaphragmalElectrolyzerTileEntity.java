@@ -1,24 +1,26 @@
 package ru.itaros.chemlab.minecraft.tileentity;
 
 import net.minecraft.item.ItemStack;
-import ru.itaros.api.hoe.HOEAbstractLinker;
+import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.ChemLab;
+import ru.itaros.chemlab.HOELinker;
 import ru.itaros.chemlab.hoe.data.DiaphragmalElectrolyzerData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
+import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 
-public class DiaphragmalElectrolyzerTileEntity extends MachineTileEntity {
+public class DiaphragmalElectrolyzerTileEntity extends MachineCrafterTileEntity {
 
 	@Override
-	public HOEAbstractLinker getLinker() {
+	public HOELinker getLinker() {
 		return ChemLab.proxy.getLinker();
 	}
 
 	@Override
 	public HOEMachineIO getSuperIO() {
-		return (HOEMachineIO) ChemLab.getIOCollection().getHOEIO("DiaphragmalElectrolyzerIO");
+		return (HOEMachineCrafterIO) ChemLab.getIOCollection().getHOEIO("DiaphragmalElectrolyzerIO");
 	}
 
 	@Override
@@ -29,7 +31,7 @@ public class DiaphragmalElectrolyzerTileEntity extends MachineTileEntity {
 	}
 	
 	public ItemStack exchangeDiaphragm(ItemStack n){
-		HOEMachineData data = this.server;
+		HOEData data = this.server;
 		if(data!=null){
 			DiaphragmalElectrolyzerData ded = (DiaphragmalElectrolyzerData)data;
 			return ded.exchangeDiaphragm(n);
@@ -38,7 +40,7 @@ public class DiaphragmalElectrolyzerTileEntity extends MachineTileEntity {
 		}
 	}
 	public ItemStack exchangeAnode(ItemStack n){
-		HOEMachineData data = this.server;
+		HOEData data = this.server;
 		if(data!=null){
 			DiaphragmalElectrolyzerData ded = (DiaphragmalElectrolyzerData)data;
 			return ded.exchangeAnode(n);

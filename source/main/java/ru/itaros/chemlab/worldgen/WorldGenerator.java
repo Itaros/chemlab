@@ -2,12 +2,13 @@ package ru.itaros.chemlab.worldgen;
 
 import java.util.Random;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
+import net.minecraft.world.gen.feature.WorldGenMinable;
 
 import org.apache.logging.log4j.Level;
 
@@ -21,6 +22,13 @@ public class WorldGenerator implements IWorldGenerator {
 
 	private static final float NOISEDOWNSAMPLE_HALITE = 0.5F;
 	private static final float NOISEDOWNSAMPLE_ASBESTOS = 0.04F;
+	private static final float NOISEDOWNSAMPLE_HEMATITE = 0.1F;
+	private static final float NOISEDOWNSAMPLE_PERICLASE = 0.2F;
+	
+	private static final int PYRITECHANCE = 16;//ALL
+	public static final int PLATINUMCHANCE = 4;//ONLY RIVERS
+	private static final int METAANTHRACITECHANCE = 6;//ALL	
+	
 	
 	//VoronoiGenerator voronoi;
 	NoiseGeneratorPerlin perlinHalite;
@@ -50,10 +58,171 @@ public class WorldGenerator implements IWorldGenerator {
 		halitePass(random,chunkX,chunkZ,world);
 		asbestosPass(random,chunkX,chunkZ,world);
 		platinumPass(random,chunkX,chunkZ,world);
+		pyritePass(random,chunkX,chunkZ,world);
+		MetaAnthracitePass(random,chunkX,chunkZ,world);
+		LimestonePass(random,chunkX,chunkZ,world);
+		HematitePass(random,chunkX,chunkZ,world);
+		PericlasePass(random,chunkX,chunkZ,world);
 	}
 
 	
-	public static final int PLATINUMCHANCE = 5;
+	private void PericlasePass(Random random, int chunkX, int chunkZ,
+			World world) {
+		
+		ExtendedBlockStorage[] stor = HelperWorldGen.getStorageFromChunk(chunkX, chunkZ, world);
+		int xi = chunkX*HelperWorldGen.CHUNKSIZE;
+		int yi = chunkZ*HelperWorldGen.CHUNKSIZE;		
+		
+		for(int xs = 0; xs<HelperWorldGen.CHUNKSIZE;xs++){
+			for(int ys = 0; ys<HelperWorldGen.CHUNKSIZE;ys++){
+				int x = xi+xs;
+				int y = yi+ys;	
+				
+				double noiseFactor = perlinHalite.func_151601_a(x*NOISEDOWNSAMPLE_PERICLASE, y*NOISEDOWNSAMPLE_PERICLASE);
+				//FMLLog.log(Level.INFO, "Factor:"+noiseFactor);
+				if(noiseFactor>19F){
+					float normalizedShift =  (((float)noiseFactor-19F)/(20F-19F));
+					
+					
+					int level = HelperWorldGen.getUndergroundHeightLevel(world, x, y)-10;
+					int diff = (int) ((HelperWorldGen.assumeSafeHeightDifferenceToBedrock(level-1)*normalizedShift)+1);
+					//FMLLog.log(Level.INFO, "Diff:"+diff+" from "+level);
+					
+					for(int z = HelperWorldGen.ASSUMED_BEDROCK_LEVEL;z<diff;z++){
+						if(world.getBlock(x, z, y)==Blocks.stone){//TODO: Ask chunk, not world. Or use helper to access stor \o/
+							HelperWorldGen.setBlockDirectly(world, stor, xs, ys, z ,BlockLoader.orePericlase);
+						}
+					}
+					
+					
+				}
+				
+			}
+		}		
+	}
+
+	private void HematitePass(Random random, int chunkX, int chunkZ, World world) {
+		ExtendedBlockStorage[] stor = HelperWorldGen.getStorageFromChunk(chunkX, chunkZ, world);
+		int xi = chunkX*HelperWorldGen.CHUNKSIZE;
+		int yi = chunkZ*HelperWorldGen.CHUNKSIZE;		
+		
+		for(int xs = 0; xs<HelperWorldGen.CHUNKSIZE;xs++){
+			for(int ys = 0; ys<HelperWorldGen.CHUNKSIZE;ys++){
+				int x = xi+xs;
+				int y = yi+ys;	
+				
+				double noiseFactor = perlinHalite.func_151601_a(x*NOISEDOWNSAMPLE_HEMATITE, y*NOISEDOWNSAMPLE_HEMATITE);
+				//FMLLog.log(Level.INFO, "Factor:"+noiseFactor);
+				if(noiseFactor>19F){
+					float normalizedShift =  (((float)noiseFactor-19F)/(20F-19F));
+					
+					
+					int level = HelperWorldGen.getUndergroundHeightLevel(world, x, y)-10;
+					int diff = (int) ((HelperWorldGen.assumeSafeHeightDifferenceToBedrock(level-1)*normalizedShift)+1);
+					FMLLog.log(Level.INFO, "Diff:"+diff+" from "+level);
+					
+					for(int z = HelperWorldGen.ASSUMED_BEDROCK_LEVEL;z<diff;z++){
+						if(world.getBlock(x, z, y)==Blocks.stone){//TODO: Ask chunk, not world. Or use helper to access stor \o/
+							HelperWorldGen.setBlockDirectly(world, stor, xs, ys, z ,BlockLoader.oreHematite);
+						}
+					}
+					
+					
+				}
+				
+			}
+		}
+	}
+
+	private void LimestonePass(Random random, int chunkX, int chunkZ,
+			World world) {
+		ExtendedBlockStorage[] stor = HelperWorldGen.getStorageFromChunk(chunkX, chunkZ, world);
+		int xi = chunkX*HelperWorldGen.CHUNKSIZE;
+		int yi = chunkZ*HelperWorldGen.CHUNKSIZE;
+		for(int xs = 0; xs<HelperWorldGen.CHUNKSIZE;xs++){
+			for(int ys = 0; ys<HelperWorldGen.CHUNKSIZE;ys++){
+				int x = xi+xs;
+				int y = yi+ys;	
+				
+				double noiseFactor = perlinHalite.func_151601_a(x*NOISEDOWNSAMPLE_ASBESTOS, y*NOISEDOWNSAMPLE_ASBESTOS);
+				//FMLLog.log(Level.INFO, "Factor:"+noiseFactor);
+				if(noiseFactor>5F & noiseFactor<8F){
+					//float normalizedShift =  (((float)noiseFactor-18F)/(20F-18F));
+					
+					
+					int Zmin = 50;
+					int Zmax = world.getHeightValue(x, y);
+					
+					//FMLLog.log(Level.INFO, "Diff:"+diff+" from "+level);
+					
+					
+					for(int z = Zmin; z <= Zmax; z++){
+						if(world.getBlock(x, z, y)==Blocks.stone){//TODO: Ask chunk, not world. Or use helper to access stor \o/
+							HelperWorldGen.setBlockDirectly(world, stor, xs, ys, z ,BlockLoader.oreLimestone);
+						}
+					}
+					
+					
+				}
+				
+			}
+		}		
+		
+	}
+
+
+	WorldGenMinable metaAnthracite_generator = new WorldGenMinable(BlockLoader.oreMetaAnthracite, 15);
+	
+	private void MetaAnthracitePass(Random random, int chunkX, int chunkZ,
+			World world) {
+		int xi = chunkX*HelperWorldGen.CHUNKSIZE;
+		int yi = chunkZ*HelperWorldGen.CHUNKSIZE;		
+		for(int i = 0; i < METAANTHRACITECHANCE; i++){
+			int xs = (int) (random.nextFloat()*(float)HelperWorldGen.CHUNKSIZE);
+			int ys = (int) (random.nextFloat()*(float)HelperWorldGen.CHUNKSIZE);
+			
+			
+			int x = xi+xs;
+			int y = yi+ys;	
+			int z = (int) (random.nextFloat()*(float)HelperWorldGen.assumeSafeHeightDifferenceToBedrock(HelperWorldGen.getUndergroundHeightLevel(world, x, y)));		
+		
+			metaAnthracite_generator.generate(world, random, x, z, y);
+		
+		}
+		
+	}
+
+	private void pyritePass(Random random, int chunkX, int chunkZ, World world) {
+		
+		ExtendedBlockStorage[] stor = HelperWorldGen.getStorageFromChunk(chunkX, chunkZ, world);
+		int xi = chunkX*HelperWorldGen.CHUNKSIZE;
+		int yi = chunkZ*HelperWorldGen.CHUNKSIZE;	
+		
+		for(int i = 0; i < PYRITECHANCE; i++){
+			int xs = (int) (random.nextFloat()*(float)HelperWorldGen.CHUNKSIZE);
+			int ys = (int) (random.nextFloat()*(float)HelperWorldGen.CHUNKSIZE);
+			
+			int x = xi+xs;
+			int y = yi+ys;	
+			
+			BiomeGenBase b = world.getBiomeGenForCoords(x, y);
+			if(b != BiomeGenBase.river){
+				i++;//Skip density
+			}
+			
+			int maxL = HelperWorldGen.getUndergroundHeightLevel(world, x, y);
+			int deltaL = HelperWorldGen.assumeSafeHeightDifferenceToBedrock(maxL);
+			int cL=maxL-(int)(random.nextFloat()*(float)deltaL);
+			
+			HelperWorldGen.setBlockDirectly(world, stor, xs, ys, cL ,BlockLoader.orePyrite);
+	
+			
+		}
+		
+	}
+
+
+	
 	private void platinumPass(Random random, int chunkX, int chunkZ, World world) {
 		ExtendedBlockStorage[] stor = HelperWorldGen.getStorageFromChunk(chunkX, chunkZ, world);
 		int xi = chunkX*HelperWorldGen.CHUNKSIZE;

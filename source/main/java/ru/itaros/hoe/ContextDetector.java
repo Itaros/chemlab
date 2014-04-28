@@ -24,7 +24,7 @@ public class ContextDetector implements IHOEContextDetector {
 	
 	@Override
 	public FMLContext getContext() {
-		if(local==null){return FMLContext.INTEGRATED;}else{
+		if(local==null){return FMLContext.CLIENT;}else{
 			return local;
 		}
 	}
@@ -33,10 +33,13 @@ public class ContextDetector implements IHOEContextDetector {
 	public void requestContextData(FMLServerAboutToStartEvent event) {
 		FMLLog.log(Level.INFO, ">HOE TRIES TO REFLECT ISE...");
     	try {
-			Class<?> integrated = (Class<?>) Class.forName("IntegratedServer");
+			Class<?> integrated = (Class<?>) Class.forName("net.minecraft.server.integrated.IntegratedServer");
 			if(integrated.isInstance(event.getServer())){
 				FMLLog.log(Level.INFO, ">...SUCCESS[INTEGRATED]");
 				local=FMLContext.INTEGRATED;
+	    	}else{
+	    		FMLLog.log(Level.INFO, ">...FAILURE[AMBIGUITY]");
+				local=FMLContext.CLIENT;
 	    	}
 		} catch (ClassNotFoundException e) {
 			FMLLog.log(Level.INFO, ">...FAILURE[DEDICATED]");
@@ -45,5 +48,12 @@ public class ContextDetector implements IHOEContextDetector {
 		} 
 
 	}
+
+	@Override
+	public void rejectContext() {
+		local=null;
+	}
+	
+	
 
 }

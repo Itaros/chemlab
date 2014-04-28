@@ -22,7 +22,8 @@ public class GUILoader {
 				FluidCompressorContainer.class,
 				TurboexpanderContainer.class,
 				EvaporationUnitContainer.class,
-				CatalyticTankContainer.class
+				CatalyticTankContainer.class,
+				HiResistantMixerContainer.class
 				);
 	}
 	

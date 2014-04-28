@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import ru.itaros.api.hoe.IHOEJob;
 import ru.itaros.api.hoe.exceptions.HOENoSuchDataExistsException;
+import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 
 public class HOEMachines implements IHOEJob {
@@ -12,9 +13,17 @@ public class HOEMachines implements IHOEJob {
 	
 	Vector<HOEMachineData> machines = new Vector<HOEMachineData>();
 	
+	//Used in error reporting
+	private HOEMachineData currentlyProcessed;
+	public HOEMachineData getCurrentlyProccessedData(){
+		return currentlyProcessed;
+	}
+	
+	
 	@Override
 	public void run() {
 		for(HOEMachineData d : machines){
+			currentlyProcessed=d;
 			if(d.isConfigured()){
 				HOEMachineIO io = d.getIO();
 				io.tick(d);
@@ -29,15 +38,15 @@ public class HOEMachines implements IHOEJob {
 		machines.add(data);
 	}
 	/*
-	 * Creates and injects basic HOEMachineData
+	 * Creates and injects basic HOEMachineCrafterData
 	 */
-	public HOEMachineData generateMachineData() {
-		HOEMachineData data = new HOEMachineData();
+	public HOEMachineCrafterData generateMachineCrafterData() {
+		HOEMachineCrafterData data = new HOEMachineCrafterData();
 		machines.add(data);
 		return data;
 	}
 
-	public void removeMachineData(HOEMachineData data) throws HOENoSuchDataExistsException {
+	public void removeMachineData(HOEMachineCrafterData data) throws HOENoSuchDataExistsException {
 		if(!machines.remove(data)){
 			throw new HOENoSuchDataExistsException();
 		}

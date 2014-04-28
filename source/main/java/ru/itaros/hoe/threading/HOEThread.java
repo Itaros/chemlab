@@ -50,6 +50,11 @@ public class HOEThread extends Thread implements IHOEThread{
 				}catch(Exception e){
 					//TODO: Send exception to console
 					//TODO: Send message to server chat
+					System.err.println("========ERROR REPORT========");
+					System.err.println("Faulty HOEJob detected:\n"+r.getClass().getSimpleName());
+					e.printStackTrace();
+					System.err.println("Possible cause:"+r.getCurrentlyProccessedData().getClass().getName());
+					System.err.println("=======END OF REPORT========");
 					toTerminate=r;
 				}
 			}

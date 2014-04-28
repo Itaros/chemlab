@@ -3,11 +3,11 @@ package ru.itaros.chemlab.client.ui;
 import net.minecraft.entity.player.InventoryPlayer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.minecraft.tileentity.FluidCompressorTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 
 public class GUIFluidCompressor extends GUIHOEClassicalMachine {
 
-	public GUIFluidCompressor(InventoryPlayer playerInv, MachineTileEntity tile){
+	public GUIFluidCompressor(InventoryPlayer playerInv, MachineCrafterTileEntity tile){
 		this(playerInv,(FluidCompressorTileEntity)tile);
 	}
 	private GUIFluidCompressor(InventoryPlayer playerInv, FluidCompressorTileEntity tile) {

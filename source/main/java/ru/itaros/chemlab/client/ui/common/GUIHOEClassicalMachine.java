@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import org.lwjgl.opengl.GL11;
 
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -20,7 +20,7 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 	public abstract String getMachineUnlocalizedName();
 	
 	public static final int CAPTIONCOLOR = 4210752;
-	protected MachineTileEntity tile;
+	protected MachineCrafterTileEntity tile;
 	protected InventoryPlayer playerInv;
 	private ResourceLocation background;
 	protected int x;

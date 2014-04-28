@@ -60,10 +60,10 @@ public class HOE {
     {
     	contextdetector.requestContextData(event);
     	//Hack to load correct proxy	
-    	if(contextdetector.getContext()==FMLContext.DEDICATED){
-	    	proxy = new HOEServer();
-	    	FMLLog.log(Level.INFO, "HOE PROXY HACK ELEVATED!");
-    	}
+    	//if(contextdetector.getContext()==FMLContext.DEDICATED || contextdetector.getContext()==FMLContext.INTEGRATED){
+	    //	proxy = new HOEServer();
+	    //	FMLLog.log(Level.INFO, "HOE PROXY HACK ELEVATED!");
+    	//}
     	
 		proxy.initHOE();
     } 
@@ -71,6 +71,7 @@ public class HOE {
     public void serverShutdown(FMLServerStoppingEvent event)
     {
 		proxy.shutdownHOE();
+		contextdetector.rejectContext();
     }
 	public static void setController(HOEThreadController hoeThreadController) {
 		HOETC = hoeThreadController;

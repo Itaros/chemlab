@@ -47,6 +47,16 @@ public class ItemLoader {
 	public static DegradableItem platinum_catalization_grid;
 	
 	public static ChemLabItem ferricoxide;
+	public static ChemLabItem amorphousGraphite;
+	
+	public static ChemLabItem carbonizediron;
+	public static ChemLabItem carbonizedsulfuricatediron;
+	
+	public static ChemLabItem slag;
+	
+	public static ChemLabItem magnesium;
+	
+	public static ChemLabItem magnesiumsulfide;
 	
 	public static void loadItems(){
 		programmer = new Programmer();
@@ -95,6 +105,23 @@ public class ItemLoader {
 		ferricoxide = new ChemLabItem("ferricoxide");
 		GameRegistry.registerItem(ferricoxide,ferricoxide.getUnlocalizedName());
 		
+		amorphousGraphite = new ChemLabItem("graphite.amorphous");
+		GameRegistry.registerItem(amorphousGraphite,amorphousGraphite.getUnlocalizedName());
+		
+		carbonizediron = new ChemLabItem("ingot.iron.carbonized");
+		GameRegistry.registerItem(carbonizediron,carbonizediron.getUnlocalizedName());
+		
+		carbonizedsulfuricatediron = new ChemLabItem("ingot.iron.carbonized_sulfuricated");
+		GameRegistry.registerItem(carbonizedsulfuricatediron,carbonizedsulfuricatediron.getUnlocalizedName());
+		
+		slag = new ChemLabItem("slag");
+		GameRegistry.registerItem(slag, slag.getUnlocalizedName());
+		
+		magnesium = new ChemLabItem("magnesium");
+		GameRegistry.registerItem(magnesium,magnesium.getUnlocalizedName());
+		
+		magnesiumsulfide = new ChemLabItem("magnesiumsulfide");
+		GameRegistry.registerItem(magnesiumsulfide,magnesiumsulfide.getUnlocalizedName());
 		
 		loadAutoItems();
 		
@@ -200,7 +227,11 @@ public class ItemLoader {
 		"oreSerpentineAsbestos",
 		"oreAmphiboleAsbestos",
 		"orePlatinum",
-		"orePyrite"
+		"orePyrite",
+		"oreMetaAnthracite",
+		"oreLimestone",
+		"oreHematite",
+		"orePericlase"
 	};	
 
 	private static void crushedOreAutoloader(){

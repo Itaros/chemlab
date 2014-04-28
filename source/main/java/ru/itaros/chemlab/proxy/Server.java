@@ -1,7 +1,7 @@
 package ru.itaros.chemlab.proxy;
 
 import ru.itaros.chemlab.HOELinker;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 
 public class Server extends Proxy {
 
@@ -15,7 +15,7 @@ public class Server extends Proxy {
 	}
 	
 	@Override
-	public void openProgrammerGUI(MachineTileEntity tile) {
+	public void openProgrammerGUI(MachineCrafterTileEntity tile) {
 		// TODO Auto-generated method stub
 		
 	}

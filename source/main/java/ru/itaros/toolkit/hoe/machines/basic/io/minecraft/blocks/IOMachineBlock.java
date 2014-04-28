@@ -2,6 +2,7 @@ package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.blocks;
 
 import java.util.Random;
 
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -68,8 +69,8 @@ public abstract class IOMachineBlock extends Block implements ITileEntityProvide
 			int z, Random random) {
 		
 		TileEntity te  =world.getTileEntity(x, y, z);
-		if(te instanceof MachineTileEntity){
-			MachineTileEntity me = (MachineTileEntity)te;
+		if(te instanceof MachineCrafterTileEntity){
+			MachineCrafterTileEntity me = (MachineCrafterTileEntity)te;
 			me.pullFromHOE();
 			me.pushToHOE();
 			me.sync();

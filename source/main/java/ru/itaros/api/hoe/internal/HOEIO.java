@@ -41,7 +41,9 @@ public abstract class HOEIO {
 		isAllowedToStart=true;
 	}
 
-	public abstract void tick(HOEData data);
+	public void tick(HOEData data){
+		data.executeIntercoms(data);
+	}
 	//TODO: HOE-style exception
 	public static IIORegistry getIORegistry(){
 		try{

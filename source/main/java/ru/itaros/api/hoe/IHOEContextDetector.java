@@ -6,6 +6,7 @@ public interface IHOEContextDetector {
 
 	public enum FMLContext{
 		INTEGRATED,
+		CLIENT,
 		DEDICATED,
 		UPRS//MPCP+,Bukkit
 	}
@@ -13,5 +14,5 @@ public interface IHOEContextDetector {
 	
 	public FMLContext getContext();
 	public void requestContextData(FMLServerAboutToStartEvent event);
-	
+	public void rejectContext();
 }

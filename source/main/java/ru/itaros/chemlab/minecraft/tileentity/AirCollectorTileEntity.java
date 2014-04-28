@@ -1,20 +1,21 @@
 package ru.itaros.chemlab.minecraft.tileentity;
 
-import ru.itaros.api.hoe.HOEAbstractLinker;
 import ru.itaros.chemlab.ChemLab;
+import ru.itaros.chemlab.HOELinker;
+import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 
-public class AirCollectorTileEntity extends MachineTileEntity {
+public class AirCollectorTileEntity extends MachineCrafterTileEntity {
 
 	@Override
-	public HOEAbstractLinker getLinker() {
+	public HOELinker getLinker() {
 		return ChemLab.proxy.getLinker();
 	}
 
 	@Override
 	public HOEMachineIO getSuperIO() {
-		return (HOEMachineIO) ChemLab.getIOCollection().getHOEIO("AirCollectorIO");
+		return (HOEMachineCrafterIO) ChemLab.getIOCollection().getHOEIO("AirCollectorIO");
 	}
 
 }

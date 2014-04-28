@@ -32,6 +32,9 @@ public class HOEFluidLoader {
 	
 	public static SulphuricAcidSolution sulphuricacid_solution;
 	
+	public static CarbonDioxideGas carbondioxide_gas;
+	public static CarbonMonooxideGas carbonmonooxide_gas;
+	
 	private static HOEFluidStack[] composition_air;
 	
 	public static void load(){
@@ -94,6 +97,12 @@ public class HOEFluidLoader {
 		
 		sulphuricacid_solution = new SulphuricAcidSolution();
 		registry.register(sulphuricacid_solution);
+		
+		carbondioxide_gas = new CarbonDioxideGas();
+		registry.register(carbondioxide_gas);
+		
+		carbonmonooxide_gas = new CarbonMonooxideGas();
+		registry.register(carbonmonooxide_gas);
 		
 		//compositions
 		composition_air = new HOEFluidStack[]{

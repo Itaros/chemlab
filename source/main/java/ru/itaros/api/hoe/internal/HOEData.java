@@ -1,13 +1,22 @@
 package ru.itaros.api.hoe.internal;
 
+import ru.itaros.toolkit.hoe.machines.basic.io.connectivity.HOEBiPolarSocket;
 
 
-public class HOEData {
+
+public abstract class HOEData {
+	
+	public HOEData(){
+		connectivity = new HOEBiPolarSocket();
+	}
+	
 	protected HOEData child;
+	protected boolean isSided;
 	
 	public HOEData getChild(){
 		return child;
 	}
+	public abstract boolean isConfigured();
 	protected HOEData spawnChild() {
 		Class<? extends HOEData> mytype = this.getClass();
 		try {
@@ -18,7 +27,23 @@ public class HOEData {
 			throw new RuntimeException(e);
 		}
 		//child = new HOEMachineData(this);
+	}
+	public boolean isSided() {
+		return isSided;
 	}	
+	
+	
+	
+	//================Intercomms================
+	HOEBiPolarSocket connectivity;
+
+	public void executeIntercoms(HOEData data) {
+		connectivity.operate(data);
+	}
+	public HOEBiPolarSocket getIntercomSocket(){
+		return connectivity;
+	}
+	//==========================================
 	
 }
 

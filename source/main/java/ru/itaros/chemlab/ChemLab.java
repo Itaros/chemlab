@@ -4,6 +4,7 @@ import java.util.EnumMap;
 
 import org.apache.logging.log4j.Level;
 
+import ru.itaros.api.hoe.IHOEContextDetector.FMLContext;
 import ru.itaros.chemlab.client.ui.common.GUIHandler;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.chemlab.loader.BlockLoader;
@@ -18,6 +19,7 @@ import ru.itaros.chemlab.network.NetworkChannel;
 import ru.itaros.chemlab.proxy.Proxy;
 import ru.itaros.chemlab.proxy.Server;
 import ru.itaros.chemlab.worldgen.WorldGenerator;
+import ru.itaros.hoe.ContextDetector;
 import ru.itaros.toolkit.hoe.io.IOCollectionHelper;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
@@ -98,15 +100,11 @@ public class ChemLab
     public void serverInit(FMLServerAboutToStartEvent event)
     {    
     	//Hack to load correct proxy	
-    	try {
-			Class<?> integrated = (Class<?>) Class.forName("IntegratedServer");
-			if(integrated.isInstance(event.getServer())){
-	    		proxy = new Server();
-	    		FMLLog.log(Level.INFO, "HOE[ChemLab] PROXY HACK ELEVATED!");
-	    	}
-		} catch (ClassNotFoundException e) {
-			//NOP. Fail Silently. This class doesn't exist on server
-		}     	
+    	
+    	//if(ContextDetector.getInstance().getContext()==FMLContext.DEDICATED || ContextDetector.getInstance().getContext()==FMLContext.INTEGRATED){
+		//    proxy = new Server();
+		//    FMLLog.log(Level.INFO, "HOE[ChemLab] PROXY HACK ELEVATED!");
+    	//}
     	
     	
 		proxy.initLinker();   	

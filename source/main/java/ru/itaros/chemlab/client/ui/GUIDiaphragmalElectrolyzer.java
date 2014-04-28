@@ -3,11 +3,11 @@ package ru.itaros.chemlab.client.ui;
 import net.minecraft.entity.player.InventoryPlayer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.minecraft.tileentity.DiaphragmalElectrolyzerTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 
 public class GUIDiaphragmalElectrolyzer extends GUIHOEClassicalMachine {
 
-	public GUIDiaphragmalElectrolyzer(InventoryPlayer playerInv, MachineTileEntity tile){
+	public GUIDiaphragmalElectrolyzer(InventoryPlayer playerInv, MachineCrafterTileEntity tile){
 		this(playerInv,(DiaphragmalElectrolyzerTileEntity)tile);
 	}
 	private GUIDiaphragmalElectrolyzer(InventoryPlayer playerInv, DiaphragmalElectrolyzerTileEntity tile) {

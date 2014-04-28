@@ -4,11 +4,11 @@ import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.hoe.data.DiaphragmalElectrolyzerData;
 import ru.itaros.chemlab.loader.recipes.DiaphragmalElectrolyzerRecipes;
 import ru.itaros.chemlab.loader.recipes.WoodChainRecipes;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
-import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
+import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
+import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
 
-public class DiaphragmalElectrolyzerIO extends HOEMachineIO {
+public class DiaphragmalElectrolyzerIO extends HOEMachineCrafterIO {
 
 	public static final int MAXPOWER = 1000;
 	public static final int INCOMING_PORTS		=	3;

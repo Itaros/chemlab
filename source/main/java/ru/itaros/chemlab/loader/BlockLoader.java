@@ -25,11 +25,19 @@ public class BlockLoader {
 	public static Turboexpander turboexpander;
 	public static EvaporationUnit evaporationunit;
 	public static CatalyticTank cattank;
+	public static HiResistantMixer hiresistmixer;
+	public static ServiceBay servicebay;
+	
 	
 	public static OreHalite oreHalite;
 	public static OreMetal orePlatinum;
 	public static OreMetal orePyrite;
+	public static OreMetal oreMetaAnthracite;
 	
+	public static OreMetal oreLimestone;
+	public static OreMetal oreHematite;
+	
+	public static OreMetal orePericlase;//MgO
 	
 	public static void loadBlocks(){
 		loadAsbestosMinerals();
@@ -79,6 +87,12 @@ public class BlockLoader {
 		cattank = new CatalyticTank();
 		GameRegistry.registerBlock(cattank,cattank.getUnlocalizedNameRaw());
 		
+		hiresistmixer = new HiResistantMixer();
+		GameRegistry.registerBlock(hiresistmixer, hiresistmixer.getUnlocalizedNameRaw());
+		
+		servicebay = new ServiceBay();
+		GameRegistry.registerBlock(servicebay, servicebay.getUnlocalizedNameRaw());
+		
 		
 		//Ores
 		
@@ -93,6 +107,23 @@ public class BlockLoader {
 		orePyrite = new OreMetal("Pyrite");
 		GameRegistry.registerBlock(orePyrite,orePyrite.getUnlocalizedName());
 		OreDictionary.registerOre("orePyrite", orePyrite);
+		
+		oreMetaAnthracite = new OreMetal("MetaAnthracite");
+		GameRegistry.registerBlock(oreMetaAnthracite,oreMetaAnthracite.getUnlocalizedName());
+		OreDictionary.registerOre("oreMetaAnthracite", oreMetaAnthracite);
+		
+		oreLimestone = new OreMetal("Limestone");
+		GameRegistry.registerBlock(oreLimestone, oreLimestone.getUnlocalizedName());
+		OreDictionary.registerOre("oreLimestone",oreLimestone);
+		
+		oreHematite = new OreMetal("Hematite");
+		GameRegistry.registerBlock(oreHematite,oreHematite.getUnlocalizedName());
+		OreDictionary.registerOre("oreHematite", oreHematite);
+		
+		orePericlase = new OreMetal("Periclase");
+		GameRegistry.registerBlock(orePericlase,orePericlase.getUnlocalizedName());
+		OreDictionary.registerOre("orePericlase", orePericlase);
+		
 		
 	}
 

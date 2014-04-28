@@ -7,10 +7,12 @@ import org.lwjgl.opengl.GL12;
 
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.network.packets.SetHOEMachineRecipePacket;
+import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
+import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.elements.Tab;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
@@ -22,8 +24,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class GUIToolProgrammer extends GuiScreen {
 
-	MachineTileEntity tile;
-	public GUIToolProgrammer(MachineTileEntity te){
+	MachineCrafterTileEntity tile;
+	public GUIToolProgrammer(MachineCrafterTileEntity te){
 		tile=te;
 	}
 	
@@ -137,97 +139,100 @@ public class GUIToolProgrammer extends GuiScreen {
 		//0 = DRAW
 		//1 = CLICKSIGN
 		
-		RecipesCollection repcol = tile.getSuperIO().getRecipesCollection();
-		//TODO: If there is no col - show "NO RECIPES AVAILABLE. THIS IS A BUG!"
-		
-		int recipesAmount = repcol.getRecipesAmount();
-		totalPages = recipesAmount/3;//3 is amount per page
-		
-		int rangeStart = currentPage * 3;
-		int rangeEnd = rangeStart + 3;
-		if(rangeEnd>recipesAmount){rangeEnd=recipesAmount;};
-		
-		int osx=171;
-		int osy=44;
-		
-		int xi = 8;
-		int yi = 18;
-		int ystep = 45;
-		
-		//Drawing
-		int i=-1;
-		for(int xp = rangeStart; xp < rangeEnd; xp++){
-			i++;
-			if(operation == 0){
-				GL11.glDisable(GL11.GL_LIGHTING);
-				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-				this.mc.renderEngine.bindTexture(overlay);
-				this.drawTexturedModalRect(xi+x, yi+y+(ystep*i), 0, 0, osx, osy);
-				GL11.glEnable(GL11.GL_LIGHTING);
-				
-				Recipe r = repcol.getRecipes()[xp];
-				
-				 GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-				//What the hell is that?
-		        short short1 = 240;
-		        short short2 = 240;
-		        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)short1 / 1.0F, (float)short2 / 1.0F);				
-				
-		        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-				
-				RenderHelper.enableGUIStandardItemLighting();
-				
-				GL11.glColorMask(true, true, true, true);
-
-				GL11.glPushMatrix();
-		       // int k = this.guiLeft;
-		       // int l = this.guiTop;
-		       // GL11.glTranslatef((float)k, (float)l, 0.0F);
-				
-				//TODO: This shit should be all precached
-				//Drawing incomings
-				int inc_offset=-1;
-				for(ItemStack stack_inc : r.getIncomingStricttypes()){
-					inc_offset++;
-					drawItemStack(stack_inc, x+xi+60-10-(inc_offset*(16+2)), y+yi+18+(ystep*i), null);
-				}
-				//Drawing outcomings
-				int out_offset=-1;
-				for(ItemStack stack_out : r.getOutcomingStricttypes()){
-					out_offset++;
-					drawItemStack(stack_out, x+xi+97+10+(out_offset*(16+2)), y+yi+18+(ystep*i), null);
-				}	
-				
-				RenderHelper.enableStandardItemLighting();
-				
-				GL11.glPopMatrix();
-				
-				
-				fontRendererObj.drawString(r.getLocalizedName(), xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);
-				
-			}else if(operation==1){
-				int ox = x2-x;
-				int oy = y2-y;
-				
-				int initx=xi;
-				int inity=yi+(ystep*i);
-				
-				
-				if(ox>initx && ox<initx+osx){
-					if(oy>inity && oy<inity+osy){
-						//Clicked
-						Recipe r = repcol.getRecipes()[xp];
-						this.mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
-						//tile.trySetRecipe(r);//Should be sended to server
-						//Clicking is always done on a client, you know xD
-						ChemLab.getInstance().SendPacketAsClientToServer(new SetHOEMachineRecipePacket(tile,r));
+		HOEMachineIO mio = tile.getSuperIO();
+		if(mio instanceof HOEMachineCrafterIO){
+			HOEMachineCrafterIO mcrafter = (HOEMachineCrafterIO)mio;
+			RecipesCollection repcol = mcrafter.getRecipesCollection();
+			//TODO: If there is no col - show "NO RECIPES AVAILABLE. THIS IS A BUG!"
+			
+			int recipesAmount = repcol.getRecipesAmount();
+			totalPages = recipesAmount/3;//3 is amount per page
+			
+			int rangeStart = currentPage * 3;
+			int rangeEnd = rangeStart + 3;
+			if(rangeEnd>recipesAmount){rangeEnd=recipesAmount;};
+			
+			int osx=171;
+			int osy=44;
+			
+			int xi = 8;
+			int yi = 18;
+			int ystep = 45;
+			
+			//Drawing
+			int i=-1;
+			for(int xp = rangeStart; xp < rangeEnd; xp++){
+				i++;
+				if(operation == 0){
+					GL11.glDisable(GL11.GL_LIGHTING);
+					GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+					this.mc.renderEngine.bindTexture(overlay);
+					this.drawTexturedModalRect(xi+x, yi+y+(ystep*i), 0, 0, osx, osy);
+					GL11.glEnable(GL11.GL_LIGHTING);
+					
+					Recipe r = repcol.getRecipes()[xp];
+					
+					 GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+					//What the hell is that?
+			        short short1 = 240;
+			        short short2 = 240;
+			        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)short1 / 1.0F, (float)short2 / 1.0F);				
+					
+			        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+					
+					RenderHelper.enableGUIStandardItemLighting();
+					
+					GL11.glColorMask(true, true, true, true);
+	
+					GL11.glPushMatrix();
+			       // int k = this.guiLeft;
+			       // int l = this.guiTop;
+			       // GL11.glTranslatef((float)k, (float)l, 0.0F);
+					
+					//TODO: This shit should be all precached
+					//Drawing incomings
+					int inc_offset=-1;
+					for(ItemStack stack_inc : r.getIncomingStricttypes()){
+						inc_offset++;
+						drawItemStack(stack_inc, x+xi+60-10-(inc_offset*(16+2)), y+yi+18+(ystep*i), null);
 					}
+					//Drawing outcomings
+					int out_offset=-1;
+					for(ItemStack stack_out : r.getOutcomingStricttypes()){
+						out_offset++;
+						drawItemStack(stack_out, x+xi+97+10+(out_offset*(16+2)), y+yi+18+(ystep*i), null);
+					}	
+					
+					RenderHelper.enableStandardItemLighting();
+					
+					GL11.glPopMatrix();
+					
+					
+					fontRendererObj.drawString(r.getLocalizedName(), xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);
+					
+				}else if(operation==1){
+					int ox = x2-x;
+					int oy = y2-y;
+					
+					int initx=xi;
+					int inity=yi+(ystep*i);
+					
+					
+					if(ox>initx && ox<initx+osx){
+						if(oy>inity && oy<inity+osy){
+							//Clicked
+							Recipe r = repcol.getRecipes()[xp];
+							this.mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+							//tile.trySetRecipe(r);//Should be sended to server
+							//Clicking is always done on a client, you know xD
+							ChemLab.getInstance().SendPacketAsClientToServer(new SetHOEMachineRecipePacket(tile,r));
+						}
+					}
+					
 				}
-				
 			}
-		}
 		//60/18
-		
+		}
 		
 	}
 

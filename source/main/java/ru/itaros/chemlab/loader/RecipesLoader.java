@@ -7,6 +7,7 @@ import ru.itaros.chemlab.loader.recipes.DiaphragmalElectrolyzerRecipes;
 import ru.itaros.chemlab.loader.recipes.EvaporationUnitRecipes;
 import ru.itaros.chemlab.loader.recipes.FluidCompressorRecipes;
 import ru.itaros.chemlab.loader.recipes.FurnaceRecipes;
+import ru.itaros.chemlab.loader.recipes.MixerRecipes;
 import ru.itaros.chemlab.loader.recipes.TurboexpanderRecipes;
 import ru.itaros.chemlab.loader.recipes.WoodChainRecipes;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -30,6 +31,8 @@ public class RecipesLoader {
 		EvaporationUnitRecipes.load();
 		
 		CatalyticTankRecipes.load();
+		
+		MixerRecipes.load();
 	}
 
 	

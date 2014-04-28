@@ -23,7 +23,9 @@ public class TileEntityLoader {
     			new FluidCompressorIO(),
     			new TurboexpanderIO(),
     			new EvaporationUnitIO(),
-    			new CatalyticTankIO()
+    			new CatalyticTankIO(),
+    			new HiResistantMixerIO(),
+    			new ServiceBayIO()
     			);
 		iocollection.registerInHOE();
 		
@@ -44,6 +46,8 @@ public class TileEntityLoader {
 		GameRegistry.registerTileEntity(TurboexpanderTileEntity.class,TurboexpanderTileEntity.class.getName());
 		GameRegistry.registerTileEntity(EvaporationUnitTileEntity.class,EvaporationUnitTileEntity.class.getName());
 		GameRegistry.registerTileEntity(CatalyticTankTileEntity.class,CatalyticTankTileEntity.class.getName());
+		GameRegistry.registerTileEntity(HiResistantMixerTileEntity.class,HiResistantMixerTileEntity.class.getName());
+		GameRegistry.registerTileEntity(ServiceBayTileEntity.class,ServiceBayTileEntity.class.getName());
 		
 		return iocollection;
 	}

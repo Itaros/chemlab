@@ -1,12 +1,14 @@
 package ru.itaros.chemlab.hoe.data;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.loader.ItemLoader;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
+import ru.itaros.toolkit.hoe.machines.interfaces.IHasReplacableParts;
 
-public class CatalyticTankData extends HOEMachineData {
+public class CatalyticTankData extends HOEMachineCrafterData implements IHasReplacableParts {
 	/*
 	 * Reflection autocaster
 	 */
@@ -69,5 +71,28 @@ public class CatalyticTankData extends HOEMachineData {
 		ItemStack o = retrieveCatalyzer();
 		insertCatalyzer(n);
 		return o;
+	}
+
+	
+	//IHasReplacableParts
+	@Override
+	public boolean requiresReplacements() {
+		if(resource<=0){return true;}else{return false;}
+	}
+	//TODO: ItemLoader should move to cached ItemStacks
+	private static Item replacable = ItemLoader.platinum_catalization_grid;
+	@Override
+	public ItemStack getTypeOfReplacableRequired() {
+		return new ItemStack(replacable);
+	}
+
+	@Override
+	public ItemStack exchangeParts(ItemStack part) {
+		if(part.getItem()==replacable){
+			return exchangeCatalyzer(part);
+		}else{
+			return null;
+		}
+		
 	}	
 }

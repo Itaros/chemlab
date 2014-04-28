@@ -2,7 +2,7 @@ package ru.itaros.chemlab.client.ui.common;
 
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.minecraft.tileentity.BiogrinderTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -42,7 +42,7 @@ public class GUIHandler implements IGuiHandler {
 		
 		try{
 			Class<? extends HOEContainer> guitr = index[ID];
-			return guitr.getConstructor(InventoryPlayer.class,MachineTileEntity.class).newInstance(player.inventory,te);
+			return guitr.getConstructor(InventoryPlayer.class,MachineCrafterTileEntity.class).newInstance(player.inventory,te);
 			
 		}catch(Exception e){
 			System.err.println("Something wrong with UI(SERVER)!");
@@ -64,7 +64,7 @@ public class GUIHandler implements IGuiHandler {
 		try{
 			Class<? extends HOEContainer> guitr = index[ID];
 			Class<? extends GUIHOEClassicalMachine> containert = (Class<? extends GUIHOEClassicalMachine>) guitr.getMethod("getGUIType").invoke(null);
-			return containert.getConstructor(InventoryPlayer.class,MachineTileEntity.class).newInstance(player.inventory,te);
+			return containert.getConstructor(InventoryPlayer.class,MachineCrafterTileEntity.class).newInstance(player.inventory,te);
 		}catch(Exception e){
 			System.err.println("Something wrong with UI(CLIENT)!");
 		}

@@ -2,7 +2,7 @@ package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -32,13 +32,13 @@ public abstract class Recipe {
 		}
 	}
 
-	public abstract boolean checkStorage(HOEMachineData hoeMachineData);
+	public abstract boolean checkStorage(HOEMachineCrafterData hoeMachineData);
 
-	public abstract boolean checkResources(HOEMachineData hoeMachineData);
+	public abstract boolean checkResources(HOEMachineCrafterData hoeMachineData);
 
-	public abstract void consumeResources(HOEMachineData hoeMachineData);
+	public abstract void consumeResources(HOEMachineCrafterData hoeMachineData);
 
-	public abstract void incrementProduction(HOEMachineData hoeMachineData);
+	public abstract void incrementProduction(HOEMachineCrafterData hoeMachineData);
 	
 	
 	private String unlocalizedName="";

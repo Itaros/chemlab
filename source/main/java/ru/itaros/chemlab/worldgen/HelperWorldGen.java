@@ -10,6 +10,7 @@ public class HelperWorldGen {
 
 	public static final int ASSUMED_BEDROCK_LEVEL = 5;
 	public static final int CHUNKSIZE = 16;
+	public static final float CHUNKHEIGHT = 250;
 	
 	/*
 	 * This methods acquares chunk storage

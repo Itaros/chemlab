@@ -9,7 +9,7 @@ import io.netty.handler.codec.string.StringEncoder;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
 import ru.itaros.chemlab.network.IPacketCodecDescriptor;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 
 public class SetHOEMachineRecipePacket implements IPacketCodecDescriptor {
 
@@ -23,12 +23,12 @@ public class SetHOEMachineRecipePacket implements IPacketCodecDescriptor {
 		World w = DimensionManager.getWorld(dim);
 		TileEntity tile = w.getTileEntity(x, y, z);
 		if(tile==null){return;}
-		if(tile instanceof MachineTileEntity){
+		if(tile instanceof MachineCrafterTileEntity){
 			//Trying to get recipe
 			IHOERecipeRegistry repreg = Recipe.getRecipeRegistry();
 			Recipe r = repreg.get(rectoken);//TODO: CAN CRASH SERVER. Need to discard on error.
 			//Setting
-			MachineTileEntity me = (MachineTileEntity)tile;
+			MachineCrafterTileEntity me = (MachineCrafterTileEntity)tile;
 			me.trySetRecipe(r);
 			System.out.println("RECIPE CHANGED");
 		}else{
@@ -37,7 +37,7 @@ public class SetHOEMachineRecipePacket implements IPacketCodecDescriptor {
 	}
 	//EXEC
 	public SetHOEMachineRecipePacket(){} //we need this for the packet decoding
-	public SetHOEMachineRecipePacket(MachineTileEntity tile, Recipe r){
+	public SetHOEMachineRecipePacket(MachineCrafterTileEntity tile, Recipe r){
 		//Getting coordinates
 		x = tile.xCoord;
 		y = tile.yCoord;

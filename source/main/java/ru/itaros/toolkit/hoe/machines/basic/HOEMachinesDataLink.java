@@ -12,13 +12,13 @@ public final class HOEMachinesDataLink implements IHOEDataLink {
 	}
 	
 	@Override
-	public HOEMachineData generateCell() {
-		return threadproto.generateMachineData();
+	public HOEData generateCell() {
+		return threadproto.generateMachineCrafterData();
 	}
 
 	@Override
 	public void deleteCell(HOEData data) throws HOENoSuchDataExistsException {
-		threadproto.removeMachineData((HOEMachineData)data);
+		threadproto.removeMachineData((HOEMachineCrafterData)data);
 	}
 
 }

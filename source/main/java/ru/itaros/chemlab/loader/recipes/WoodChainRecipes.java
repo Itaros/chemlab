@@ -88,10 +88,14 @@ public class WoodChainRecipes {
 		incoming = new ItemStack[]{new ItemStack(BlockLoader.oreHalite),new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
 		outcoming = new ItemStack[]{OreDictionary.getOres("dustSand").get(0).copy(),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.nacl_solution))};
 		FixedConversionRecipe fcr4_2 = new FixedConversionRecipe(20,100,incoming,outcoming);		
-		fcr4_2.setUnlocalizedName("washer.halite");		
-		
+		fcr4_2.setUnlocalizedName("washer.halite");	
+		//Meta-Anthracite washing
+		incoming = new ItemStack[]{OreDictionary.getOres("crushedMetaAnthracite").get(0).copy(),new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
+		outcoming = new ItemStack[]{new ItemStack(ItemLoader.amorphousGraphite)};//TODO: Add stone sludge into outcome
+		FixedConversionRecipe fcr4_3 = new FixedConversionRecipe(20,100,incoming,outcoming);		
+		fcr4_3.setUnlocalizedName("washer.amorphgraphite");			
 		//Collection
-		washerRecipes = new RecipesCollection(fcr4,fcr4_1,fcr4_2);
+		washerRecipes = new RecipesCollection(fcr4,fcr4_1,fcr4_2,fcr4_3);
 		washerRecipes.register();		
 		
 		//======Impregnator======

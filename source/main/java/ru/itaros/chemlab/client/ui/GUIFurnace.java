@@ -3,11 +3,11 @@ package ru.itaros.chemlab.client.ui;
 import net.minecraft.entity.player.InventoryPlayer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.minecraft.tileentity.FurnaceTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 
 public class GUIFurnace extends GUIHOEClassicalMachine {
 
-	public GUIFurnace(InventoryPlayer playerInv, MachineTileEntity tile){
+	public GUIFurnace(InventoryPlayer playerInv, MachineCrafterTileEntity tile){
 		this(playerInv,(FurnaceTileEntity)tile);
 	}
 	private GUIFurnace(InventoryPlayer playerInv, FurnaceTileEntity tile) {

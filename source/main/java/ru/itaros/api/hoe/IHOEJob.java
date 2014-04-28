@@ -1,5 +1,7 @@
 package ru.itaros.api.hoe;
 
+import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+
 
 public interface IHOEJob {
 
@@ -10,4 +12,8 @@ public interface IHOEJob {
 	 */
 	public void run();
 	
+	/*
+	 * Used in error reporting
+	 */
+	public HOEMachineData getCurrentlyProccessedData();
 }

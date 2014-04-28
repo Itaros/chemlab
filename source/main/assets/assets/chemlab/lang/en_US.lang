@@ -21,7 +21,10 @@ tile.chemlab:machineaircollector.name=Air Collector
 tile.chemlab:ore.halite.name=Halite
 tile.chemlab:ore.platinum.name=Native Platinum Ore
 tile.chemlab:ore.pyrite.name=Pyrite Ore
-
+tile.chemlab:ore.metaanthracite.name=Meta-Anthracite Ore
+tile.chemlab:ore.limestone.name=Limestone
+tile.chemlab:ore.hematite.name=Hematite Ore
+tile.chemlab:ore.periclase.name=Periclase Ore
 
 item.chemlab:Woodchips.name=Woodchips
 item.chemlab:WoodchipClump.name=Woodchip Clumps
@@ -41,6 +44,7 @@ item.chemlab:CrushedOre-oreCoal.name=Crushed Coal Ore
 item.chemlab:CrushedOre-orePlatinum.name=Crushed Native Platinum Ore
 item.chemlab:CrushedOre-oreSerpentineAsbestos.name=Crushed White Asbestos
 item.chemlab:CrushedOre-oreAmphiboleAsbestos.name=Crushed Amphibole Asbestos
+item.chemlab:CrushedOre-oreMetaAnthracite.name=Crushed Meta-Anthracite
 
 item.chemlab:asbestos-diaphragm.name=White Asbestos Diaphragm
 item.chemlab:graphite_anode.name=Graphite Anode
@@ -76,8 +80,16 @@ item.chemlab:hvlc-oxygen-gas.name=Oxygen Hi-Volume Liquid Cell
 item.chemlab:hvlc-sulphurdioxide-gas.name=Sulphur Dioxide Hi-Volume Liquid Cell
 item.chemlab:hvlc-sulphurtrioxide-gas.name=Sulphur Trioxide Hi-Volume Liquid Cell
 item.chemlab:hvlc-sulphuricacid-solution.name=Sulphuric Acid Hi-Volume Liquid Cell
+item.chemlab:hvlc-carbondioxide-gas.name=Carbon Dioxide Hi-Volume Liquid Cell
+item.chemlab:hvlc-carbonmonooxide-gas.name=Carbon Monooxide Hi-Volume Liquid Cell
 
 item.genericitem.ferricoxide.name=Ferric Oxide
+item.genericitem.graphite.amorphous.name=Amorphous Graphite
+item.genericitem.ingot.iron.carbonized.name=Carbonized Iron
+item.genericitem.ingot.iron.carbonized_sulfuricated.name=Carbonized Sulfuric Iron
+item.genericitem.slag.name=Slag
+item.genericitem.magnesium.name=Magnesium
+item.genericitem.magnesiumsulfide.name=Magnesium Sulfide
 
 recipe.crusher.oreIron.name=Crush Native Iron Cluster Ore
 recipe.crusher.oreGold.name=Crush Native Gold Cluster Ore
@@ -95,6 +107,7 @@ recipe.impregnator.woodfibers.name=Impregnate Woodfibers
 recipe.washer.halite.name=Dissolve Halite
 recipe.washer.proteined.name=Extract Proteins and Polyoses
 recipe.washer.lignocellulose.name=Wash Wood Fibers
+recipe.washer.amorphgraphite.name=Extract Amorphous Graphite
 recipe.centrext.ligninocellulose.name=Extract Lignin and Cellulose
 recipe.centrext.extractives.name=Extract Wood Extractives
 recipe.biogrinder.crushchips.name=Cut Woodchips
@@ -102,6 +115,12 @@ recipe.biogrinder.crushlogs.name=Grind Logs
 recipe.diaelectr.naoh.name=Electrolyse NaCl
 recipe.centrext.crushedgold.name=Separate Gold from Stone
 recipe.cattank.sulphurtrioxide.name=Oxidise Sulphur Dioxide to Trioxide
+recipe.mixer.sulphuricacid.name=React Sulphur Trioxide with Water
+recipe.furnace.carbothermal.ferricoxide.name=Reduce to Carbonized Iron
+recipe.furnace.dusts.gold.name=Melt Pure Gold Dust
+recipe.furnace.dusts.iron.name=Melt Pure Iron Dust
+recipe.mixer.decarboxination.name=Molten phase decarbonation
+recipe.mixer.desulphurication.name=Remove Sulphur
 
 
 
