@@ -21,13 +21,7 @@ public class CentrifugalExtractorIO extends HOEMachineCrafterIO {
 		this.setReq(INCOMING_PORTS, OUTCOMING_PORTS);
 		this.allowToStart();
 	}
-	@Override
-	protected void produce(HOEData data) {
-		HOEMachineCrafterData hm = (HOEMachineCrafterData) data;
-		if(hm.decrementResources()){
-			hm.incrementProduction();
-		}
-	}
+
 	
 	@Override
 	public void configureData(HOEData data) {

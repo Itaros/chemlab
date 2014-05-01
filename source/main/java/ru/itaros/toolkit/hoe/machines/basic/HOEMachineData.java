@@ -22,13 +22,13 @@ public class HOEMachineData extends HOEData {
 		bindChildToParent(parent);
 	}	
 	
-	protected int power;
+	protected double power;
 
 	public void readNBT(NBTTagCompound nbt){
 		//super.readNBT(nbt);
 		//Power
-		power=nbt.getInteger("power");
-		maxpower=nbt.getInteger("maxpower");
+		power=nbt.getDouble("power");
+		maxpower=nbt.getDouble("maxpower");
 		//FMLLog.log(Level.INFO, "Maxpower was:"+maxpower);
 		//Ticks
 		ticksRequared=nbt.getInteger("ticksRequared");
@@ -43,8 +43,8 @@ public class HOEMachineData extends HOEData {
 	public void writeNBT(NBTTagCompound nbt){
 		//super.writeNBT(nbt);
 		//Power
-		nbt.setInteger("power", power);
-		nbt.setInteger("maxpower", maxpower);
+		nbt.setDouble("power", power);
+		nbt.setDouble("maxpower", maxpower);
 		//Ticks
 		nbt.setInteger("ticksRequared", ticksRequared);
 		nbt.setInteger("ticksAccumulated", ticksAccumulated);
@@ -68,14 +68,14 @@ public class HOEMachineData extends HOEData {
 	 */
 	protected void bindChildToParent(HOEMachineData parent){};
 
-	protected int maxpower;
+	protected double maxpower;
 	public int ticksRequared;
 
-	public int getPower() {
+	public double getPower() {
 		return power;
 	}
 
-	public int getPowerMax() {
+	public double getPowerMax() {
 		return maxpower;
 	}
 
@@ -137,17 +137,23 @@ public class HOEMachineData extends HOEData {
 		return io;
 	}
 
-	public int incrementPower(int i) {
+	public double incrementPower(double i) {
 		power+=i;
 		if(power>maxpower){
-			int overflow = power-maxpower;
+			double overflow = power-maxpower;
 			return overflow;
 		}
 		return 0;
 	}
 
+	public void decrementPower(double powerReqPerTick) {
+		power-=powerReqPerTick;
+		if(power<0){power=0;}
+	}	
+	
 	public HOEMachineData() {
 		super();
 	}
+
 
 }

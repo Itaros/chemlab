@@ -1,6 +1,7 @@
 package ru.itaros.chemlab.loader.recipes;
 
 import net.minecraft.item.ItemStack;
+import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.chemlab.items.ore.CrushedOre;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionRecipe;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
@@ -19,7 +20,7 @@ public class CrusherRecipes {
 			ItemStack source = crore.getSourceItem();
 			ItemStack in = source.copy();in.stackSize=1;
 			ItemStack out = new ItemStack(crore);out.stackSize=1;
-			FixedConversionRecipe fcr = new FixedConversionRecipe(10,1000,in,out);
+			FixedConversionRecipe fcr = new FixedConversionRecipe(25,(25*ChemLabValues.OILPOWER_FACTOR),in,out);
 			fcr.setUnlocalizedName("crusher."+crore.getDictName());
 			crushedRecipes[a]=fcr;
 		}

@@ -25,6 +25,7 @@ import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
 public class ItemLoader {
 
 	public static Programmer programmer;
+	public static PipeWrench wrench;
 	
 	public static HiVolumeLiquidCellEmpty emptyhvlc;
 	
@@ -62,6 +63,8 @@ public class ItemLoader {
 		programmer = new Programmer();
 		GameRegistry.registerItem(programmer,programmer.getUnlocalizedName());
 		
+		wrench = new PipeWrench();
+		GameRegistry.registerItem(wrench,wrench.getUnlocalizedName());
 		
 		woodchips = new Woodchips();
 		GameRegistry.registerItem(woodchips, woodchips.getUnlocalizedName());

@@ -16,12 +16,30 @@ public abstract class HOEMachineCrafterIO extends HOEMachineIO{
 	@Override
 	public abstract void configureData(HOEData data);
 
+
+	@Override
+	protected void produce(HOEData data) {
+		HOEMachineCrafterData hm = (HOEMachineCrafterData) data;
+		if(hm.decrementResources()){
+			hm.incrementProduction();
+		}
+		
+	}	
+	
 	protected boolean isMachineActive(HOEData data){
 		//if(data==null){return false;}//SOMETHING REALLY WRONG
 		HOEMachineCrafterData machine = (HOEMachineCrafterData)data;
-		if(!machine.isRecipeSet){return false;}
-		if(!machine.checkStorage()){return false;}
-		return true;
+		if(!machine.isReadyForCycle()){return false;}
+			
+		//if(!machine.isRecipeSet){return false;}
+		//if(!machine.checkStorage()){return false;}
+		
+		//power
+		if(machine.useEnergy()){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 }

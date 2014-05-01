@@ -41,8 +41,11 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 
 	public GUIHOEClassicalMachine(Container par1Container) {
 		super(par1Container);
+		resetEyeCandy();
 	}
 	
+
+
 	@Override
 	public boolean doesGuiPauseGame() {
 		return false;
@@ -109,18 +112,53 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 	
 
 	private void DrawPowerGauge(HOEMachineData data) {
-		int power = data.getPower();
-		int powerMax = data.getPowerMax();	
-		power=powerMax/2;//TODO: DEBUG. There is no power yet
 		
-		double diff = (double)power/(double)powerMax;
+		new_time=System.nanoTime();
+		tcom+=new_time-last_time;
+		
+		//TIME
+		
+		//HOE POWER
+		double power = data.getPower();
+		//timers
+		//->
+		if(energySmoothed<0D){energySmoothed=power;}
+		if(mjSmoothed<0D){mjSmoothed=tile.getCurrentMJ();}
+		if(tcom>TIMEOFFSET){
+			tcom-=TIMEOFFSET;
+			energySmoothed=(energySmoothed+power)/2D;
+			mjSmoothed=(mjSmoothed+tile.getCurrentMJ())/2D;
+		}
+		//<-
+		
+		double powerMax = data.getPowerMax();	
+		
+		double diff = energySmoothed/(double)powerMax;
 		int offset = (int) (66D*diff);
 		int inverted = 66-offset;
 		this.drawTexturedModalRect(x+159, y+13+inverted, 177, 2+inverted, 9+1, offset);
 		
+		//MJs
+		double mjdiff = mjSmoothed/tile.getMaximumMJ();
+		offset = (int) ((66D-6D)*mjdiff);	
+		inverted = 66-6-offset;
+		this.drawTexturedModalRect(x+159, y+12+inverted, 177, 67, 9,6);
 		
-		//fontRendererObj.drawString(power+"/"+powerMax, x+8, y+6+30, CAPTIONCOLOR);
+		//fontRendererObj.drawString(tile.getCurrentMJ()+"/"+tile.getMaximumMJ(), x+8, y+6+30, CAPTIONCOLOR);
 		
 	}
-
+	private static final int TIMEOFFSET=(int) (1D/20D*1000D);
+	private long last_time;
+	private long new_time;
+	private int tcom;
+	private double energySmoothed;
+	private double mjSmoothed;
+	private void resetEyeCandy() {
+		energySmoothed=-1;
+		mjSmoothed=-1;
+		
+		tcom=0;
+		last_time=System.nanoTime();
+	}
+	
 }

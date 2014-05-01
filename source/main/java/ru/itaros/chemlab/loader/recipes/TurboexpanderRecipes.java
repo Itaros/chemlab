@@ -26,7 +26,7 @@ public class TurboexpanderRecipes {
 				
 				ItemStack i = new ItemStack(HiVolumeLiquidCell.getByFluid(f));
 				ItemStack o = new ItemStack(HiVolumeLiquidCell.getByFluid(ifc.getExpandedForm()));
-				int requaredEnergy = 0;// ifc.getReleasedEnergyForExpansion();
+				int requaredEnergy = 10;// ifc.getReleasedEnergyForExpansion();
 				templist.add(new FixedConversionRecipe(REQUIRED_TIME,requaredEnergy,i,o));
 			}
 		}

@@ -8,7 +8,7 @@ import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollecti
 
 public class WasherIO extends HOEMachineCrafterIO {
 
-	public static final int MAXPOWER = 1000;
+	public static final int MAXPOWER = 500;
 	public static final int INCOMING_PORTS		=	2;
 	public static final int OUTCOMING_PORTS	=	2;
 	
@@ -22,13 +22,7 @@ public class WasherIO extends HOEMachineCrafterIO {
 		this.setReq(INCOMING_PORTS, OUTCOMING_PORTS);
 		this.allowToStart();
 	}
-	@Override
-	protected void produce(HOEData data) {
-		HOEMachineCrafterData hm = (HOEMachineCrafterData) data;
-		if(hm.decrementResources()){
-			hm.incrementProduction();
-		}
-	}
+
 	
 	@Override
 	public void configureData(HOEData data) {

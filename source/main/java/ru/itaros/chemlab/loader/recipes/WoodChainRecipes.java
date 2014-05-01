@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.items.ore.Dust;
 import ru.itaros.chemlab.loader.BlockLoader;
@@ -75,24 +76,24 @@ public class WoodChainRecipes {
 		name = "chemlab.washer.[water+lignocellulose->purelignocellulose+lextractives]";
 		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(water)),new ItemStack(ItemLoader.lignocelluloseflakes)};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.purelignocelluloseflakes),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.cellulosal_extractives_high))};
-		FixedConversionRecipe fcr4 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		FixedConversionRecipe fcr4 = new FixedConversionRecipe(20,20,incoming,outcoming,name);		
 		fcr4.setUnlocalizedName("washer.lignocellulose");
 		//FCR 4-1 (EXPLODED WOOD FIBERS + NaOH SOL -> WASHED LIGNOCELLULOSE + POLYOSE WARET SOLUTION)
 		//TODO: Make diluted extractives
 		name = "chemlab.washer.[explwoddfibr+naohs->washdlgnclls+polws]";
 		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(naoh)),new ItemStack(ItemLoader.explodedwoodfibers)};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.washedlignocellulose),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.polyose_proteined_solution))};
-		FixedConversionRecipe fcr4_1 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		FixedConversionRecipe fcr4_1 = new FixedConversionRecipe(20,20,incoming,outcoming,name);		
 		fcr4_1.setUnlocalizedName("washer.proteined");
 		//FCR 4-2 (Halite washing)
 		incoming = new ItemStack[]{new ItemStack(BlockLoader.oreHalite),new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
 		outcoming = new ItemStack[]{OreDictionary.getOres("dustSand").get(0).copy(),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.nacl_solution))};
-		FixedConversionRecipe fcr4_2 = new FixedConversionRecipe(20,100,incoming,outcoming);		
+		FixedConversionRecipe fcr4_2 = new FixedConversionRecipe(20,20,incoming,outcoming);		
 		fcr4_2.setUnlocalizedName("washer.halite");	
 		//Meta-Anthracite washing
 		incoming = new ItemStack[]{OreDictionary.getOres("crushedMetaAnthracite").get(0).copy(),new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
 		outcoming = new ItemStack[]{new ItemStack(ItemLoader.amorphousGraphite)};//TODO: Add stone sludge into outcome
-		FixedConversionRecipe fcr4_3 = new FixedConversionRecipe(20,100,incoming,outcoming);		
+		FixedConversionRecipe fcr4_3 = new FixedConversionRecipe(20,20,incoming,outcoming);		
 		fcr4_3.setUnlocalizedName("washer.amorphgraphite");			
 		//Collection
 		washerRecipes = new RecipesCollection(fcr4,fcr4_1,fcr4_2,fcr4_3);
@@ -139,7 +140,7 @@ public class WoodChainRecipes {
 		name = "chemlab.steamboiler[water->steam-pressurized]";
 		incoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(water))};
 		outcoming = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(steam_pressurized))};
-		FixedConversionRecipe fcr7 = new FixedConversionRecipe(20,100,incoming,outcoming,name);		
+		FixedConversionRecipe fcr7 = new FixedConversionRecipe(20,20*ChemLabValues.OILPOWER_FACTOR,incoming,outcoming,name);		
 		fcr7.setUnlocalizedName("steamboiler.steam");
 		//Collection
 		steamboilerRecipes = new RecipesCollection(fcr7);
@@ -177,7 +178,7 @@ public class WoodChainRecipes {
 		
 		//TODO: facility to validate FCRs before injection
 		
-		fcr = new FixedConversionRecipe(500, 10, i, o);
+		fcr = new FixedConversionRecipe(500, 500*3, i, o);
 		fcr.setUnlocalizedName("centrext.crushedgold");
 		
 		return fcr;
@@ -193,7 +194,7 @@ public class WoodChainRecipes {
 		
 		//TODO: facility to validate FCRs before injection
 		
-		fcr = new FixedConversionRecipe(500, 10, i, o);
+		fcr = new FixedConversionRecipe(500, 500*3, i, o);
 		fcr.setUnlocalizedName("centrext.crushedpyrite");
 		
 		return fcr;

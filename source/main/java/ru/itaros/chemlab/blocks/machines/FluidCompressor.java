@@ -39,13 +39,7 @@ public class FluidCompressor extends IOMachineBlock {
 
 	private static final int METADATA_VARIATIONS = 1;	
 	//Graphics
-	
-	MetaIconFolder icons;
-	
-	@Override
-	public IIcon getIcon(int side, int meta) {
-		return icons.GetIcon(side, meta);
-	}
+
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
 		icons = new MetaIconFolder(METADATA_VARIATIONS);

@@ -42,12 +42,6 @@ public class ServiceBay extends IOMachineBlock {
 	//Graphics
 	
 
-	MetaIconFolder icons;
-	
-	@Override
-	public IIcon getIcon(int side, int meta) {
-		return icons.GetIcon(side, meta);
-	}
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
 		icons = new MetaIconFolder(METADATA_VARIATIONS);

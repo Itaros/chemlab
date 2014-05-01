@@ -19,7 +19,7 @@ public class CatalyticTankRecipes {
 		ItemStack[] o = {
 				new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.sulphurtrioxide_gas),2)
 		};
-		fcr1 = new FixedConversionRecipe(1000,10,i,o);
+		fcr1 = new FixedConversionRecipe(1000,1000*2,i,o);//Can be powered by redstone engines
 		fcr1.setUnlocalizedName("cattank.sulphurtrioxide");
 		
 		recipes = new RecipesCollection(fcr1);

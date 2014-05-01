@@ -3,6 +3,7 @@ package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
+import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -38,6 +39,8 @@ public abstract class Recipe {
 
 	public abstract void consumeResources(HOEMachineCrafterData hoeMachineData);
 
+	public abstract boolean tryToConsumeEnergy(HOEMachineData hoeMachineData);
+	
 	public abstract void incrementProduction(HOEMachineCrafterData hoeMachineData);
 	
 	
@@ -53,5 +56,7 @@ public abstract class Recipe {
 		String r = LanguageRegistry.instance().getStringLocalization(unlocalizedName+".name");
 		if(r==""){return unlocalizedName;}else{return r;}
 	}
+
+
 	
 }

@@ -2,6 +2,7 @@ package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.blocks;
 
 import java.util.Random;
 
+import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 import net.minecraft.block.Block;
@@ -9,9 +10,12 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
-public abstract class IOMachineBlock extends Block implements ITileEntityProvider{
+public abstract class IOMachineBlock extends Block implements IRotatableBlock, ITileEntityProvider{
+
 
 
 	protected abstract int getUIID();
@@ -68,6 +72,7 @@ public abstract class IOMachineBlock extends Block implements ITileEntityProvide
 	public void updateTick(World world, int x, int y,
 			int z, Random random) {
 		
+		
 		TileEntity te  =world.getTileEntity(x, y, z);
 		if(te instanceof MachineCrafterTileEntity){
 			MachineCrafterTileEntity me = (MachineCrafterTileEntity)te;
@@ -88,5 +93,52 @@ public abstract class IOMachineBlock extends Block implements ITileEntityProvide
 	public int tickRate(World p_149738_1_) {
 		return 20*5;
 	}
+	
+	
+//ROTATION
+	//private ForgeDirection currentRotation=ForgeDirection.SOUTH;
+	
+	
+	@Override
+	public ForgeDirection getDirection(World w, int x, int y, int z) {
+		return ForgeDirection.getOrientation(w.getBlockMetadata(x, y, z));
+	}
+
+	
+	
+	@Override
+	public boolean rotateBlock(World worldObj, int x, int y, int z,
+			ForgeDirection axis) {
+		rotate(worldObj,x,y,z);
+		return true;
+	}
+	@Override
+	public void rotate(World w, int x, int y, int z) {
+		int off = RotatableBlockUtility.calculateSpinIncrement(w,x,y,z,rotationChain.length);
+		w.setBlockMetadataWithNotify(x, y, z, off, 2);
+	}
+	public static final ForgeDirection[] rotationChain={ForgeDirection.SOUTH,ForgeDirection.EAST,ForgeDirection.NORTH,ForgeDirection.WEST};
+
+	@Override
+	public ForgeDirection[] getRotationChain() {
+		return rotationChain;
+	}
+	
+//GFX
+	protected MetaIconFolder icons;
+	
+	@Override
+	public IIcon getIcon(int side, int meta) {
+		int realside=getRealSide(side,meta);
+		return icons.GetIcon(realside, 0);
+	}
+	
+
+	
+	private int getRealSide(int side,int dir) {
+		return RotatableBlockUtility.getIconIndiceFromSideGrid(side,dir,RotatableBlockUtility.DEFAULTSIDEGRID);
+	}
+
+	
 	
 }

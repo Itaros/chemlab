@@ -1,6 +1,7 @@
 package ru.itaros.chemlab.hoe;
 
 import ru.itaros.api.hoe.internal.HOEData;
+import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.chemlab.loader.recipes.CrusherRecipes;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
@@ -8,7 +9,7 @@ import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollecti
 
 public class CrusherIO extends HOEMachineCrafterIO {
 
-	public static final int MAXPOWER = 1000;
+	public static final int MAXPOWER = ChemLabValues.ENERGY_FRACTION*100*2;
 	public static final int INCOMING_PORTS		=	1;
 	public static final int OUTCOMING_PORTS	=	1;
 	
@@ -22,13 +23,8 @@ public class CrusherIO extends HOEMachineCrafterIO {
 		this.setReq(INCOMING_PORTS, OUTCOMING_PORTS);
 		this.allowToStart();
 	}
-	@Override
-	protected void produce(HOEData data) {
-		HOEMachineCrafterData hm = (HOEMachineCrafterData) data;
-		if(hm.decrementResources()){
-			hm.incrementProduction();
-		}
-	}
+
+
 	
 	@Override
 	public void configureData(HOEData data) {

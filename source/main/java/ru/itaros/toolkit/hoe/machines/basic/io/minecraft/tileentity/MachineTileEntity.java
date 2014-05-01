@@ -1,6 +1,10 @@
 package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity;
 
+import buildcraft.api.power.IPowerReceptor;
+import buildcraft.api.power.PowerHandler;
+import buildcraft.api.power.PowerHandler.PowerReceiver;
 import ru.itaros.api.hoe.IHOEContextDetector.FMLContext;
+import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.chemlab.HOELinker;
 import ru.itaros.hoe.ContextDetector;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
@@ -11,8 +15,10 @@ import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
-public abstract class MachineTileEntity extends TileEntity {
+public abstract class MachineTileEntity extends TileEntity implements IPowerReceptor {
 
 	protected HOEMachineIO hoeio;
 
@@ -68,12 +74,14 @@ public abstract class MachineTileEntity extends TileEntity {
 		super.readFromNBT(nbt);
 		//System.out.println("Deserializing TE: "+this.getClass().getSimpleName());
 		readServerState(nbt);
+		MJ.readFromNBT(nbt, "mj");
 	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		writeServerState(nbt);
+		MJ.writeToNBT(nbt, "mj");
 	}
 	public abstract HOELinker getLinker();
 
@@ -85,6 +93,9 @@ public abstract class MachineTileEntity extends TileEntity {
 	public MachineTileEntity() {
 		super();
 		
+		initMJ();//MJ, MC side
+		
+		//HOETHR
 		hoeio =  getSuperIO();
 		
 		if(ContextDetector.getInstance().getContext()!=FMLContext.CLIENT){
@@ -118,6 +129,67 @@ public abstract class MachineTileEntity extends TileEntity {
 		}else{
 			return true;
 		}
+	}
+
+
+	
+	//MJ POWER
+	
+	/*
+	 * Convenience method. Provides a way to get a synched client before actual sync operation
+	 */
+	private void clientPowerInjection(int power){
+		if(ContextDetector.getInstance().getContext()!=FMLContext.DEDICATED){
+			HOEMachineData c = getClientData();
+			if(c==null){return;}
+			c.incrementPower(power);
+		}
+	}
+	
+	@Override
+	public void doWork(PowerHandler handler) {
+		HOEMachineData s = getServerData();
+		if(s==null){return;}
+		
+		double diff = (s.getPowerMax()-s.getPower());
+		if(diff>=MJ_BATCH){
+			double used = handler.useEnergy(MJ_BATCH, MJ_BATCH, true);
+			//TODO: Is this "used" needed?
+			s.incrementPower(MJ_BATCH);
+			clientPowerInjection(MJ_BATCH);
+			//This is save because it is ATOMIC
+		}
+		
+	}
+
+	public static final int MJ_MIN=1;
+	public static final int MJ_BATCH=ChemLabValues.ENERGY_FRACTION;	
+	public static final int MJ_MAX=MJ_BATCH;
+	public static final int MJ_CAPACITY=1000;
+
+	
+	private void initMJ(){
+		MJ = new PowerHandler(this, PowerHandler.Type.MACHINE);
+		MJ.configure(MJ_MIN, MJ_MAX, MJ_BATCH, MJ_CAPACITY);
+	}
+	
+	private PowerHandler MJ;
+	@Override
+	public PowerReceiver getPowerReceiver(ForgeDirection arg0) {
+		return MJ.getPowerReceiver();
+	}
+
+	@Override
+	public World getWorld() {
+		return this.worldObj;
+	}	
+	
+	
+	public double getCurrentMJ(){
+		return MJ.getEnergyStored();
+	}
+	public double getMaximumMJ(){
+		return MJ.getMaxEnergyStored();
 	}
 
 }

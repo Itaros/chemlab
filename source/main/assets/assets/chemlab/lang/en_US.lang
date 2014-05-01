@@ -1,6 +1,7 @@
 itemGroup.ChemLab=ChemLab Common
 
 item.chemlab:Programmer.name=Hardware Programmer
+item.pipewrench.name=Pipe Wrench
 
 tile.chemlab:machinebiogrinder.name=Biogrinder
 tile.chemlab:machinecentrifugalextractor.name=Centrifugal Extractor

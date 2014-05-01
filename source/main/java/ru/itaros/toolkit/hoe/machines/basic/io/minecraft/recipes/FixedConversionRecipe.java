@@ -1,6 +1,7 @@
 package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes;
 
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
+import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -54,13 +55,15 @@ public class FixedConversionRecipe extends Recipe {
 		
 		this.timeReq=timeReq;
 		this.powerReq=powerReq;
+		this.powerReqPerTick=this.powerReq/this.timeReq;
 	}
 	
 	protected ItemStack[] gridInput;
 	protected ItemStack[] gridOutput;
 	
 	protected int timeReq;
-	protected int powerReq;//TODO: is not used
+	protected double powerReq;
+	protected double powerReqPerTick;
 	
 	@Override
 	public int getIncomingSlots() {
@@ -112,6 +115,17 @@ public class FixedConversionRecipe extends Recipe {
 			 data.decrementInboundAmountByIndex(i,gridReq);
 		}
 	}
+	
+	@Override
+	public boolean tryToConsumeEnergy(HOEMachineData hoeMachineData) {
+		if(hoeMachineData.getPower()>=powerReqPerTick){
+			hoeMachineData.decrementPower(powerReqPerTick);
+			return true;
+		}else{
+			return false;
+		}
+	}	
+	
 	@Override
 	public void incrementProduction(HOEMachineCrafterData data) {
 		for(int i = 0; i<gridOutput.length;i++){
@@ -119,4 +133,6 @@ public class FixedConversionRecipe extends Recipe {
 			 data.incrementOutboundAmountByIndex(i,gridSurp);
 		}
 	}
+
+
 }

@@ -38,7 +38,7 @@ public class EvaporationUnitRecipes {
 				}
 				ItemStack[] o = new ItemStack[os.size()];
 				o = os.toArray(o);
-				int requaredEnergy = 0;// ifc.getReleasedEnergyForExpansion();
+				int requaredEnergy = 1;// ifc.getReleasedEnergyForExpansion();
 				templist.add(new FixedConversionRecipe(REQUIRED_TIME,requaredEnergy,i,o));
 			}
 		}

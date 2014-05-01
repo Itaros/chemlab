@@ -166,6 +166,7 @@ public class HOEMachineCrafterData extends HOEMachineData{
 		recipe.incrementProduction(this);
 	}
 	public boolean decrementResources() {
+		isReadyForCycle=false;//Cycled thought
 		if(recipe==null){return false;}
 		//Here we check if it is possible to produce something with those available resources
 		if(recipe.checkResources(this) && HOEDataStateCheck()){
@@ -176,6 +177,14 @@ public class HOEMachineCrafterData extends HOEMachineData{
 			return false;//Not enough resources
 		}
 	}
+	
+	
+	public boolean useEnergy() {
+		if(recipe==null){return false;}
+		return recipe.tryToConsumeEnergy(this);
+	}		
+	
+	
 	/*
 	 * Override it to provide special requirements to run production process
 	 */
@@ -332,7 +341,25 @@ public class HOEMachineCrafterData extends HOEMachineData{
 		}else{
 			return incoming_stricttype[injectorTypeOffset];
 		}
-	}	
+	}
+	
+	
+	
+	private boolean isReadyForCycle=false;
+	public boolean isReadyForCycle() {
+		if(isReadyForCycle){
+			return true;
+		}else{
+			if(recipe==null){return false;}
+			if(recipe.checkResources(this) && HOEDataStateCheck() && recipe.checkStorage(this)){
+				isReadyForCycle=true;
+			}else{
+				isReadyForCycle=false;
+			}
+			return isReadyForCycle;
+		}
+	}
+
 
 
 	
