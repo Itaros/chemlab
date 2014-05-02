@@ -33,7 +33,7 @@ public class ServiceBay extends IOMachineBlock {
 	
 	public ServiceBay(){		
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machineservicebay");
+		this.setBlockNameRaw("machine."+"servicebay");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 	}
 	

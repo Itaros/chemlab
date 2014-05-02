@@ -27,7 +27,7 @@ public class AirCollector extends IOMachineBlock {
 
 	public AirCollector() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machineaircollector");
+		this.setBlockNameRaw("machine."+"aircollector");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		//this.setTickRandomly(true);
 	}

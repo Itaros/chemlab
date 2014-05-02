@@ -12,7 +12,7 @@ public class HiVolumeLiquidCell extends Item {
 	
 	public HiVolumeLiquidCell(HOEFluid fluid){
 		super();
-		this.setUnlocalizedName("chemlab:"+"hvlc-"+fluid.getCommonName());
+		this.setUnlocalizedName("hvlc."+fluid.getCommonName());
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		this.setTextureName("chemlab:hvlc-"+fluid.getCommonName());
 		

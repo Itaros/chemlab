@@ -26,7 +26,7 @@ public class SteamExplosionUnit extends IOMachineBlock {
 
 	public SteamExplosionUnit() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machinesteamexplosionunit");
+		this.setBlockNameRaw("machine."+"steamexplosionunit");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		//this.setTickRandomly(true);
 	}

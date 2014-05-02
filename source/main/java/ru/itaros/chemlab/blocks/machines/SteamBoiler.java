@@ -24,7 +24,7 @@ public class SteamBoiler extends IOMachineBlock {
 
 	public SteamBoiler() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machinesteamboiler");
+		this.setBlockNameRaw("machine."+"steamboiler");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		//this.setTickRandomly(true);
 	}

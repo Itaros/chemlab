@@ -25,7 +25,7 @@ public class Washer extends IOMachineBlock {
 
 	public Washer() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machinewasher");
+		this.setBlockNameRaw("machine."+"washer");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		//this.setTickRandomly(true);
 	}

@@ -218,6 +218,10 @@ public class HOEMachineCrafterData extends HOEMachineData{
 					
 					int diff=temp.getMaxStackSize()-incoming_depot[x];
 					if(diff==0){return false;}
+					//Can't extract more then available
+					if(temp.stackSize<diff){
+						diff=temp.stackSize;
+					}
 					incoming_depot[x]+=diff;
 					temp.stackSize-=diff;
 					return true;

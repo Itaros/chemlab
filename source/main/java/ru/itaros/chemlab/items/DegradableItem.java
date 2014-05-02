@@ -11,7 +11,7 @@ public class DegradableItem extends Item {
 	public DegradableItem(String name, int uses){
 		super();
 		internalName = name;
-		this.setUnlocalizedName("chemlab:"+internalName);
+		this.setUnlocalizedName("degradable."+internalName);
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		this.setMaxStackSize(1);
 		this.setMaxDamage(uses);

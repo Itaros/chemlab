@@ -9,7 +9,7 @@ public class OreMetal extends Block {
 
 	public OreMetal(String group) {
 		super(Material.rock);
-		this.setBlockName("chemlab:ore."+group.toLowerCase());
+		this.setBlockName("ore."+group.toLowerCase());
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		this.setBlockTextureName("chemlab:ore_"+group.toLowerCase());
 		

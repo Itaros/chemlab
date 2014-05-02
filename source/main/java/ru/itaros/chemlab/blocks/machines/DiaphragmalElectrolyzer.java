@@ -30,7 +30,7 @@ public class DiaphragmalElectrolyzer extends IOMachineBlock {
 
 	public DiaphragmalElectrolyzer() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machinediaphelectr");
+		this.setBlockNameRaw("machine."+"diaphelectr");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		//this.setTickRandomly(true);
 	}

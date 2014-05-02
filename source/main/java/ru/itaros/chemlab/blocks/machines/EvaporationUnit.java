@@ -27,7 +27,7 @@ public class EvaporationUnit extends IOMachineBlock {
 
 	public EvaporationUnit() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machineevaporationunit");
+		this.setBlockNameRaw("machine."+"evaporationunit");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		//this.setTickRandomly(true);
 	}

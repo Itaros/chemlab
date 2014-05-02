@@ -25,7 +25,7 @@ public class Turboexpander extends IOMachineBlock {
 
 	public Turboexpander() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machineturboexpander");
+		this.setBlockNameRaw("machine."+"turboexpander");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		//this.setTickRandomly(true);
 	}

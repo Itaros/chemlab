@@ -25,7 +25,7 @@ public class Furnace extends IOMachineBlock {
 
 	public Furnace() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machinefurnace");
+		this.setBlockNameRaw("machine."+"furnace");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		//this.setTickRandomly(true);
 	}

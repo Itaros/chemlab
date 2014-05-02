@@ -25,7 +25,7 @@ public class HiResistantMixer extends IOMachineBlock {
 
 	public HiResistantMixer() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machinehiresistmixer");
+		this.setBlockNameRaw("machine."+"hiresistmixer");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		//this.setTickRandomly(true);
 	}

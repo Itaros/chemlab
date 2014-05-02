@@ -48,7 +48,7 @@ public class FurnaceRecipes {
 		
 		//Carbothermic reaction
 		ItemStack[] i = {new ItemStack(ItemLoader.ferricoxide,2),new ItemStack(ItemLoader.amorphousGraphite,3)};
-		ItemStack[] o = {new ItemStack(ItemLoader.carbonizediron,4),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.carbondioxide_gas),3)};
+		ItemStack[] o = {new ItemStack(ItemLoader.pigiron,4),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.carbondioxide_gas),3)};
 		FixedConversionRecipe carbothermic_ferricoxide = new FixedConversionRecipe(100,100,i,o);
 		carbothermic_ferricoxide.setUnlocalizedName("furnace.carbothermal.ferricoxide");
 		
@@ -58,7 +58,7 @@ public class FurnaceRecipes {
 		ItemStack limestone = OreDictionary.getOres("crushedLimestone").get(0).copy();
 		limestone.stackSize=1;		
 		i = new ItemStack[]{hematite,limestone,new ItemStack(ItemLoader.amorphousGraphite,3)};
-		o = new ItemStack[]{new ItemStack(ItemLoader.carbonizedsulfuricatediron,4),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.carbondioxide_gas),3),new ItemStack(ItemLoader.slag,1)};
+		o = new ItemStack[]{new ItemStack(ItemLoader.sulfuricatedpigiron,4),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.carbondioxide_gas),3),new ItemStack(ItemLoader.slag,1)};
 		FixedConversionRecipe carbothermic_ferricoxide_hematite = new FixedConversionRecipe(100,100,i,o);
 		carbothermic_ferricoxide_hematite.setUnlocalizedName("furnace.carbothermal.ferricoxide_hematite");		
 		

@@ -25,7 +25,7 @@ public class Impregnator extends IOMachineBlock {
 
 	public Impregnator() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machineimpregnator");
+		this.setBlockNameRaw("machine."+"impregnator");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		//this.setTickRandomly(true);
 	}

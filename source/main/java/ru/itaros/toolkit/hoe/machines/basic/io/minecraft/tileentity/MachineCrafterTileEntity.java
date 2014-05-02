@@ -119,12 +119,19 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 			
 		case ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT:
 			programmerStack=stack;
-			programmatorScreenLauncher();
-			programmerStack=null;//TODO: DEBUG!!!
+			if(programmerStack==null){programmerWasOpened=false;break;}
+			if(!programmerWasOpened){
+				programmatorScreenLauncher();
+				programmerWasOpened=true;
+			}
+			//programmerStack=null;//TODO: DEBUG!!!
 			break;
 			
 		}		
 	}
+	
+	private boolean programmerWasOpened=false;
+	
 	private void programmatorScreenLauncher() {
 		if(programmerStack!=null && programmerStack.getItem()==ItemLoader.programmer){
 			
@@ -165,6 +172,12 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 
 	@Override
     public ItemStack decrStackSize(int slot, int amt) {
+		if(slot==ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT){
+			ItemStack ret = this.getStackInSlot(slot);
+			setInventorySlotContents(slot, null);
+			return ret;
+		}
+		
     	if(slot<0){return (ItemStack)null;}//You can't take from client inbound
             ItemStack stack = getStackInSlot(slot);
             if (stack != null) {

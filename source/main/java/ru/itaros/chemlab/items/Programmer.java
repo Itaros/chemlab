@@ -10,7 +10,7 @@ public class Programmer extends Item {
 
 	public Programmer(){
 		super();
-		this.setUnlocalizedName("chemlab:"+getClass().getSimpleName());
+		this.setUnlocalizedName(getClass().getSimpleName().toLowerCase());
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		this.setTextureName("chemlab:programmer");
 		

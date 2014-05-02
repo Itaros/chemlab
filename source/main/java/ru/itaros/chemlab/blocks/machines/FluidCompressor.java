@@ -25,7 +25,7 @@ public class FluidCompressor extends IOMachineBlock {
 
 	public FluidCompressor() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machinefluidcompressor");
+		this.setBlockNameRaw("machine."+"fluidcompressor");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		//this.setTickRandomly(true);
 	}

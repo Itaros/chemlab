@@ -26,7 +26,7 @@ public class CrushedOre extends Item {
 	}
 	
 	private void init(){
-		this.setUnlocalizedName("chemlab:"+getClass().getSimpleName()+"-"+dict);
+		this.setUnlocalizedName(getClass().getSimpleName().toLowerCase()+"."+dict);
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		this.setTextureName("chemlab:crushedore-"+dict);		
 	}

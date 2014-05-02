@@ -50,8 +50,8 @@ public class ItemLoader {
 	public static ChemLabItem ferricoxide;
 	public static ChemLabItem amorphousGraphite;
 	
-	public static ChemLabItem carbonizediron;
-	public static ChemLabItem carbonizedsulfuricatediron;
+	public static ChemLabItem pigiron;
+	public static ChemLabItem sulfuricatedpigiron;
 	
 	public static ChemLabItem slag;
 	
@@ -111,11 +111,11 @@ public class ItemLoader {
 		amorphousGraphite = new ChemLabItem("graphite.amorphous");
 		GameRegistry.registerItem(amorphousGraphite,amorphousGraphite.getUnlocalizedName());
 		
-		carbonizediron = new ChemLabItem("ingot.iron.carbonized");
-		GameRegistry.registerItem(carbonizediron,carbonizediron.getUnlocalizedName());
+		pigiron = new ChemLabItem("ingot.iron.pig");
+		GameRegistry.registerItem(pigiron,pigiron.getUnlocalizedName());
 		
-		carbonizedsulfuricatediron = new ChemLabItem("ingot.iron.carbonized_sulfuricated");
-		GameRegistry.registerItem(carbonizedsulfuricatediron,carbonizedsulfuricatediron.getUnlocalizedName());
+		sulfuricatedpigiron = new ChemLabItem("ingot.iron.pig_sulfuricated");
+		GameRegistry.registerItem(sulfuricatedpigiron,sulfuricatedpigiron.getUnlocalizedName());
 		
 		slag = new ChemLabItem("slag");
 		GameRegistry.registerItem(slag, slag.getUnlocalizedName());

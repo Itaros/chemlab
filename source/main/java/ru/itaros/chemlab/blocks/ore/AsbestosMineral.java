@@ -18,7 +18,7 @@ public class AsbestosMineral extends Block {
 	public AsbestosMineral(AsbestosMineralType type) {
 		super(Material.rock);
 
-		this.setBlockName("chemlab:asbestosmineral."+type.toString());
+		this.setBlockName("asbestosmineral."+type.toString());
 		this.setBlockTextureName("chemlab:asbestosmineral-"+type.toString());
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 	}

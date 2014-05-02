@@ -8,7 +8,7 @@ public class OreHalite extends Block {
 
 	public OreHalite() {
 		super(Material.glass);
-		this.setBlockName("chemlab:ore.halite");
+		this.setBlockName("ore.halite");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		this.setBlockTextureName("chemlab:ore_halite");
 	}

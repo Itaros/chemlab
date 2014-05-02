@@ -16,7 +16,7 @@ public class HiVolumeLiquidCellEmpty extends Item {
 
 	public HiVolumeLiquidCellEmpty(){
 		super();
-		this.setUnlocalizedName("chemlab:"+"hvlc-"+EMPTY_TOKEN);
+		this.setUnlocalizedName("hvlc."+EMPTY_TOKEN);
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		this.setTextureName("chemlab:hvlc-"+EMPTY_TOKEN);
 	}

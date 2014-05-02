@@ -34,7 +34,7 @@ public class Dust extends Item {
 	}
 	
 	public static String assumeDustNameFor(String s){
-		return "chemlab:dust."+s;
+		return "dust."+s;
 	}
 	
 }

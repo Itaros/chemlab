@@ -25,7 +25,7 @@ public class Press extends IOMachineBlock {
 
 	public Press() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machinepress");
+		this.setBlockNameRaw("machine."+"press");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		//this.setTickRandomly(true);
 	}

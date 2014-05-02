@@ -2,6 +2,7 @@ package ru.itaros.chemlab.worldgen;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -86,7 +87,7 @@ public class WorldGenerator implements IWorldGenerator {
 					
 					int level = HelperWorldGen.getUndergroundHeightLevel(world, x, y)-10;
 					int diff = (int) ((HelperWorldGen.assumeSafeHeightDifferenceToBedrock(level-1)*normalizedShift)+1);
-					//FMLLog.log(Level.INFO, "Diff:"+diff+" from "+level);
+					
 					
 					for(int z = HelperWorldGen.ASSUMED_BEDROCK_LEVEL;z<diff;z++){
 						if(world.getBlock(x, z, y)==Blocks.stone){//TODO: Ask chunk, not world. Or use helper to access stor \o/
@@ -119,7 +120,7 @@ public class WorldGenerator implements IWorldGenerator {
 					
 					int level = HelperWorldGen.getUndergroundHeightLevel(world, x, y)-10;
 					int diff = (int) ((HelperWorldGen.assumeSafeHeightDifferenceToBedrock(level-1)*normalizedShift)+1);
-					FMLLog.log(Level.INFO, "Diff:"+diff+" from "+level);
+					
 					
 					for(int z = HelperWorldGen.ASSUMED_BEDROCK_LEVEL;z<diff;z++){
 						if(world.getBlock(x, z, y)==Blocks.stone){//TODO: Ask chunk, not world. Or use helper to access stor \o/
@@ -152,9 +153,6 @@ public class WorldGenerator implements IWorldGenerator {
 					
 					int Zmin = 50;
 					int Zmax = world.getHeightValue(x, y);
-					
-					//FMLLog.log(Level.INFO, "Diff:"+diff+" from "+level);
-					
 					
 					for(int z = Zmin; z <= Zmax; z++){
 						if(world.getBlock(x, z, y)==Blocks.stone){//TODO: Ask chunk, not world. Or use helper to access stor \o/
@@ -214,8 +212,10 @@ public class WorldGenerator implements IWorldGenerator {
 			int deltaL = HelperWorldGen.assumeSafeHeightDifferenceToBedrock(maxL);
 			int cL=maxL-(int)(random.nextFloat()*(float)deltaL);
 			
-			HelperWorldGen.setBlockDirectly(world, stor, xs, ys, cL ,BlockLoader.orePyrite);
-	
+			Block previousBlock = world.getBlock(x, cL, y);
+			if(previousBlock==Blocks.stone){
+				HelperWorldGen.setBlockDirectly(world, stor, xs, ys, cL ,BlockLoader.orePyrite);
+			}
 			
 		}
 		
@@ -265,7 +265,6 @@ public class WorldGenerator implements IWorldGenerator {
 					
 					int level = HelperWorldGen.getUndergroundHeightLevel(world, x, y);
 					int diff = (int) ((HelperWorldGen.assumeSafeHeightDifferenceToBedrock(level-1)*normalizedShift)+1);
-					FMLLog.log(Level.INFO, "Diff:"+diff+" from "+level);
 					
 					//TODO: there is only one asbestos, but we need all of them
 					for(int z = HelperWorldGen.ASSUMED_BEDROCK_LEVEL;z<diff;z++){
@@ -322,8 +321,10 @@ public class WorldGenerator implements IWorldGenerator {
 						
 						for(int di = 0; di<d;di++){
 							int rz = z + di;
-							
-							HelperWorldGen.setBlockDirectly(world, stor, xs, ys, rz,BlockLoader.oreHalite);
+							Block previousBlock = world.getBlock(x, rz, y);
+							if(previousBlock==Blocks.stone || previousBlock == Blocks.sand || previousBlock == Blocks.sandstone){
+								HelperWorldGen.setBlockDirectly(world, stor, xs, ys, rz,BlockLoader.oreHalite);
+							}
 						}
 					}
 					

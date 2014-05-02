@@ -25,7 +25,7 @@ public class Crusher extends IOMachineBlock {
 
 	public Crusher() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machinecrusher");
+		this.setBlockNameRaw("machine."+"crusher");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		//this.setTickRandomly(true);
 	}

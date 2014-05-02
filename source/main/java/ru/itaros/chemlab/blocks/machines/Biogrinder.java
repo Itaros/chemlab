@@ -28,7 +28,7 @@ public class Biogrinder extends IOMachineBlock {
 
 	public Biogrinder() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machinebiogrinder");
+		this.setBlockNameRaw("machine."+"biogrinder");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		//this.setTickRandomly(true);
 	}

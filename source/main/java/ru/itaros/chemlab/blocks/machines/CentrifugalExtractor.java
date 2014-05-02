@@ -16,7 +16,7 @@ public class CentrifugalExtractor extends IOMachineBlock {
 
 	public CentrifugalExtractor() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machinecentrifugalextractor");
+		this.setBlockNameRaw("machine."+"centrifugalextractor");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 	}
 

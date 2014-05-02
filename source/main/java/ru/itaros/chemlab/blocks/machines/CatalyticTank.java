@@ -30,7 +30,7 @@ public class CatalyticTank extends IOMachineBlock {
 
 	public CatalyticTank() {
 		super(Material.iron);
-		this.setBlockNameRaw("chemlab:machinecattank");
+		this.setBlockNameRaw("machine."+"cattank");
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		//this.setTickRandomly(true);
 	}
