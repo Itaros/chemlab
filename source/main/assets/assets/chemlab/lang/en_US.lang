@@ -3,6 +3,21 @@ itemGroup.ChemLab=ChemLab Common
 item.programmer.name=Hardware Programmer
 item.pipewrench.name=Pipe Wrench
 
+tile.component.machinecasing.name=Machine Casing
+item.genericitem.component.screw.name=Bolt
+item.genericitem.component.pcbpad.name=PCB Pad
+item.genericitem.component.frame.name=Machine Frame
+item.genericitem.component.panel.name=Machine Panel
+item.genericitem.component.controlinterface.name=Machine Control Interface
+item.genericitem.component.mjconversionunit.name=MJ EMF Converter
+item.genericitem.component.centralassembly.name=Machine Core
+
+item.tool.pickaxe.wrought.name=Wrought Iron Pickaxe
+item.tool.axe.wrought.name=Wrought Iron Axe
+item.tool.hoe.wrought.name=Wrought Iron Hoe
+item.tool.sword.wrought.name=Wrought Iron Sword
+item.tool.shovel.wrought.name=Wrought Iron Shovel
+
 tile.machine.biogrinder.name=Biogrinder
 tile.machine.centrifugalextractor.name=Centrifugal Extractor
 tile.machine.washer.name=Industrial Washer
@@ -86,8 +101,9 @@ item.hvlc.carbonmonooxide-gas.name=Carbon Monooxide Hi-Volume Liquid Cell
 
 item.genericitem.ferricoxide.name=Ferric Oxide
 item.genericitem.graphite.amorphous.name=Amorphous Graphite
-item.genericitem.ingot.iron.pig.name=Pig Iron
-item.genericitem.ingot.iron.pig_sulfuricated.name=Sulfuric Pig Iron
+item.genericitem.ingot.iron.pig.name=Pig Iron Ingot
+item.genericitem.ingot.iron.pig_sulfuricated.name=Red-short Pig Iron Ingot
+item.genericitem.ingot.iron.wrought.name=Wrought Iron Ingot
 item.genericitem.slag.name=Slag
 item.genericitem.magnesium.name=Magnesium
 item.genericitem.magnesiumsulfide.name=Magnesium Sulfide

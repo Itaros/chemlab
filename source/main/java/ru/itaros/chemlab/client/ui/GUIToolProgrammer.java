@@ -222,8 +222,13 @@ public class GUIToolProgrammer extends GuiScreen {
 						if(oy>inity && oy<inity+osy){
 							//Clicked
 							Recipe r = repcol.getRecipes()[xp];
-							this.mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
-							//tile.trySetRecipe(r);//Should be sended to server
+							//this.mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+							
+							if(tile.trySetRecipe(r)){
+								this.mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+							}else{
+								this.mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("chemlab:ui.click"), 1.0F));
+							}
 							//Clicking is always done on a client, you know xD
 							ChemLab.getInstance().SendPacketAsClientToServer(new SetHOEMachineRecipePacket(tile,r));
 						}
@@ -235,6 +240,21 @@ public class GUIToolProgrammer extends GuiScreen {
 		}
 		
 	}
+
+	
+	
+	
+	@Override
+	public void onGuiClosed() {
+		this.mc.getSoundHandler().stopSounds();
+	}
+
+
+	@Override
+	public boolean doesGuiPauseGame() {
+		return false;
+	}
+
 
 	//Mojangcode
     private void drawItemStack(ItemStack stack, int x, int y, String stackSizeOverride)

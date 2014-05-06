@@ -3,12 +3,15 @@ package ru.itaros.chemlab.loader;
 import net.minecraft.block.Block;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.registry.GameRegistry;
+import ru.itaros.chemlab.blocks.MachineCasing;
 import ru.itaros.chemlab.blocks.machines.*;
 import ru.itaros.chemlab.blocks.ore.AsbestosMineral;
 import ru.itaros.chemlab.blocks.ore.OreHalite;
 import ru.itaros.chemlab.blocks.ore.OreMetal;
 
 public class BlockLoader {
+	
+	public static MachineCasing casing;
 	
 	public static Biogrinder biogrinder;
 	public static CentrifugalExtractor centriextractor;
@@ -40,7 +43,12 @@ public class BlockLoader {
 	public static OreMetal orePericlase;//MgO
 	
 	public static void loadBlocks(){
+		
+		casing = new MachineCasing();
+		GameRegistry.registerBlock(casing,casing.getUnlocalizedName());
+		
 		loadAsbestosMinerals();
+		
 		//Machines
 		biogrinder = new Biogrinder();
 		GameRegistry.registerBlock(biogrinder ,biogrinder.getUnlocalizedNameRaw());

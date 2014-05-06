@@ -50,6 +50,7 @@ public class ItemLoader {
 	public static ChemLabItem ferricoxide;
 	public static ChemLabItem amorphousGraphite;
 	
+	public static ChemLabItem wroughtiron;
 	public static ChemLabItem pigiron;
 	public static ChemLabItem sulfuricatedpigiron;
 	
@@ -59,12 +60,40 @@ public class ItemLoader {
 	
 	public static ChemLabItem magnesiumsulfide;
 	
+	
+	
+	public static ChemLabItem screw,pcbpad;
+	public static ChemLabItem frame,panel,controlinterface;
+	public static ChemLabItem mjconversionunit;
+	public static ChemLabItem centralassembly;
+	
+	
 	public static void loadItems(){
+		
+		//COMPONENTS
+		screw=new ChemLabItem("component.screw");
+		pcbpad=new ChemLabItem("component.pcbpad");
+		frame=new ChemLabItem("component.frame");
+		panel=new ChemLabItem("component.panel");
+		controlinterface=new ChemLabItem("component.controlinterface");
+		mjconversionunit=new ChemLabItem("component.mjconversionunit");
+		centralassembly=new ChemLabItem("component.centralassembly");
+		GameRegistry.registerItem(screw,screw.getUnlocalizedName());
+		GameRegistry.registerItem(pcbpad,pcbpad.getUnlocalizedName());
+		GameRegistry.registerItem(frame,frame.getUnlocalizedName());
+		GameRegistry.registerItem(panel,panel.getUnlocalizedName());
+		GameRegistry.registerItem(controlinterface,controlinterface.getUnlocalizedName());
+		GameRegistry.registerItem(mjconversionunit,mjconversionunit.getUnlocalizedName());
+		GameRegistry.registerItem(centralassembly,centralassembly.getUnlocalizedName());
+		
+		//TOOLS
 		programmer = new Programmer();
 		GameRegistry.registerItem(programmer,programmer.getUnlocalizedName());
 		
 		wrench = new PipeWrench();
 		GameRegistry.registerItem(wrench,wrench.getUnlocalizedName());
+		
+		//GENERICS
 		
 		woodchips = new Woodchips();
 		GameRegistry.registerItem(woodchips, woodchips.getUnlocalizedName());
@@ -110,6 +139,9 @@ public class ItemLoader {
 		
 		amorphousGraphite = new ChemLabItem("graphite.amorphous");
 		GameRegistry.registerItem(amorphousGraphite,amorphousGraphite.getUnlocalizedName());
+		
+		wroughtiron = new ChemLabItem("ingot.iron.wrought");
+		GameRegistry.registerItem(wroughtiron,wroughtiron.getUnlocalizedName());
 		
 		pigiron = new ChemLabItem("ingot.iron.pig");
 		GameRegistry.registerItem(pigiron,pigiron.getUnlocalizedName());

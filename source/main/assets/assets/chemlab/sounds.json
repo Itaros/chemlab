@@ -1,0 +1,4 @@
+{
+ "ui.failure": {"category": "master","sounds": [{"name": "ui.failure","stream": false}]},
+ "ui.click": {"category": "master","sounds": [{"name": "ui.click","stream": false}]}
+}

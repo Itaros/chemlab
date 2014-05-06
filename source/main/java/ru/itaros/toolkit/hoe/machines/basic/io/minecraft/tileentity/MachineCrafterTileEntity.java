@@ -82,6 +82,50 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	}
 	
 	
+	
+	@Override
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		
+		NBTTagCompound in = nbt.getCompoundTag("inbound");
+		if(in!=null){
+			inbound_synchro = ItemStack.loadItemStackFromNBT(in);
+		}
+		NBTTagCompound out = nbt.getCompoundTag("outbound");
+		if(out!=null){
+			outbound_synchro = ItemStack.loadItemStackFromNBT(out);		
+		}
+		
+		NBTTagCompound pr = nbt.getCompoundTag("prog");
+		if(pr!=null){
+			programmerStack = ItemStack.loadItemStackFromNBT(pr);		
+		}		
+		
+	}
+	@Override
+	public void writeToNBT(NBTTagCompound nbt) {
+		super.writeToNBT(nbt);
+		
+		//TODO: Helper needed for that
+		if(inbound_synchro!=null){
+			NBTTagCompound in = new NBTTagCompound();
+			inbound_synchro.writeToNBT(in);
+			nbt.setTag("inbound", in);
+		}
+		if(outbound_synchro!=null){
+			NBTTagCompound out = new NBTTagCompound();
+			outbound_synchro.writeToNBT(out);
+			nbt.setTag("outbound", out);	
+		}
+		if(programmerStack!=null){
+			NBTTagCompound pr = new NBTTagCompound();
+			programmerStack.writeToNBT(pr);
+			nbt.setTag("prog", pr);	
+		}
+	}
+	
+	
+	
 	@Override
 	public int getSizeInventory() {
 		return 1+1;//in and out synchrobound! %_%
@@ -315,10 +359,17 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	
 	
 	
-	public void trySetRecipe(Recipe r){
+	public boolean trySetRecipe(Recipe r){
 		if(server!=null){
-			getCrafterServer().setRecipe(r);
+			HOEMachineCrafterData d = getCrafterServer();
+			if(!d.evaluateHasItems()){
+				d.setRecipe(r);
+				return true;
+			}else{
+				return false;
+			}
 		}
+		return false;
 	}
 	
 	

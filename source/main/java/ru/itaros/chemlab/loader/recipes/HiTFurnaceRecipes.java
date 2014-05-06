@@ -9,7 +9,7 @@ import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionRecipe;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
 
-public class FurnaceRecipes {
+public class HiTFurnaceRecipes {
 
 	public static RecipesCollection recipes;
 	

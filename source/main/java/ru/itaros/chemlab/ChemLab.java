@@ -12,6 +12,7 @@ import ru.itaros.chemlab.loader.GUILoader;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.chemlab.loader.RecipesLoader;
+import ru.itaros.chemlab.loader.recipes.optional.VanillaTweaks;
 import ru.itaros.chemlab.loader.tileentity.TileEntityLoader;
 import ru.itaros.chemlab.network.ChemLabChannel;
 import ru.itaros.chemlab.network.IPacketCodecDescriptor;
@@ -76,7 +77,11 @@ public class ChemLab
     	
  		BlockLoader.loadBlocks();
  		ItemLoader.loadItems();
-		iocollection = TileEntityLoader.load();   	
+		iocollection = TileEntityLoader.load();   
+		
+		//Tweaks
+		VanillaTweaks.tweakIron();
+		VanillaTweaks.createWroughtIronTools();
     	
     }     
     @EventHandler

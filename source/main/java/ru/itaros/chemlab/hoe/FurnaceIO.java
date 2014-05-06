@@ -1,7 +1,7 @@
 package ru.itaros.chemlab.hoe;
 
 import ru.itaros.api.hoe.internal.HOEData;
-import ru.itaros.chemlab.loader.recipes.FurnaceRecipes;
+import ru.itaros.chemlab.loader.recipes.HiTFurnaceRecipes;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
@@ -15,7 +15,7 @@ public class FurnaceIO extends HOEMachineCrafterIO {
 	
 	@Override
 	public RecipesCollection getRecipesCollection() {
-		return FurnaceRecipes.recipes;
+		return HiTFurnaceRecipes.recipes;
 	}	
 	
 	public FurnaceIO(){

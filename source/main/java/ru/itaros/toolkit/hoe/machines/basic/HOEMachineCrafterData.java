@@ -363,6 +363,15 @@ public class HOEMachineCrafterData extends HOEMachineData{
 			return isReadyForCycle;
 		}
 	}
+	public boolean evaluateHasItems() {
+		for(int i = 0 ; i<incoming_stricttype.length;i++){
+			if(incoming_depot[i]>0){return true;}
+		}
+		for(int i = 0 ; i<outcoming_stricttype.length;i++){
+			if(outcoming_depot[i]>0){return true;}
+		}		
+		return false;
+	}
 
 
 
