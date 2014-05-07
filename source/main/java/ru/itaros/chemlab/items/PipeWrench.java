@@ -28,7 +28,7 @@ public class PipeWrench extends Item {
 
 		if (block.rotateBlock(world, x, y, z, ForgeDirection.getOrientation(side))) {
 			player.swingItem();
-			return true;
+			return !world.isRemote;
 		}
 		return false;
 	}

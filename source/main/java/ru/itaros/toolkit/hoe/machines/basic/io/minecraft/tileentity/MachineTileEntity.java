@@ -106,9 +106,9 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 			hoeio.configureData(server);
 			
 			client=(HOEMachineData) server.getChild();
+			//server.sync();
 
 		}else{
-			//TODO: Fix this for INTEGRATED SERVER CONTEXT
 			//Client configuration is simplier	
 			//It just WAITS for it to be passed over network
 		}
@@ -124,10 +124,10 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 	@Override
 	public boolean canUpdate() {
 		FMLContext context = ContextDetector.getInstance().getContext();
-		if(context != FMLContext.CLIENT){
-			return false;
-		}else{
+		if(context == FMLContext.CLIENT || context==FMLContext.INTEGRATED){
 			return true;
+		}else{
+			return false;
 		}
 	}
 

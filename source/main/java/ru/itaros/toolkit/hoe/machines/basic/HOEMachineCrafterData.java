@@ -59,6 +59,7 @@ public class HOEMachineCrafterData extends HOEMachineData{
 
 	@Override
 	protected void bindChildToParent(HOEMachineData parent){
+		super.bindChildToParent(parent);
 		HOEMachineCrafterData hmcd = (HOEMachineCrafterData)parent;
 		//Linking strict types. Believed to be Read-Only
 		this.incoming_stricttype=hmcd.incoming_stricttype;

@@ -61,12 +61,23 @@ public class HOEMachineData extends HOEData {
 
 	public void sync(){
 		if(child==null){throw new HOEWrongSyncDirection();}
+		
+		
+		HOEMachineData childd=(HOEMachineData) child;
+		childd.power=power;
+		childd.maxpower=maxpower;
+			
+		childd.ticksRequared=ticksRequared;
+		childd.ticksAccumulated=ticksAccumulated;
+		
 	}
 	
 	/*
 	 * This methods creates initial HARDLINK between child and client
 	 */
-	protected void bindChildToParent(HOEMachineData parent){};
+	protected void bindChildToParent(HOEMachineData parent){
+		this.io=parent.io;
+	};
 
 	protected double maxpower;
 	public int ticksRequared;

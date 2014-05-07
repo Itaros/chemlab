@@ -54,6 +54,7 @@ public class ServiceBayData extends HOEMachineData {
 
 	@Override
 	protected void bindChildToParent(HOEMachineData parent) {
+		super.bindChildToParent(parent);
 		ServiceBayData sbd_parent = (ServiceBayData)parent;
 		if(sbd_parent.injectables!=null){
 			injectables = sbd_parent.injectables.copy();

@@ -26,7 +26,7 @@ public class WorldGenerator implements IWorldGenerator {
 	private static final float NOISEDOWNSAMPLE_HEMATITE = 0.1F;
 	private static final float NOISEDOWNSAMPLE_PERICLASE = 0.2F;
 	
-	private static final int PYRITECHANCE = 16;//ALL
+	private static final int PYRITECHANCE = 16*5;//ALL
 	public static final int PLATINUMCHANCE = 4;//ONLY RIVERS
 	private static final int METAANTHRACITECHANCE = 6;//ALL	
 	
