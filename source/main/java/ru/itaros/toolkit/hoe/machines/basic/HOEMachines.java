@@ -4,7 +4,6 @@ import java.util.Vector;
 
 import ru.itaros.api.hoe.IHOEJob;
 import ru.itaros.api.hoe.exceptions.HOENoSuchDataExistsException;
-import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 
 public class HOEMachines implements IHOEJob {

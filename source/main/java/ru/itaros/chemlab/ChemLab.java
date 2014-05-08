@@ -2,9 +2,6 @@ package ru.itaros.chemlab;
 
 import java.util.EnumMap;
 
-import org.apache.logging.log4j.Level;
-
-import ru.itaros.api.hoe.IHOEContextDetector.FMLContext;
 import ru.itaros.chemlab.client.ui.common.GUIHandler;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.chemlab.loader.BlockLoader;
@@ -16,16 +13,12 @@ import ru.itaros.chemlab.loader.recipes.optional.VanillaTweaks;
 import ru.itaros.chemlab.loader.tileentity.TileEntityLoader;
 import ru.itaros.chemlab.network.ChemLabChannel;
 import ru.itaros.chemlab.network.IPacketCodecDescriptor;
-import ru.itaros.chemlab.network.NetworkChannel;
 import ru.itaros.chemlab.proxy.Proxy;
-import ru.itaros.chemlab.proxy.Server;
 import ru.itaros.chemlab.worldgen.WorldGenerator;
-import ru.itaros.hoe.ContextDetector;
 import ru.itaros.toolkit.hoe.io.IOCollectionHelper;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;

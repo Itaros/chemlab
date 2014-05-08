@@ -4,19 +4,13 @@ package ru.itaros.toolkit.hoe.machines.basic;
 
 
 
-import org.apache.logging.log4j.Level;
-
-import cpw.mods.fml.common.FMLLog;
-import ru.itaros.api.hoe.exceptions.HOEWrongSyncDirection;
-import ru.itaros.api.hoe.internal.HOEData;
-import ru.itaros.api.hoe.internal.HOEIO;
-import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
-import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionRecipe;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import ru.itaros.api.hoe.internal.HOEData;
+import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionRecipe;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
 
 public class HOEMachineCrafterData extends HOEMachineData{
 	private int incoming_slots,outcoming_slots;

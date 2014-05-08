@@ -61,12 +61,34 @@ public class ItemLoader {
 	public static ChemLabItem magnesiumsulfide;
 	
 	
-	
+	//general components
 	public static ChemLabItem screw,pcbpad;
 	public static ChemLabItem frame,panel,controlinterface;
 	public static ChemLabItem mjconversionunit;
 	public static ChemLabItem centralassembly;
+	//specialized components
+	public static ChemLabItem heatingelement;
+	public static ChemLabItem pressurenozzle;
 	
+	public static ChemLabItem microtube;
+	public static ChemLabItem multicompartment;
+	
+	public static ChemLabItem fluidmixer;
+	public static ChemLabItem fluidchamber;
+	
+	public static ChemLabItem ioportexpansionconnector;
+	public static ChemLabItem iteminterface;
+	
+	public static ChemLabItem presshead;
+	public static ChemLabItem actuator;
+	
+	public static ChemLabItem replacablesleigh;
+	public static ChemLabItem grindinggear;
+	
+	public static ChemLabItem pumpcasing,pumpmotor,pumphelicalrotor;
+	public static ChemLabItem airpump;
+	
+	public static ChemLabItem electrodeconnector;
 	
 	public static void loadItems(){
 		
@@ -85,6 +107,50 @@ public class ItemLoader {
 		GameRegistry.registerItem(controlinterface,controlinterface.getUnlocalizedName());
 		GameRegistry.registerItem(mjconversionunit,mjconversionunit.getUnlocalizedName());
 		GameRegistry.registerItem(centralassembly,centralassembly.getUnlocalizedName());
+		//SPECIALIZED COMPONENTS
+		heatingelement=new ChemLabItem("component.heatingelement");
+		pressurenozzle=new ChemLabItem("component.pressurenozzle");
+		GameRegistry.registerItem(heatingelement,heatingelement.getUnlocalizedName());
+		GameRegistry.registerItem(pressurenozzle,pressurenozzle.getUnlocalizedName());
+		
+		microtube=new ChemLabItem("component.microtube");
+		multicompartment=new ChemLabItem("component.multicompartment");
+		GameRegistry.registerItem(microtube,microtube.getUnlocalizedName());
+		GameRegistry.registerItem(multicompartment,multicompartment.getUnlocalizedName());
+		
+		fluidmixer=new ChemLabItem("component.fluidmixer");
+		fluidchamber=new ChemLabItem("component.fluidchamber");
+		GameRegistry.registerItem(fluidmixer,fluidmixer.getUnlocalizedName());
+		GameRegistry.registerItem(fluidchamber,fluidchamber.getUnlocalizedName());
+		
+		presshead=new ChemLabItem("component.presshead");
+		actuator=new ChemLabItem("component.actuator");
+		GameRegistry.registerItem(presshead,presshead.getUnlocalizedName());
+		GameRegistry.registerItem(actuator,actuator.getUnlocalizedName());
+		
+		ioportexpansionconnector=new ChemLabItem("component.ioportexpansionconnector");
+		iteminterface=new ChemLabItem("component.iteminterface");
+		GameRegistry.registerItem(ioportexpansionconnector,ioportexpansionconnector.getUnlocalizedName());
+		GameRegistry.registerItem(iteminterface,iteminterface.getUnlocalizedName());
+
+		replacablesleigh=new ChemLabItem("component.replacablesleigh");
+		grindinggear=new ChemLabItem("component.grindinggear");
+		GameRegistry.registerItem(replacablesleigh,replacablesleigh.getUnlocalizedName());
+		GameRegistry.registerItem(grindinggear,grindinggear.getUnlocalizedName());
+		
+		
+		pumpcasing=new ChemLabItem("component.pumpcasing");
+		pumpmotor=new ChemLabItem("component.pumpmotor");
+		pumphelicalrotor=new ChemLabItem("component.pumphelicalrotor");
+		GameRegistry.registerItem(pumpcasing,pumpcasing.getUnlocalizedName());
+		GameRegistry.registerItem(pumpmotor,pumpmotor.getUnlocalizedName());
+		GameRegistry.registerItem(pumphelicalrotor,pumphelicalrotor.getUnlocalizedName());
+		
+		airpump=new ChemLabItem("component.airpump");
+		GameRegistry.registerItem(airpump,airpump.getUnlocalizedName());
+		
+		electrodeconnector=new ChemLabItem("component.electrodeconnector");
+		GameRegistry.registerItem(electrodeconnector,electrodeconnector.getUnlocalizedName());
 		
 		//TOOLS
 		programmer = new Programmer();
@@ -232,6 +298,7 @@ public class ItemLoader {
 		d.add(new Dust("sand",4));
 		d.add(new Dust("stone",-1));
 		
+		checkAndAddDust(d,"iron",-1);
 		checkAndAddDust(d,"gold",-1);
 		checkAndAddDust(d,"platinum",-1);
 		checkAndAddDust(d,"pyrite",-1);

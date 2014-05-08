@@ -1,35 +1,24 @@
 package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity;
 
-import org.apache.logging.log4j.Level;
-
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import ru.itaros.api.hoe.IHOEContextDetector.FMLContext;
-import ru.itaros.chemlab.ChemLab;
-import ru.itaros.chemlab.loader.ItemLoader;
-import ru.itaros.hoe.ContextDetector;
-import ru.itaros.hoe.HOE;
-import ru.itaros.hoe.proxy.HOEServer;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
-import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
-import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ProgrammerSlot;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
-import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.world.World;
+
+import org.apache.logging.log4j.Level;
+
+import ru.itaros.chemlab.ChemLab;
+import ru.itaros.chemlab.loader.ItemLoader;
+import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
+import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
+import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ProgrammerSlot;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
+import cpw.mods.fml.common.FMLLog;
 
 
 public abstract class MachineCrafterTileEntity extends MachineTileEntity implements ISidedInventory{

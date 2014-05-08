@@ -6,7 +6,6 @@ import ru.itaros.chemlab.hoe.data.ServiceBayData;
 import ru.itaros.chemlab.minecraft.tileentity.connectome.ServiceBayConnectome;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
-import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 

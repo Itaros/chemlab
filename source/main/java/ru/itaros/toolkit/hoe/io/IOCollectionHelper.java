@@ -1,6 +1,5 @@
 package ru.itaros.toolkit.hoe.io;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Hashtable;
 
 import ru.itaros.api.hoe.internal.HOEIO;

@@ -5,7 +5,6 @@ import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.chemlab.loader.ItemLoader;
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionRecipe;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
 

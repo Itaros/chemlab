@@ -2,7 +2,6 @@ package ru.itaros.chemlab.hoe;
 
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.loader.recipes.AirCollectorRecipes;
-import ru.itaros.chemlab.loader.recipes.WoodChainRecipes;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;

@@ -1,11 +1,10 @@
 package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes;
 
-import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.item.ItemStack;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public abstract class Recipe {
 

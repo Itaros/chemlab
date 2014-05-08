@@ -1,15 +1,14 @@
 package ru.itaros.chemlab.network.packets;
 
-import cpw.mods.fml.common.network.ByteBufUtils;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import io.netty.buffer.ByteBuf;
-import io.netty.handler.codec.string.StringEncoder;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
 import ru.itaros.chemlab.network.IPacketCodecDescriptor;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
+import cpw.mods.fml.common.network.ByteBufUtils;
 
 public class SetHOEMachineRecipePacket implements IPacketCodecDescriptor {
 

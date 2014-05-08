@@ -2,12 +2,9 @@ package ru.itaros.chemlab.blocks.machines;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.util.IIcon;
 import ru.itaros.chemlab.ChemLab;
-import ru.itaros.chemlab.client.ui.SteamBoilerContainer;
 import ru.itaros.chemlab.client.ui.SteamExplosionUnitContainer;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
-import ru.itaros.chemlab.minecraft.tileentity.SteamBoilerTileEntity;
 import ru.itaros.chemlab.minecraft.tileentity.SteamExplosionUnitTileEntity;
 import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.blocks.IOMachineBlock;

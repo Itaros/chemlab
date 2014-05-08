@@ -1,9 +1,8 @@
 package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes;
 
+import net.minecraft.item.ItemStack;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
 public class FixedConversionRecipe extends Recipe {
 	

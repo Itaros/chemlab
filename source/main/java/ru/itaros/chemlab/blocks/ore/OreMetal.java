@@ -1,9 +1,9 @@
 package ru.itaros.chemlab.blocks.ore;
 
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraftforge.oredict.OreDictionary;
+import ru.itaros.chemlab.ChemLabValues;
+import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 
 public class OreMetal extends Block {
 
@@ -12,6 +12,11 @@ public class OreMetal extends Block {
 		this.setBlockName("ore."+group.toLowerCase());
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		this.setBlockTextureName("chemlab:ore_"+group.toLowerCase());
+		
+		this.setHardness(ChemLabValues.BASE_ORE_HARDNESS);
+		this.setResistance(ChemLabValues.BASE_ORE_RESISTANCE);
+		
+		this.setHarvestLevel("pickaxe", 1);
 		
 	}
 	

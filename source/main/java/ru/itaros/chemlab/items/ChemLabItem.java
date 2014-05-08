@@ -1,7 +1,7 @@
 package ru.itaros.chemlab.items;
 
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import net.minecraft.item.Item;
+import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 
 public class ChemLabItem extends Item {
 

@@ -1,22 +1,19 @@
 package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity;
 
-import buildcraft.api.power.IPowerReceptor;
-import buildcraft.api.power.PowerHandler;
-import buildcraft.api.power.PowerHandler.PowerReceiver;
-import ru.itaros.api.hoe.IHOEContextDetector.FMLContext;
-import ru.itaros.chemlab.ChemLabValues;
-import ru.itaros.chemlab.HOELinker;
-import ru.itaros.hoe.ContextDetector;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
-import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
-import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import ru.itaros.api.hoe.IHOEContextDetector.FMLContext;
+import ru.itaros.chemlab.ChemLabValues;
+import ru.itaros.chemlab.HOELinker;
+import ru.itaros.hoe.ContextDetector;
+import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
+import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
+import buildcraft.api.power.IPowerReceptor;
+import buildcraft.api.power.PowerHandler;
+import buildcraft.api.power.PowerHandler.PowerReceiver;
 
 public abstract class MachineTileEntity extends TileEntity implements IPowerReceptor {
 

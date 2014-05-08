@@ -1,5 +1,6 @@
 package ru.itaros.chemlab.blocks.ore;
 
+import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -21,6 +22,11 @@ public class AsbestosMineral extends Block {
 		this.setBlockName("asbestosmineral."+type.toString());
 		this.setBlockTextureName("chemlab:asbestosmineral-"+type.toString());
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
+		
+		this.setHardness(ChemLabValues.BASE_ORE_HARDNESS/2);
+		this.setResistance(ChemLabValues.BASE_ORE_RESISTANCE);		
+		
+		this.setHarvestLevel("pickaxe", 1);
 	}
 
 }

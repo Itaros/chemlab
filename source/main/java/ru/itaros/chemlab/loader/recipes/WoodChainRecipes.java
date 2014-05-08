@@ -1,12 +1,10 @@
 package ru.itaros.chemlab.loader.recipes;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
-import ru.itaros.chemlab.items.ore.Dust;
 import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.chemlab.loader.ItemLoader;
@@ -65,6 +63,7 @@ public class WoodChainRecipes {
 		//FCR 3-2 (CRUSHED NATIVE GOLD->STONE DUST+GOLD DUST)
 		FixedConversionRecipe fcr3_2 = getRecipeForNativeCrushedGold();
 		FixedConversionRecipe fcr3_3 = getRecipeForNativeCrushedPyrite();
+		//FixedConversionRecipe fcr3_4 = getRecipeForNativeCrushedIron();
 		//Collection
 		centrifugalExtractorRecipes = new RecipesCollection(fcr3,fcr3_1,fcr3_2,fcr3_3);
 		centrifugalExtractorRecipes.register();
@@ -199,6 +198,28 @@ public class WoodChainRecipes {
 		
 		return fcr;
 	}	
+	
+//	private static FixedConversionRecipe getRecipeForNativeCrushedIron(){
+//		
+//		FixedConversionRecipe fcr;
+//		
+//		ItemStack pyriteDust = OreDictionary.getOres("dustIron").get(0).copy();
+//		ItemStack stoneDust = OreDictionary.getOres("dustStone").get(0).copy();
+//		ItemStack ironNugget = new ItemStack(Items.);
+//		
+//		ItemStack[] i = new ItemStack[]{OreDictionary.getOres("crushedIron").get(0).copy()};
+//		ItemStack[] o = new ItemStack[]{pyriteDust,stoneDust,ironNugget};
+//		
+//		//TODO: facility to validate FCRs before injection
+//		
+//		fcr = new FixedConversionRecipe(500, 500*3, i, o);
+//		fcr.setUnlocalizedName("centrext.crushediron");
+//		
+//		return fcr;		
+//		
+//		
+//	}
+	
 	
 	
 	

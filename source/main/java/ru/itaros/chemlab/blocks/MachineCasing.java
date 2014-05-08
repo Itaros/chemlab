@@ -1,5 +1,6 @@
 package ru.itaros.chemlab.blocks;
 
+import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -11,6 +12,7 @@ public class MachineCasing extends Block {
 	public MachineCasing() {
 		super(Material.iron);
 		this.setBlockName("component.machinecasing");
+		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 	}
 
 	
@@ -19,7 +21,7 @@ public class MachineCasing extends Block {
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
 		icons = new MetaIconFolder(METADATA_VARIATIONS);
-		icons.Register(0, "chemlab", new String[]{"machine_base","machine_base","machine_base","machine_base","machine_base","machine_base"}, reg);
+		icons.Register(0, "chemlab", new String[]{"machine_case","machine_case","machine_case","machine_case","machine_case","machine_case"}, reg);
 	}	
 	@Override
 	public IIcon getIcon(int side, int meta) {

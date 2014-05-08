@@ -1,14 +1,13 @@
 package ru.itaros.chemlab.client.ui.common;
 
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.debug.RecipeSetSlot;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ProgrammerSlot;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ReadonlySlot;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ProgrammerSlot;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ReadonlySlot;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 
 public class HOEContainer extends Container {
 

@@ -2,13 +2,10 @@ package ru.itaros.chemlab.blocks.machines;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.util.IIcon;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.client.ui.AirCollectorContainer;
-import ru.itaros.chemlab.client.ui.CrusherContainer;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.chemlab.minecraft.tileentity.AirCollectorTileEntity;
-import ru.itaros.chemlab.minecraft.tileentity.CrusherTileEntity;
 import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.blocks.IOMachineBlock;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;

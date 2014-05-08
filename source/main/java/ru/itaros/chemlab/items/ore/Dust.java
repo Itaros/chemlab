@@ -1,9 +1,7 @@
 package ru.itaros.chemlab.items.ore;
 
-import java.util.ArrayList;
-
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import net.minecraft.item.Item;
+import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 
 public class Dust extends Item {
 	

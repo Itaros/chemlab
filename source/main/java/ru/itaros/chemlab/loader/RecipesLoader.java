@@ -11,9 +11,6 @@ import ru.itaros.chemlab.loader.recipes.MixerRecipes;
 import ru.itaros.chemlab.loader.recipes.TurboexpanderRecipes;
 import ru.itaros.chemlab.loader.recipes.VanillaCraftingRecipes;
 import ru.itaros.chemlab.loader.recipes.WoodChainRecipes;
-import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.item.Item;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class RecipesLoader {
 	public static void load(){

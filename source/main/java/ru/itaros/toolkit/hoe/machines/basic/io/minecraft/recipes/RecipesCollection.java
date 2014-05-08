@@ -1,7 +1,6 @@
 package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes;
 
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
-import net.minecraft.item.Item;
 
 public class RecipesCollection {
 	

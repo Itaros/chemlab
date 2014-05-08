@@ -1,8 +1,5 @@
 package ru.itaros.hoe.proxy;
 
-import ru.itaros.api.hoe.IHOEInterfacer;
-import ru.itaros.hoe.interfacer.HOEInterfacer;
-import ru.itaros.hoe.interfacer.HOEInterfacerDummy;
 
 public class HOEClient extends HOEServer {
 	//@Override

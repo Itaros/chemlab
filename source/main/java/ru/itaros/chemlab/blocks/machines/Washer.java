@@ -2,7 +2,6 @@ package ru.itaros.chemlab.blocks.machines;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.util.IIcon;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.client.ui.WasherContainer;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;

@@ -1,7 +1,6 @@
 package ru.itaros.chemlab.hoe;
 
 import ru.itaros.api.hoe.internal.HOEData;
-import ru.itaros.chemlab.hoe.data.DiaphragmalElectrolyzerData;
 import ru.itaros.chemlab.loader.recipes.EvaporationUnitRecipes;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;

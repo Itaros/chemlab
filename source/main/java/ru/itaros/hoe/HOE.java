@@ -1,18 +1,13 @@
 package ru.itaros.hoe;
 
 
-import org.apache.logging.log4j.Level;
-
-import ru.itaros.api.hoe.IHOEContextDetector.FMLContext;
 import ru.itaros.api.hoe.IHOEInterfacer;
 import ru.itaros.hoe.interfacer.HOEInterfacer;
 import ru.itaros.hoe.proxy.HOEProxy;
-import ru.itaros.hoe.proxy.HOEServer;
 import ru.itaros.hoe.registries.HOEFluidRegistry;
 import ru.itaros.hoe.registries.HOEIORegistry;
 import ru.itaros.hoe.registries.HOERecipeRegistry;
 import ru.itaros.hoe.threading.HOEThreadController;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;

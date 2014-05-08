@@ -2,9 +2,6 @@ package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.blocks;
 
 import java.util.Random;
 
-import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -13,6 +10,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import ru.itaros.chemlab.ChemLabValues;
+import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 
 public abstract class IOMachineBlock extends Block implements IRotatableBlock, ITileEntityProvider{
 
@@ -25,6 +26,12 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 	protected IOMachineBlock(Material material) {
 		super(material);
 		System.out.println("HOEBlock. Registration: "+this.getClass().getName());
+		
+		this.setHardness(ChemLabValues.BASE_MACHINE_HARDNESS);
+		this.setResistance(ChemLabValues.BASE_MACHINE_RESISTANCE);
+		
+		 this.setHarvestLevel("pickaxe", 2);
+		
 	}
 	
 	

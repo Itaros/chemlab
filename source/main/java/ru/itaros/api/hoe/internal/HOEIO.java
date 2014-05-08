@@ -1,7 +1,5 @@
 package ru.itaros.api.hoe.internal;
 
-import java.lang.reflect.InvocationTargetException;
-
 import ru.itaros.api.hoe.registries.IIORegistry;
 
 /*

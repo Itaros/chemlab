@@ -3,7 +3,6 @@ package ru.itaros.hoe.interfacer;
 import ru.itaros.api.hoe.IHOEInterfacer;
 import ru.itaros.api.hoe.IHOEThread;
 import ru.itaros.hoe.HOE;
-import ru.itaros.hoe.threading.HOEThread;
 
 /*
  * This class provides a way to communicate with HOE

@@ -1,8 +1,8 @@
 package ru.itaros.chemlab.convenience;
 
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import ru.itaros.chemlab.loader.BlockLoader;
 
 public class ChemLabCreativeTab extends CreativeTabs {
 
@@ -21,7 +21,7 @@ public class ChemLabCreativeTab extends CreativeTabs {
 
 	@Override
 	public Item getTabIconItem() {
-		return Item.getItemFromBlock(Block.getBlockFromName("dirt"));
+		return Item.getItemFromBlock(BlockLoader.diaphragmalelectrolyzer);
 	}
 
 }

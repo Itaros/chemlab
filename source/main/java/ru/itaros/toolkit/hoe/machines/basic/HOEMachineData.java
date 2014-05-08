@@ -4,7 +4,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.exceptions.HOEWrongSyncDirection;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.api.hoe.internal.HOEIO;
-import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 
 public class HOEMachineData extends HOEData {

@@ -2,8 +2,6 @@ package ru.itaros.toolkit.hoe.machines.basic.io.connectivity;
 
 import java.util.ArrayList;
 
-import ru.itaros.api.hoe.internal.HOEData;
-
 /*
  * This class connects 
  */
