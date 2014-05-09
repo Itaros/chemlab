@@ -27,7 +27,9 @@ public class FluidCompressorRecipes {
 				ItemStack i = new ItemStack(HiVolumeLiquidCell.getByFluid(f));
 				ItemStack o = new ItemStack(HiVolumeLiquidCell.getByFluid(ifc.getCompressedForm()));
 				int requaredEnergy = ifc.getRequaredEnergyForCompression();
-				templist.add(new FixedConversionRecipe(REQUIRED_TIME,requaredEnergy,i,o));
+				FixedConversionRecipe fcr = new FixedConversionRecipe(REQUIRED_TIME,requaredEnergy,i,o);
+				fcr.setUnlocalizedName("fluicomp."+f.getCommonName());
+				templist.add(fcr);
 			}
 		}
 		

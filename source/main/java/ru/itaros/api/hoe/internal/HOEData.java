@@ -32,6 +32,19 @@ public abstract class HOEData {
 		return isSided;
 	}	
 	
+
+	
+	private boolean isRunning=true;
+	public void invalidate() {
+		isRunning=false;
+		HOEData child = getChild();
+		if(child!=null){
+			child.invalidate();
+		}
+	}	
+	public boolean isRunning(){
+		return isRunning;
+	}
 	
 	
 	//================Intercomms================

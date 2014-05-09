@@ -31,7 +31,7 @@ public class ServiceBayIO extends HOEMachineIO {
 	private static final int TIMEOUT=5;//Secs
 	
 	@Override
-	protected void produce(HOEData data) {
+	protected void produce(HOEData data, boolean doReal) {
 		
 		//NO CLIENTS HERE
 		if(ContextDetector.getInstance().getContext()==FMLContext.CLIENT){return;}

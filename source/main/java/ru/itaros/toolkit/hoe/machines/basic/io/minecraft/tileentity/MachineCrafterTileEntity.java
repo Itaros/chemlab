@@ -10,8 +10,10 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 
 import org.apache.logging.log4j.Level;
 
+import ru.itaros.api.hoe.IHOEContextDetector.FMLContext;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.loader.ItemLoader;
+import ru.itaros.hoe.ContextDetector;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
@@ -283,13 +285,14 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	
 	
 	//Sync
+	private boolean doReal = (ContextDetector.getInstance().getContext()==FMLContext.CLIENT);
 	@Override
 	public void updateEntity() {
 		if(client!=null){
 			HOEMachineIO io = client.getIO();
 			if(io!=null){
 				//CLIENTSIDE TICK in MTA
-				io.tick(client);
+				io.tick(client, doReal);
 				updateRO();
 			}
 		}		

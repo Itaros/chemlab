@@ -39,7 +39,7 @@ public abstract class HOEIO {
 		isAllowedToStart=true;
 	}
 
-	public void tick(HOEData data){
+	public void tick(HOEData data, boolean doReal){
 		data.executeIntercoms(data);
 	}
 	//TODO: HOE-style exception

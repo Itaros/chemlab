@@ -61,17 +61,17 @@ tile.ore.limestone.name=Limestone
 tile.ore.hematite.name=Hematite Ore
 tile.ore.periclase.name=Periclase Ore
 
-item.chemlab:Woodchips.name=Woodchips
-item.chemlab:WoodchipClump.name=Woodchip Clumps
-item.chemlab:WoodFiberFlakes.name=Wood Fiber Flakes
-item.chemlab:PureWoodFiberFlakes.name=Pure Wood Fiber Flakes
-item.chemlab:ImpregnatedWoodFibers.name=Impregnated Wood Fibers
-item.chemlab:ImpregnatedWoodFibersPellet.name=Impregnated Wood Fibers Pellet
-item.chemlab:ExplodedWoodFibers.name=Exploded Wood Fibers
-item.chemlab:WashedLignocellulose.name=Washed Lignocellulose
-item.chemlab:ImpregnatedLignocellulose.name=Impregnated Lignocellulose
-item.chemlab:PressedLignocellulose.name=Pressed Lignocellulose Pellet
-item.chemlab:DecomposedLignocellulose.name=Decomposed Lignocellulose
+item.genericitem.woodchips.name=Woodchips
+item.genericitem.woodchipclump.name=Woodchip Clumps
+item.genericitem.lignocelluloseflakes.name=Wood Fiber Flakes
+item.genericitem.purelignocelluloseflakes.name=Pure Wood Fiber Flakes
+item.genericitem.impregnatedlignocellulose.name=Impregnated Wood Fibers
+item.genericitem.impregnatedwoodfiberspellet.name=Impregnated Wood Fibers Pellet
+item.genericitem.explodedwoodfibers.name=Exploded Wood Fibers
+item.genericitem.washedlignocellulose.name=Washed Lignocellulose
+item.genericitem.impregnatedlignocelluloseflakes.name=Impregnated Lignocellulose
+item.genericitem.pressedlignocellulose.name=Pressed Lignocellulose Pellet
+item.genericitem.decomposedlignocellulose.name=Decomposed Lignocellulose
 
 item.crushedore.oreIron.name=Crushed Low-grade Iron Ore
 item.crushedore.oreGold.name=Crushed Low-grade Gold Ore
@@ -94,6 +94,7 @@ item.dust.stone.name=Stone Dust
 item.dust.gold.name=Gold Dust
 item.dust.platinum.name=Platinum Dust
 item.dust.pyrite.name=Pyrite Dust
+item.dust.iron.name=Iron Dust
 
 tile.asbestosmineral.Crocidolite.name=Crocidolite Ore
 tile.asbestosmineral.Tremolite.name=Tremolite Ore
@@ -157,11 +158,24 @@ recipe.diaelectr.naoh.name=Electrolyse NaCl
 recipe.centrext.crushedgold.name=Separate Gold from Stone
 recipe.cattank.sulphurtrioxide.name=Oxidise Sulphur Dioxide to Trioxide
 recipe.mixer.sulphuricacid.name=React Sulphur Trioxide with Water
-recipe.furnace.carbothermal.ferricoxide.name=Reduce to Carbonized Iron
+recipe.furnace.carbothermal.ferricoxide.name=Reduce to Pig Iron
 recipe.furnace.dusts.gold.name=Melt Pure Gold Dust
 recipe.furnace.dusts.iron.name=Melt Pure Iron Dust
 recipe.mixer.decarboxination.name=Molten phase decarbonation
 recipe.mixer.desulphurication.name=Remove Sulphur
+recipe.centrext.crushedpyrite.name=Extract Pyrite Dust
+recipe.furnace.carbothermal.ferricoxide_hematite.name=Reduce to Redshort Pig Iron
+recipe.aircollector.air.name=Collect Environmental Air
+recipe.evapunit.air.liquid.name=Evaporate Liquid Air
+recipe.fluicomp.air.name=Compress Air
+recipe.fluicomp.air.compressed.name=Try to compress Air more
+recipe.fluicomp.air.liquid.name=Recompress Air
+recipe.turboexp.air.compressed.name=Expand and Cool Compressed Air
 
-
-
+ui.separator=----
+ui.prefix.name=Machine: 
+ui.prefix.owner=Owner: 
+ui.prefix.power=Power Status 
+ui.prefix.power.max=Max: 
+ui.prefix.power.cur=Cur: 
+ui.postfix= MJ

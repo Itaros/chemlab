@@ -15,12 +15,14 @@ public abstract class HOEMachineCrafterIO extends HOEMachineIO{
 
 
 	@Override
-	protected void produce(HOEData data) {
+	protected void produce(HOEData data, boolean doReal){
 		HOEMachineCrafterData hm = (HOEMachineCrafterData) data;
-		if(hm.decrementResources()){
-			hm.incrementProduction();
+		hm.shutCycleOff();//Cycled thought
+		if(doReal){
+			if(hm.decrementResources()){
+				hm.incrementProduction();
+			}
 		}
-		
 	}	
 	
 	protected boolean isMachineActive(HOEData data){

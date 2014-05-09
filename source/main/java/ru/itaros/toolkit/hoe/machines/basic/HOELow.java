@@ -26,7 +26,7 @@ public class HOELow implements IHOEJob {
 			currentlyProcessed=d;
 			if(d.isConfigured()){
 				HOEMachineIO io = d.getIO();
-				io.tick(d);
+				io.tick(d, true);
 			}
 		}
 	}

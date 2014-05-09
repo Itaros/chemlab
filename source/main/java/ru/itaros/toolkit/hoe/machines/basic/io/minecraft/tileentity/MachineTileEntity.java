@@ -11,11 +11,13 @@ import ru.itaros.hoe.ContextDetector;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.ISecured;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.TileEntitySecurityTracker;
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
 import buildcraft.api.power.PowerHandler.PowerReceiver;
 
-public abstract class MachineTileEntity extends TileEntity implements IPowerReceptor {
+public abstract class MachineTileEntity extends TileEntity implements IPowerReceptor, ISecured {
 
 	protected HOEMachineIO hoeio;
 
@@ -72,6 +74,7 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 		//System.out.println("Deserializing TE: "+this.getClass().getSimpleName());
 		readServerState(nbt);
 		MJ.readFromNBT(nbt, "mj");
+		security.readFromNBT(nbt, "security");
 	}
 
 	@Override
@@ -79,6 +82,7 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 		super.writeToNBT(nbt);
 		writeServerState(nbt);
 		MJ.writeToNBT(nbt, "mj");
+		security.writeToNBT(nbt, "security");
 	}
 	public abstract HOELinker getLinker();
 
@@ -129,6 +133,14 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 	}
 
 
+	//SECURITY
+	
+	TileEntitySecurityTracker security = new TileEntitySecurityTracker();
+	
+	public TileEntitySecurityTracker getSecurity(){
+		return security;
+	}
+	
 	
 	//MJ POWER
 	
@@ -187,6 +199,15 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 	}
 	public double getMaximumMJ(){
 		return MJ.getMaxEnergyStored();
+	}
+	
+	
+	//HOE Interop
+
+	public void invalidateHOEData() {
+		if(server!=null){
+			server.invalidate();
+		}
 	}
 
 }

@@ -26,7 +26,9 @@ public class TurboexpanderRecipes {
 				ItemStack i = new ItemStack(HiVolumeLiquidCell.getByFluid(f));
 				ItemStack o = new ItemStack(HiVolumeLiquidCell.getByFluid(ifc.getExpandedForm()));
 				int requaredEnergy = 10;// ifc.getReleasedEnergyForExpansion();
-				templist.add(new FixedConversionRecipe(REQUIRED_TIME,requaredEnergy,i,o));
+				FixedConversionRecipe fcr = new FixedConversionRecipe(REQUIRED_TIME,requaredEnergy,i,o);
+				fcr.setUnlocalizedName("turboexp."+f.getCommonName());
+				templist.add(fcr);
 			}
 		}
 		

@@ -13,6 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.network.packets.SetHOEMachineRecipePacket;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
@@ -21,6 +22,7 @@ import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.elements.Tab;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.ISecured;
 
 public class GUIToolProgrammer extends GuiScreen {
 
@@ -94,6 +96,10 @@ public class GUIToolProgrammer extends GuiScreen {
 			
 		}
 		
+		if(activeTab==infotab){
+			this.drawMachineInfo();
+		}
+		
 		
 		
 		super.drawScreen(par1, par2, par3);
@@ -132,6 +138,54 @@ public class GUIToolProgrammer extends GuiScreen {
 		
 	}
 
+	
+	private void drawMachineInfo(){
+		RenderHelper.disableStandardItemLighting();
+		GL11.glDisable(GL11.GL_LIGHTING);		
+		
+		int xi = 8;
+		int yi = 18;
+		
+		int ystep = 10;
+		
+		int i = 0;
+		
+		HOEMachineIO mio = tile.getSuperIO();
+		if(mio instanceof HOEMachineCrafterIO){
+			HOEMachineCrafterIO mcrafter = (HOEMachineCrafterIO)mio;
+			
+			String namePrefix = LanguageRegistry.instance().getStringLocalization("ui.prefix.name");
+			String ownerPrefix = LanguageRegistry.instance().getStringLocalization("ui.prefix.owner");
+			String sep = LanguageRegistry.instance().getStringLocalization("ui.separator");
+			
+			String powerPrefix = LanguageRegistry.instance().getStringLocalization("ui.prefix.power");
+			String powerPrefix_max = LanguageRegistry.instance().getStringLocalization("ui.prefix.power.max");
+			String powerPrefix_cur = LanguageRegistry.instance().getStringLocalization("ui.prefix.power.cur");
+			String powerPostfix = LanguageRegistry.instance().getStringLocalization("ui.postfix");
+			
+			
+			fontRendererObj.drawString(namePrefix+"UNDEFINED", xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);		
+			i++;
+			ISecured secte = (ISecured) tile;
+			fontRendererObj.drawString(ownerPrefix+secte.getSecurity().getOwnerName(), xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);		
+			i++;
+			fontRendererObj.drawString(sep, xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);		
+			i++;
+			fontRendererObj.drawString(powerPrefix, xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);
+			i++;
+			fontRendererObj.drawString("-"+powerPrefix_cur+tile.getClientData().getPower()+powerPostfix, xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);
+			i++;			
+			fontRendererObj.drawString("-"+powerPrefix_max+tile.getClientData().getPowerMax()+powerPostfix, xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);
+			i++;
+			
+			
+			
+			
+			
+		}
+	}
+	
+	
 	private int totalPages = 0;
 	private int currentPage = 0;
 	private void drawRecipes(int operation, int x2, int y2) {
@@ -147,6 +201,9 @@ public class GUIToolProgrammer extends GuiScreen {
 			
 			int recipesAmount = repcol.getRecipesAmount();
 			totalPages = recipesAmount/3;//3 is amount per page
+			if(recipesAmount % 3 == 0){
+				totalPages--;
+			}
 			
 			int rangeStart = currentPage * 3;
 			int rangeEnd = rangeStart + 3;
@@ -207,6 +264,8 @@ public class GUIToolProgrammer extends GuiScreen {
 					
 					GL11.glPopMatrix();
 					
+					RenderHelper.disableStandardItemLighting();
+					GL11.glDisable(GL11.GL_LIGHTING);
 					
 					fontRendererObj.drawString(r.getLocalizedName(), xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);
 					
@@ -283,8 +342,10 @@ public class GUIToolProgrammer extends GuiScreen {
 	protected void mouseClicked(int x2, int y2, int button) {
 
 		clickTabs(x2,y2,button,x,y);
-		drawRecipes(1,x2,y2);
-		interactPageSelector(x2,y2);
+		if(activeTab==recipetab){
+			drawRecipes(1,x2,y2);
+			interactPageSelector(x2,y2);
+		}
 		
 		super.mouseClicked(x2, y2, button);
 	}

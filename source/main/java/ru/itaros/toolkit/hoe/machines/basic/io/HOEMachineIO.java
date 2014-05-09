@@ -15,19 +15,19 @@ public abstract class HOEMachineIO extends HOEIO {
 	
 	
 	@Override
-	public void tick(HOEData data) {
-		super.tick(data);
+	public void tick(HOEData data, boolean doReal) {
+		super.tick(data, doReal);
 		HOEMachineData machine = (HOEMachineData) data;
 		if(!isMachineActive(data)){return;}
 		machine.incrementTick();
 		if(machine.getTicks()>machine.ticksRequared){
 			machine.voidTicks();
-			produce(data);
+			produce(data, doReal);
 		}
 	}
 
 
 
-	protected abstract void produce(HOEData data);
+	protected abstract void produce(HOEData data, boolean doReal);
 
 }

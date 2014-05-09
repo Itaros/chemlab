@@ -164,6 +164,8 @@ public class HOEMachineData extends HOEData {
 	public HOEMachineData() {
 		super();
 	}
+	
+	
 
 
 }

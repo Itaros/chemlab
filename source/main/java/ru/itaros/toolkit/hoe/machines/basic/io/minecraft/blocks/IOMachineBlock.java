@@ -5,7 +5,9 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
@@ -14,6 +16,7 @@ import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.TileEntitySecurityTracker;
 
 public abstract class IOMachineBlock extends Block implements IRotatableBlock, ITileEntityProvider{
 
@@ -53,11 +56,25 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 	}
 	
 	
+	private void securityCheck(World world, int x,
+			int y, int z,EntityPlayer entplayer){
+		
+		TileEntity te = world.getTileEntity(x, y, z);
+		if(te instanceof MachineTileEntity){
+			MachineTileEntity mte = (MachineTileEntity)te;
+			TileEntitySecurityTracker sec =mte.getSecurity();
+			sec.setOwnerIfNotSet(entplayer);
+		}
+		
+	}
+	
 	@Override
 	public boolean onBlockActivated(World world, int x,
 			int y, int z, EntityPlayer entplayer,
 			int unknown, float px, float py,
 			float pz) {	
+		
+		securityCheck(world,x,y,z, entplayer);
 		
 		entplayer.openGui(getOwnerMod(), getUIID(), world, x, y, z);		
 		
@@ -96,16 +113,43 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
             par1World.scheduleBlockUpdate(par2, par3, par4, this, this.tickRate(par1World));
     }	
     
+	
+	
 	@Override
 	public int tickRate(World p_149738_1_) {
 		return 20*5;
 	}
+	
+
+	@Override
+	public void breakBlock(World w, int x, int y,
+			int z, Block block, int meta) {
+		
+		//This method sets flag to decline HOEData which will not be existant in world
+		TileEntity te = w.getTileEntity(x, y, z);
+		if(te instanceof MachineTileEntity){
+			MachineTileEntity mte =(MachineTileEntity)te;
+			mte.invalidateHOEData();
+		}
+		
+		super.breakBlock(w, x, y, z,
+				block, meta);
+	}	
+	
+	
+	@Override
+	public boolean hasTileEntity(int meta) {
+		return true;
+	}	
 	
 	
 //ROTATION
 	//private ForgeDirection currentRotation=ForgeDirection.SOUTH;
 	
 	
+
+
+
 	@Override
 	public ForgeDirection getDirection(World w, int x, int y, int z) {
 		return ForgeDirection.getOrientation(w.getBlockMetadata(x, y, z));

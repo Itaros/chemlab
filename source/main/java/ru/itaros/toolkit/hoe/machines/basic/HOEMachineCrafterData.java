@@ -161,7 +161,6 @@ public class HOEMachineCrafterData extends HOEMachineData{
 		recipe.incrementProduction(this);
 	}
 	public boolean decrementResources() {
-		isReadyForCycle=false;//Cycled thought
 		if(recipe==null){return false;}
 		//Here we check if it is possible to produce something with those available resources
 		if(recipe.checkResources(this) && HOEDataStateCheck()){
@@ -345,6 +344,9 @@ public class HOEMachineCrafterData extends HOEMachineData{
 	
 	
 	private boolean isReadyForCycle=false;
+	public void shutCycleOff(){
+		isReadyForCycle=false;
+	}
 	public boolean isReadyForCycle() {
 		if(isReadyForCycle){
 			return true;

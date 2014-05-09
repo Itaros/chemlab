@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import ru.itaros.api.hoe.IHOEJob;
 import ru.itaros.api.hoe.exceptions.HOENoSuchDataExistsException;
+import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 
 public class HOEMachines implements IHOEJob {
@@ -21,12 +22,18 @@ public class HOEMachines implements IHOEJob {
 	
 	@Override
 	public void run() {
+		HOEData skipped=null;
 		for(HOEMachineData d : machines){
+			if(!d.isRunning()){skipped=d;}
 			currentlyProcessed=d;
 			if(d.isConfigured()){
 				HOEMachineIO io = d.getIO();
-				io.tick(d);
+				io.tick(d, true);
 			}
+		}
+		if(skipped!=null){
+			System.out.println("Skipped machine removed: "+skipped.getClass().getSimpleName());
+			machines.remove(skipped);
 		}
 	}
 

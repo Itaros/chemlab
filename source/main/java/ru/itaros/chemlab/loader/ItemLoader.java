@@ -5,22 +5,16 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
-import cpw.mods.fml.common.registry.GameRegistry;
-import ru.itaros.chemlab.items.*;
+import ru.itaros.chemlab.items.ChemLabItem;
+import ru.itaros.chemlab.items.DegradableItem;
+import ru.itaros.chemlab.items.HiVolumeLiquidCell;
+import ru.itaros.chemlab.items.HiVolumeLiquidCellEmpty;
+import ru.itaros.chemlab.items.PipeWrench;
+import ru.itaros.chemlab.items.Programmer;
 import ru.itaros.chemlab.items.ore.CrushedOre;
 import ru.itaros.chemlab.items.ore.Dust;
-import ru.itaros.chemlab.items.refactorable.DecomposedLignocellulose;
-import ru.itaros.chemlab.items.refactorable.ExplodedWoodFibers;
-import ru.itaros.chemlab.items.refactorable.ImpregnatedLignocellulose;
-import ru.itaros.chemlab.items.refactorable.ImpregnatedWoodFibers;
-import ru.itaros.chemlab.items.refactorable.ImpregnatedWoodFibersPellet;
-import ru.itaros.chemlab.items.refactorable.PressedLignocellulose;
-import ru.itaros.chemlab.items.refactorable.PureWoodFiberFlakes;
-import ru.itaros.chemlab.items.refactorable.WashedLignocellulose;
-import ru.itaros.chemlab.items.refactorable.WoodFiberFlakes;
-import ru.itaros.chemlab.items.refactorable.WoodchipClump;
-import ru.itaros.chemlab.items.refactorable.Woodchips;
 import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ItemLoader {
 
@@ -29,18 +23,18 @@ public class ItemLoader {
 	
 	public static HiVolumeLiquidCellEmpty emptyhvlc;
 	
-	public static Woodchips woodchips;
-	public static WoodchipClump woodchipclump;
+	public static ChemLabItem woodchips;
+	public static ChemLabItem woodchipclump;
 	
-	public static WoodFiberFlakes lignocelluloseflakes;
-	public static PureWoodFiberFlakes purelignocelluloseflakes;
-	public static ImpregnatedWoodFibers impregnatedlignocelluloseflakes;
-	public static ImpregnatedWoodFibersPellet impregnatedwoodfiberspellet;
-	public static ExplodedWoodFibers explodedwoodfibers;
-	public static WashedLignocellulose washedlignocellulose;
-	public static ImpregnatedLignocellulose impregnatedlignocellulose;
-	public static PressedLignocellulose pressedlignocellulose;
-	public static DecomposedLignocellulose decomposedlignocellulose;
+	public static ChemLabItem lignocelluloseflakes;
+	public static ChemLabItem purelignocelluloseflakes;
+	public static ChemLabItem impregnatedlignocelluloseflakes;
+	public static ChemLabItem impregnatedwoodfiberspellet;
+	public static ChemLabItem explodedwoodfibers;
+	public static ChemLabItem washedlignocellulose;
+	public static ChemLabItem impregnatedlignocellulose;
+	public static ChemLabItem pressedlignocellulose;
+	public static ChemLabItem decomposedlignocellulose;
 	
 	public static DegradableItem asbestos_diaphragm;
 	public static DegradableItem graphite_anode;
@@ -161,37 +155,37 @@ public class ItemLoader {
 		
 		//GENERICS
 		
-		woodchips = new Woodchips();
+		woodchips = new ChemLabItem("woodchips");
 		GameRegistry.registerItem(woodchips, woodchips.getUnlocalizedName());
 		
-		woodchipclump = new WoodchipClump();
+		woodchipclump = new ChemLabItem("woodchipclump");
 		GameRegistry.registerItem(woodchipclump, woodchipclump.getUnlocalizedName());	
 		
-		lignocelluloseflakes = new WoodFiberFlakes();
+		lignocelluloseflakes =new ChemLabItem("lignocelluloseflakes");
 		GameRegistry.registerItem(lignocelluloseflakes,lignocelluloseflakes.getUnlocalizedName());	
 		
-		purelignocelluloseflakes = new PureWoodFiberFlakes();
+		purelignocelluloseflakes = new ChemLabItem("purelignocelluloseflakes");
 		GameRegistry.registerItem(purelignocelluloseflakes,purelignocelluloseflakes.getUnlocalizedName());	
 		
-		impregnatedlignocelluloseflakes = new ImpregnatedWoodFibers();
+		impregnatedlignocelluloseflakes = new ChemLabItem("impregnatedlignocelluloseflakes");
 		GameRegistry.registerItem(impregnatedlignocelluloseflakes,impregnatedlignocelluloseflakes.getUnlocalizedName());	
 				
-		impregnatedwoodfiberspellet = new ImpregnatedWoodFibersPellet();
+		impregnatedwoodfiberspellet = new ChemLabItem("impregnatedwoodfiberspellet");
 		GameRegistry.registerItem(impregnatedwoodfiberspellet,impregnatedwoodfiberspellet.getUnlocalizedName());	
 			
-		explodedwoodfibers = new ExplodedWoodFibers();
+		explodedwoodfibers = new ChemLabItem("explodedwoodfibers");
 		GameRegistry.registerItem(explodedwoodfibers,explodedwoodfibers.getUnlocalizedName());
 			
-		washedlignocellulose = new WashedLignocellulose();
+		washedlignocellulose = new ChemLabItem("washedlignocellulose");
 		GameRegistry.registerItem(washedlignocellulose,washedlignocellulose.getUnlocalizedName());
 			
-		impregnatedlignocellulose = new ImpregnatedLignocellulose();
+		impregnatedlignocellulose = new ChemLabItem("impregnatedlignocellulose");
 		GameRegistry.registerItem(impregnatedlignocellulose,impregnatedlignocellulose.getUnlocalizedName());
 		
-		pressedlignocellulose = new PressedLignocellulose();
+		pressedlignocellulose = new ChemLabItem("pressedlignocellulose");
 		GameRegistry.registerItem(pressedlignocellulose,pressedlignocellulose.getUnlocalizedName());
 		
-		decomposedlignocellulose = new DecomposedLignocellulose();
+		decomposedlignocellulose = new ChemLabItem("decomposedlignocellulose");
 		GameRegistry.registerItem(decomposedlignocellulose,decomposedlignocellulose.getUnlocalizedName());
 		
 		
