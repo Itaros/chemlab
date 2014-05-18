@@ -1,14 +1,14 @@
 package ru.itaros.chemlab.client.ui;
 
+import net.minecraft.entity.player.InventoryPlayer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.minecraft.tileentity.BiogrinderTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
-import net.minecraft.entity.player.InventoryPlayer;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 
 public class GUIBiogrinder extends GUIHOEClassicalMachine {
 
 	
-	public GUIBiogrinder(InventoryPlayer playerInv, MachineCrafterTileEntity tile){
+	public GUIBiogrinder(InventoryPlayer playerInv, MachineTileEntity tile){
 		this(playerInv,(BiogrinderTileEntity)tile);
 	}
 	private GUIBiogrinder(InventoryPlayer playerInv, BiogrinderTileEntity tile) {

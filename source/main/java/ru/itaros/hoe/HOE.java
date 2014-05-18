@@ -13,6 +13,7 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 
 @Mod(modid = HOE.MODID, version = HOE.VERSION, useMetadata = true)
@@ -61,7 +62,15 @@ public class HOE {
     	//}
     	
 		proxy.initHOE();
+		
+		
     } 
+    @EventHandler
+    public void serverInit(FMLServerStartingEvent event)
+    {    
+    	event.registerServerCommand(new HOEAdminCommands());
+    }
+    
     @EventHandler
     public void serverShutdown(FMLServerStoppingEvent event)
     {

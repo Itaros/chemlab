@@ -2,13 +2,13 @@ package ru.itaros.chemlab.client.ui;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
-import ru.itaros.chemlab.client.ui.common.HOEContainer;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
+import ru.itaros.chemlab.client.ui.common.HOECrafterContainer;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 
-public class CatalyticTankContainer extends HOEContainer {
-	public static final int ID = 14;
+public class CatalyticTankContainer extends HOECrafterContainer {
+
 	
-	public CatalyticTankContainer(InventoryPlayer playerInv, MachineCrafterTileEntity tile) {
+	public CatalyticTankContainer(InventoryPlayer playerInv, MachineTileEntity tile) {
 		super(playerInv, tile);
 	}
 

@@ -1,9 +1,11 @@
 package ru.itaros.toolkit.hoe.facilities.fluid;
 
+import net.minecraftforge.fluids.Fluid;
 import ru.itaros.hoe.registries.HOEFluidRegistry;
 
 public abstract class HOEFluid {
 
+	
 	public HOEFluid(){
 		detectCommonName();
 	}
@@ -31,6 +33,15 @@ public abstract class HOEFluid {
 	public abstract String getUnlocalizedName();
 	
 	
+	private Fluid forgeFluid;
+	public Fluid getForgeFluid(){
+		return forgeFluid;
+	}
+	public void setForgeFluid(Fluid fluid){
+		forgeFluid=fluid;
+	}
+	
+	
 	/*
 	 * Hexadecimal number.
 	 * e.g. return 0xFFFFFF;//white
@@ -48,6 +59,13 @@ public abstract class HOEFluid {
 		return TempShift.normal;
 	}
 	
+	public enum HOEFluidState{
+		LIQUID,
+		GAS, 
+		COLLOID
+	}
+	
+	public abstract HOEFluidState getState();
 	
 	
 	//TODO: HOE-style exception

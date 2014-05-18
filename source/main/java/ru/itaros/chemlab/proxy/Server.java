@@ -19,5 +19,10 @@ public class Server extends Proxy {
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void registerGFX() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

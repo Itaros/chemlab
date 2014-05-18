@@ -14,5 +14,8 @@ public class SodiumHydroxideSolution extends HOEFluid {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	@Override
+	public HOEFluidState getState() {
+		return HOEFluidState.LIQUID;
+	}		
 }

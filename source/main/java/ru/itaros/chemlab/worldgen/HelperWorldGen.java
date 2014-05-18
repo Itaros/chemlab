@@ -26,9 +26,11 @@ public class HelperWorldGen {
 	 */
 	public static void setBlockDirectly(World world, ExtendedBlockStorage[] storage,
 			int x, int y, int height,Block block) {
-		ExtendedBlockStorage s = storage[height >> 4];
+		int bitshift = height >> 4;
+		if(bitshift>=16){bitshift = 15;}
+		ExtendedBlockStorage s = storage[bitshift];
 		if(s==null){
-			s = storage[height >> 4] = new ExtendedBlockStorage(height >> 4 << 4, !world.provider.hasNoSky);
+			s = storage[bitshift] = new ExtendedBlockStorage(height >> 4 << 4, !world.provider.hasNoSky);
 		}							
 		s.func_150818_a(x,height & 15,y,block);//SET BLOCK
 	}	

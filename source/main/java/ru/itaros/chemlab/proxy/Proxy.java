@@ -11,4 +11,6 @@ public abstract class Proxy {
 	
 	public abstract  void openProgrammerGUI(MachineCrafterTileEntity tile);
 	
+	public abstract void registerGFX();
+	
 }

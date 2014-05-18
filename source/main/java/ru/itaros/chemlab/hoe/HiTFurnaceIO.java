@@ -6,10 +6,10 @@ import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
 
-public class FurnaceIO extends HOEMachineCrafterIO {
+public class HiTFurnaceIO extends HOEMachineCrafterIO {
 
 	public static final int MAXPOWER = 1000;
-	public static final int INCOMING_PORTS		=	3;
+	public static final int INCOMING_PORTS		=	4;
 	public static final int OUTCOMING_PORTS	=	3;
 	
 	
@@ -18,7 +18,7 @@ public class FurnaceIO extends HOEMachineCrafterIO {
 		return HiTFurnaceRecipes.recipes;
 	}	
 	
-	public FurnaceIO(){
+	public HiTFurnaceIO(){
 		this.setReq(INCOMING_PORTS, OUTCOMING_PORTS);
 		this.allowToStart();
 	}

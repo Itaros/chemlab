@@ -4,6 +4,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.client.ui.TurboexpanderContainer;
+import ru.itaros.chemlab.client.ui.common.HOEContainer;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.chemlab.minecraft.tileentity.TurboexpanderTileEntity;
 import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
@@ -18,7 +19,7 @@ public class Turboexpander extends IOMachineBlock {
 	}	
 	@Override
 	protected int getUIID() {
-		return TurboexpanderContainer.ID;
+		return HOEContainer.getID(TurboexpanderContainer.class);
 	}	
 	
 

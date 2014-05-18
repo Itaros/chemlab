@@ -15,5 +15,8 @@ public class Water extends HOEFluid {
 	public int getColor() {
 		return 0x3d669c;
 	}
-
+	@Override
+	public HOEFluidState getState() {
+		return HOEFluidState.LIQUID;
+	}		
 }

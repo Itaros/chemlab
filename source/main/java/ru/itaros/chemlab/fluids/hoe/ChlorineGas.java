@@ -15,4 +15,9 @@ public class ChlorineGas extends HOEFluid {
 		return 0;
 	}
 
+	@Override
+	public HOEFluidState getState() {
+		return HOEFluidState.GAS;
+	}	
+	
 }

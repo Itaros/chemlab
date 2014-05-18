@@ -1,6 +1,9 @@
 package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -29,7 +32,18 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 		
 	}
 
-	public abstract void updateEntity();
+	//sync
+	private boolean doReal = (ContextDetector.getInstance().getContext()==FMLContext.CLIENT || ContextDetector.getInstance().getContext()==FMLContext.INTEGRATED);
+	@Override
+	public void updateEntity(){
+		if(client!=null){
+			HOEMachineIO io = client.getIO();
+			if(io!=null){
+				//CLIENTSIDE TICK in MTA
+				io.tick(client, doReal);
+			}
+		}	
+	}
 
 	protected abstract HOEMachineData acquareData(HOEMachines machines);
 
@@ -105,7 +119,6 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 			
 			
 			hoeio.configureData(server);
-			
 			client=(HOEMachineData) server.getChild();
 			//server.sync();
 
@@ -121,6 +134,7 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 	public HOEMachineData getServerData() {
 		return server;
 	}	
+	
 
 	@Override
 	public boolean canUpdate() {
@@ -210,4 +224,21 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 		}
 	}
 
+	
+	
+	//NBT SYNC
+	@Override
+	public Packet getDescriptionPacket() {
+		//this.xCoord, this.yCoord, this.zCoord, 1, nbtTag
+		NBTTagCompound nbt = new NBTTagCompound();
+		this.writeToNBT(nbt);
+		S35PacketUpdateTileEntity pkt = new S35PacketUpdateTileEntity(this.xCoord,this.yCoord,this.zCoord,1,nbt);
+		return pkt;
+	}
+	@Override
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+		super.onDataPacket(net,pkt);
+		this.readFromNBT(pkt.func_148857_g());//Meh. This gets NBT
+	}
+	
 }

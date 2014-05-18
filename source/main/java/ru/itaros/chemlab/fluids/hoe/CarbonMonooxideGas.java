@@ -14,4 +14,9 @@ public class CarbonMonooxideGas extends HOEFluid {
 		return 0;
 	}
 
+	@Override
+	public HOEFluidState getState() {
+		return HOEFluidState.GAS;
+	}	
+	
 }

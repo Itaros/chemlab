@@ -4,6 +4,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.client.ui.SteamBoilerContainer;
+import ru.itaros.chemlab.client.ui.common.HOEContainer;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.chemlab.minecraft.tileentity.SteamBoilerTileEntity;
 import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
@@ -17,7 +18,7 @@ public class SteamBoiler extends IOMachineBlock {
 	}	
 	@Override
 	protected int getUIID() {
-		return SteamBoilerContainer.ID;
+		return HOEContainer.getID(SteamBoilerContainer.class);
 	}	
 	
 

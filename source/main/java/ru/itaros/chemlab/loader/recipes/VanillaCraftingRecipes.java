@@ -590,7 +590,25 @@ public class VanillaCraftingRecipes {
 				'N',new ItemStack(ItemLoader.pressurenozzle)
 				);		
 		
+		//=====HVLC FILLER=====
+		GameRegistry.addShapedRecipe(new ItemStack(BlockLoader.hvlcfiller),
+				"SNS",
+				"FCF",
+				"SLS",
+				'S',new ItemStack(ItemLoader.screw),
+				'N',new ItemStack(ItemLoader.pressurenozzle),
+				'F',new ItemStack(ItemLoader.frame),
+				'C',new ItemStack(BlockLoader.casing),
+				'L',new ItemStack(ItemLoader.fluidchamber));
 		
+		//=====GAS CHIMNEY=====
+		GameRegistry.addShapedRecipe(new ItemStack(BlockLoader.gaschimney),
+				"BFB",
+				"BFB",
+				"BFB",
+				'B',new ItemStack(Items.brick),
+				'F',new ItemStack(ItemLoader.fluidchamber)
+		);
 		
 		
 	}

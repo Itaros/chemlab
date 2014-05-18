@@ -1,5 +1,7 @@
 package ru.itaros.chemlab.client.ui.common;
 
+import java.util.HashMap;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -8,31 +10,36 @@ import net.minecraft.item.ItemStack;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ProgrammerSlot;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ReadonlySlot;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 
-public class HOEContainer extends Container {
+public abstract class HOEContainer extends Container {
 
+	private static HashMap<Class<? extends HOEContainer>,Integer> IDs=new HashMap<Class<? extends HOEContainer>,Integer>();
+	public static int getID(Class<? extends HOEContainer> c){
+		return IDs.get(c);
+	}
+	public static void setID(Class<? extends HOEContainer> c,int newid){
+		IDs.put(c, newid);
+		}
+	
 	ProgrammerSlot psio;
 	
-	private Slot INBOUND,OUTBOUND;
+	protected Slot INBOUND,OUTBOUND;
 	
+	protected MachineTileEntity tile;
 	
-	public HOEContainer(InventoryPlayer playerInv, MachineCrafterTileEntity tile){
+	public HOEContainer(InventoryPlayer playerInv, MachineTileEntity tile){
 		//this(playerInv,(BiogrinderTileEntity)tile);
 		
-		INBOUND=new Slot(tile,0,17,16);
-		OUTBOUND=new Slot(tile,1,17,54);
+		this.tile = tile;
 		
-		addSlotToContainer(INBOUND);//INBOUND
-		addSlotToContainer(OUTBOUND);//OUTBOUND
+		bindSlots();
 		
-		addSlotToContainer(new ReadonlySlot(tile,-1,48,36));//INBOUND 1
-		addSlotToContainer(new ReadonlySlot(tile,-2,112,36));//OUTBOUND 1
-		
-		psio = new ProgrammerSlot(tile,17,29);
-		addSlotToContainer(psio);//PROGRAMMER IO
-
 		bindPlayerInventory(playerInv);		
 	}
+	
+	
+	public abstract void bindSlots();
 
 
 	@Override
@@ -66,7 +73,13 @@ public class HOEContainer extends Container {
 		
 		if(slot==null){return null;}
 		ItemStack itemstack1 = slot.getStack();
-		itemstack = itemstack1.copy();
+		
+		if(itemstack1==null){
+			//itemstack=null;
+			return null;
+		}else{
+			itemstack = itemstack1.copy();
+		}
 
 		if(slot==OUTBOUND){
 			if (!this.mergeItemStack(itemstack1, OUTPUT+1, OUTPUT+36+1, true))

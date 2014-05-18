@@ -6,7 +6,7 @@ import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 
-public class FurnaceTileEntity extends MachineCrafterTileEntity {
+public class HiTFurnaceTileEntity extends MachineCrafterTileEntity {
 
 	@Override
 	public HOELinker getLinker() {
@@ -15,7 +15,7 @@ public class FurnaceTileEntity extends MachineCrafterTileEntity {
 
 	@Override
 	public HOEMachineIO getSuperIO() {
-		return (HOEMachineCrafterIO) ChemLab.getIOCollection().getHOEIO("FurnaceIO");
+		return (HOEMachineCrafterIO) ChemLab.getIOCollection().getHOEIO("HiTFurnaceIO");
 	}
 
 }

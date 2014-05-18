@@ -4,6 +4,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.client.ui.HiResistantMixerContainer;
+import ru.itaros.chemlab.client.ui.common.HOEContainer;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.chemlab.minecraft.tileentity.HiResistantMixerTileEntity;
 import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
@@ -18,7 +19,7 @@ public class HiResistantMixer extends IOMachineBlock {
 	}	
 	@Override
 	protected int getUIID() {
-		return HiResistantMixerContainer.ID;
+		return HOEContainer.getID(HiResistantMixerContainer.class);
 	}	
 	
 

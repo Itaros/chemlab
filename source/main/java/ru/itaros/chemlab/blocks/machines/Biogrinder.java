@@ -4,6 +4,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.client.ui.BiogrinderContainer;
+import ru.itaros.chemlab.client.ui.common.HOEContainer;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.chemlab.minecraft.tileentity.BiogrinderTileEntity;
 import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
@@ -21,7 +22,7 @@ public class Biogrinder extends IOMachineBlock {
 	}	
 	@Override
 	protected int getUIID() {
-		return BiogrinderContainer.ID;
+		return HOEContainer.getID(BiogrinderContainer.class);
 	}	
 	
 

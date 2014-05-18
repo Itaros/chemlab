@@ -3,11 +3,11 @@ package ru.itaros.chemlab.client.ui;
 import net.minecraft.entity.player.InventoryPlayer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.minecraft.tileentity.ImpregnatorTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 
 public class GUIImpregnator extends GUIHOEClassicalMachine {
 
-	public GUIImpregnator(InventoryPlayer playerInv, MachineCrafterTileEntity tile){
+	public GUIImpregnator(InventoryPlayer playerInv, MachineTileEntity tile){
 		this(playerInv,(ImpregnatorTileEntity)tile);
 	}
 	private GUIImpregnator(InventoryPlayer playerInv, ImpregnatorTileEntity tile) {
@@ -18,7 +18,7 @@ public class GUIImpregnator extends GUIHOEClassicalMachine {
 	
 	@Override
 	public String getMachineUnlocalizedName() {
-		return "Impregnation Chamber";
+		return "HPIC";
 	}	
 	
 

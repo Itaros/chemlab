@@ -1,6 +1,7 @@
 package ru.itaros.chemlab.loader;
 
 import ru.itaros.chemlab.client.ui.*;
+import ru.itaros.chemlab.client.ui.special.*;
 import ru.itaros.chemlab.client.ui.common.GUIHandler;
 
 public class GUILoader {
@@ -23,7 +24,9 @@ public class GUILoader {
 				TurboexpanderContainer.class,
 				EvaporationUnitContainer.class,
 				CatalyticTankContainer.class,
-				HiResistantMixerContainer.class
+				HiResistantMixerContainer.class,
+				HVLCFillerContainer.class,
+				GasChimneyContainer.class
 				);
 	}
 	

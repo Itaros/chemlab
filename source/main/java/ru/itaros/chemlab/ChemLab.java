@@ -30,7 +30,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = ChemLab.MODID, version = ChemLab.VERSION, dependencies="required-after:hoelib")
+@Mod(modid = ChemLab.MODID, version = ChemLab.VERSION, dependencies="required-after:hoelib;required-after:BuildCraft|Core")
 public class ChemLab
 {
 	public ChemLab(){
@@ -57,9 +57,15 @@ public class ChemLab
     	channels.get(Side.CLIENT).writeOutbound(descriptor);
     }
     
+    private static Config cfg;
+    public static Config getConfig(){
+    	return cfg;
+    }
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+    	cfg = new Config().loadConfig(event);
+    	
     	channels = NetworkRegistry.INSTANCE.newChannel("chemlabchannel", new ChemLabChannel());
     	
     	GUILoader.loadGUIs();
@@ -71,6 +77,9 @@ public class ChemLab
  		BlockLoader.loadBlocks();
  		ItemLoader.loadItems();
 		iocollection = TileEntityLoader.load();   
+		
+		//GFX
+		proxy.registerGFX();
 		
 		//Tweaks
 		VanillaTweaks.tweakIron();

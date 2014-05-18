@@ -20,27 +20,16 @@ import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ProgrammerSlot;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.IHOEInventorySyncable;
 import cpw.mods.fml.common.FMLLog;
 
 
-public abstract class MachineCrafterTileEntity extends MachineTileEntity implements ISidedInventory{
+public abstract class MachineCrafterTileEntity extends MachineTileEntity implements ISidedInventory, IHOEInventorySyncable{
 
 	ItemStack programmerStack=null;
 	
 	
-	@Override
-	public Packet getDescriptionPacket() {
-		//this.xCoord, this.yCoord, this.zCoord, 1, nbtTag
-		NBTTagCompound nbt = new NBTTagCompound();
-		this.writeToNBT(nbt);
-		S35PacketUpdateTileEntity pkt = new S35PacketUpdateTileEntity(this.xCoord,this.yCoord,this.zCoord,1,nbt);
-		return pkt;
-	}
-	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-		super.onDataPacket(net,pkt);
-		this.readFromNBT(pkt.func_148857_g());//Meh. This gets NBT
-	}
+
 
 
 	public MachineCrafterTileEntity(){
@@ -285,14 +274,14 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	
 	
 	//Sync
-	private boolean doReal = (ContextDetector.getInstance().getContext()==FMLContext.CLIENT);
 	@Override
 	public void updateEntity() {
+		super.updateEntity();
 		if(client!=null){
 			HOEMachineIO io = client.getIO();
 			if(io!=null){
 				//CLIENTSIDE TICK in MTA
-				io.tick(client, doReal);
+				//io.tick(client, doReal);
 				updateRO();
 			}
 		}		

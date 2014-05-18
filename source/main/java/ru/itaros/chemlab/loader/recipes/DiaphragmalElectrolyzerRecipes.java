@@ -13,8 +13,7 @@ public class DiaphragmalElectrolyzerRecipes {
 	public static RecipesCollection recipes;
 	
 	public static void load(){
-		//TODO: two empty capsules instead of one. But there is a problem with recipes related to this
-		ItemStack[] i = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.nacl_solution)),new ItemStack(ItemLoader.emptyhvlc)};
+		ItemStack[] i = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.nacl_solution)),new ItemStack(ItemLoader.emptyhvlc,2)};
 		ItemStack[] o = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.sodiumhydroxide_solution)),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.h2_gas)),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.cl2_gas))};
 		FixedConversionRecipe fcr = new FixedConversionRecipe(100,100*ChemLabValues.OILPOWER_FACTOR*2,i,o);
 		fcr.setUnlocalizedName("diaelectr.naoh");

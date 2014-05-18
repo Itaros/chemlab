@@ -1,5 +1,6 @@
 package ru.itaros.chemlab.loader.recipes;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
@@ -28,7 +29,21 @@ public class MixerRecipes {
 		FixedConversionRecipe fcr3 = new FixedConversionRecipe(1000, 1000, i, o);
 		fcr3.setUnlocalizedName("mixer.desulphurication");		
 		
-		recipes = new RecipesCollection(fcr,fcr2,fcr3);
+		ItemStack stoneInclusions = OreDictionary.getOres("dustStone").get(0).copy();
+		stoneInclusions.stackSize=3;
+		i = new ItemStack[]{new ItemStack(ItemLoader.wroughtiron,4)};
+		o = new ItemStack[]{OreDictionary.getOres("ingotIron").get(0).copy(),stoneInclusions};
+		FixedConversionRecipe fcr4 = new FixedConversionRecipe(2000, 5000, i, o);
+		fcr4.setUnlocalizedName("mixer.wroughtpurify");		
+				
+		i = new ItemStack[]{OreDictionary.getOres("ingotIron").get(0).copy(),stoneInclusions};
+		o = new ItemStack[]{new ItemStack(ItemLoader.wroughtiron,4)};
+		FixedConversionRecipe fcr5 = new FixedConversionRecipe(1000, 5000, i, o);
+		fcr5.setUnlocalizedName("mixer.ironaddstone");		
+					
+		
+		
+		recipes = new RecipesCollection(fcr,fcr2,fcr3,fcr4,fcr5);
 		recipes.register();
 		
 	}

@@ -22,7 +22,7 @@ public class BlockLoader {
 	public static SteamExplosionUnit steamexplosionunit;
 	public static Crusher crusher;
 	public static DiaphragmalElectrolyzer diaphragmalelectrolyzer;
-	public static Furnace furnace;
+	public static HiTFurnace furnace;
 	public static AirCollector aircollector;
 	public static FluidCompressor fluidcompressor;
 	public static Turboexpander turboexpander;
@@ -30,6 +30,8 @@ public class BlockLoader {
 	public static CatalyticTank cattank;
 	public static HiResistantMixer hiresistmixer;
 	public static ServiceBay servicebay;
+	public static HVLCFiller hvlcfiller;
+	public static GasChimney gaschimney;
 	
 	
 	public static OreHalite oreHalite;
@@ -77,7 +79,7 @@ public class BlockLoader {
 		diaphragmalelectrolyzer = new DiaphragmalElectrolyzer();
 		GameRegistry.registerBlock(diaphragmalelectrolyzer,diaphragmalelectrolyzer.getUnlocalizedNameRaw());
 		
-		furnace = new Furnace();
+		furnace = new HiTFurnace();
 		GameRegistry.registerBlock(furnace, furnace.getUnlocalizedNameRaw());
 		
 		aircollector = new AirCollector();
@@ -100,6 +102,12 @@ public class BlockLoader {
 		
 		servicebay = new ServiceBay();
 		GameRegistry.registerBlock(servicebay, servicebay.getUnlocalizedNameRaw());
+		
+		hvlcfiller = new HVLCFiller();
+		GameRegistry.registerBlock(hvlcfiller,hvlcfiller.getUnlocalizedNameRaw());
+		
+		gaschimney = new GasChimney();
+		GameRegistry.registerBlock(gaschimney,gaschimney.getUnlocalizedNameRaw());
 		
 		
 		//Ores

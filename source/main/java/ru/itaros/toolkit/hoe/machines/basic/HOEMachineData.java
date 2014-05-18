@@ -131,6 +131,10 @@ public class HOEMachineData extends HOEData {
 		return data;
 	}
 
+	/*
+	 * This method signs data off as configured
+	 * and spawns a child for read access
+	 */
 	public void setConfigured() {
 		init();
 		child=spawnChild();

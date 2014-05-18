@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.client.ui.CatalyticTankContainer;
+import ru.itaros.chemlab.client.ui.common.HOEContainer;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.chemlab.minecraft.tileentity.CatalyticTankTileEntity;
@@ -23,7 +24,7 @@ public class CatalyticTank extends IOMachineBlock {
 	}	
 	@Override
 	protected int getUIID() {
-		return CatalyticTankContainer.ID;
+		return HOEContainer.getID(CatalyticTankContainer.class);
 	}	
 	
 

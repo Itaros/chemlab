@@ -10,35 +10,48 @@ import org.lwjgl.opengl.GL11;
 
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 
 public abstract class GUIHOEClassicalMachine extends GuiContainer {
 
+	
+
+	
 	//public abstract Class<? extends Container> getContainerType();
 	
 	public abstract String getMachineUnlocalizedName();
 	
 	public static final int CAPTIONCOLOR = 4210752;
-	protected MachineCrafterTileEntity tile;
+	protected MachineTileEntity tile;
 	protected InventoryPlayer playerInv;
 	private ResourceLocation background;
 	protected int x;
-
+	protected int y;
 	@Override
 	public void initGui() {
 		
 		
-		background = new ResourceLocation("chemlab","textures/gui/generichoemachine.png");
-		
+		background = new ResourceLocation("chemlab",getUITexturePath());
 		
 		super.initGui();
+		
+		x = (width - xSize) / 2;
+		y = (height - ySize) / 2;		
+		
 	}
 
+	
+	protected String getUITexturePath(){
+		return "textures/gui/generichoemachine.png";
+	}
+	
 
 
-	protected int y;
+	
 
 	public GUIHOEClassicalMachine(Container par1Container) {
 		super(par1Container);
+
 		resetEyeCandy();
 	}
 	
@@ -64,13 +77,9 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 				
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 				this.mc.renderEngine.bindTexture(background);
-				x = (width - xSize) / 2;
-				y = (height - ySize) / 2;
 				this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);		
 				
-				DrawPowerGauge(data);
-				
-				DrawProgressbar(data);
+				DrawGauges(data);
 				
 				fontRendererObj.drawString(this.getMachineUnlocalizedName(), x+8, y+6, CAPTIONCOLOR);//4210752
 				
@@ -89,9 +98,14 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 			}
 
 	
+	protected void DrawGauges(HOEMachineData data){
+		DrawPowerGauge(data);
+		DrawProgressbar(data);		
+	}
 	
 	
-	private void DrawProgressbar(HOEMachineData data) {
+	
+	protected void DrawProgressbar(HOEMachineData data) {
 		float currentT = data.getTicks();
 		float maxT = data.ticksRequared;
 		int percent = (int) ((currentT/maxT)*100);

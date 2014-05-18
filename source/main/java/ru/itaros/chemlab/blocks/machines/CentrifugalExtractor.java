@@ -4,6 +4,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.client.ui.CentrifugalExtractorContainer;
+import ru.itaros.chemlab.client.ui.common.HOEContainer;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.chemlab.minecraft.tileentity.CentrifugalExtractorTileEntity;
 import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
@@ -20,7 +21,7 @@ public class CentrifugalExtractor extends IOMachineBlock {
 
 	@Override
 	protected int getUIID() {
-		return CentrifugalExtractorContainer.ID;
+		return HOEContainer.getID(CentrifugalExtractorContainer.class);
 	}
 
 	@Override

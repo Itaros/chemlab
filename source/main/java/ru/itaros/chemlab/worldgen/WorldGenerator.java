@@ -257,7 +257,8 @@ public class WorldGenerator implements IWorldGenerator {
 				//FMLLog.log(Level.INFO, "Factor:"+noiseFactor);
 				if(noiseFactor>18F){
 					float normalizedShift =  (((float)noiseFactor-18F)/(20F-18F));
-					
+					if(normalizedShift>1){normalizedShift=1;}//clamp, temporarily
+					System.out.println("Shift: "+normalizedShift);
 					
 					int level = HelperWorldGen.getUndergroundHeightLevel(world, x, y);
 					int diff = (int) ((HelperWorldGen.assumeSafeHeightDifferenceToBedrock(level-1)*normalizedShift)+1);

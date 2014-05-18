@@ -14,4 +14,9 @@ public class PolyoseWaterSolution extends HOEFluid {
 		return 0x805410;
 	}
 
+	@Override
+	public HOEFluidState getState() {
+		return HOEFluidState.COLLOID;
+	}		
+	
 }

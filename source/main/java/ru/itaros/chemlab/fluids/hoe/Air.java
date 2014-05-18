@@ -46,4 +46,9 @@ public class Air extends HOEFluid implements IFluidComposite, IFluidCompressable
 		return HOEFluidLoader.getAirComposition();
 	}
 
+	@Override
+	public HOEFluidState getState() {
+		return HOEFluidState.GAS;
+	}
+
 }

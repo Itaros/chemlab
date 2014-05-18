@@ -16,4 +16,9 @@ public class PressurizedSteam extends HOEFluid {
 		return 0xFFFFFF;
 	}
 
+	@Override
+	public HOEFluidState getState() {
+		return HOEFluidState.GAS;
+	}	
+	
 }

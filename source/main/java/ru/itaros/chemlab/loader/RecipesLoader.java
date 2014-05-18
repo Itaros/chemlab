@@ -10,6 +10,7 @@ import ru.itaros.chemlab.loader.recipes.HiTFurnaceRecipes;
 import ru.itaros.chemlab.loader.recipes.MixerRecipes;
 import ru.itaros.chemlab.loader.recipes.TurboexpanderRecipes;
 import ru.itaros.chemlab.loader.recipes.VanillaCraftingRecipes;
+import ru.itaros.chemlab.loader.recipes.WasherRecipes;
 import ru.itaros.chemlab.loader.recipes.WoodChainRecipes;
 
 public class RecipesLoader {
@@ -31,7 +32,7 @@ public class RecipesLoader {
 		CatalyticTankRecipes.load();
 		
 		MixerRecipes.load();
-		
+		WasherRecipes.load();
 		
 		
 	}

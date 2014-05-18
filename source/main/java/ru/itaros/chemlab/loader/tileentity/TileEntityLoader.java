@@ -2,6 +2,8 @@ package ru.itaros.chemlab.loader.tileentity;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ru.itaros.chemlab.hoe.*;
+import ru.itaros.chemlab.hoe.special.GasChimneyIO;
+import ru.itaros.chemlab.hoe.special.HVLCFillerIO;
 import ru.itaros.chemlab.minecraft.tileentity.*;
 import ru.itaros.toolkit.hoe.io.IOCollectionHelper;
 
@@ -18,14 +20,16 @@ public class TileEntityLoader {
     			new SteamExplosionUnitIO(),
     			new CrusherIO(),
     			new DiaphragmalElectrolyzerIO(),
-    			new FurnaceIO(),
+    			new HiTFurnaceIO(),
     			new AirCollectorIO(),
     			new FluidCompressorIO(),
     			new TurboexpanderIO(),
     			new EvaporationUnitIO(),
     			new CatalyticTankIO(),
     			new HiResistantMixerIO(),
-    			new ServiceBayIO()
+    			new ServiceBayIO(),
+    			new HVLCFillerIO(),
+    			new GasChimneyIO()
     			);
 		iocollection.registerInHOE();
 		
@@ -40,7 +44,7 @@ public class TileEntityLoader {
 		GameRegistry.registerTileEntity(SteamExplosionUnitTileEntity.class, SteamExplosionUnitTileEntity.class.getName());
 		GameRegistry.registerTileEntity(CrusherTileEntity.class, CrusherTileEntity.class.getName());
 		GameRegistry.registerTileEntity(DiaphragmalElectrolyzerTileEntity.class,DiaphragmalElectrolyzerTileEntity.class.getName());
-		GameRegistry.registerTileEntity(FurnaceTileEntity.class,FurnaceTileEntity.class.getName());
+		GameRegistry.registerTileEntity(HiTFurnaceTileEntity.class,HiTFurnaceTileEntity.class.getName());
 		GameRegistry.registerTileEntity(AirCollectorTileEntity.class,AirCollectorTileEntity.class.getName());
 		GameRegistry.registerTileEntity(FluidCompressorTileEntity.class,FluidCompressorTileEntity.class.getName());
 		GameRegistry.registerTileEntity(TurboexpanderTileEntity.class,TurboexpanderTileEntity.class.getName());
@@ -48,6 +52,10 @@ public class TileEntityLoader {
 		GameRegistry.registerTileEntity(CatalyticTankTileEntity.class,CatalyticTankTileEntity.class.getName());
 		GameRegistry.registerTileEntity(HiResistantMixerTileEntity.class,HiResistantMixerTileEntity.class.getName());
 		GameRegistry.registerTileEntity(ServiceBayTileEntity.class,ServiceBayTileEntity.class.getName());
+		GameRegistry.registerTileEntity(HVLCFillerTileEntity.class,HVLCFillerTileEntity.class.getName());
+		GameRegistry.registerTileEntity(GasChimneyTileEntity.class,GasChimneyTileEntity.class.getName());
+		
+		//GameRegistry.registerTileEntity(.class,.class.getName());
 		
 		return iocollection;
 	}

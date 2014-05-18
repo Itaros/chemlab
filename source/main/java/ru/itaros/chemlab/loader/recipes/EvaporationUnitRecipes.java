@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.minecraft.item.ItemStack;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
+import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
 import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid.TempShift;
 import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluidStack;
@@ -26,16 +27,19 @@ public class EvaporationUnitRecipes {
 			if(f instanceof IFluidComposite){
 				IFluidComposite ifc = (IFluidComposite)f;
 				
-				ItemStack[] i = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(f))};
+				ItemStack[] i = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(f)),null};
 				HOEFluidStack[] composition = ifc.getComposition();
 				
 				ArrayList<ItemStack> os = new ArrayList<ItemStack>();
+				int hvlcReq=0-1;//-1 is original HVLC
 				for(HOEFluidStack stack:composition){
 					ItemStack part = new ItemStack(HiVolumeLiquidCell.getByFluid(stack.type),stack.stackSize);
+					hvlcReq+=stack.stackSize;
 					os.add(part);
 				}
 				ItemStack[] o = new ItemStack[os.size()];
 				o = os.toArray(o);
+				i[1]=new ItemStack(ItemLoader.emptyhvlc,hvlcReq);//emptyhvlcs
 				int requaredEnergy = 1;// ifc.getReleasedEnergyForExpansion();
 				FixedConversionRecipe fxr = new FixedConversionRecipe(REQUIRED_TIME,requaredEnergy,i,o);
 				fxr.setUnlocalizedName("evapunit."+f.getCommonName());

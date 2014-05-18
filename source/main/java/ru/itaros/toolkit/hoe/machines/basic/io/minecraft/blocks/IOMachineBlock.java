@@ -16,6 +16,7 @@ import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.IHOEInventorySyncable;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.TileEntitySecurityTracker;
 
 public abstract class IOMachineBlock extends Block implements IRotatableBlock, ITileEntityProvider{
@@ -98,12 +99,16 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 		
 		
 		TileEntity te  =world.getTileEntity(x, y, z);
-		if(te instanceof MachineCrafterTileEntity){
-			MachineCrafterTileEntity me = (MachineCrafterTileEntity)te;
+		if(te instanceof IHOEInventorySyncable){
+			IHOEInventorySyncable me = (IHOEInventorySyncable)te;
 			me.pullFromHOE();
 			me.pushToHOE();
 			me.sync();
 		}
+		//if(te instanceof MachineTileEntity){
+		//	MachineTileEntity me = (MachineTileEntity)te;
+		//	me.sync();
+		//}
 		
 		world.scheduleBlockUpdate(x, y, z, this, this.tickRate(world));
 	}

@@ -3,11 +3,11 @@ package ru.itaros.chemlab.client.ui;
 import net.minecraft.entity.player.InventoryPlayer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.minecraft.tileentity.WasherTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 
 public class GUIWasher extends GUIHOEClassicalMachine {
 
-	public GUIWasher(InventoryPlayer playerInv, MachineCrafterTileEntity tile){
+	public GUIWasher(InventoryPlayer playerInv, MachineTileEntity tile){
 		this(playerInv,(WasherTileEntity)tile);
 	}
 	private GUIWasher(InventoryPlayer playerInv, WasherTileEntity tile) {
