@@ -1,4 +1,4 @@
-package ru.itaros.chemlab.worldgen;
+package ru.itaros.hoe.toolkit.worldgen;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
@@ -21,6 +21,12 @@ public class HelperWorldGen {
 		return stor;
 	}
 
+	public static ExtendedBlockStorage[] getStorageFromChunk(Chunk chunk) {
+		ExtendedBlockStorage[] stor = chunk.getBlockStorageArray();
+		return stor;
+	}	
+	
+	
 	/*
 	 * This method sets block bypassing any validation or light passes
 	 */
@@ -34,12 +40,18 @@ public class HelperWorldGen {
 		}							
 		s.func_150818_a(x,height & 15,y,block);//SET BLOCK
 	}	
+
+	
 	
 	
 	
 	public static int getUndergroundHeightLevel(World world, int x, int y){
 		return world.getHeightValue(x, y)-(4+2);
 	}
+	public static int getUndergroundHeightLevel(Chunk chunk, int localx, int localy){
+		return chunk.getHeightValue(localx, localy)-(4+2);
+	}	
+	
 	public static int assumeSafeHeightDifferenceToBedrock(int z){
 		return z-ASSUMED_BEDROCK_LEVEL;
 	}

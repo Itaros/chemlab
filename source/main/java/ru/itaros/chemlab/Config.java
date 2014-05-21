@@ -8,9 +8,11 @@ public class Config {
 	public boolean gfx_AdvancedParticleInjectorHack;
 	public boolean gfx_gasChimneyFX;
 	
+	public String worldgenerator_clid="ru.itaros.chemlab.loader.worldgen.WorldGenLoaderNative";
+	
 	
 	private static final String CATEGORY_GFX="GFX";
-	
+	private static final String CATEGORY_WORLDGEN="WORLDGEN";
 	
 	private Configuration cfg;
 	
@@ -23,6 +25,9 @@ public class Config {
 			System.out.println("It is not possible to have gfx_AdvancedParticleInjectorHack enabled with gfx_gasChimneyFX. Disabling both.");
 			gfx_AdvancedParticleInjectorHack=false;
 		}
+		
+		
+		worldgenerator_clid=cfg.get(CATEGORY_WORLDGEN, "clid", worldgenerator_clid).getString();
 		
 		
 		cfg.save();

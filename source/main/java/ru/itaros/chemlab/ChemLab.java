@@ -11,10 +11,12 @@ import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.chemlab.loader.RecipesLoader;
 import ru.itaros.chemlab.loader.recipes.optional.VanillaTweaks;
 import ru.itaros.chemlab.loader.tileentity.TileEntityLoader;
+import ru.itaros.chemlab.loader.worldgen.WorldGenLoaderNative;
 import ru.itaros.chemlab.network.ChemLabChannel;
 import ru.itaros.chemlab.network.IPacketCodecDescriptor;
 import ru.itaros.chemlab.proxy.Proxy;
-import ru.itaros.chemlab.worldgen.WorldGenerator;
+import ru.itaros.hoe.HOE;
+import ru.itaros.hoe.toolkit.worldgen.HOEWorldGenerator;
 import ru.itaros.toolkit.hoe.io.IOCollectionHelper;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -39,7 +41,7 @@ public class ChemLab
 	}
 	
     public static final String MODID = "chemlab";
-    public static final String VERSION = "1.0";
+    public static final String VERSION = "2.x";
     
     
     @SidedProxy(clientSide="ru.itaros.chemlab.proxy.Client", serverSide="ru.itaros.chemlab.proxy.Server")
@@ -89,7 +91,7 @@ public class ChemLab
     @EventHandler
     public void Init(FMLInitializationEvent event)
     {
-    	GameRegistry.registerWorldGenerator(new WorldGenerator(), 100);
+    	HOE.getInstance().getHOEExecutor().execute(cfg.worldgenerator_clid);
     }
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
