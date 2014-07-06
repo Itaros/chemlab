@@ -2,6 +2,8 @@ package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.Constants;
 
 public class StackUtility {
 
@@ -19,6 +21,8 @@ public class StackUtility {
 		}
 		source.stackSize-=operative;
 		target.stackSize+=operative;
+		
+		target.setItemDamage(source.getItemDamage());
 	}
 
 	/*
@@ -35,6 +39,21 @@ public class StackUtility {
 	/*
 	 * Server->Child sync helper
 	 */
+	public static ItemStack[] syncItemStacks(ItemStack[] target, ItemStack[] source){
+		//nullchecks
+		if(source==null){target=null;return target;}
+		//size aligning
+		if(target==null || source.length!=target.length){
+			target = new ItemStack[source.length];
+		}
+		//normal sync
+		int size = target.length;
+		for(int i = 0 ; i < size ; i++){
+			target[i]=syncItemStacks(target[i], source[i]);
+		}
+		
+		return target;
+	}
 	public static ItemStack syncItemStacks(ItemStack target, ItemStack source){
 		
 		if(source==null){
@@ -66,6 +85,22 @@ public class StackUtility {
 	
 	
 	
+	public static void writeItemStacksToNBT(ItemStack[] stack, NBTTagCompound nbt, String tag){
+		if(stack!=null){
+			NBTTagCompound nbt2 = new NBTTagCompound();
+			NBTTagList nbts = new NBTTagList();
+			for(int i = 0 ; i < stack.length ; i++){
+				ItemStack st = stack[i];
+				NBTTagCompound it = new NBTTagCompound();
+				if(st!=null){
+					st.writeToNBT(it);
+				}
+				nbts.appendTag(it);
+			}
+			nbt2.setTag("array", nbts);	
+			nbt.setTag(tag, nbt2);			
+		}
+	}
 	public static void writeItemStackToNBT(ItemStack stack, NBTTagCompound nbt, String tag){
 		if(stack!=null){
 			NBTTagCompound nbt2 = new NBTTagCompound();
@@ -74,6 +109,19 @@ public class StackUtility {
 		}
 	}
 	
+	public static ItemStack[] readItemStacksFromNBT(ItemStack[] array,NBTTagCompound nbt, String tag){
+		if(nbt.hasKey(tag)){
+			NBTTagCompound nbt2 = nbt.getCompoundTag(tag);
+			NBTTagList nbts = nbt2.getTagList("array", Constants.NBT.TAG_COMPOUND);
+			for(int i = 0 ; i < nbts.tagCount() ; i++){
+				NBTTagCompound it = nbts.getCompoundTagAt(i);
+				array[i]=ItemStack.loadItemStackFromNBT(it);
+			}
+			return array;
+		}else{
+			return array;
+		}
+	}
 	public static ItemStack readItemStackFromNBT(NBTTagCompound nbt, String tag){
 		if(nbt.hasKey(tag)){
 			NBTTagCompound nbt2 = nbt.getCompoundTag(tag);
@@ -87,14 +135,15 @@ public class StackUtility {
 	
 	
 	
-	public static ItemStack tryToPutIn(StackTransferTuple tuple){
+	public static ItemStack tryToPutIn(StackTransferTuple tuple, boolean ignoreMetadata, ItemStack filter){
 		//ItemStack tuple.stack1, ItemStack tuple.stack2
 		if(tuple.stack2==null){return null;}
+		if(filter!=null && !tuple.stack2.isItemEqual(filter)){return tuple.stack2;}
 		if(tuple.stack1==null){
 			tuple.stack1=tuple.stack2.copy();
 			return null;
 		}else{
-			if(tuple.stack1.isItemEqual(tuple.stack2)){
+			if(isItemEqualStackSizeProtection(tuple.stack1, tuple.stack2, ignoreMetadata)){
 				StackUtility.mergeInto(tuple.stack1, tuple.stack2);
 				return StackUtility.verify(tuple.stack2);
 			}else{
@@ -103,21 +152,48 @@ public class StackUtility {
 		}		
 	}
 	
-	public static ItemStack tryToGetOut(StackTransferTuple tuple){
+	public static boolean isItemEqual(ItemStack stack1, ItemStack stack2, boolean ignoreMetadata){
+		if(ignoreMetadata){
+			return stack1.getItem()==stack2.getItem();
+		}else{
+			return (stack1.getItem()==stack2.getItem())&&(stack1.getItemDamage()==stack2.getItemDamage());
+		}
+	}	
+	public static boolean isItemEqualStackSizeProtection(ItemStack stack1, ItemStack stack2, boolean ignoreMetadata){
+		if(ignoreMetadata){
+			boolean metadiffs = stack1.getItemDamage()!=stack2.getItemDamage();
+			if(!metadiffs){
+				return stack1.getItem()==stack2.getItem();
+			}else{
+				if(stack1.stackSize==0){
+					return stack1.getItem()==stack2.getItem();
+				}else{
+					return false;
+				}
+			}
+		}else{
+			return (stack1.getItem()==stack2.getItem())&&(stack1.getItemDamage()==stack2.getItemDamage());
+		}
+	}
+	
+	public static ItemStack tryToGetOut(StackTransferTuple tuple, ItemStack filter){
 		//ItemStack tuple.stack1, ItemStack tuple.stack2
 		if(tuple.stack1==null){
 			if(tuple.stack2==null){
 				return null;
 			}
+			if(filter!=null && !tuple.stack2.isItemEqual(filter)){return null;}
 			ItemStack tmp = tuple.stack2.copy();
 			//tuple.stack2.stackSize=0;
 			tuple.stack2=null;
 			//tuple.stack2=verify(tuple.stack2);
-			return verify(tmp);
+			return tmp;//verify(tmp);
 		}else{
 			if(tuple.stack2==null){
+				//No items to transfer
 				return tuple.stack1;
 			}
+			if(filter!=null && !tuple.stack2.isItemEqual(filter)){return tuple.stack1;}
 			if(tuple.stack1.isItemEqual(tuple.stack2)){
 				StackUtility.mergeInto(tuple.stack1, tuple.stack2);
 				
@@ -127,6 +203,32 @@ public class StackUtility {
 			}
 		}
 	}
+
+	public static ItemStack decrementStack(ItemStack stack, int amount) {
+		if(stack==null){return null;}
+		stack.stackSize-=amount;
+		return verify(stack);
+	}
+	public static ItemStack incrementStack(ItemStack stack, int amount) {
+		if(stack==null){return null;}
+		stack.stackSize+=amount;
+		return verify(stack);
+	}	
+	
+	
+	/*
+	 * Gets NBT from Items \o/
+	 */
+	public static NBTTagCompound getTags(ItemStack i){
+		NBTTagCompound tag = i.getTagCompound();
+		if(tag==null){
+			tag = new NBTTagCompound();
+			i.setTagCompound(tag);
+		}
+		return tag;
+	}
+	
+	
 	
 	
 	

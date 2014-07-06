@@ -17,18 +17,14 @@ public abstract class HOEMachineCrafterIO extends HOEMachineIO{
 	@Override
 	protected void produce(HOEData data, boolean doReal){
 		HOEMachineCrafterData hm = (HOEMachineCrafterData) data;
-		hm.shutCycleOff();//Cycled thought
-		if(doReal){
-			if(hm.decrementResources()){
-				hm.incrementProduction();
-			}
-		}
+		//hm.shutCycleOff();//Cycled thought
+		hm.produce(doReal);
 	}	
 	
 	protected boolean isMachineActive(HOEData data){
 		//if(data==null){return false;}//SOMETHING REALLY WRONG
 		HOEMachineCrafterData machine = (HOEMachineCrafterData)data;
-		if(!machine.isReadyForCycle()){return false;}
+		if(!machine.hasWork()){return false;}
 			
 		//if(!machine.isRecipeSet){return false;}
 		//if(!machine.checkStorage()){return false;}

@@ -7,9 +7,9 @@ import ru.itaros.chemlab.client.ui.HiResistantMixerContainer;
 import ru.itaros.chemlab.client.ui.common.HOEContainer;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.chemlab.minecraft.tileentity.HiResistantMixerTileEntity;
+import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
 import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.blocks.IOMachineBlock;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 
 public class HiResistantMixer extends IOMachineBlock {
 

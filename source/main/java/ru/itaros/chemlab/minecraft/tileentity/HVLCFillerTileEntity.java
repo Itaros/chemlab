@@ -16,12 +16,13 @@ import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.HOELinker;
 import ru.itaros.chemlab.hoe.data.HVLCFillerData;
 import ru.itaros.chemlab.loader.ItemLoader;
+import ru.itaros.hoe.data.utils.HOEDataFingerprint;
+import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.FluidUtility;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackUtility;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.IHOEInventorySyncable;
 
 public class HVLCFillerTileEntity extends MachineTileEntity implements ISidedInventory, IHOEInventorySyncable, IFluidHandler, IMachine {
@@ -40,8 +41,9 @@ public class HVLCFillerTileEntity extends MachineTileEntity implements ISidedInv
 
 	
 	@Override
-	protected HOEMachineData acquareData(HOEMachines machines) {
+	protected HOEMachineData acquareData(HOEMachines machines, HOEDataFingerprint fingerprint) {
 		HVLCFillerData sbd= new HVLCFillerData();
+		sbd.setOwnerFingerprint(fingerprint);
 		machines.injectCustomData(sbd);
 		return sbd;
 	}

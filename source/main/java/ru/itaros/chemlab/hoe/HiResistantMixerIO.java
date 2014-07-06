@@ -1,7 +1,7 @@
 package ru.itaros.chemlab.hoe;
 
 import ru.itaros.api.hoe.internal.HOEData;
-import ru.itaros.chemlab.loader.recipes.MixerRecipes;
+import ru.itaros.chemlab.loader.recipes.HiRMixerRecipes;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
@@ -15,7 +15,7 @@ public class HiResistantMixerIO extends HOEMachineCrafterIO {
 	
 	@Override
 	public RecipesCollection getRecipesCollection() {
-		return MixerRecipes.recipes;
+		return HiRMixerRecipes.recipes;
 	}	
 	
 	public HiResistantMixerIO(){

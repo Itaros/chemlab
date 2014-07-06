@@ -6,8 +6,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.client.ui.common.HOEContainer;
+import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ReadonlySlot;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 
 public class HVLCFillerContainer extends HOEContainer {
 

@@ -4,7 +4,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.BiomeGenBase;
 import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.hoe.HOE;
-import ru.itaros.hoe.registries.vanilla.WorldGenRegistry;
 import ru.itaros.hoe.signatures.IAllowedConfigArgument;
 import ru.itaros.hoe.toolkit.worldgen.GenDistributionProvider;
 import ru.itaros.hoe.toolkit.worldgen.GenDistributionProviderScattered;
@@ -13,6 +12,7 @@ import ru.itaros.hoe.toolkit.worldgen.WorldGenOverlay;
 import ru.itaros.hoe.toolkit.worldgen.WorldGenOverlayBiome;
 import ru.itaros.hoe.toolkit.worldgen.WorldGenOverlayRange;
 import ru.itaros.hoe.toolkit.worldgen.WorldGenOverlayRangeLimestone;
+import ru.itaros.hoe.vanilla.registries.WorldGenRegistry;
 
 public class WorldGenLoaderScattered implements IAllowedConfigArgument {
 	

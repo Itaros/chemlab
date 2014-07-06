@@ -2,26 +2,30 @@ package ru.itaros.chemlab;
 
 import java.util.EnumMap;
 
+import net.minecraftforge.common.MinecraftForge;
 import ru.itaros.chemlab.client.ui.common.GUIHandler;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
+import ru.itaros.chemlab.events.SyndicationSystemPipingProtection;
 import ru.itaros.chemlab.loader.BlockLoader;
+import ru.itaros.chemlab.loader.DamageSourceLoader;
 import ru.itaros.chemlab.loader.GUILoader;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.chemlab.loader.RecipesLoader;
+import ru.itaros.chemlab.loader.TierLoader;
 import ru.itaros.chemlab.loader.recipes.optional.VanillaTweaks;
 import ru.itaros.chemlab.loader.tileentity.TileEntityLoader;
-import ru.itaros.chemlab.loader.worldgen.WorldGenLoaderNative;
 import ru.itaros.chemlab.network.ChemLabChannel;
 import ru.itaros.chemlab.network.IPacketCodecDescriptor;
 import ru.itaros.chemlab.proxy.Proxy;
 import ru.itaros.hoe.HOE;
-import ru.itaros.hoe.toolkit.worldgen.HOEWorldGenerator;
+import ru.itaros.hoe.tiers.TierRegistry;
 import ru.itaros.toolkit.hoe.io.IOCollectionHelper;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
@@ -29,7 +33,6 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.FMLOutboundHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = ChemLab.MODID, version = ChemLab.VERSION, dependencies="required-after:hoelib;required-after:BuildCraft|Core")
@@ -42,7 +45,12 @@ public class ChemLab
 	
     public static final String MODID = "chemlab";
     public static final String VERSION = "2.x";
-    
+    public static final String getPublicVersionNotation(){
+    	return "PR-2.02";
+    }
+    public static final String getMCVersionNotation(){
+    	return "1.7.2";
+    }    
     
     @SidedProxy(clientSide="ru.itaros.chemlab.proxy.Client", serverSide="ru.itaros.chemlab.proxy.Server")
     public static Proxy proxy;
@@ -63,9 +71,16 @@ public class ChemLab
     public static Config getConfig(){
     	return cfg;
     }
+    
+    VersionCheckerIntegration versioncheck;
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+    	versioncheck = new VersionCheckerIntegration().startPolling();
+    	
+    	tier_registry=new TierRegistry();
+    	TierLoader.loadTiers();
+    	
     	cfg = new Config().loadConfig(event);
     	
     	channels = NetworkRegistry.INSTANCE.newChannel("chemlabchannel", new ChemLabChannel());
@@ -80,17 +95,24 @@ public class ChemLab
  		ItemLoader.loadItems();
 		iocollection = TileEntityLoader.load();   
 		
+		DamageSourceLoader.load();
+		
 		//GFX
 		proxy.registerGFX();
 		
 		//Tweaks
 		VanillaTweaks.tweakIron();
 		VanillaTweaks.createWroughtIronTools();
+		
+		//Block Breaking Events
+		MinecraftForge.EVENT_BUS.register(new SyndicationSystemPipingProtection());
     	
     }     
     @EventHandler
     public void Init(FMLInitializationEvent event)
     {
+    	versioncheck.makeFinal();
+    	
     	HOE.getInstance().getHOEExecutor().execute(cfg.worldgenerator_clid);
     }
     @EventHandler
@@ -102,7 +124,10 @@ public class ChemLab
     }   
     
  
-    
+    private TierRegistry tier_registry;
+    public TierRegistry getTierRegistry(){
+    	return tier_registry;
+    }
     
     
     @EventHandler

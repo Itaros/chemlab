@@ -69,6 +69,9 @@ public class HOEThread extends Thread implements IHOEThread{
 						System.err.println("Faulty HOEJob detected:\n"+r.getClass().getSimpleName());
 						e.printStackTrace();
 						System.err.println("Possible cause:"+r.getCurrentlyProccessedData().getClass().getName());
+						if(r.getCurrentlyProccessedData()!=null && r.getCurrentlyProccessedData().getIO()!=null){
+							System.err.println("IO:"+r.getCurrentlyProccessedData().getIO().getClass().getName());
+						}
 						System.err.println("=======END OF REPORT========");
 						toTerminate=r;
 					}

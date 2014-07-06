@@ -2,10 +2,10 @@ package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services;
 
 import java.util.ArrayList;
 
+import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.io.connectivity.HOEBiPolarSocket;
 import ru.itaros.toolkit.hoe.machines.basic.io.connectivity.HOEPeerToPeerConnector;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 

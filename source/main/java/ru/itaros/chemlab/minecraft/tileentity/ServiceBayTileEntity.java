@@ -4,10 +4,11 @@ import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.HOELinker;
 import ru.itaros.chemlab.hoe.data.ServiceBayData;
 import ru.itaros.chemlab.minecraft.tileentity.connectome.ServiceBayConnectome;
+import ru.itaros.hoe.data.utils.HOEDataFingerprint;
+import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 
 public class ServiceBayTileEntity extends MachineTileEntity {
 
@@ -29,8 +30,9 @@ public class ServiceBayTileEntity extends MachineTileEntity {
 	}
 	
 	@Override
-	protected HOEMachineData acquareData(HOEMachines machines) {
+	protected HOEMachineData acquareData(HOEMachines machines, HOEDataFingerprint fingerprint) {
 		ServiceBayData sbd= new ServiceBayData();
+		sbd.setOwnerFingerprint(fingerprint);
 		machines.injectCustomData(sbd);
 		return sbd;
 	}

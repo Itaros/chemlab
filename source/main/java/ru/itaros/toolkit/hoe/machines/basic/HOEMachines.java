@@ -7,6 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import ru.itaros.api.hoe.IHOEJob;
 import ru.itaros.api.hoe.exceptions.HOENoSuchDataExistsException;
 import ru.itaros.api.hoe.internal.HOEData;
+import ru.itaros.hoe.data.utils.HOEDataFingerprint;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 
 public class HOEMachines implements IHOEJob {
@@ -37,8 +38,9 @@ public class HOEMachines implements IHOEJob {
 			}
 		}
 		if(skipped!=null){
-			System.out.println("Skipped machine removed: "+skipped.getClass().getSimpleName());
+			System.out.println("Skipped machine removed: "+skipped.getClass().getSimpleName()+"@"+skipped.hashCode());
 			machines.remove(skipped);
+			skipped.notifySkipEvent();
 		}
 	}
 
@@ -68,6 +70,7 @@ public class HOEMachines implements IHOEJob {
 	public void injectCustomData(HOEMachineData data){
 		queueLock.lock();
 		injectorQueue.push(data);
+		System.out.println("Injecting machine: "+data.getClass().getSimpleName()+"@"+data.hashCode());
 		tryToInject=true;
 		queueLock.unlock();
 		//machines.add(data);
@@ -84,6 +87,38 @@ public class HOEMachines implements IHOEJob {
 	public void removeMachineData(HOEMachineCrafterData data) throws HOENoSuchDataExistsException {
 		if(!machines.remove(data)){
 			throw new HOENoSuchDataExistsException();
+		}
+	}
+
+
+	public HOEMachineData checkForFingerprint(HOEDataFingerprint fingerprint) {
+		HOEMachineData candidate=null;
+		queueLock.lock();
+		for(HOEMachineData hmda:machines){
+			HOEDataFingerprint comparable = hmda.getOwnerFingerprint();
+			if(comparable==null){System.out.println("Wrong fingerprint: "+hmda.getClass().getSimpleName());hmda.invalidate();continue;}
+			if(comparable.equals(fingerprint)){
+				candidate=hmda;
+				validateProcessingRegistry(candidate);
+				break;
+			}
+		}
+		queueLock.unlock();
+		return candidate;
+	}
+
+	/*
+	 * This method insures this data will not be ejected(via being pardoned)
+	 * And returns it back if it is already has been evicted.
+	 */
+	private void validateProcessingRegistry(HOEMachineData candidate) {
+		//Pardoning
+		if(!candidate.isRunning()){
+			candidate.revalidate();
+		}
+		//Oh god. It is now evicted?
+		if(candidate.isSkipEventNotified()){
+			injectCustomData(candidate);
 		}
 	}
 

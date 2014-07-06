@@ -1,6 +1,8 @@
 package ru.itaros.chemlab;
 
 import net.minecraftforge.common.config.Configuration;
+import ru.itaros.chemlab.hoe.data.syndication.SyndicationHubData;
+import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class Config {
@@ -8,11 +10,14 @@ public class Config {
 	public boolean gfx_AdvancedParticleInjectorHack;
 	public boolean gfx_gasChimneyFX;
 	
+	public Class<? extends HOEMachineData>[] hoesyndic_blacklist;
+	
 	public String worldgenerator_clid="ru.itaros.chemlab.loader.worldgen.WorldGenLoaderNative";
 	
 	
 	private static final String CATEGORY_GFX="GFX";
 	private static final String CATEGORY_WORLDGEN="WORLDGEN";
+	private static final String CATEGORY_HOESYNDICATION="HOESYNDICATION";
 	
 	private Configuration cfg;
 	
@@ -29,9 +34,30 @@ public class Config {
 		
 		worldgenerator_clid=cfg.get(CATEGORY_WORLDGEN, "clid", worldgenerator_clid).getString();
 		
+
+		loadHOESyndicationBlacklist(cfg);
+		
+		ChemLab.getInstance().getTierRegistry().readConfigs(cfg);
 		
 		cfg.save();
 		return this;
+	}
+
+	private void loadHOESyndicationBlacklist(Configuration cfg) {
+		String[] blacklistedClasses = cfg.get(CATEGORY_HOESYNDICATION, "invalidationblacklist", new String[]{SyndicationHubData.class.getName()}).getStringList();
+		hoesyndic_blacklist = new Class[blacklistedClasses.length];
+		int i = -1;
+		for(String s:blacklistedClasses){
+			i++;
+			Class<? extends HOEMachineData> c;
+			try {
+				c = (Class<? extends HOEMachineData>) Class.forName(s);
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException("Wrong "+CATEGORY_HOESYNDICATION+" configuration",e);
+			}
+			hoesyndic_blacklist[i]=c;
+		}
+		
 	}
 	
 }

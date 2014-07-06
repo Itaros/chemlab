@@ -6,8 +6,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
 import ru.itaros.chemlab.network.IPacketCodecDescriptor;
+import ru.itaros.hoe.vanilla.tiles.MachineCrafterTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 import cpw.mods.fml.common.network.ByteBufUtils;
 
 public class SetHOEMachineRecipePacket implements IPacketCodecDescriptor {

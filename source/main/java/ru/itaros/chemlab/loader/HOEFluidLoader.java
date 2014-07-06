@@ -35,6 +35,9 @@ public class HOEFluidLoader {
 	public static CarbonDioxideGas carbondioxide_gas;
 	public static CarbonMonooxideGas carbonmonooxide_gas;
 	
+	public static EndothermicGas endothermic_gas;
+	public static FormingGas forming_gas;
+	
 	private static HOEFluidStack[] composition_air;
 	
 	public static void load(){
@@ -103,12 +106,19 @@ public class HOEFluidLoader {
 		
 		carbonmonooxide_gas = new CarbonMonooxideGas();
 		registry.register(carbonmonooxide_gas);
+	
+		
+		endothermic_gas=new EndothermicGas();
+		registry.register(endothermic_gas);
+		forming_gas=new FormingGas();		
+		registry.register(forming_gas);
 		
 		//compositions
 		composition_air = new HOEFluidStack[]{
 			new HOEFluidStack(nitrogen_gas,4),
 			new HOEFluidStack(oxygen_gas,1)
 		};
+	
 		
 	}
 

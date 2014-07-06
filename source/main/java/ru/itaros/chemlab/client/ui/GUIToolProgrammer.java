@@ -16,12 +16,12 @@ import org.lwjgl.opengl.GL12;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.network.packets.SetHOEMachineRecipePacket;
+import ru.itaros.hoe.toolkit.ui.Tab;
+import ru.itaros.hoe.vanilla.tiles.MachineCrafterTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.elements.Tab;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.ISecured;
 
 public class GUIToolProgrammer extends GuiScreen {

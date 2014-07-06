@@ -18,12 +18,13 @@ import ru.itaros.chemlab.hoe.data.GasChimneyData;
 import ru.itaros.chemlab.hoe.data.HVLCFillerData;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.loader.ItemLoader;
+import ru.itaros.hoe.data.utils.HOEDataFingerprint;
+import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackUtility;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.TileEntityHelper;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.IHOEInventorySyncable;
 import ru.itaros.toolkit.hoe.machines.interfaces.ISynchroportItems;
 import ru.itaros.toolkit.hoe.machines.interfaces.tileentity.ITileEntityParticleManager;
@@ -42,7 +43,7 @@ public class GasChimneyTileEntity extends MachineTileEntity implements ISidedInv
 	public void updateEntity() {
 		super.updateEntity();
 		if(ChemLab.getConfig().gfx_gasChimneyFX){
-			HOEMachineData data = this.getServerData();
+			HOEMachineData data = this.getClientData();
 			if(data!=null && data instanceof GasChimneyData){
 				GasChimneyData gas = (GasChimneyData)data;
 				synchedSmoke+=gas.holdChimneySmoke();
@@ -55,8 +56,9 @@ public class GasChimneyTileEntity extends MachineTileEntity implements ISidedInv
 	}
 
 	@Override
-	protected HOEMachineData acquareData(HOEMachines machines) {
+	protected HOEMachineData acquareData(HOEMachines machines, HOEDataFingerprint fingerprint) {
 		GasChimneyData sbd= new GasChimneyData();
+		sbd.setOwnerFingerprint(fingerprint);
 		machines.injectCustomData(sbd);
 		return sbd;
 	}

@@ -5,6 +5,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.chemlab.loader.ItemLoader;
+import ru.itaros.chemlab.loader.TierLoader;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionMetaUnawareRecipe;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionRecipe;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
 
@@ -46,6 +48,7 @@ public class HiTFurnaceRecipes {
 		emptyhvlcs = new ItemStack(ItemLoader.emptyhvlc,11-8);
 		ItemStack[] po_o = new ItemStack[]{ferricoxide,sulphurdioxide,emptyhvlcs};
 		FixedConversionRecipe pyriteoxygeneation = new FixedConversionRecipe(200,200,po_i,po_o);
+		pyriteoxygeneation.setUnlocalizedName("furnace.oxpyrite");
 		
 		//Carbothermic reaction
 		emptyhvlcs = new ItemStack(ItemLoader.emptyhvlc,3);
@@ -69,10 +72,20 @@ public class HiTFurnaceRecipes {
 		i = new ItemStack[]{OreDictionary.getOres("crushedPericlase").get(0).copy(),new ItemStack(ItemLoader.amorphousGraphite),emptyhvlcs};
 		o = new ItemStack[]{new ItemStack(ItemLoader.magnesium),new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.carbonmonooxide_gas))};
 		FixedConversionRecipe carbothermic_mgo = new FixedConversionRecipe(100,100,i,o);
+		carbothermic_mgo.setUnlocalizedName("furnace.carbothermal.magnesium");
 		
+		FixedConversionRecipe wrought_wire=null;
+		FixedConversionRecipe iron_wire=null;
+		if(TierLoader.L0_WroughtIron.isEnabled()){
+			wrought_wire = new FixedConversionMetaUnawareRecipe(100,500,new ItemStack(ItemLoader.rod_swg_brittle_wroughtIron),new ItemStack(ItemLoader.rod_swg_hot_wroughtIron));
+			wrought_wire.setUnlocalizedName("furnace.wire.wrought");
+		}
+		iron_wire = new FixedConversionMetaUnawareRecipe(100,500,new ItemStack(ItemLoader.rod_swg_brittle_iron),new ItemStack(ItemLoader.rod_swg_hot_iron));
+		iron_wire.setUnlocalizedName("furnace.wire.iron");
 		
 		recipes = new RecipesCollection(dusts);
 		recipes.injectAfter(pyriteoxygeneation,carbothermic_ferricoxide,carbothermic_ferricoxide_hematite,carbothermic_mgo);
+		recipes.injectAfter(wrought_wire,iron_wire);
 		recipes.register();
 		
 		

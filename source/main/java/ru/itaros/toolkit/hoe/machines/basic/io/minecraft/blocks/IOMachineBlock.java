@@ -5,21 +5,20 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import ru.itaros.api.chemlab.ISyndicationPipeConnectable;
 import ru.itaros.chemlab.ChemLabValues;
+import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
 import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.IHOEInventorySyncable;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.TileEntitySecurityTracker;
 
-public abstract class IOMachineBlock extends Block implements IRotatableBlock, ITileEntityProvider{
+public abstract class IOMachineBlock extends Block implements IRotatableBlock, ITileEntityProvider, ISyndicationPipeConnectable{
 
 
 
@@ -85,6 +84,8 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 		}else{
 			//server
 			world.markBlockForUpdate(x, y, z);
+			
+			System.out.println("ISEN: "+((MachineTileEntity)world.getTileEntity(x, y, z)).getServerData().isSkipEventNotified());
 		}	
 		return true;
 	}
@@ -105,12 +106,15 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 			me.pushToHOE();
 			me.sync();
 		}
-		//if(te instanceof MachineTileEntity){
-		//	MachineTileEntity me = (MachineTileEntity)te;
-		//	me.sync();
-		//}
+		if(te instanceof MachineTileEntity){
+			HOEMachineData data = ((MachineTileEntity) te).getServerData();
+			if(data != null && data.isPerformingBlockUpdates()){
+				//If it is syndicated it tries to relieve load from tickmanager at all
+				world.scheduleBlockUpdate(x, y, z, this, this.tickRate(world));
+			}
+		}
 		
-		world.scheduleBlockUpdate(x, y, z, this, this.tickRate(world));
+		
 	}
 
     public void onBlockAdded(World par1World, int par2, int par3, int par4)

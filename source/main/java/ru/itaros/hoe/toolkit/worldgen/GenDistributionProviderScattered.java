@@ -135,7 +135,8 @@ public class GenDistributionProviderScattered extends GenDistributionProvider {
 			
 			int level = HelperWorldGen.getUndergroundHeightLevel(chunk, localx, localy);
 			int diff = (int) ((level-depthFromBedrock)*Math.abs(overlay.getNoiseValueFor(chunkedx+localx, chunkedy+localy)/NOISECAP));
-			int z = depthFromBedrock+diff;			
+			int z = depthFromBedrock+diff;
+			if(z<5){continue;}
 		
 			if(validateBiome(chunk,localx,localy) && overlay.validateBlock(chunk.getBlock(modx, z,mody))){
 				overlay.setBlock(world,stor,modx,mody,z);

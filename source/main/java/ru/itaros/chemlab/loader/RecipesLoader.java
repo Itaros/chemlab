@@ -12,6 +12,9 @@ import ru.itaros.chemlab.loader.recipes.TurboexpanderRecipes;
 import ru.itaros.chemlab.loader.recipes.VanillaCraftingRecipes;
 import ru.itaros.chemlab.loader.recipes.WasherRecipes;
 import ru.itaros.chemlab.loader.recipes.WoodChainRecipes;
+import ru.itaros.chemlab.loader.recipes.bc.BCRecipesLoader;
+import ru.itaros.chemlab.loader.recipes.*;
+
 
 public class RecipesLoader {
 	public static void load(){
@@ -31,9 +34,17 @@ public class RecipesLoader {
 		
 		CatalyticTankRecipes.load();
 		
-		MixerRecipes.load();
+		HiRMixerRecipes.load();
 		WasherRecipes.load();
+		MixerRecipes.load();
 		
+		AutomaticDrawplateRecipes.load();
+		QuenchingChamberRecipes.load();
+		MetalFormationMachineRecipes.load();
+		
+		WireCoatingExtruderRecipes.load();
+		
+		BCRecipesLoader.load();
 		
 	}
 

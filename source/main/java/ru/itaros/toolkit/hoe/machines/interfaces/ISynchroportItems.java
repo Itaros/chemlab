@@ -1,14 +1,17 @@
 package ru.itaros.toolkit.hoe.machines.interfaces;
 
 import net.minecraft.item.ItemStack;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackTransferTuple;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackUtility;
 
 
 public interface ISynchroportItems {
 
 	public ItemStack tryToPutIn(ItemStack source);
+	public ItemStack tryToPutIn(ItemStack source, ItemStack filter);
 	public ItemStack tryToGetOut(ItemStack target);
+	public ItemStack tryToGetOut(ItemStack target, ItemStack filter);
+	
+	public void markDirty();
+	public boolean pollDirty();
 	
 }
 
@@ -21,11 +24,13 @@ public interface ISynchroportItems {
 //	transferTuple.fill(exemplar_cell_in, source);
 //	source=StackUtility.tryToPutIn(transferTuple);
 //	exemplar_cell_in=transferTuple.retr1();
+//	this.markDirty();
 //	return source;
 //}
 //public ItemStack tryToGetOut(ItemStack target){
 //	transferTuple.fill(target, exemplar_cell_out);
 //	target = StackUtility.tryToGetOut(transferTuple);
 //	exemplar_cell_out=transferTuple.retr2();
+//	this.markDirty();
 //	return target;
 //}

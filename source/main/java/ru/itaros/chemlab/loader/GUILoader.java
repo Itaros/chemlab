@@ -2,6 +2,7 @@ package ru.itaros.chemlab.loader;
 
 import ru.itaros.chemlab.client.ui.*;
 import ru.itaros.chemlab.client.ui.special.*;
+import ru.itaros.chemlab.client.ui.syndication.*;
 import ru.itaros.chemlab.client.ui.common.GUIHandler;
 
 public class GUILoader {
@@ -26,7 +27,14 @@ public class GUILoader {
 				CatalyticTankContainer.class,
 				HiResistantMixerContainer.class,
 				HVLCFillerContainer.class,
-				GasChimneyContainer.class
+				GasChimneyContainer.class,
+				SyndicationHubContainer.class,
+				SyndicationItemPortContainer.class,
+				MixerContainer.class,
+				AutomaticDrawplateContainer.class,
+				QuenchingChamberContainer.class,
+				MetalFormationMachineContainer.class,
+				WireCoatingExtruderContainer.class
 				);
 	}
 	

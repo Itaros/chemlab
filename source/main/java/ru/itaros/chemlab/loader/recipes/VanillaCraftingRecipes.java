@@ -2,39 +2,44 @@ package ru.itaros.chemlab.loader.recipes;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.chemlab.loader.ItemLoader;
+import ru.itaros.chemlab.loader.TierLoader;
 import buildcraft.BuildCraftCore;
+import buildcraft.BuildCraftSilicon;
+import buildcraft.BuildCraftTransport;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class VanillaCraftingRecipes {
 
 	public static void load() {
 		
-		//Buildcraft helper recipes
-		GameRegistry.addShapedRecipe(new ItemStack(BuildCraftCore.ironGearItem),
-				"SIS",
-				"IWI",
-				"SIS",
-				'W', new ItemStack(BuildCraftCore.stoneGearItem),
-				'I', new ItemStack(ItemLoader.wroughtiron),//That is only wrought recipe
-				'S', new ItemStack(ItemLoader.screw)
-				);
-		
-		//Vanilla piston helper recipe
-		ShapedOreRecipe pistonHelperRecipe = new ShapedOreRecipe(new ItemStack(Blocks.piston),
-				"WWW",
-				"CIC",
-				"CRC",
-				'I',new ItemStack(ItemLoader.wroughtiron),
-				'C',new ItemStack(Blocks.cobblestone),
-				'R',new ItemStack(Items.redstone),
-				'W',"plankWood");
-		CraftingManager.getInstance().getRecipeList().add(pistonHelperRecipe);
-		
+		if(TierLoader.L0_WroughtIron.isEnabled()){
+			//Buildcraft helper recipes
+			GameRegistry.addShapedRecipe(new ItemStack(BuildCraftCore.ironGearItem),
+					"SIS",
+					"IWI",
+					"SIS",
+					'W', new ItemStack(BuildCraftCore.stoneGearItem),
+					'I', TierLoader.L0_WroughtIron.getTargetItem(),//That is only wrought recipe
+					'S', new ItemStack(ItemLoader.screw)
+					);
+			
+			//Vanilla piston helper recipe
+			ShapedOreRecipe pistonHelperRecipe = new ShapedOreRecipe(new ItemStack(Blocks.piston),
+					"WWW",
+					"CIC",
+					"CRC",
+					'I',TierLoader.L0_WroughtIron.getTargetItem(),
+					'C',new ItemStack(Blocks.cobblestone),
+					'R',new ItemStack(Items.redstone),
+					'W',"plankWood");
+			CraftingManager.getInstance().getRecipeList().add(pistonHelperRecipe);
+		}
 		
 		//Tools
 		
@@ -44,7 +49,7 @@ public class VanillaCraftingRecipes {
 				"IPI",
 				"GGG",
 				'S',new ItemStack(ItemLoader.screw),
-				'I',new ItemStack(ItemLoader.wroughtiron),
+				'I',TierLoader.L0_WroughtIron.getTargetItem(),
 				'P',new ItemStack(ItemLoader.pcbpad),
 				'G',new ItemStack(Items.gold_nugget)
 				);
@@ -54,13 +59,13 @@ public class VanillaCraftingRecipes {
 				"0II",
 				"00I",
 				"00I",
-				'I',new ItemStack(ItemLoader.wroughtiron)
+				'I',TierLoader.L0_WroughtIron.getTargetItem()
 				);
 		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.wrench),
 				"II0",
 				"I00",
 				"I00",
-				'I',new ItemStack(ItemLoader.wroughtiron)
+				'I',TierLoader.L0_WroughtIron.getTargetItem()
 				);
 				
 		//~~~HVLC~~~
@@ -68,7 +73,7 @@ public class VanillaCraftingRecipes {
 				"ICI",
 				"ICI",
 				"INI",
-				'I',new ItemStack(ItemLoader.wroughtiron),
+				'I',TierLoader.L0_WroughtIron.getTargetItem(),
 				'C',new ItemStack(ItemLoader.fluidchamber),
 				'N',new ItemStack(ItemLoader.pressurenozzle)
 		);
@@ -129,16 +134,18 @@ public class VanillaCraftingRecipes {
 				"ISI",
 				"SII",
 				'S',new ItemStack(ItemLoader.screw),
-				'I',new ItemStack(ItemLoader.wroughtiron)
+				'I',TierLoader.L0_WroughtIron.getTargetItem()
 				);		
 		
-		//SCREW - WROUGHT IRON
-		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.screw,16),
-				"III",
-				"0I0",
-				"0I0",
-				'I',new ItemStack(ItemLoader.wroughtiron)
-				);	
+		if(TierLoader.L0_WroughtIron.isEnabled()){
+			//SCREW - WROUGHT IRON
+			GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.screw,16),
+					"III",
+					"0I0",
+					"0I0",
+					'I',new ItemStack(ItemLoader.wroughtiron)
+					);	
+		}
 		//SCREW - IRON
 		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.screw,16),
 				"III",
@@ -154,14 +161,15 @@ public class VanillaCraftingRecipes {
 				"III",
 				'I',new ItemStack(Items.iron_ingot)
 				);		
-		//PANEL - WROUGHT IRON
-		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.panel),
-				"III",
-				"III",
-				"III",
-				'I',new ItemStack(ItemLoader.wroughtiron)
-				);				
-		
+		if(TierLoader.L0_WroughtIron.isEnabled()){
+			//PANEL - WROUGHT IRON
+			GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.panel),
+					"III",
+					"III",
+					"III",
+					'I',new ItemStack(ItemLoader.wroughtiron)
+					);				
+		}
 		
 		//PCBPAD - TEMPORARY
 //		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.pcbpad),
@@ -177,7 +185,7 @@ public class VanillaCraftingRecipes {
 				"   ",
 				"IGI",
 				"WWW",
-				'I',new ItemStack(ItemLoader.wroughtiron),
+				'I',TierLoader.L0_WroughtIron.getTargetItem(),
 				'G',new ItemStack(Items.gold_nugget),
 				'W',"slabWood");
 		CraftingManager.getInstance().getRecipeList().add(PCB);
@@ -191,7 +199,7 @@ public class VanillaCraftingRecipes {
 				'G',new ItemStack(BuildCraftCore.stoneGearItem),
 				'S',new ItemStack(ItemLoader.screw),
 				'R',new ItemStack(Blocks.redstone_torch),
-				'I',new ItemStack(ItemLoader.wroughtiron)
+				'I',TierLoader.L0_WroughtIron.getTargetItem()
 				);		
 		//MJ POWERCONV - iron
 		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.mjconversionunit),
@@ -203,6 +211,89 @@ public class VanillaCraftingRecipes {
 				'R',new ItemStack(Blocks.redstone_torch),
 				'I',new ItemStack(Items.iron_ingot)
 				);				
+		
+		//DIAMOND DRAWPLATE ASSEMBLY
+		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.diamonddrawplateassembly),
+				"IDI",
+				"SGS",
+				"IDI",
+				'G',new ItemStack(BuildCraftCore.stoneGearItem),
+				'S',new ItemStack(ItemLoader.screw),
+				'I',TierLoader.L0_WroughtIron.getTargetItem(),
+				'D',new ItemStack(Items.diamond)
+				);				
+		
+		//SYNDICATION CPU UNIT
+		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.syndicationcpuunit),
+				"EPI",
+				"PCP",
+				"IPE",
+				'C',new ItemStack(ItemLoader.syndicationcpuchip),
+				'I',new ItemStack(ItemLoader.controlinterface),
+				'E',new ItemStack(ItemLoader.ioportexpansionconnector),
+				'P',new ItemStack(ItemLoader.pcbpad)
+				);			
+		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.syndicationcpuunit),
+				"IPE",
+				"PCP",
+				"EPI",
+				'C',new ItemStack(ItemLoader.syndicationcpuchip),
+				'I',new ItemStack(ItemLoader.controlinterface),
+				'E',new ItemStack(ItemLoader.ioportexpansionconnector),
+				'P',new ItemStack(ItemLoader.pcbpad)
+				);		
+		
+		//GATE CONTAINMENT
+		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.gatecontainment),
+				"SMS",
+				"MPM",
+				"SCS",
+				'P',new ItemStack(Items.ender_pearl),
+				'S',new ItemStack(ItemLoader.screw),
+				'C',new ItemStack(ItemLoader.pcbpad),
+				'M',new ItemStack(ItemLoader.panel)
+				);			
+		
+		//MULTIPORT CONNECTOR
+		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.multiportconnector),
+				"SPS",
+				"WGW",
+				"SPS",
+				'G',new ItemStack(ItemLoader.gatecontainment),
+				'S',new ItemStack(ItemLoader.screw),
+				'P',new ItemStack(BuildCraftTransport.pipeItemsStone),
+				'W',new ItemStack(ItemLoader.powercable)
+				);			
+		
+		
+		//IO MULTITOOL COMPONENT
+		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.iomultitoolcomponent),
+				"0S0",
+				"0S0",
+				"0B0",
+				'S',new ItemStack(Items.stick),
+				'B',new ItemStack(Blocks.stone_button)
+				);		
+		
+		//IO MULTITOOL
+		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.iomultitool),
+				"00C",
+				"0R0",
+				"000",
+				'C',new ItemStack(BuildCraftSilicon.redstoneChipset,1,2),
+				'R',new ItemStack(ItemLoader.iomultitoolcomponent)
+				);		
+		
+		
+		//CHEATING: SS CPU
+		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.syndicationcpuchip),
+				"LCL",
+				"CQC",
+				"LCL",
+				'Q',new ItemStack(Items.quartz),
+				'C',new ItemStack(ItemLoader.powercable),
+				'L',new ItemStack(BuildCraftSilicon.redstoneChipset,1,3)
+				);			
 		
 		
 		loadMachinesRecipes();
@@ -223,14 +314,14 @@ public class VanillaCraftingRecipes {
 				"I0I",
 				"0I0",
 				"0I0",
-				'I',new ItemStack(ItemLoader.wroughtiron)
+				'I',TierLoader.L0_WroughtIron.getTargetItem()
 				);	
 		//HEATING ELEMENT
 		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.heatingelement),
 				"CCI",
 				"IGI",
 				"ICC",
-				'I',new ItemStack(ItemLoader.wroughtiron),
+				'I',TierLoader.L0_WroughtIron.getTargetItem(),
 				'C',new ItemStack(Items.clay_ball),
 				'G',new ItemStack(BuildCraftCore.ironGearItem)
 				);		
@@ -250,7 +341,7 @@ public class VanillaCraftingRecipes {
 				"I0I",
 				"I0I",
 				"I0I",
-				'I',new ItemStack(ItemLoader.wroughtiron)
+				'I',TierLoader.L0_WroughtIron.getTargetItem()
 				);			
 		
 		//MULTICOMPARTMENT
@@ -258,7 +349,7 @@ public class VanillaCraftingRecipes {
 				"ITI",
 				"TTT",
 				"ITI",
-				'I',new ItemStack(ItemLoader.wroughtiron),
+				'I',TierLoader.L0_WroughtIron.getTargetItem(),
 				'T',new ItemStack(ItemLoader.microtube)
 				);			
 		//=====STEAM EXPLOSION UNIT=====
@@ -287,7 +378,7 @@ public class VanillaCraftingRecipes {
 				"I0I",
 				"I0I",
 				"INI",
-				'I',new ItemStack(ItemLoader.wroughtiron),
+				'I',TierLoader.L0_WroughtIron.getTargetItem(),
 				'N',new ItemStack(ItemLoader.pressurenozzle)
 				);	
 		//FLUID MIXER
@@ -295,7 +386,7 @@ public class VanillaCraftingRecipes {
 				"I0I",
 				"0G0",
 				"I0I",
-				'I',new ItemStack(ItemLoader.wroughtiron),
+				'I',TierLoader.L0_WroughtIron.getTargetItem(),
 				'G',new ItemStack(BuildCraftCore.stoneGearItem)
 				);	
 		
@@ -316,7 +407,7 @@ public class VanillaCraftingRecipes {
 				"III",
 				"WWW",
 				'W',new ItemStack(Blocks.stone),
-				'I',new ItemStack(ItemLoader.wroughtiron)
+				'I',TierLoader.L0_WroughtIron.getTargetItem()
 				);			
 		
 //		//ACTUATOR
@@ -435,7 +526,7 @@ public class VanillaCraftingRecipes {
 				"00G",
 				"SII",
 				'S',new ItemStack(ItemLoader.screw),
-				'I',new ItemStack(ItemLoader.wroughtiron),
+				'I',TierLoader.L0_WroughtIron.getTargetItem(),
 				'G',new ItemStack(Items.gold_ingot)
 				);
 		
@@ -458,7 +549,7 @@ public class VanillaCraftingRecipes {
 				"SGS",
 				"I00",
 				'S',new ItemStack(ItemLoader.screw),
-				'I',new ItemStack(ItemLoader.wroughtiron),
+				'I',TierLoader.L0_WroughtIron.getTargetItem(),
 				'G',new ItemStack(BuildCraftCore.ironGearItem));
 		
 		
@@ -468,7 +559,7 @@ public class VanillaCraftingRecipes {
 				"IMG",
 				"SSS",
 				'S', new ItemStack(ItemLoader.screw),
-				'I', new ItemStack(ItemLoader.wroughtiron),
+				'I', TierLoader.L0_WroughtIron.getTargetItem(),
 				'M', new ItemStack(ItemLoader.mjconversionunit),
 				'G', new ItemStack(BuildCraftCore.stoneGearItem)
 				);
@@ -502,7 +593,7 @@ public class VanillaCraftingRecipes {
 				"III",
 				"000",
 				"III",
-				'I',new ItemStack(ItemLoader.wroughtiron)
+				'I',TierLoader.L0_WroughtIron.getTargetItem()
 				);
 		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.replacablesleigh,3),
 				"III",
@@ -561,7 +652,7 @@ public class VanillaCraftingRecipes {
 				"III",
 				"GGG",
 				"III",
-				'I',new ItemStack(ItemLoader.wroughtiron),
+				'I',TierLoader.L0_WroughtIron.getTargetItem(),
 				'G',new ItemStack(BuildCraftCore.stoneGearItem)
 				);
 		//HELICAL ROTOR
@@ -569,13 +660,13 @@ public class VanillaCraftingRecipes {
 				"I0I",
 				"III",
 				"0I0",
-				'I',new ItemStack(ItemLoader.wroughtiron)
+				'I',TierLoader.L0_WroughtIron.getTargetItem()
 				);
 		GameRegistry.addShapedRecipe(new ItemStack(ItemLoader.pumphelicalrotor),
 				"0I0",
 				"III",
 				"I0I",
-				'I',new ItemStack(ItemLoader.wroughtiron)
+				'I',TierLoader.L0_WroughtIron.getTargetItem()
 				);		
 		
 		
@@ -609,6 +700,120 @@ public class VanillaCraftingRecipes {
 				'B',new ItemStack(Items.brick),
 				'F',new ItemStack(ItemLoader.fluidchamber)
 		);
+		
+		//=====METAL FORMER=====
+		GameRegistry.addShapedRecipe(new ItemStack(BlockLoader.metformer),
+				"APA",
+				"HCH",
+				"SFS",
+				'C',new ItemStack(BlockLoader.casing),
+				'S',new ItemStack(ItemLoader.screw),
+				'F',new ItemStack(ItemLoader.fluidchamber),
+				'P',new ItemStack(ItemLoader.presshead),
+				'H',new ItemStack(ItemLoader.heatingelement),
+				'A',new ItemStack(ItemLoader.actuator)
+		);		
+		
+		//=====MIXER=====
+		GameRegistry.addShapedRecipe(new ItemStack(BlockLoader.mixer),
+				"MNM",
+				"MCM",
+				"MFM",
+				'C',new ItemStack(BlockLoader.casing),
+				'M',new ItemStack(ItemLoader.fluidmixer),
+				'N',new ItemStack(ItemLoader.pressurenozzle),
+				'F',new ItemStack(ItemLoader.fluidchamber)
+		);		
+		
+		//=====AUTOMATIC DRAWPLATE=====
+		GameRegistry.addShapedRecipe(new ItemStack(BlockLoader.automaticdrawplate),
+				"PDP",
+				"ACA",
+				"SRS",
+				'C',new ItemStack(BlockLoader.casing),
+				'D',new ItemStack(ItemLoader.diamonddrawplateassembly),
+				'R',new ItemStack(ItemLoader.replacablesleigh),
+				'P',new ItemStack(ItemLoader.presshead),
+				'A',new ItemStack(ItemLoader.actuator),
+				'S',new ItemStack(ItemLoader.screw)
+		);				
+		
+		//=====QUENCHER=====
+		GameRegistry.addShapedRecipe(new ItemStack(BlockLoader.quencher),
+				"PUP",
+				"MCM",
+				"FFF",
+				'C',new ItemStack(BlockLoader.casing),
+				'F',new ItemStack(ItemLoader.fluidchamber),
+				'P',new ItemStack(ItemLoader.pressurenozzle),
+				'M',new ItemStack(ItemLoader.fluidmixer),
+				'U',new ItemStack(ItemLoader.frame)
+		);	
+		
+		//=====SYNDICATION HUB=====
+		GameRegistry.addShapedRecipe(new ItemStack(BlockLoader.syndicationhub),
+				"SPS",
+				"MCM",
+				"SMS",
+				'C',new ItemStack(BlockLoader.casing),
+				'S',new ItemStack(ItemLoader.screw),
+				'P',new ItemStack(ItemLoader.syndicationcpuunit),
+				'M',new ItemStack(ItemLoader.multiportconnector)
+		);		
+		
+		//=====ITEMPORT=====
+		GameRegistry.addShapedRecipe(new ItemStack(BlockLoader.syndication_itemport),
+				"SPS",
+				"ICI",
+				"SMS",
+				'C',new ItemStack(BlockLoader.casing),
+				'S',new ItemStack(ItemLoader.screw),
+				'P',new ItemStack(ItemLoader.frame),
+				'M',new ItemStack(ItemLoader.multiportconnector),
+				'I',new ItemStack(ItemLoader.ioportexpansionconnector)
+		);				
+		//=====EMF GENERATOR=====
+		GameRegistry.addShapedRecipe(new ItemStack(BlockLoader.syndication_emfgenerator),
+				"SPS",
+				"ECE",
+				"SSS",
+				'C',new ItemStack(BlockLoader.casing),
+				'S',new ItemStack(ItemLoader.screw),
+				'P',new ItemStack(ItemLoader.frame),
+				'E',new ItemStack(ItemLoader.mjconversionunit)
+		);	
+		//=====EMF CAPACITOR=====
+		GameRegistry.addShapedRecipe(new ItemStack(BlockLoader.syndication_util_capacitor),
+				"SSS",
+				"PCP",
+				"SSS",
+				'C',new ItemStack(BlockLoader.casing),
+				'S',new ItemStack(ItemLoader.screw),
+				'P',new ItemStack(Items.ender_pearl)
+		);	
+		//=====SYNDICATION BUS MULTIPIPE=====
+		GameRegistry.addShapedRecipe(new ItemStack(BlockLoader.pipes_syndicationbus,16),
+				"SSS",
+				"MPM",
+				"SSS",
+				'M',new ItemStack(ItemLoader.multiportconnector),
+				'S',new ItemStack(ItemLoader.screw),
+				'P',new ItemStack(BuildCraftTransport.pipeItemsGold)
+		);			
+		
+		//=====WIRE COATING EXTRUDER=====
+		GameRegistry.addShapedRecipe(new ItemStack(BlockLoader.wcextruder),
+				"NTN",
+				"PCP",
+				"SFS",
+				'C',new ItemStack(BlockLoader.casing),
+				'T',new ItemStack(ItemLoader.fluidchamber),
+				'P',new ItemStack(ItemLoader.presshead),
+				'N',new ItemStack(ItemLoader.pressurenozzle),
+				'F',new ItemStack(ItemLoader.frame),
+				'S',new ItemStack(ItemLoader.screw)
+		);				
+		
 		
 		
 	}

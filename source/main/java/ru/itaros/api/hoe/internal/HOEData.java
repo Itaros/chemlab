@@ -42,6 +42,13 @@ public abstract class HOEData {
 			child.invalidate();
 		}
 	}	
+	public void revalidate() {
+		isRunning=true;
+		HOEData child = getChild();
+		if(child!=null){
+			child.revalidate();
+		}			
+	}	
 	public boolean isRunning(){
 		return isRunning;
 	}
@@ -57,6 +64,14 @@ public abstract class HOEData {
 		return connectivity;
 	}
 	//==========================================
+	
+	private boolean skipEventNotified=false;
+	public void notifySkipEvent() {
+		skipEventNotified=true;
+	}
+	public boolean isSkipEventNotified(){
+		return skipEventNotified;
+	}
 	
 }
 

@@ -4,8 +4,9 @@ import net.minecraft.client.entity.EntityClientPlayerMP;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.client.tesr.ParticleInjectorHackTESR;
 import ru.itaros.chemlab.client.ui.GUIToolProgrammer;
+import ru.itaros.chemlab.loader.client.ISBRLoader;
 import ru.itaros.chemlab.minecraft.tileentity.GasChimneyTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
+import ru.itaros.hoe.vanilla.tiles.MachineCrafterTileEntity;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 
@@ -35,6 +36,9 @@ public class Client extends Server {
 		if(ChemLab.getConfig().gfx_AdvancedParticleInjectorHack){
 			ClientRegistry.bindTileEntitySpecialRenderer(GasChimneyTileEntity.class, new ParticleInjectorHackTESR());
 		}
+		
+		ISBRLoader.load();
+		
 		
 		super.registerGFX();
 	}

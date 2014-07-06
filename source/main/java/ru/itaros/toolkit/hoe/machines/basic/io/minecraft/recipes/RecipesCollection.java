@@ -14,14 +14,39 @@ public class RecipesCollection {
 		return outcomingReq;
 	}
 
+	private Recipe[] denullify(Recipe[] recipes){
+		int nulls=0;
+		for(Recipe r:recipes){
+			if(r==null){nulls++;}
+		}
+		Recipe[] nr;
+		if(nulls>0){
+			nr = new Recipe[recipes.length-nulls];
+			int i=-1;
+			for(Recipe r:recipes){
+				if(r!=null){
+					i++;
+					nr[i]=r;
+				}
+			}			
+		}else{
+			nr = recipes;
+		}
+		return nr;
+	}
+	
+	
 	public RecipesCollection(Recipe... recipes){
-		this.recipes=recipes;
+		Recipe[] nr = denullify(recipes);	
+		
+		this.recipes=nr;
 		
 		recalcRequirments();
 	}
 	
 	public void register(){
 		for(Recipe r : recipes){
+			r.makeFinal();
 			IHOERecipeRegistry reg = Recipe.getRecipeRegistry();
 			reg.add(r);
 		}
@@ -38,8 +63,11 @@ public class RecipesCollection {
 	}
 
 	public void injectAfter(Recipe... newOnes){
+		Recipe[] n = denullify(newOnes);	
+		
+		
 		Recipe[] o = recipes;
-		Recipe[] n = newOnes;
+		//Recipe[] n = newOnes;
 		recipes = new Recipe[o.length+n.length];
 		System.arraycopy(o, 0, recipes, 0, o.length);
 		System.arraycopy(n, 0, recipes, o.length, n.length);

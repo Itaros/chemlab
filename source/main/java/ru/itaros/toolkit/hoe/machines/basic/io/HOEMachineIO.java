@@ -18,6 +18,7 @@ public abstract class HOEMachineIO extends HOEIO {
 	public void tick(HOEData data, boolean doReal) {
 		super.tick(data, doReal);
 		HOEMachineData machine = (HOEMachineData) data;
+		if(!machine.isConfigured()){return;}
 		if(!isMachineActive(data)){return;}
 		machine.incrementTick();
 		if(machine.getTicks()>machine.ticksRequared){

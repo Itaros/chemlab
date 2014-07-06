@@ -4,6 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.exceptions.HOEWrongSyncDirection;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.api.hoe.internal.HOEIO;
+import ru.itaros.hoe.data.utils.HOEDataFingerprint;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 
 public class HOEMachineData extends HOEData {
@@ -21,6 +22,15 @@ public class HOEMachineData extends HOEData {
 		bindChildToParent(parent);
 	}	
 	
+	
+	private HOEDataFingerprint ownerFingerprint;
+	public void setOwnerFingerprint(HOEDataFingerprint fingerprint){
+		ownerFingerprint=fingerprint;
+	}
+	public HOEDataFingerprint getOwnerFingerprint(){
+		return ownerFingerprint;
+	}
+	
 	protected double power;
 
 	public void readNBT(NBTTagCompound nbt){
@@ -32,6 +42,8 @@ public class HOEMachineData extends HOEData {
 		//Ticks
 		ticksRequared=nbt.getInteger("ticksRequared");
 		ticksAccumulated=nbt.getInteger("ticksAccumulated");
+		//Operational state
+		isSyndicated=nbt.getBoolean("isSyndicated");
 		//IO recognition Signature
 		String ioname = nbt.getString("io_sign");
 		if(ioname!=""){
@@ -47,6 +59,8 @@ public class HOEMachineData extends HOEData {
 		//Ticks
 		nbt.setInteger("ticksRequared", ticksRequared);
 		nbt.setInteger("ticksAccumulated", ticksAccumulated);
+		//Operational state
+		nbt.setBoolean("isSyndicated",isSyndicated);
 		//IO recognition Signature
 		if(io!=null){
 			nbt.setString("io_sign", io.getClass().getName());
@@ -76,6 +90,7 @@ public class HOEMachineData extends HOEData {
 	 */
 	protected void bindChildToParent(HOEMachineData parent){
 		this.io=parent.io;
+		this.isConfigured=parent.isConfigured;
 	};
 
 	protected double maxpower;
@@ -87,6 +102,10 @@ public class HOEMachineData extends HOEData {
 
 	public double getPowerMax() {
 		return maxpower;
+	}
+	
+	public double getNeededPower(){
+		return maxpower-power;
 	}
 
 	protected int ticksAccumulated = 0;
@@ -169,6 +188,31 @@ public class HOEMachineData extends HOEData {
 		super();
 	}
 	
+	
+	private boolean isSyndicated=false;
+
+	/*
+	 * This method provides a way to distinguish blocks which are synced regardless of syndication state
+	 */
+	public boolean isPerformingBlockUpdates(){
+		return !isSyndicated();
+	}
+	
+	public boolean isSyndicated() {
+		return isSyndicated;
+	}
+	public void setSyndicated(boolean isSyndicated) {
+		this.isSyndicated = isSyndicated;
+	}
+	@Override
+	public boolean isRunning() {
+		return super.isRunning() & !isSyndicated;
+	}
+	public HOEMachineData makeRemote() {
+		this.isSided=true;
+		return this;
+	}
+
 	
 
 

@@ -12,7 +12,7 @@ import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.hoe.HOE;
-import ru.itaros.hoe.registries.vanilla.WorldGenRegistry;
+import ru.itaros.hoe.vanilla.registries.WorldGenRegistry;
 import cpw.mods.fml.common.IWorldGenerator;
 
 public class HOEWorldGenerator implements IWorldGenerator {

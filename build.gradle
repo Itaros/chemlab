@@ -17,26 +17,33 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.2-pr-2.01"
+version = "1.7.2-pr-2.02"
 group= "ru.itaros.chemlab" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "ChemLab"
 
 dependencies {
-    compile 'com.mod-buildcraft:buildcraft:5.0.4.+:dev'
+    compile 'com.mod-buildcraft:buildcraft:6.0.16:dev'
 }
 
 minecraft {
-    version = "1.7.2-10.12.1.1060"
+    version = "1.7.2-10.12.1.1079"
     assetDir = "eclipse/assets"
 }
 
+
+
+project.sourceCompatibility = 1.7
+project.targetCompatibility = 1.7
+
 sourceSets {
     main {
-        java {
+        java {	
             srcDir 'source/main/java'
+			
             // exclude 'some exclusion'
             // include 'some inclusion'
         }
+
         resources {
             srcDir 'source/main/resources'
 			srcDir 'source/main/assets'
@@ -44,7 +51,37 @@ sourceSets {
             // include 'some inclusion'
         }
 	}
+		coremod{
+		compileClasspath += sourceSets.main.compileClasspath
+			java{
+				srcDir 'source/coremod/java'
+			}
+			 resources {
+				srcDir 'source/coremod/resources'
+			 }
+		}	
 }
+
+
+
+task coremodInternalJar(type: Jar){
+	classifier = 'coremod'
+	from sourceSets.coremod.output
+	manifest {
+		attributes 'FMLCorePlugin': 'ru.itaros.hoe.coremod.HOEFMLPlugin'
+		attributes 'AccessTransformer': 'hoelib_at.cfg'
+	}	
+}
+
+jar {
+	//from sourceSets.coremod.output
+//manifest {
+//        attributes 'FMLCorePlugin': 'ru.itaros.hoe.coremod.HOEFMLPlugin'
+//        attributes 'AccessTransformer': 'hoelib_at.cfg'
+//    }
+}
+
+build.dependsOn coremodInternalJar
 
 processResources
 {
@@ -61,3 +98,6 @@ processResources
         exclude 'mcmod.info'
     }
 }
+
+
+

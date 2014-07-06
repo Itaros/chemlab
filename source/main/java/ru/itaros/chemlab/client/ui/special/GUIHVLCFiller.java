@@ -8,12 +8,12 @@ import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.hoe.data.HVLCFillerData;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.chemlab.minecraft.tileentity.HVLCFillerTileEntity;
+import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
 import ru.itaros.toolkit.hoe.facilities.fluid.containment.HOEFluidDepot;
 import ru.itaros.toolkit.hoe.facilities.fluid.containment.HOEFluidTank;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.Rect;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.UIUtility;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 
 public class GUIHVLCFiller extends GUIHOEClassicalMachine {
 

@@ -3,12 +3,15 @@ package ru.itaros.chemlab.loader;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import ru.itaros.chemlab.items.ChemLabItem;
+import ru.itaros.chemlab.items.ChemLabWireItem;
 import ru.itaros.chemlab.items.DegradableItem;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.items.HiVolumeLiquidCellEmpty;
+import ru.itaros.chemlab.items.IOMultitool;
 import ru.itaros.chemlab.items.PipeWrench;
 import ru.itaros.chemlab.items.Programmer;
 import ru.itaros.chemlab.items.ore.CrushedOre;
@@ -20,6 +23,7 @@ public class ItemLoader {
 
 	public static Programmer programmer;
 	public static PipeWrench wrench;
+	public static IOMultitool iomultitool;
 	
 	public static HiVolumeLiquidCellEmpty emptyhvlc;
 	
@@ -54,12 +58,15 @@ public class ItemLoader {
 	
 	public static ChemLabItem magnesiumsulfide;
 	
+	public static ChemLabItem scraps_iron,scraps_wrought;
 	
 	//general components
 	public static ChemLabItem screw,pcbpad;
 	public static ChemLabItem frame,panel,controlinterface;
 	public static ChemLabItem mjconversionunit;
 	public static ChemLabItem centralassembly;
+	
+	public static ChemLabItem powercable;
 	//specialized components
 	public static ChemLabItem heatingelement;
 	public static ChemLabItem pressurenozzle;
@@ -84,6 +91,27 @@ public class ItemLoader {
 	
 	public static ChemLabItem electrodeconnector;
 	
+	public static ChemLabItem iomultitoolcomponent;
+	public static ChemLabItem diamonddrawplateassembly;
+	
+	public static ChemLabItem syndicationcpuunit;
+	public static ChemLabItem syndicationcpuchip;
+	public static ChemLabItem multiportconnector;
+	public static ChemLabItem gatecontainment;
+	
+	//Wire industry
+	public static ChemLabItem rod_wroughtIron;
+	public static ChemLabItem rod_iron;
+	
+	public static ChemLabWireItem rod_swg_brittle_wroughtIron;
+	public static ChemLabWireItem rod_swg_brittle_iron;	
+	
+	public static ChemLabWireItem rod_swg_hot_wroughtIron;
+	public static ChemLabWireItem rod_swg_hot_iron;		
+	
+	public static ChemLabWireItem rod_swg_wroughtIron;
+	public static ChemLabWireItem rod_swg_iron;			
+	
 	public static void loadItems(){
 		
 		//COMPONENTS
@@ -101,6 +129,9 @@ public class ItemLoader {
 		GameRegistry.registerItem(controlinterface,controlinterface.getUnlocalizedName());
 		GameRegistry.registerItem(mjconversionunit,mjconversionunit.getUnlocalizedName());
 		GameRegistry.registerItem(centralassembly,centralassembly.getUnlocalizedName());
+		
+		powercable=new ChemLabItem("component.powercable");
+		GameRegistry.registerItem(powercable,powercable.getUnlocalizedName());
 		//SPECIALIZED COMPONENTS
 		heatingelement=new ChemLabItem("component.heatingelement");
 		pressurenozzle=new ChemLabItem("component.pressurenozzle");
@@ -146,12 +177,31 @@ public class ItemLoader {
 		electrodeconnector=new ChemLabItem("component.electrodeconnector");
 		GameRegistry.registerItem(electrodeconnector,electrodeconnector.getUnlocalizedName());
 		
+		iomultitoolcomponent=new ChemLabItem("component.iomultitool");
+		GameRegistry.registerItem(iomultitoolcomponent,iomultitoolcomponent.getUnlocalizedName());
+			
+		
+		syndicationcpuunit = new ChemLabItem("component.syndication.cpu.unit");
+		GameRegistry.registerItem(syndicationcpuunit,syndicationcpuunit.getUnlocalizedName());
+		syndicationcpuchip = new ChemLabItem("component.syndication.cpu.chip");
+		GameRegistry.registerItem(syndicationcpuchip,syndicationcpuchip.getUnlocalizedName());
+		multiportconnector = new ChemLabItem("component.syndication.multiport");
+		GameRegistry.registerItem(multiportconnector,multiportconnector.getUnlocalizedName());	
+		gatecontainment  = new ChemLabItem("component.syndication.gatecontainment");
+		GameRegistry.registerItem(gatecontainment,gatecontainment.getUnlocalizedName());	
+		
+		diamonddrawplateassembly = new ChemLabItem("component.diamonddrawplateassembly");
+		GameRegistry.registerItem(diamonddrawplateassembly,diamonddrawplateassembly.getUnlocalizedName());
+		
 		//TOOLS
 		programmer = new Programmer();
 		GameRegistry.registerItem(programmer,programmer.getUnlocalizedName());
 		
 		wrench = new PipeWrench();
 		GameRegistry.registerItem(wrench,wrench.getUnlocalizedName());
+		
+		iomultitool = new IOMultitool();
+		GameRegistry.registerItem(iomultitool,iomultitool.getUnlocalizedName());
 		
 		//GENERICS
 		
@@ -200,8 +250,13 @@ public class ItemLoader {
 		amorphousGraphite = new ChemLabItem("graphite.amorphous");
 		GameRegistry.registerItem(amorphousGraphite,amorphousGraphite.getUnlocalizedName());
 		
-		wroughtiron = new ChemLabItem("ingot.iron.wrought");
-		GameRegistry.registerItem(wroughtiron,wroughtiron.getUnlocalizedName());
+		
+		if(TierLoader.L0_WroughtIron.isEnabled()){
+			wroughtiron = new ChemLabItem("ingot.iron.wrought");
+			GameRegistry.registerItem(wroughtiron,wroughtiron.getUnlocalizedName());
+			TierLoader.L0_WroughtIron.setTargetItem(wroughtiron);
+		}
+		TierLoader.L0_WroughtIron.setSourceItem(new ItemStack(Items.iron_ingot,1));
 		
 		pigiron = new ChemLabItem("ingot.iron.pig");
 		GameRegistry.registerItem(pigiron,pigiron.getUnlocalizedName());
@@ -217,6 +272,35 @@ public class ItemLoader {
 		
 		magnesiumsulfide = new ChemLabItem("magnesiumsulfide");
 		GameRegistry.registerItem(magnesiumsulfide,magnesiumsulfide.getUnlocalizedName());
+		
+		if(TierLoader.L0_WroughtIron.isEnabled()){
+			rod_wroughtIron = new ChemLabItem("rod.wrought");
+			GameRegistry.registerItem(rod_wroughtIron,rod_wroughtIron.getUnlocalizedName());
+			rod_swg_brittle_wroughtIron = new ChemLabWireItem("wire.wrought.brittle",10);
+			GameRegistry.registerItem(rod_swg_brittle_wroughtIron,rod_swg_brittle_wroughtIron.getUnlocalizedName());
+			rod_swg_hot_wroughtIron = new ChemLabWireItem("wire.wrought.hot",10);
+			GameRegistry.registerItem(rod_swg_hot_wroughtIron,rod_swg_hot_wroughtIron.getUnlocalizedName());
+			
+			rod_swg_wroughtIron = new ChemLabWireItem("wire.wrought",10);
+			GameRegistry.registerItem(rod_swg_wroughtIron,rod_swg_wroughtIron.getUnlocalizedName());	
+		
+			scraps_wrought = new ChemLabItem("scraps.wrought");
+			GameRegistry.registerItem(scraps_wrought,scraps_wrought.getUnlocalizedName());
+		}
+		
+		rod_iron= new ChemLabItem("rod.iron");
+		GameRegistry.registerItem(rod_iron,rod_iron.getUnlocalizedName());
+		rod_swg_brittle_iron = new ChemLabWireItem("wire.iron.brittle",16);
+		GameRegistry.registerItem(rod_swg_brittle_iron,rod_swg_brittle_iron.getUnlocalizedName());
+		rod_swg_hot_iron = new ChemLabWireItem("wire.iron.hot",16);
+		GameRegistry.registerItem(rod_swg_hot_iron,rod_swg_hot_iron.getUnlocalizedName());
+				
+		rod_swg_iron = new ChemLabWireItem("wire.iron",10);
+		GameRegistry.registerItem(rod_swg_iron,rod_swg_iron.getUnlocalizedName());		
+		
+		scraps_iron = new ChemLabItem("scraps.iron");
+		GameRegistry.registerItem(scraps_iron,scraps_iron.getUnlocalizedName());
+		
 		
 		loadAutoItems();
 		

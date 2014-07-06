@@ -5,6 +5,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ru.itaros.chemlab.blocks.MachineCasing;
 import ru.itaros.chemlab.blocks.machines.*;
+import ru.itaros.chemlab.blocks.machines.syndication.*;
 import ru.itaros.chemlab.blocks.ore.AsbestosMineral;
 import ru.itaros.chemlab.blocks.ore.OreHalite;
 import ru.itaros.chemlab.blocks.ore.OreMetal;
@@ -33,6 +34,19 @@ public class BlockLoader {
 	public static HVLCFiller hvlcfiller;
 	public static GasChimney gaschimney;
 	
+	public static SyndicationHub syndicationhub;
+	public static SyndicationBus pipes_syndicationbus;
+	
+	public static SyndicationCapacitor syndication_util_capacitor;
+	public static SyndicationEMFGenerator syndication_emfgenerator;
+	public static SyndicationItemPort syndication_itemport;
+	
+	public static Mixer mixer;
+	public static AutomaticDrawplate automaticdrawplate;
+	public static QuenchingChamber quencher;
+	public static MetalFormationMachine metformer;
+	
+	public static WireCoatingExtruder wcextruder;
 	
 	public static OreHalite oreHalite;
 	public static OreMetal orePlatinum;
@@ -109,6 +123,38 @@ public class BlockLoader {
 		gaschimney = new GasChimney();
 		GameRegistry.registerBlock(gaschimney,gaschimney.getUnlocalizedNameRaw());
 		
+		mixer = new Mixer();
+		GameRegistry.registerBlock(mixer,mixer.getUnlocalizedNameRaw());
+		
+		automaticdrawplate = new AutomaticDrawplate();
+		GameRegistry.registerBlock(automaticdrawplate,automaticdrawplate.getUnlocalizedNameRaw());
+		
+		quencher = new QuenchingChamber();
+		GameRegistry.registerBlock(quencher,quencher.getUnlocalizedNameRaw());
+		
+		metformer = new MetalFormationMachine();
+		GameRegistry.registerBlock(metformer,metformer.getUnlocalizedNameRaw());
+		
+		wcextruder = new WireCoatingExtruder();
+		GameRegistry.registerBlock(wcextruder,wcextruder.getUnlocalizedNameRaw());
+		
+		//GameRegistry.registerBlock(,.getUnlocalizedNameRaw());
+		
+		
+		syndicationhub = new SyndicationHub();
+		GameRegistry.registerBlock(syndicationhub,syndicationhub.getUnlocalizedNameRaw());
+		
+		pipes_syndicationbus = new SyndicationBus();
+		GameRegistry.registerBlock(pipes_syndicationbus,pipes_syndicationbus.getUnlocalizedName());
+		
+		syndication_util_capacitor = new SyndicationCapacitor();
+		GameRegistry.registerBlock(syndication_util_capacitor,syndication_util_capacitor.getUnlocalizedName());
+		
+		syndication_emfgenerator = new SyndicationEMFGenerator();
+		GameRegistry.registerBlock(syndication_emfgenerator,syndication_emfgenerator.getUnlocalizedName());
+		
+		syndication_itemport = new SyndicationItemPort();
+		GameRegistry.registerBlock(syndication_itemport,syndication_itemport.getUnlocalizedName());
 		
 		//Ores
 		

@@ -4,6 +4,7 @@ import java.util.Map;
 
 import ru.itaros.chemlab.items.tools.vanilla.*;
 import ru.itaros.chemlab.loader.ItemLoader;
+import ru.itaros.chemlab.loader.TierLoader;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -18,17 +19,19 @@ public class VanillaTweaks {
 	private static boolean isIronTweaked=false;
 	
 	public static void tweakIron(){
-		//Preparing
-		ItemStack wroughtIronStack = new ItemStack(ItemLoader.wroughtiron);
-		
-		//Overriding vanilla smelting
-		Map vanilla = FurnaceRecipes.smelting().getSmeltingList();
-		ItemStack origin_iron = getOriginInMap(vanilla, Blocks.iron_ore);
-		vanilla.put(origin_iron, wroughtIronStack);
-		//Adding symmetrical recipe
-		FurnaceRecipes.smelting().func_151394_a(OreDictionary.getOres("crushedIron").get(0).copy(), wroughtIronStack, 0);
-		
-		isIronTweaked=true;
+		if(TierLoader.L0_WroughtIron.isEnabled()){
+			//Preparing
+			ItemStack wroughtIronStack = new ItemStack(ItemLoader.wroughtiron);
+			
+			//Overriding vanilla smelting
+			Map vanilla = FurnaceRecipes.smelting().getSmeltingList();
+			ItemStack origin_iron = getOriginInMap(vanilla, Blocks.iron_ore);
+			vanilla.put(origin_iron, wroughtIronStack);
+			//Adding symmetrical recipe
+			FurnaceRecipes.smelting().func_151394_a(OreDictionary.getOres("crushedIron").get(0).copy(), wroughtIronStack, 0);
+			
+			isIronTweaked=true;
+		}
 	}
 	
 	public static void createWroughtIronTools(){

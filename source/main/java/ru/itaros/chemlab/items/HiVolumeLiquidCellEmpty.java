@@ -1,15 +1,14 @@
 package ru.itaros.chemlab.items;
 
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
-import ru.itaros.chemlab.loader.HOEFluidLoader;
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
+import ru.itaros.chemlab.loader.HOEFluidLoader;
+import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
 
 public class HiVolumeLiquidCellEmpty extends Item {
 	public static final String EMPTY_TOKEN = "empty";

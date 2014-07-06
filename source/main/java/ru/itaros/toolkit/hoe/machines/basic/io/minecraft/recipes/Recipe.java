@@ -4,9 +4,11 @@ import net.minecraft.item.ItemStack;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackUtility;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public abstract class Recipe {
+	
 
 	private String name;
 	public String getName(){
@@ -42,6 +44,11 @@ public abstract class Recipe {
 	
 	public abstract void incrementProduction(HOEMachineCrafterData hoeMachineData);
 	
+	public void performProduction(HOEMachineCrafterData data){
+		consumeResources(data);
+		incrementProduction(data);
+	}
+	
 	
 	private String unlocalizedName="";
 	public Recipe setUnlocalizedName(String name){
@@ -54,6 +61,44 @@ public abstract class Recipe {
 		}
 		String r = LanguageRegistry.instance().getStringLocalization(unlocalizedName+".name");
 		if(r==""){return unlocalizedName;}else{return r;}
+	}
+
+	public int getSlotIdFor(ItemStack type, boolean ignoreMetadata) {
+		if(type==null){return -1;}
+		ItemStack[] stacks = getIncomingStricttypes();
+		for(int i = 0 ; i < stacks.length ; i++){
+			if(stacks[i]==null){continue;}
+			if(StackUtility.isItemEqual(type, stacks[i],ignoreMetadata)){
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	//Recipe indication
+
+	public void makeFinal() {
+		normalizedIn = new ItemStack[getIncomingSlots()];//getIncomingStricttypes().clone();
+		normalizedOut = new ItemStack[getOutcomingSlots()];//getOutcomingStricttypes().clone();
+		for(int i = 0 ; i < normalizedIn.length; i++){
+			normalizedIn[i]=getIncomingStricttypes()[i].copy();
+			normalizedIn[i].stackSize=0;
+		}
+		for(int i = 0 ; i < normalizedOut.length; i++){
+			normalizedOut[i]=getOutcomingStricttypes()[i].copy();
+			normalizedOut[i].stackSize=0;
+		}		
+	}	
+	
+	private ItemStack[] normalizedIn;
+	private ItemStack[] normalizedOut;	
+	
+	public ItemStack[] getNormalziedIncomingStricttypes() {
+		return normalizedIn;
+	}
+
+	public ItemStack[] getNormalziedOutcomingStricttypes() {
+		return normalizedOut;
 	}
 
 

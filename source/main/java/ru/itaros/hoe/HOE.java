@@ -7,10 +7,12 @@ import ru.itaros.hoe.proxy.HOEProxy;
 import ru.itaros.hoe.registries.HOEFluidRegistry;
 import ru.itaros.hoe.registries.HOEIORegistry;
 import ru.itaros.hoe.registries.HOERecipeRegistry;
-import ru.itaros.hoe.registries.vanilla.WorldGenRegistry;
 import ru.itaros.hoe.signatures.HOEExecutor;
 import ru.itaros.hoe.threading.HOEThreadController;
+import ru.itaros.hoe.threading.monitor.HOEKeepAliveMonitorInternalized;
 import ru.itaros.hoe.toolkit.worldgen.HOEWorldGenerator;
+import ru.itaros.hoe.vanilla.registries.WorldGenRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
@@ -54,23 +56,41 @@ public class HOE {
     	return hoeexec;
     }
     
+    public HOEKeepAliveMonitorInternalized getKeepAlive(){
+    	return keepalive;
+    }
+    
+    public Config getConfig(){
+    	return config;
+    }
+    
     //============MTA============
     private HOEFluidRegistry hoefluidregistry;
     private HOEIORegistry ioregistry;
     private HOERecipeRegistry reciperegistrry;
     
     private ContextDetector contextdetector;
+    private HOEKeepAliveMonitorInternalized keepalive;
     //===========================
     //============AHT============
     private HOEExecutor hoeexec;
     //===========================
     //============VMC============
     private WorldGenRegistry worldgenregistry;
+    private Config config;
     //===========================
+    
+    
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+    	config = new Config().loadConfig(event);
+    	
+    	if(config.threading_keepalive){
+    		keepalive = new HOEKeepAliveMonitorInternalized();
+    	}
+    	
     	hoeexec = new HOEExecutor();
     	
     	contextdetector = new ContextDetector();
@@ -86,9 +106,18 @@ public class HOE {
     	
     }    
     
+    HOETilePostLoadTickHandler postload_tickhandler;
+    public HOETilePostLoadTickHandler getTEPostLoadManager(){
+    	return postload_tickhandler;
+    }
+    
+    
     @EventHandler
     public void Init(FMLInitializationEvent event)
     {   
+    	postload_tickhandler = new HOETilePostLoadTickHandler();
+    	FMLCommonHandler.instance().bus().register(postload_tickhandler);
+    	
     	GameRegistry.registerWorldGenerator(new HOEWorldGenerator(), 100);
     }
     
@@ -96,6 +125,8 @@ public class HOE {
     @EventHandler
     public void serverInit(FMLServerAboutToStartEvent event)
     {
+    	postload_tickhandler.init();
+    	
     	contextdetector.requestContextData(event);
     	//Hack to load correct proxy	
     	//if(contextdetector.getContext()==FMLContext.DEDICATED || contextdetector.getContext()==FMLContext.INTEGRATED){

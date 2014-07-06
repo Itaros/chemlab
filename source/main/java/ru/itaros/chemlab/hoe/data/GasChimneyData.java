@@ -125,15 +125,25 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 	StackTransferTuple transferTuple = new StackTransferTuple();
 	
 	public ItemStack tryToPutIn(ItemStack source){
+		return tryToPutIn(source, null);
+	}
+
+	public ItemStack tryToPutIn(ItemStack source, ItemStack filter){
 		transferTuple.fill(inbound, source);
-		source=StackUtility.tryToPutIn(transferTuple);
+		source=StackUtility.tryToPutIn(transferTuple,false,null);
 		inbound=transferTuple.retr1();
+		this.markDirty();
 		return source;
 	}
 	public ItemStack tryToGetOut(ItemStack target){
+		return tryToGetOut(target, null);
+	}
+
+	public ItemStack tryToGetOut(ItemStack target, ItemStack filter){
 		transferTuple.fill(target, outbound);
-		target = StackUtility.tryToGetOut(transferTuple);
+		target = StackUtility.tryToGetOut(transferTuple,null);
 		outbound=StackUtility.verify(transferTuple.retr2());
+		this.markDirty();
 		return target;
 	}	
 	
@@ -165,7 +175,18 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 	}
 
 
-
+	//Synchromanager(visual inventory sync)
+	protected boolean isDirty=false;
+	@Override
+	public void markDirty() {
+		isDirty=true;
+	}
+	@Override
+	public boolean pollDirty() {
+		boolean cache = isDirty;
+		isDirty=false;
+		return cache;
+	}
 	
 	
 	

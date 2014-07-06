@@ -7,9 +7,9 @@ import net.minecraft.world.World;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.chemlab.minecraft.tileentity.ServiceBayTileEntity;
+import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
 import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.blocks.IOMachineBlock;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 
 public class ServiceBay extends IOMachineBlock {
 

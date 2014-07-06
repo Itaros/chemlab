@@ -9,17 +9,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
+import ru.itaros.chemlab.loader.ItemLoader;
+import ru.itaros.hoe.toolkit.data.descriptor.IHOEMultiInventoryMachine;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackTransferTuple;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackUtility;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionRecipe;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
+import ru.itaros.toolkit.hoe.machines.interfaces.ISynchroportItems;
 
-public class HOEMachineCrafterData extends HOEMachineData{
+public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiInventoryMachine, ISynchroportItems{
 	private int incoming_slots,outcoming_slots;
 	//ALIGNED DATA
-	private int[] incoming_depot;
-	private int[] outcoming_depot;
-	
-	private ItemStack[] incoming_stricttype;//HARDBIBNDED
-	private ItemStack[] outcoming_stricttype;//HARDBIBNDED	
+	private ItemStack[] inbound;
+	private ItemStack[] outbound;
 	
 	
 	public boolean isRecipeSet=false;	
@@ -55,16 +57,12 @@ public class HOEMachineCrafterData extends HOEMachineData{
 	protected void bindChildToParent(HOEMachineData parent){
 		super.bindChildToParent(parent);
 		HOEMachineCrafterData hmcd = (HOEMachineCrafterData)parent;
-		//Linking strict types. Believed to be Read-Only
-		this.incoming_stricttype=hmcd.incoming_stricttype;
-		this.outcoming_stricttype=hmcd.outcoming_stricttype;
-		//Mimicking structure
-		this.incoming_slots=hmcd.incoming_slots;
-		this.outcoming_slots=hmcd.outcoming_slots;
-		this.incoming_depot=new int[incoming_slots];
-		this.outcoming_depot=new int[outcoming_slots];
 		//Mimicking recipe
 		this.recipe=hmcd.recipe;
+		
+		//copying slot indexation
+		this.incoming_slots=hmcd.incoming_slots;
+		this.outcoming_slots=hmcd.outcoming_slots;
 	}
 	
 	
@@ -72,20 +70,18 @@ public class HOEMachineCrafterData extends HOEMachineData{
 	public void sync() {
 		super.sync();
 		HOEMachineCrafterData childd=(HOEMachineCrafterData) child;
-		childd.incoming_depot=incoming_depot;
-		childd.outcoming_depot=outcoming_depot;
+
+		childd.hasWork=hasWork;
 		
-		childd.incoming_stricttype=incoming_stricttype.clone();
-		childd.outcoming_stricttype=outcoming_stricttype.clone();
+		childd.inbound = StackUtility.syncItemStacks(childd.inbound, inbound);
+		childd.outbound = StackUtility.syncItemStacks(childd.outbound, outbound);
 		
 	}
 
 	@Override
 	protected void init(){
-		incoming_depot=new int[incoming_slots];
-		outcoming_depot=new int[outcoming_slots];
-		incoming_stricttype=new ItemStack[incoming_slots];
-		outcoming_stricttype=new ItemStack[outcoming_slots];
+		inbound=new ItemStack[incoming_slots];
+		outbound=new ItemStack[outcoming_slots];
 	}
 
 	public void setRecipe(Recipe recipe){
@@ -106,9 +102,6 @@ public class HOEMachineCrafterData extends HOEMachineData{
 				FixedConversionRecipe fcr = (FixedConversionRecipe)recipe;
 				ticksRequared=fcr.getTicksRequared();
 			}
-			
-			incoming_stricttype=recipe.getIncomingStricttypes();
-			outcoming_stricttype=recipe.getOutcomingStricttypes();
 		}else{
 			//TODO: Null recipe(recipe remover)
 		}
@@ -120,13 +113,9 @@ public class HOEMachineCrafterData extends HOEMachineData{
 	@Override
 	public void writeNBT(NBTTagCompound nbt) {
 		super.writeNBT(nbt);
-		//Slot allocators cfg
-		nbt.setInteger("incoming_slots", incoming_slots);	
-		nbt.setInteger("outcoming_slots", outcoming_slots);	
-
 		//Slots Itself
-		nbt.setIntArray("incoming_depot", incoming_depot);
-		nbt.setIntArray("outcoming_depot", outcoming_depot);
+		StackUtility.writeItemStacksToNBT(inbound, nbt, "initem");
+		StackUtility.writeItemStacksToNBT(outbound, nbt, "outitem");
 		//Types are configured by recipe to reduce network congestion
 		String reptoken = "";
 		if(recipe!=null){
@@ -137,12 +126,9 @@ public class HOEMachineCrafterData extends HOEMachineData{
 	@Override
 	public void readNBT(NBTTagCompound nbt) {
 		super.readNBT(nbt);
-		//Slot allocators cfg
-		incoming_slots=nbt.getInteger("incoming_slots");	
-		outcoming_slots=nbt.getInteger("outcoming_slots");	
 		//Slots Itself
-		incoming_depot=nbt.getIntArray("incoming_depot");
-		outcoming_depot=nbt.getIntArray("outcoming_depot");
+		inbound=StackUtility.readItemStacksFromNBT(inbound,nbt, "initem");
+		outbound=StackUtility.readItemStacksFromNBT(outbound,nbt, "outitem");
 		//Types are configured by recipe to reduce network congestion		
 		IHOERecipeRegistry repreg = Recipe.getRecipeRegistry();
 		String reptoken = nbt.getString("reptoken");
@@ -155,21 +141,6 @@ public class HOEMachineCrafterData extends HOEMachineData{
 	private void unfoldStricttypesByRecipe() {
 		applyRecipeParametrics(recipe);
 		if(recipe!=null){isRecipeSet=true;}else{isRecipeSet=false;}
-	}
-	public void incrementProduction() {
-		if(recipe==null){return;}
-		recipe.incrementProduction(this);
-	}
-	public boolean decrementResources() {
-		if(recipe==null){return false;}
-		//Here we check if it is possible to produce something with those available resources
-		if(recipe.checkResources(this) && HOEDataStateCheck()){
-			recipe.consumeResources(this);
-			HOEDataUpdateState();
-			return true;//There are enough resources and run is completed
-		}else{
-			return false;//Not enough resources
-		}
 	}
 	
 	
@@ -192,185 +163,181 @@ public class HOEMachineCrafterData extends HOEMachineData{
 		;
 	}
 	
+	
+	
+	protected boolean hasWork;
+	private int refreshSpin=0;
+	private static final int SPIN_THRESHOLD=20-1;
+	public boolean hasWork(){
+		if(hasWork){
+			return true;
+		}else{
+			refreshSpin++;
+			if(refreshSpin>SPIN_THRESHOLD){
+				hasWork=checkWork();
+				refreshSpin=0;
+			}
+			return false;
+		}
+	}	
+
+
+	public int inSize(){
+		return incoming_slots;
+	}
+	public int outSize(){
+		return outcoming_slots;
+	}	
+	public ItemStack get_in_withRecipe(int i){
+		if(!isSided || recipe==null){
+			//Normal Operation
+			return get_in(i);
+		}else{
+			ItemStack current = inbound[i];
+			if(current!=null){return current;}
+			//Try to show recipe
+			ItemStack[] stricts = recipe.getNormalziedIncomingStricttypes();
+			if(!(i<stricts.length)){
+				return null;
+			}else{
+				return stricts[i];
+			}
+		}		
+	}
+	public ItemStack get_out_withRecipe(int i){
+		if(!isSided || recipe==null){
+			//Normal Operation
+			return get_out(i);
+		}else{
+			ItemStack current = outbound[i];
+			if(current!=null){return current;}
+			//Try to show recipe
+			ItemStack[] stricts = recipe.getNormalziedOutcomingStricttypes();
+			if(!(i<stricts.length)){
+				return null;
+			}else{
+				return stricts[i];
+			}
+		}		
+	}	
+	public ItemStack get_in(int i){
+		return inbound[i];
+	}
+	public ItemStack get_out(int i){
+		return outbound[i];
+	}	
+	public IHOEMultiInventoryMachine set_in(int i, ItemStack stack){
+		 inbound[i]=stack;
+		 return this;
+	}
+	public IHOEMultiInventoryMachine set_out(int i, ItemStack stack){
+		outbound[i]=stack;
+		return this;
+	}
+	public ItemStack[] get_in(){
+		return inbound;
+	}
+	public ItemStack[] get_out(){
+		return outbound;
+	}	
+	
+	protected void reevaluateWork(){
+		hasWork=checkWork();
+	}
+	private boolean checkWork(){
+		if(recipe==null){return false;}//No work without recipe
+		
+		boolean isStorageFree = recipe.checkStorage(this);
+		boolean isResourcesAvail = recipe.checkResources(this);
+		
+		return isStorageFree & isResourcesAvail;
+	}	
+
+
+	int cycleid=0;
+	public void produce(boolean doReal) {
+		if(checkWork()){
+			
+			cycleid++;
+			
+			recipe.performProduction(this);
+			
+			reevaluateWork();
+			
+		}else{
+			reevaluateWork();
+		}
+	}	
+	
+	
 	public boolean checkStorage() {
 		//Checking storage capabilities
 		if(recipe==null){return false;}//No storage if there is no recipe
 		return recipe.checkStorage(this);
 	}
-
-	public boolean pushResource(ItemStack temp) {
-		if(temp==null){return false;}
-		for(int x = 0; x < incoming_stricttype.length; x++){
-			if(incoming_stricttype[x]==null){continue;}
-			if(incoming_depot[x]<=temp.getMaxStackSize()){
-				Item originType=incoming_stricttype[x].getItem();
-				Item sourceType=temp.getItem();
-				int originMeta = incoming_stricttype[x].getItemDamage();
-				int sourceMeta = temp.getItemDamage();
-				if(originType==sourceType && originMeta==sourceMeta){
-				//if(incoming_stricttype[x].getUnlocalizedName().equals(temp.getItem().getUnlocalizedName())){
-					
-					int diff=temp.getMaxStackSize()-incoming_depot[x];
-					if(diff==0){return false;}
-					//Can't extract more then available
-					if(temp.stackSize<diff){
-						diff=temp.stackSize;
-					}
-					incoming_depot[x]+=diff;
-					temp.stackSize-=diff;
-					return true;
-				}
-			}
-		}
-		
-		
-		return false;
-	}	
-	public ItemStack pullProduct(ItemStack outbound_synchro) {
-		Item reqtype=null;
-		int reqmeta=0;
-		int max=64;
-		if(outbound_synchro!=null){
-			reqtype=outbound_synchro.getItem();
-			reqmeta=outbound_synchro.getItemDamage();
-			max = 64-outbound_synchro.stackSize;
-			if(max<=0){return outbound_synchro;}
-		}
-		for(int x = 0; x < outcoming_stricttype.length; x++){
-			if(outcoming_stricttype[x]==null){continue;}
-			
-			if(outcoming_depot[x]>0){
-				ItemStack product = outbound_synchro;
-				if(product==null){
-					product = outcoming_stricttype[x].copy();product.stackSize=outcoming_depot[x];
-					outcoming_depot[x]-=product.stackSize;//Allowing RaceConditions!
-				}else{
-					
-					if((outcoming_stricttype[x].getItem()!=reqtype & outcoming_stricttype[x].getItemDamage()==reqmeta)){continue;}//Do not try to shift physical form of items, lol
-					
-					if(outcoming_depot[x]<=max){
-						max=outcoming_depot[x];
-					}else{
-						max=max;//LOL, dummy to remind me of something I already forgot
-					}
-					outcoming_depot[x]-=max;//Allowing RaceConditions!
-					product.stackSize+=max;
-				}
-				
-				return product;
-			}else{
-				//Nothing to pull
-				continue;
-				//return outbound_synchro;
-			}
-		}
-		//Nothing to pull from full assortment
-		return outbound_synchro;
-	}
-	
-	
-	//TODO: Pass originals to modify them for performance
-	public ItemStack getInboundRO() {
-		if(incoming_stricttype!=null && incoming_stricttype.length>0 && incoming_stricttype[0]!=null){
-			ItemStack rslt = incoming_stricttype[0].copy();rslt.stackSize=incoming_depot[0];
-			return rslt;
-		}else{
-			return null;
-		}
-	}
-	public ItemStack getOutboundRO() {
-		if(outcoming_stricttype!=null && outcoming_stricttype.length>0 && outcoming_stricttype[0]!=null){
-			ItemStack rslt = outcoming_stricttype[0].copy();rslt.stackSize=outcoming_depot[0];
-			return rslt;
-		}else{
-			return null;
-		}
-	}
-	public String getInboundAmount() {
-		if(incoming_depot!=null && incoming_depot.length>0){
-			return String.valueOf(incoming_depot[0]);
-		}else{
-			return "N/A";
-		}
-	}
-	public String getOutboundAmount() {
-		if(outcoming_depot!=null && outcoming_depot.length>0){
-			return String.valueOf(outcoming_depot[0]);
-		}else{
-			return "N/A";
-		}		
-	}
 	
 	//Storage
 	
-	public int getOutboundAmountByIndex(int index) {
-		if(index<outcoming_depot.length){
-			return outcoming_depot[index];
-		}else{
-			return 500;//INVALID INDEX TOCKEN
-		}
-	}
-	public int getInboundAmountByIndex(int index) {
-		if(index<incoming_depot.length){
-			return incoming_depot[index];
-		}else{
-			return -500;//INVALID INDEX TOCKEN
-		}		
-	}
-	public void decrementInboundAmountByIndex(int index, int amount) {
-		if(index<incoming_depot.length){
-			incoming_depot[index]-=amount;
-		}else{
-			//TODO: Exception?
-		}	
-	}
-	public void incrementOutboundAmountByIndex(int index, int amount) {
-		if(index<outcoming_depot.length){
-			outcoming_depot[index]+=amount;
-		}else{
-			//TODO: Exception?
-		}
-		
-	}
-	
-	public ItemStack getStricttypeByIndex(int injectorTypeOffset) {
-		if(injectorTypeOffset>=incoming_stricttype.length){
-			return null;
-		}else{
-			return incoming_stricttype[injectorTypeOffset];
-		}
-	}
-	
-	
-	
-	private boolean isReadyForCycle=false;
-	public void shutCycleOff(){
-		isReadyForCycle=false;
-	}
-	public boolean isReadyForCycle() {
-		if(isReadyForCycle){
-			return true;
-		}else{
-			if(recipe==null){return false;}
-			if(recipe.checkResources(this) && HOEDataStateCheck() && recipe.checkStorage(this)){
-				isReadyForCycle=true;
-			}else{
-				isReadyForCycle=false;
-			}
-			return isReadyForCycle;
-		}
-	}
 	public boolean evaluateHasItems() {
-		for(int i = 0 ; i<incoming_stricttype.length;i++){
-			if(incoming_depot[i]>0){return true;}
+		for(int i = 0 ; i<inbound.length;i++){
+			if(inbound[i]!=null && inbound[i].stackSize>0){return true;}
 		}
-		for(int i = 0 ; i<outcoming_stricttype.length;i++){
-			if(outcoming_depot[i]>0){return true;}
+		for(int i = 0 ; i<outbound.length;i++){
+			if(outbound[i]!=null && outbound[i].stackSize>0){return true;}
 		}		
 		return false;
 	}
+	
+	protected boolean ignoreInboundMetadata=false;
+	public void setIgnoreInboundMetadata(){
+		ignoreInboundMetadata=true;
+	}
+	
+	StackTransferTuple transferTuple = new StackTransferTuple();
+	private int outboundslot=0;
+	@Override
+	public ItemStack tryToPutIn(ItemStack source) {
+		return tryToPutIn(source, null);
+	}
+	@Override
+	public ItemStack tryToPutIn(ItemStack source, ItemStack filter) {
+		if(recipe==null){return source;}
+		int slot = recipe.getSlotIdFor(source,ignoreInboundMetadata);
+		if(slot==-1){return source;}
+		transferTuple.fill(inbound[slot], source);
+		source=StackUtility.tryToPutIn(transferTuple,ignoreInboundMetadata,filter);
+		inbound[slot]=transferTuple.retr1();
+		this.markDirty();
+		return source;
+	}
+	@Override
+	public ItemStack tryToGetOut(ItemStack target) {
+		return tryToGetOut(target, null);
+	}
+	@Override
+	public ItemStack tryToGetOut(ItemStack target, ItemStack filter) {
+		if(recipe==null){return target;}
+		if(outboundslot>=outbound.length){outboundslot=0;}
+		transferTuple.fill(target, outbound[outboundslot]);
+		target = StackUtility.tryToGetOut(transferTuple,filter);
+		outbound[outboundslot]=StackUtility.verify(transferTuple.retr2());
+		outboundslot++;
+		this.markDirty();
+		return target;
+	}
 
-
+	//Synchromanager(visual inventory sync)
+	protected boolean isDirty=false;
+	@Override
+	public void markDirty() {
+		isDirty=true;
+	}
+	@Override
+	public boolean pollDirty() {
+		boolean cache = isDirty;
+		isDirty=false;
+		return cache;
+	}
 
 	
 }

@@ -7,10 +7,11 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import ru.itaros.hoe.vanilla.tiles.MachineCrafterTileEntity;
+import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.CopierSlot;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ProgrammerSlot;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ReadonlySlot;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineCrafterTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.MachineTileEntity;
 
 public abstract class HOEContainer extends Container {
 
@@ -50,7 +51,38 @@ public abstract class HOEContainer extends Container {
 	
 	
 	
-    protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
+    @Override
+	public ItemStack slotClick(int slotid, int button, int par3,
+			EntityPlayer player) {
+    	Slot s = slotid>=0 ? (Slot)this.inventorySlots.get(slotid) : null;
+    	if(s instanceof CopierSlot){
+    		return modifyCopierSlot(s, button, player);
+    	}else{
+    		return super.slotClick(slotid, button, par3, player);
+    	}	
+	}
+    
+    
+	private ItemStack modifyCopierSlot(Slot s, int button, EntityPlayer player) {
+		ItemStack heldItem = player.inventory.getItemStack();
+		if(s==null){return heldItem;}
+		
+		ItemStack copy;
+		if(heldItem==null){
+			copy=null;
+		}else{
+			copy=heldItem.copy();
+			copy.stackSize=s.getSlotStackLimit();
+		}
+		
+		s.putStack(copy);
+		
+		return heldItem;
+	}
+	
+	
+	
+	protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
         for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 9; j++) {
                         addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,

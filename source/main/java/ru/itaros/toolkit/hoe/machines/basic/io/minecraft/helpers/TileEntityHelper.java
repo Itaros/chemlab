@@ -13,7 +13,7 @@ public class TileEntityHelper {
 		if(hmd!=null){
 			if(hmd instanceof ISynchroportItems){
 				ISynchroportItems synchroport = (ISynchroportItems)hmd;
-				item=synchroport.tryToPutIn(item);
+				item=synchroport.tryToPutIn(item, null);
 			}
 		}
 		return item;
@@ -23,7 +23,7 @@ public class TileEntityHelper {
 		if(hmd!=null){
 			if(hmd instanceof ISynchroportItems){
 				ISynchroportItems synchroport = (ISynchroportItems)hmd;
-				item=synchroport.tryToGetOut(item);
+				item=synchroport.tryToGetOut(item, null);
 			}
 		}
 		return item;

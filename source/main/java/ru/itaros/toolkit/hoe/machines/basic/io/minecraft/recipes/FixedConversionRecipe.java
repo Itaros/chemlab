@@ -3,6 +3,7 @@ package ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes;
 import net.minecraft.item.ItemStack;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackUtility;
 
 public class FixedConversionRecipe extends Recipe {
 	
@@ -24,7 +25,7 @@ public class FixedConversionRecipe extends Recipe {
 	){
 		this(timeReq,powerReq,gridInput,gridOutput,helperGenerateName(gridInput,gridOutput));
 	}
-	private static String helperGenerateName(
+	protected static String helperGenerateName(
 			ItemStack[] in,
 			ItemStack[] out
 	){
@@ -89,9 +90,12 @@ public class FixedConversionRecipe extends Recipe {
 	@Override
 	public boolean checkStorage(HOEMachineCrafterData data) {
 		for(int i = 0; i<gridOutput.length;i++){
+			if(gridOutput[i]==null){continue;}
 			int gridOvershoot = gridOutput[i].stackSize;
 			int maxstack = gridOutput[i].getMaxStackSize();
-			int indexedAmount = data.getOutboundAmountByIndex(i);
+			ItemStack comparable = data.get_out(i);
+			if(comparable==null){continue;}//free
+			int indexedAmount = comparable.stackSize;
 			if(indexedAmount+gridOvershoot>maxstack){return false;}
 		}
 		return true;
@@ -100,20 +104,40 @@ public class FixedConversionRecipe extends Recipe {
 	public boolean checkResources(HOEMachineCrafterData data) {
 		for(int i = 0; i<gridInput.length;i++){
 			int gridReq = gridInput[i].stackSize;
-			int indexedAmount = data.getInboundAmountByIndex(i);
+			ItemStack comparable = data.get_in(i);
+			if(comparable==null){return false;}//no res
+			int indexedAmount = comparable.stackSize;
 			if(indexedAmount-gridReq<0){
 				return false;
 			}
 		}
 		return true;
 	}
+	
+	
+	
+	
 	@Override
 	public void consumeResources(HOEMachineCrafterData data) {
 		for(int i = 0; i<gridInput.length;i++){
-			int gridReq = gridInput[i].stackSize;
-			 data.decrementInboundAmountByIndex(i,gridReq);
+			int gridReq = gridInput[i].stackSize;	
+			data.set_in(i,StackUtility.decrementStack(data.get_in(i),gridReq));
 		}
 	}
+	
+	@Override
+	public void incrementProduction(HOEMachineCrafterData data) {
+		for(int i = 0; i<gridOutput.length;i++){
+			int gridSurp = gridOutput[i].stackSize;
+			ItemStack stack = data.get_out(i);
+			if(stack==null){
+				stack=ItemStack.copyItemStack(gridOutput[i]);
+			}else{
+				stack = StackUtility.incrementStack(stack,gridSurp);
+			}
+			data.set_out(i,stack);
+		}
+	}	
 	
 	@Override
 	public boolean tryToConsumeEnergy(HOEMachineData hoeMachineData) {
@@ -125,13 +149,7 @@ public class FixedConversionRecipe extends Recipe {
 		}
 	}	
 	
-	@Override
-	public void incrementProduction(HOEMachineCrafterData data) {
-		for(int i = 0; i<gridOutput.length;i++){
-			int gridSurp = gridOutput[i].stackSize;
-			 data.incrementOutboundAmountByIndex(i,gridSurp);
-		}
-	}
+
 
 
 }
