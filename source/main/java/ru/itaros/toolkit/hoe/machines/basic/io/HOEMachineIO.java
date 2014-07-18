@@ -1,5 +1,6 @@
 package ru.itaros.toolkit.hoe.machines.basic.io;
 
+import net.minecraft.block.Block;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.api.hoe.internal.HOEIO;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
@@ -28,7 +29,16 @@ public abstract class HOEMachineIO extends HOEIO {
 	}
 
 
-
+	private Block hostBlock;
+	public HOEMachineIO setHostBlock(Block block){
+		hostBlock=block;
+		return this;
+	}
+	public Block getHostBlock(){
+		return hostBlock;
+	}
+	
+	
 	protected abstract void produce(HOEData data, boolean doReal);
 
 }

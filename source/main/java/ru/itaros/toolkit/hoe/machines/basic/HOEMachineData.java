@@ -73,7 +73,9 @@ public class HOEMachineData extends HOEData {
 	protected void init(){}
 
 	public void sync(){
-		if(child==null){throw new HOEWrongSyncDirection();}
+		if(child==null){
+			throw new HOEWrongSyncDirection();
+			}
 		
 		
 		HOEMachineData childd=(HOEMachineData) child;

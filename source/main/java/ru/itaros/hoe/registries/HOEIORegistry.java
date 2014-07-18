@@ -28,5 +28,12 @@ public final class HOEIORegistry implements IIORegistry {
 	public HOEIO get(String fullname) {
 		return dict.get(fullname);
 	}
+	
+	@Override
+	public void claimOwnership() {
+		for(HOEIO io:dict.values()){
+			io.claimOwnership();
+		}
+	}
 
 }

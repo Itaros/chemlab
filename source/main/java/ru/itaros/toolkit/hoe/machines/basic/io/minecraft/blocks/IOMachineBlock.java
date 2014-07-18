@@ -84,50 +84,10 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 		}else{
 			//server
 			world.markBlockForUpdate(x, y, z);
-			
-			System.out.println("ISEN: "+((MachineTileEntity)world.getTileEntity(x, y, z)).getServerData().isSkipEventNotified());
 		}	
 		return true;
 	}
-	
-	
-	
-	
-	//Sync thingie
-	@Override
-	public void updateTick(World world, int x, int y,
-			int z, Random random) {
 		
-		
-		TileEntity te  =world.getTileEntity(x, y, z);
-		if(te instanceof IHOEInventorySyncable){
-			IHOEInventorySyncable me = (IHOEInventorySyncable)te;
-			me.pullFromHOE();
-			me.pushToHOE();
-			me.sync();
-		}
-		if(te instanceof MachineTileEntity){
-			HOEMachineData data = ((MachineTileEntity) te).getServerData();
-			if(data != null && data.isPerformingBlockUpdates()){
-				//If it is syndicated it tries to relieve load from tickmanager at all
-				world.scheduleBlockUpdate(x, y, z, this, this.tickRate(world));
-			}
-		}
-		
-		
-	}
-
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
-    {
-            par1World.scheduleBlockUpdate(par2, par3, par4, this, this.tickRate(par1World));
-    }	
-    
-	
-	
-	@Override
-	public int tickRate(World p_149738_1_) {
-		return 20*5;
-	}
 	
 
 	@Override

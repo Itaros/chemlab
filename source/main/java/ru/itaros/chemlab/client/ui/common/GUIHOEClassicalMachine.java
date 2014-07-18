@@ -19,6 +19,7 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.hoe.vanilla.tiles.MachineCrafterTileEntity;
 import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
@@ -42,7 +43,8 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 	protected int y;
 	@Override
 	public void initGui() {
-		
+		HOEMachineData data = tile.getClientData();
+		detectOngoingSync(data);
 		
 		background = new ResourceLocation("chemlab",getUITexturePath());
 		
@@ -76,17 +78,42 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 	}	
 	
 
+	private boolean isHOESyncing=false;
+	protected boolean isHOESyncing(){
+		return isHOESyncing;
+	}
+	protected void detectOngoingSync(HOEData clientData){
+		if(isHOESyncing){
+			if(clientData!=null){
+				isHOESyncing=false;
+				initGui();
+				return;
+			}
+		}
+		if(clientData==null){
+			isHOESyncing=true;
+			return;
+		}
+	}
 
+	
+	
+	@Override
+	public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_) {
+		HOEMachineData data = tile.getClientData();
+		detectOngoingSync(data);
+		if(isHOESyncing){
+			fontRendererObj.drawString("Machine is syncing with HOE service...", 8, 6, 0xFFFFFF);
+			return;
+		}
+		super.drawScreen(p_73863_1_, p_73863_2_, p_73863_3_);
+	}
 
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2,
 			int var3) {
 				HOEMachineData data = tile.getClientData();
-				if(data==null){
-					fontRendererObj.drawString("Machine is syncing with HOE service...", 8, 6, 0xFFFFFF);
-					return;
-				}
 				
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 				this.mc.renderEngine.bindTexture(background);

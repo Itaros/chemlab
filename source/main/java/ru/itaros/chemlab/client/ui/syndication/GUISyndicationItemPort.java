@@ -36,6 +36,7 @@ public class GUISyndicationItemPort extends GUIHOEClassicalMachine {
 	@Override
 	public void initGui() {
 		super.initGui();
+		if(isHOESyncing()){return;}
 		
 		setFilter = new GuiButton(0,x+135-2, y+60, (169-131),20, "SET");
 		this.buttonList.add(setFilter);
@@ -64,7 +65,9 @@ public class GUISyndicationItemPort extends GUIHOEClassicalMachine {
 	}
 	private void refreshSwitchModeButton(){
 		SyndicationItemPortData data = (SyndicationItemPortData)tile.getClientData();
-		switchMode.displayString=data.getSOM().getAlias();
+		if(data!=null){
+			switchMode.displayString=data.getSOM().getAlias();
+		}
 	}
 	
 	

@@ -50,4 +50,7 @@ public abstract class HOEIO {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public void claimOwnership() {}
+	
 }

@@ -29,7 +29,7 @@ public class HOEAdminCommands extends CommandBase {
 	public void processCommand(ICommandSender usr, String[] args) {
 		if(usr instanceof EntityPlayerMP){
 			EntityPlayer player = (EntityPlayerMP)usr;
-			if(!MinecraftServer.getServer().getConfigurationManager().isPlayerOpped(usr.getCommandSenderName())){
+			if(!MinecraftServer.getServer().getConfigurationManager().func_152596_g(((EntityPlayerMP) usr).getGameProfile())){
 				sendMessage(player,"You have no access to HOE MTA state machine!");
 				return;
 			}

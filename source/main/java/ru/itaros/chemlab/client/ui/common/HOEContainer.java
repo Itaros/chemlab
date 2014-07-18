@@ -7,9 +7,11 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import ru.itaros.chemlab.minecraft.achievements.ChemLabAchievements;
 import ru.itaros.hoe.vanilla.tiles.MachineCrafterTileEntity;
 import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.CopierSlot;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.MachineSlot;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ProgrammerSlot;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ReadonlySlot;
 
@@ -25,7 +27,7 @@ public abstract class HOEContainer extends Container {
 	
 	ProgrammerSlot psio;
 	
-	protected Slot INBOUND,OUTBOUND;
+	protected MachineSlot INBOUND,OUTBOUND;
 	
 	protected MachineTileEntity tile;
 	
@@ -58,8 +60,15 @@ public abstract class HOEContainer extends Container {
     	if(s instanceof CopierSlot){
     		return modifyCopierSlot(s, button, player);
     	}else{
+	    	if(s!=null){
+	    		//Achievements
+	    		ItemStack poken = s.getStack();
+	    		ChemLabAchievements.testForItem(player,poken,s);
+	    	}    		
     		return super.slotClick(slotid, button, par3, player);
     	}	
+    	
+
 	}
     
     

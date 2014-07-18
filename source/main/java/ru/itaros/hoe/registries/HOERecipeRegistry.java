@@ -31,5 +31,10 @@ public class HOERecipeRegistry implements IHOERecipeRegistry {
 			return null;
 		}
 	}
+	
+	@Override
+	public Recipe[] dumpAll() {
+		return recipes.values().toArray(new Recipe[recipes.size()]);
+	}
 
 }

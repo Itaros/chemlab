@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ru.itaros.chemlab.blocks.MachineCasing;
+import ru.itaros.chemlab.blocks.MachineItemBlock;
 import ru.itaros.chemlab.blocks.machines.*;
 import ru.itaros.chemlab.blocks.machines.syndication.*;
 import ru.itaros.chemlab.blocks.ore.AsbestosMineral;
@@ -67,94 +68,94 @@ public class BlockLoader {
 		
 		//Machines
 		biogrinder = new Biogrinder();
-		GameRegistry.registerBlock(biogrinder ,biogrinder.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(biogrinder ,MachineItemBlock.class, biogrinder.getUnlocalizedNameRaw());
 		
 		centriextractor = new CentrifugalExtractor();
-		GameRegistry.registerBlock(centriextractor ,centriextractor.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(centriextractor ,MachineItemBlock.class, centriextractor.getUnlocalizedNameRaw());
 		
 		washer = new Washer();
-		GameRegistry.registerBlock(washer ,washer.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(washer ,MachineItemBlock.class, washer.getUnlocalizedNameRaw());
 		
 		impregnator = new Impregnator();
-		GameRegistry.registerBlock(impregnator ,impregnator.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(impregnator ,MachineItemBlock.class, impregnator.getUnlocalizedNameRaw());
 			
 		press = new Press();
-		GameRegistry.registerBlock(press ,press.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(press ,MachineItemBlock.class, press.getUnlocalizedNameRaw());
 			
 		steamboiler = new SteamBoiler();
-		GameRegistry.registerBlock(steamboiler,steamboiler.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(steamboiler,MachineItemBlock.class, steamboiler.getUnlocalizedNameRaw());
 		
 		steamexplosionunit = new SteamExplosionUnit();
-		GameRegistry.registerBlock(steamexplosionunit,steamexplosionunit.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(steamexplosionunit,MachineItemBlock.class, steamexplosionunit.getUnlocalizedNameRaw());
 		
 		crusher = new Crusher();
-		GameRegistry.registerBlock(crusher,crusher.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(crusher,MachineItemBlock.class, crusher.getUnlocalizedNameRaw());
 		
 		diaphragmalelectrolyzer = new DiaphragmalElectrolyzer();
-		GameRegistry.registerBlock(diaphragmalelectrolyzer,diaphragmalelectrolyzer.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(diaphragmalelectrolyzer,MachineItemBlock.class, diaphragmalelectrolyzer.getUnlocalizedNameRaw());
 		
 		furnace = new HiTFurnace();
-		GameRegistry.registerBlock(furnace, furnace.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(furnace, MachineItemBlock.class, furnace.getUnlocalizedNameRaw());
 		
 		aircollector = new AirCollector();
-		GameRegistry.registerBlock(aircollector,aircollector.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(aircollector,MachineItemBlock.class, aircollector.getUnlocalizedNameRaw());
 		
 		fluidcompressor = new FluidCompressor();
-		GameRegistry.registerBlock(fluidcompressor,fluidcompressor.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(fluidcompressor,MachineItemBlock.class, fluidcompressor.getUnlocalizedNameRaw());
 		
 		turboexpander= new Turboexpander();
-		GameRegistry.registerBlock(turboexpander, turboexpander.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(turboexpander, MachineItemBlock.class, turboexpander.getUnlocalizedNameRaw());
 		
 		evaporationunit = new EvaporationUnit();
-		GameRegistry.registerBlock(evaporationunit, evaporationunit.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(evaporationunit, MachineItemBlock.class, evaporationunit.getUnlocalizedNameRaw());
 		
 		cattank = new CatalyticTank();
-		GameRegistry.registerBlock(cattank,cattank.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(cattank,MachineItemBlock.class, cattank.getUnlocalizedNameRaw());
 		
 		hiresistmixer = new HiResistantMixer();
-		GameRegistry.registerBlock(hiresistmixer, hiresistmixer.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(hiresistmixer, MachineItemBlock.class, hiresistmixer.getUnlocalizedNameRaw());
 		
 		servicebay = new ServiceBay();
-		GameRegistry.registerBlock(servicebay, servicebay.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(servicebay, MachineItemBlock.class, servicebay.getUnlocalizedNameRaw());
 		
 		hvlcfiller = new HVLCFiller();
-		GameRegistry.registerBlock(hvlcfiller,hvlcfiller.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(hvlcfiller,MachineItemBlock.class, hvlcfiller.getUnlocalizedNameRaw());
 		
 		gaschimney = new GasChimney();
-		GameRegistry.registerBlock(gaschimney,gaschimney.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(gaschimney,MachineItemBlock.class, gaschimney.getUnlocalizedNameRaw());
 		
 		mixer = new Mixer();
-		GameRegistry.registerBlock(mixer,mixer.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(mixer,MachineItemBlock.class, mixer.getUnlocalizedNameRaw());
 		
 		automaticdrawplate = new AutomaticDrawplate();
-		GameRegistry.registerBlock(automaticdrawplate,automaticdrawplate.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(automaticdrawplate,MachineItemBlock.class, automaticdrawplate.getUnlocalizedNameRaw());
 		
 		quencher = new QuenchingChamber();
-		GameRegistry.registerBlock(quencher,quencher.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(quencher,MachineItemBlock.class, quencher.getUnlocalizedNameRaw());
 		
 		metformer = new MetalFormationMachine();
-		GameRegistry.registerBlock(metformer,metformer.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(metformer,MachineItemBlock.class, metformer.getUnlocalizedNameRaw());
 		
 		wcextruder = new WireCoatingExtruder();
-		GameRegistry.registerBlock(wcextruder,wcextruder.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(wcextruder,MachineItemBlock.class, wcextruder.getUnlocalizedNameRaw());
 		
 		//GameRegistry.registerBlock(,.getUnlocalizedNameRaw());
 		
 		
 		syndicationhub = new SyndicationHub();
-		GameRegistry.registerBlock(syndicationhub,syndicationhub.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(syndicationhub,MachineItemBlock.class, syndicationhub.getUnlocalizedNameRaw());
 		
 		pipes_syndicationbus = new SyndicationBus();
 		GameRegistry.registerBlock(pipes_syndicationbus,pipes_syndicationbus.getUnlocalizedName());
 		
 		syndication_util_capacitor = new SyndicationCapacitor();
-		GameRegistry.registerBlock(syndication_util_capacitor,syndication_util_capacitor.getUnlocalizedName());
+		GameRegistry.registerBlock(syndication_util_capacitor,MachineItemBlock.class, syndication_util_capacitor.getUnlocalizedName());
 		
 		syndication_emfgenerator = new SyndicationEMFGenerator();
-		GameRegistry.registerBlock(syndication_emfgenerator,syndication_emfgenerator.getUnlocalizedName());
+		GameRegistry.registerBlock(syndication_emfgenerator,MachineItemBlock.class, syndication_emfgenerator.getUnlocalizedName());
 		
 		syndication_itemport = new SyndicationItemPort();
-		GameRegistry.registerBlock(syndication_itemport,syndication_itemport.getUnlocalizedName());
+		GameRegistry.registerBlock(syndication_itemport,MachineItemBlock.class, syndication_itemport.getUnlocalizedName());
 		
 		//Ores
 		

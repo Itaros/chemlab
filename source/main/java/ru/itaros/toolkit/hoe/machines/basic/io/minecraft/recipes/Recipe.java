@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackUtility;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -101,6 +102,19 @@ public abstract class Recipe {
 		return normalizedOut;
 	}
 
+	
+	private HOEMachineCrafterIO owner;
+	public void claim(HOEMachineCrafterIO owner) {
+		if(this.owner!=null && this.owner==owner){
+			System.out.println("("+this.owner.getClass().getSimpleName()+")HOEIO RECIPE OWNERSHIP CONFLICT: ");
+		}
+		this.owner=owner;
+		System.out.println(owner.getClass().getSimpleName()+" took ownership over "+this.name);
+	}
+	public HOEMachineCrafterIO getOwnerIO(){
+		return owner;
+	}
+	
 
 	
 }

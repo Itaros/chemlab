@@ -110,6 +110,10 @@ public class HOE {
     public HOETilePostLoadTickHandler getTEPostLoadManager(){
     	return postload_tickhandler;
     }
+    HOESynchroportOperationsTickHandler synchroop_tickhandler;
+    public HOESynchroportOperationsTickHandler getTESynchroOpManager(){
+    	return  synchroop_tickhandler;
+    }
     
     
     @EventHandler
@@ -117,6 +121,9 @@ public class HOE {
     {   
     	postload_tickhandler = new HOETilePostLoadTickHandler();
     	FMLCommonHandler.instance().bus().register(postload_tickhandler);
+    	
+    	synchroop_tickhandler = new HOESynchroportOperationsTickHandler();
+    	FMLCommonHandler.instance().bus().register(synchroop_tickhandler);
     	
     	GameRegistry.registerWorldGenerator(new HOEWorldGenerator(), 100);
     }
@@ -126,6 +133,7 @@ public class HOE {
     public void serverInit(FMLServerAboutToStartEvent event)
     {
     	postload_tickhandler.init();
+    	synchroop_tickhandler.init();
     	
     	contextdetector.requestContextData(event);
     	//Hack to load correct proxy	

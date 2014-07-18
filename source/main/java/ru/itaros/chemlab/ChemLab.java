@@ -3,6 +3,7 @@ package ru.itaros.chemlab;
 import java.util.EnumMap;
 
 import net.minecraftforge.common.MinecraftForge;
+import ru.itaros.api.hoe.internal.HOEIO;
 import ru.itaros.chemlab.client.ui.common.GUIHandler;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.chemlab.events.SyndicationSystemPipingProtection;
@@ -15,6 +16,7 @@ import ru.itaros.chemlab.loader.RecipesLoader;
 import ru.itaros.chemlab.loader.TierLoader;
 import ru.itaros.chemlab.loader.recipes.optional.VanillaTweaks;
 import ru.itaros.chemlab.loader.tileentity.TileEntityLoader;
+import ru.itaros.chemlab.minecraft.achievements.ChemLabAchievements;
 import ru.itaros.chemlab.network.ChemLabChannel;
 import ru.itaros.chemlab.network.IPacketCodecDescriptor;
 import ru.itaros.chemlab.proxy.Proxy;
@@ -46,7 +48,7 @@ public class ChemLab
     public static final String MODID = "chemlab";
     public static final String VERSION = "2.x";
     public static final String getPublicVersionNotation(){
-    	return "PR-2.02";
+    	return "PR-2.03";
     }
     public static final String getMCVersionNotation(){
     	return "1.7.2";
@@ -106,6 +108,9 @@ public class ChemLab
 		
 		//Block Breaking Events
 		MinecraftForge.EVENT_BUS.register(new SyndicationSystemPipingProtection());
+		
+		//Achievements
+		ChemLabAchievements.load();
     	
     }     
     @EventHandler
@@ -119,6 +124,7 @@ public class ChemLab
     public void postInit(FMLPostInitializationEvent event)
     {
 		RecipesLoader.load();
+		HOEIO.getIORegistry().claimOwnership();
 		
 		new GUIHandler();
     }   

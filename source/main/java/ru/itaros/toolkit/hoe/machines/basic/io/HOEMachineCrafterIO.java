@@ -2,6 +2,7 @@ package ru.itaros.toolkit.hoe.machines.basic.io;
 
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
 
 
@@ -36,5 +37,17 @@ public abstract class HOEMachineCrafterIO extends HOEMachineIO{
 			return false;
 		}
 	}
+
+	@Override
+	public void claimOwnership() {
+		super.claimOwnership();
+		
+		for(Recipe r:getRecipesCollection().getRecipes()){
+			r.claim(this);
+		}
+	}
+	
+	
+	
 	
 }

@@ -33,7 +33,7 @@ public class QuenchingChamberRecipes {
 		
 			
 		recipes = new RecipesCollection(quench_wire_wrought,quench_wire_iron);
-		
+		recipes.register();
 		
 	}
 	

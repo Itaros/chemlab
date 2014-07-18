@@ -7,6 +7,8 @@ import net.minecraft.inventory.Slot;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.client.ui.common.HOEContainer;
 import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.HOESlotType;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.MachineSlot;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ReadonlySlot;
 
 public class HVLCFillerContainer extends HOEContainer {
@@ -31,8 +33,8 @@ public class HVLCFillerContainer extends HOEContainer {
 
 	@Override
 	public void bindSlots() {
-		INBOUND=new Slot((IInventory) tile,0,17,17);
-		OUTBOUND=new Slot((IInventory) tile,1,17,54);
+		INBOUND=new MachineSlot((IInventory) tile,0,17,17,HOESlotType.INPUT);
+		OUTBOUND=new MachineSlot((IInventory) tile,1,17,54,HOESlotType.OUTPUT);
 		
 		addSlotToContainer(INBOUND);//INBOUND
 		addSlotToContainer(OUTBOUND);//OUTBOUND

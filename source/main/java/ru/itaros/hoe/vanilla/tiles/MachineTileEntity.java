@@ -1,7 +1,5 @@
 package ru.itaros.hoe.vanilla.tiles;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,6 +23,7 @@ import ru.itaros.hoe.data.utils.HOEDataFingerprint;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
+import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.IHOEInventorySyncable;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.ISecured;
 import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.TileEntitySecurityTracker;
 import buildcraft.api.power.IPowerReceptor;
@@ -154,6 +153,9 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 	public void onPostLoad(){
 		if(!waitsForPostload){return;}
 		waitsForPostload=false;
+		isHOEAssumesLoaded=true;
+		
+		HOE.getInstance().getTESynchroOpManager().register(this);
 		
 		fingerprint = new HOEDataFingerprint(this);
 		
@@ -311,6 +313,7 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 	
 	@Override
 	public void onChunkUnload() {
+		isHOEAssumesLoaded=false;
 		if(this.worldObj!=null && !this.worldObj.isRemote){
 			if(HOE.getInstance().getConfig().threading_keepalive){
 				HOE.getInstance().getKeepAlive().onUnloadCatch(this);;
@@ -435,6 +438,22 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 	public void enforceBlockUpdate() {
 		Block b = this.worldObj.getBlock(xCoord, yCoord, zCoord);
 		b.updateTick(worldObj, xCoord, yCoord, zCoord, null);
+	}
+	
+	
+	public void onSynchroOperationsUpdate(){
+		if(this instanceof IHOEInventorySyncable){
+			IHOEInventorySyncable me = (IHOEInventorySyncable)this;
+			me.pullFromHOE();
+			me.pushToHOE();
+			me.sync();
+		}	
+	}	
+	
+	
+	private boolean isHOEAssumesLoaded=true;
+	public boolean isHOEAssumesLoaded(){
+		return isHOEAssumesLoaded;
 	}
 	
 }

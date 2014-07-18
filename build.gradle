@@ -17,16 +17,17 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.2-pr-2.02"
+version = "1.7.10-pr-2.03"
 group= "ru.itaros.chemlab" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "ChemLab"
 
 dependencies {
-    compile 'com.mod-buildcraft:buildcraft:6.0.16:dev'
+    compile 'com.mod-buildcraft:buildcraft:6.0.17:dev'
+	compile files('mods/NotEnoughItems-1.7.10-1.0.2.15-dev.jar')
 }
 
 minecraft {
-    version = "1.7.2-10.12.1.1079"
+    version = "1.7.10-10.13.0.1187"
     assetDir = "eclipse/assets"
 }
 

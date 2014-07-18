@@ -2,8 +2,11 @@ package ru.itaros.chemlab.blocks.ore;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
 import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
+import ru.itaros.chemlab.minecraft.achievements.ChemLabAchievements;
 
 public class OreMetal extends Block {
 
@@ -19,6 +22,17 @@ public class OreMetal extends Block {
 		this.setHarvestLevel("pickaxe", 1);
 		
 	}
+
+
+	@Override
+	public void onBlockHarvested(World world, int p_149681_2_,
+			int p_149681_3_, int p_149681_4_, int p_149681_5_,
+			EntityPlayer player) {
+		ChemLabAchievements.checkOre(player, this);
+		super.onBlockHarvested(world, p_149681_2_, p_149681_3_, p_149681_4_,
+				p_149681_5_, player);
+	}
+	
 	
 	
 }

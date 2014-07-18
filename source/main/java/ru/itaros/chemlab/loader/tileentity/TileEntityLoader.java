@@ -27,6 +27,7 @@ import ru.itaros.chemlab.hoe.special.HVLCFillerIO;
 import ru.itaros.chemlab.hoe.syndication.SyndicationEMFGeneratorIO;
 import ru.itaros.chemlab.hoe.syndication.SyndicationHubIO;
 import ru.itaros.chemlab.hoe.syndication.SyndicationItemPortIO;
+import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.chemlab.minecraft.tileentity.*;
 import ru.itaros.chemlab.minecraft.tileentity.syndication.*;
 import ru.itaros.toolkit.hoe.io.IOCollectionHelper;
@@ -36,33 +37,33 @@ public class TileEntityLoader {
 
 	public static IOCollectionHelper load(){
 		IOCollectionHelper iocollection = new IOCollectionHelper(
-    			new BiogrinderIO(),
-    			new CentrifugalExtractorIO(),
-    			new WasherIO(),
-    			new ImpregnatorIO(),
-    			new PressIO(),
-    			new SteamBoilerIO(),
-    			new SteamExplosionUnitIO(),
-    			new CrusherIO(),
-    			new DiaphragmalElectrolyzerIO(),
-    			new HiTFurnaceIO(),
-    			new AirCollectorIO(),
-    			new FluidCompressorIO(),
-    			new TurboexpanderIO(),
-    			new EvaporationUnitIO(),
-    			new CatalyticTankIO(),
-    			new HiResistantMixerIO(),
-    			new ServiceBayIO(),
-    			new HVLCFillerIO(),
-    			new GasChimneyIO(),
-    			new SyndicationHubIO(),
-    			new SyndicationEMFGeneratorIO(),
-    			new SyndicationItemPortIO(),
-    			new MixerIO(),
-    			new AutomaticDrawplateIO(),
-    			new QuenchingChamberIO(),
-    			new MetalFormationMachineIO(),
-    			new WireCoatingExtruderIO()
+    			new BiogrinderIO().setHostBlock(BlockLoader.biogrinder),
+    			new CentrifugalExtractorIO().setHostBlock(BlockLoader.centriextractor),
+    			new WasherIO().setHostBlock(BlockLoader.washer),
+    			new ImpregnatorIO().setHostBlock(BlockLoader.impregnator),
+    			new PressIO().setHostBlock(BlockLoader.press),
+    			new SteamBoilerIO().setHostBlock(BlockLoader.steamboiler),
+    			new SteamExplosionUnitIO().setHostBlock(BlockLoader.steamexplosionunit),
+    			new CrusherIO().setHostBlock(BlockLoader.crusher),
+    			new DiaphragmalElectrolyzerIO().setHostBlock(BlockLoader.diaphragmalelectrolyzer),
+    			new HiTFurnaceIO().setHostBlock(BlockLoader.furnace),
+    			new AirCollectorIO().setHostBlock(BlockLoader.aircollector),
+    			new FluidCompressorIO().setHostBlock(BlockLoader.fluidcompressor),
+    			new TurboexpanderIO().setHostBlock(BlockLoader.turboexpander),
+    			new EvaporationUnitIO().setHostBlock(BlockLoader.evaporationunit),
+    			new CatalyticTankIO().setHostBlock(BlockLoader.cattank),
+    			new HiResistantMixerIO().setHostBlock(BlockLoader.hiresistmixer),
+    			new ServiceBayIO().setHostBlock(BlockLoader.servicebay),
+    			new HVLCFillerIO().setHostBlock(BlockLoader.hvlcfiller),
+    			new GasChimneyIO().setHostBlock(BlockLoader.gaschimney),
+    			new SyndicationHubIO().setHostBlock(BlockLoader.syndicationhub),
+    			new SyndicationEMFGeneratorIO().setHostBlock(BlockLoader.syndication_emfgenerator),
+    			new SyndicationItemPortIO().setHostBlock(BlockLoader.syndication_itemport),
+    			new MixerIO().setHostBlock(BlockLoader.mixer),
+    			new AutomaticDrawplateIO().setHostBlock(BlockLoader.automaticdrawplate),
+    			new QuenchingChamberIO().setHostBlock(BlockLoader.quencher),
+    			new MetalFormationMachineIO().setHostBlock(BlockLoader.metformer),
+    			new WireCoatingExtruderIO().setHostBlock(BlockLoader.wcextruder)
     			);
 		iocollection.registerInHOE();
 		

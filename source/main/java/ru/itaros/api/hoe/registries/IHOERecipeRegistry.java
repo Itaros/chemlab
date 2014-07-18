@@ -6,5 +6,5 @@ public interface IHOERecipeRegistry {
 
 	public void add(Recipe r);
 	public Recipe get(String mnemonic);
-	
+	public Recipe[] dumpAll();
 }
