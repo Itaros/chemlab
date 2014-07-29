@@ -2,7 +2,7 @@ package ru.itaros.hoe.registries;
 
 import java.util.Hashtable;
 
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
+import ru.itaros.hoe.fluid.HOEFluid;
 
 public class HOEFluidRegistry {
 

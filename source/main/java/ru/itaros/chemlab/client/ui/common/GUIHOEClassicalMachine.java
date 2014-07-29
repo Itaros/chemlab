@@ -20,10 +20,10 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import ru.itaros.api.hoe.internal.HOEData;
-import ru.itaros.hoe.vanilla.tiles.MachineCrafterTileEntity;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ReadonlySlot;
+import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.gui.ReadonlySlot;
+import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
+import ru.itaros.hoe.tiles.MachineTileEntity;
 import cpw.mods.fml.common.Optional;
 
 public abstract class GUIHOEClassicalMachine extends GuiContainer {

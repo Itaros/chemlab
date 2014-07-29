@@ -3,7 +3,7 @@ package ru.itaros.chemlab.hoe.data;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.internal.HOEData;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+import ru.itaros.hoe.data.machines.HOEMachineData;
 
 public class ServiceBayData extends HOEMachineData {
 

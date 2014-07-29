@@ -12,12 +12,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import ru.itaros.api.chemlab.ISyndicationPipeConnectable;
+import ru.itaros.chemlab.ChemLabCreativeTab;
 import ru.itaros.chemlab.client.isbr.SyndicationBusISBR;
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import ru.itaros.chemlab.loader.client.ISBRLoader;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.ISyndicationPiping;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationPipingTileEntity;
-import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
+import ru.itaros.chemlab.tiles.syndication.ISyndicationPiping;
+import ru.itaros.chemlab.tiles.syndication.SyndicationPipingTileEntity;
+import ru.itaros.hoe.utils.MetaIconFolder;
 
 public class SyndicationBus extends Block implements ISyndicationPipeConnectable, ITileEntityProvider {
 

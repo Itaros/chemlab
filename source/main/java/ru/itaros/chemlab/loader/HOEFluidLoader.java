@@ -1,9 +1,9 @@
 package ru.itaros.chemlab.loader;
 
 import ru.itaros.chemlab.fluids.hoe.*;
+import ru.itaros.hoe.fluid.HOEFluid;
+import ru.itaros.hoe.fluid.HOEFluidStack;
 import ru.itaros.hoe.registries.HOEFluidRegistry;
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluidStack;
 
 public class HOEFluidLoader {
 	

@@ -1,6 +1,6 @@
 package ru.itaros.chemlab.loader;
 
-import ru.itaros.chemlab.vanilla.SyndicationElectricutionDamageSource;
+import ru.itaros.chemlab.damagesources.SyndicationElectricutionDamageSource;
 import net.minecraft.util.DamageSource;
 
 public class DamageSourceLoader {

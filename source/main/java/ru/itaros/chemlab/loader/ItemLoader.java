@@ -8,15 +8,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import ru.itaros.chemlab.items.ChemLabItem;
 import ru.itaros.chemlab.items.ChemLabWireItem;
+import ru.itaros.chemlab.items.CrushedOre;
 import ru.itaros.chemlab.items.DegradableItem;
+import ru.itaros.chemlab.items.Dust;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.items.HiVolumeLiquidCellEmpty;
 import ru.itaros.chemlab.items.IOMultitool;
 import ru.itaros.chemlab.items.PipeWrench;
 import ru.itaros.chemlab.items.Programmer;
-import ru.itaros.chemlab.items.ore.CrushedOre;
-import ru.itaros.chemlab.items.ore.Dust;
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
+import ru.itaros.hoe.fluid.HOEFluid;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ItemLoader {

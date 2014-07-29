@@ -6,11 +6,11 @@ import ru.itaros.api.hoe.IHOEContextDetector.FMLContext;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.hoe.data.syndication.SyndicationItemPortData;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationItemPortTileEntity;
 import ru.itaros.chemlab.network.packets.ChemLabSyndicationHubCommand;
 import ru.itaros.chemlab.network.packets.ChemLabSyndicationHubCommand.SyndicationCommandMode;
+import ru.itaros.chemlab.tiles.syndication.SyndicationItemPortTileEntity;
 import ru.itaros.hoe.ContextDetector;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
+import ru.itaros.hoe.tiles.MachineTileEntity;
 
 public class GUISyndicationItemPort extends GUIHOEClassicalMachine {
 

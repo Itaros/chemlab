@@ -4,8 +4,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.chemlab.loader.TierLoader;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionRecipe;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
+import ru.itaros.hoe.recipes.FixedConversionRecipe;
+import ru.itaros.hoe.recipes.RecipesCollection;
 
 public class MetalFormationMachineRecipes {
 

@@ -2,7 +2,7 @@ package ru.itaros.chemlab;
 
 import net.minecraftforge.common.config.Configuration;
 import ru.itaros.chemlab.hoe.data.syndication.SyndicationHubData;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+import ru.itaros.hoe.data.machines.HOEMachineData;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class Config {

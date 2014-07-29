@@ -2,8 +2,8 @@ package ru.itaros.chemlab.client.ui;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
-import ru.itaros.chemlab.minecraft.tileentity.QuenchingChamberTileEntity;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
+import ru.itaros.chemlab.tiles.QuenchingChamberTileEntity;
+import ru.itaros.hoe.tiles.MachineTileEntity;
 
 public class GUIQuenchingChamber extends GUIHOEClassicalMachine {
 

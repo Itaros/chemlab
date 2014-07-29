@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import net.minecraft.item.ItemStack;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
-import ru.itaros.toolkit.hoe.facilities.fluid.IFluidCompressable;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionRecipe;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
+import ru.itaros.hoe.fluid.HOEFluid;
+import ru.itaros.hoe.fluid.IFluidCompressable;
+import ru.itaros.hoe.recipes.FixedConversionRecipe;
+import ru.itaros.hoe.recipes.RecipesCollection;
 
 public class FluidCompressorRecipes {
 

@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.loader.ItemLoader;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
+import ru.itaros.hoe.data.machines.HOEMachineCrafterData;
 
 public class DiaphragmalElectrolyzerData extends HOEMachineCrafterData {
 	/*

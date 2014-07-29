@@ -9,11 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.ISyndicationPiping;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.ISyndicationPiping.PipingMode;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.NBTUtility;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackUtility;
+import ru.itaros.chemlab.ChemLabCreativeTab;
+import ru.itaros.chemlab.tiles.syndication.ISyndicationPiping;
+import ru.itaros.chemlab.tiles.syndication.ISyndicationPiping.PipingMode;
+import ru.itaros.hoe.utils.NBTUtility;
+import ru.itaros.hoe.utils.StackUtility;
 
 public class IOMultitool extends Item {
 	

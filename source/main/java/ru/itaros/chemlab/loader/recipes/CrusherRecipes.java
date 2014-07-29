@@ -3,9 +3,9 @@ package ru.itaros.chemlab.loader.recipes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import ru.itaros.chemlab.ChemLabValues;
-import ru.itaros.chemlab.items.ore.CrushedOre;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionRecipe;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
+import ru.itaros.chemlab.items.CrushedOre;
+import ru.itaros.hoe.recipes.FixedConversionRecipe;
+import ru.itaros.hoe.recipes.RecipesCollection;
 
 public class CrusherRecipes {
 	

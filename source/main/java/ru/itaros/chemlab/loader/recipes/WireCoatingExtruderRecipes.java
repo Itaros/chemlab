@@ -4,8 +4,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import ru.itaros.chemlab.loader.ItemLoader;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.WireDiameterBasedFixedConversionRecipe;
+import ru.itaros.hoe.recipes.RecipesCollection;
+import ru.itaros.hoe.recipes.WireDiameterBasedFixedConversionRecipe;
 
 public class WireCoatingExtruderRecipes {
 

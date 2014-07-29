@@ -2,8 +2,8 @@ package ru.itaros.hoe.data.utils;
 
 import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.chemlab.ChemLab;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
+import ru.itaros.hoe.io.HOEMachineIO;
+import ru.itaros.hoe.tiles.MachineTileEntity;
 
 public class HOEDataFingerprint {
 

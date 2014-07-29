@@ -5,8 +5,8 @@ import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.chemlab.loader.TierLoader;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionMetaUnawareRecipe;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
+import ru.itaros.hoe.recipes.FixedConversionMetaUnawareRecipe;
+import ru.itaros.hoe.recipes.RecipesCollection;
 
 public class QuenchingChamberRecipes {
 

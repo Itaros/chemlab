@@ -5,12 +5,12 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.client.ui.common.HOEContainer;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationItemPortTileEntity;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.CopierSlot;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.HOESlotType;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.MachineSlot;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ReadonlySlot;
+import ru.itaros.chemlab.tiles.syndication.SyndicationItemPortTileEntity;
+import ru.itaros.hoe.gui.CopierSlot;
+import ru.itaros.hoe.gui.HOESlotType;
+import ru.itaros.hoe.gui.MachineSlot;
+import ru.itaros.hoe.gui.ReadonlySlot;
+import ru.itaros.hoe.tiles.MachineTileEntity;
 
 public class SyndicationItemPortContainer extends HOEContainer {
 

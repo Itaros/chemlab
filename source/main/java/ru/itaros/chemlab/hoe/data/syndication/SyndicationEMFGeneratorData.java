@@ -2,7 +2,7 @@ package ru.itaros.chemlab.hoe.data.syndication;
 
 import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.internal.HOEData;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+import ru.itaros.hoe.data.machines.HOEMachineData;
 
 public class SyndicationEMFGeneratorData extends HOEMachineData {
 	/*

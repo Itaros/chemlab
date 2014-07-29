@@ -1,7 +1,7 @@
 package ru.itaros.chemlab.items;
 
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
-import ru.itaros.chemlab.minecraft.achievements.ChemLabAchievements;
+import ru.itaros.chemlab.ChemLabCreativeTab;
+import ru.itaros.chemlab.achievements.ChemLabAchievements;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;

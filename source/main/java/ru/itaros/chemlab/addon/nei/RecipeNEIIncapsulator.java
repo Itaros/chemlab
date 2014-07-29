@@ -6,7 +6,7 @@ import java.util.List;
 
 import codechicken.nei.PositionedStack;
 import net.minecraft.item.ItemStack;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
+import ru.itaros.hoe.recipes.Recipe;
 
 public class RecipeNEIIncapsulator {
 

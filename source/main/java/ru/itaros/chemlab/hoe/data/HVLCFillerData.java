@@ -6,11 +6,11 @@ import net.minecraftforge.fluids.FluidStack;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
-import ru.itaros.toolkit.hoe.facilities.fluid.containment.HOEFluidDepot;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
-import ru.itaros.toolkit.hoe.machines.basic.data.facilities.IHasLiquidStorage;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackTransferTuple;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackUtility;
+import ru.itaros.hoe.data.IHasLiquidStorage;
+import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.fluid.HOEFluidDepot;
+import ru.itaros.hoe.utils.StackTransferTuple;
+import ru.itaros.hoe.utils.StackUtility;
 
 public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage {
 

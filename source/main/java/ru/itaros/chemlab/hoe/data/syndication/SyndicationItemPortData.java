@@ -4,12 +4,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.hoe.data.GasChimneyData;
+import ru.itaros.hoe.data.ISynchroportItems;
+import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.data.utils.SynchroportOperationMode;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.EnumUtility;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackTransferTuple;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackUtility;
-import ru.itaros.toolkit.hoe.machines.interfaces.ISynchroportItems;
+import ru.itaros.hoe.utils.EnumUtility;
+import ru.itaros.hoe.utils.StackTransferTuple;
+import ru.itaros.hoe.utils.StackUtility;
 
 public class SyndicationItemPortData extends HOEMachineData implements ISynchroportItems {
 

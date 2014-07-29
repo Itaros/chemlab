@@ -1,6 +1,6 @@
 package ru.itaros.chemlab.client.tesr;
 
-import ru.itaros.toolkit.hoe.machines.interfaces.tileentity.ITileEntityParticleManager;
+import ru.itaros.hoe.tiles.ITileEntityParticleManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 

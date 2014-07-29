@@ -5,8 +5,8 @@ import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.client.tesr.ParticleInjectorHackTESR;
 import ru.itaros.chemlab.client.ui.GUIToolProgrammer;
 import ru.itaros.chemlab.loader.client.ISBRLoader;
-import ru.itaros.chemlab.minecraft.tileentity.GasChimneyTileEntity;
-import ru.itaros.hoe.vanilla.tiles.MachineCrafterTileEntity;
+import ru.itaros.chemlab.tiles.GasChimneyTileEntity;
+import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 

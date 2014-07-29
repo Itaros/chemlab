@@ -12,10 +12,10 @@ import ru.itaros.api.emf.EMFDynamicBattery;
 import ru.itaros.api.emf.IEMFCollector;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.ChemLab;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationItemPortTileEntity;
+import ru.itaros.chemlab.tiles.syndication.SyndicationItemPortTileEntity;
+import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.data.utils.HOEDataFingerprint;
 import ru.itaros.hoe.data.utils.InventoryManager;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 
 public class SyndicationHubData extends HOEMachineData implements IEMFCollector {
 	/*

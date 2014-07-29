@@ -1,8 +1,8 @@
 package ru.itaros.chemlab.minecraft;
 
-import ru.itaros.chemlab.minecraft.tileentity.syndication.ISyndicationPiping;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.ISyndicationPiping.PipingMode;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationHubTileEntity;
+import ru.itaros.chemlab.tiles.syndication.ISyndicationPiping;
+import ru.itaros.chemlab.tiles.syndication.SyndicationHubTileEntity;
+import ru.itaros.chemlab.tiles.syndication.ISyndicationPiping.PipingMode;
 
 public class InverseLookupNode extends LookupNode {
 

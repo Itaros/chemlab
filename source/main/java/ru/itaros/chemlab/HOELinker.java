@@ -1,7 +1,7 @@
 package ru.itaros.chemlab;
 
 import ru.itaros.api.hoe.HOEAbstractLinker;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachines;
+import ru.itaros.hoe.jobs.HOEMachines;
 
 public class HOELinker extends HOEAbstractLinker{
 

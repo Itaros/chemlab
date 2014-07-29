@@ -5,10 +5,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import io.netty.buffer.ByteBuf;
 import ru.itaros.chemlab.hoe.data.syndication.SyndicationItemPortData;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationHubTileEntity;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationItemPortTileEntity;
 import ru.itaros.chemlab.network.IPacketCodecDescriptor;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
+import ru.itaros.chemlab.tiles.syndication.SyndicationHubTileEntity;
+import ru.itaros.chemlab.tiles.syndication.SyndicationItemPortTileEntity;
+import ru.itaros.hoe.tiles.MachineTileEntity;
 
 public class ChemLabSyndicationHubCommand implements IPacketCodecDescriptor {
 

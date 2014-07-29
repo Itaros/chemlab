@@ -6,9 +6,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
+import ru.itaros.chemlab.ChemLabCreativeTab;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
+import ru.itaros.hoe.fluid.HOEFluid;
 
 public class HiVolumeLiquidCellEmpty extends Item {
 	public static final String EMPTY_TOKEN = "empty";

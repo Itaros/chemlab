@@ -3,9 +3,9 @@ package ru.itaros.chemlab.minecraft;
 import java.util.ArrayList;
 
 import ru.itaros.api.chemlab.syndication.utilities.ISyndicationUtility;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.ISyndicationPiping;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.ISyndicationPiping.PipingMode;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationHubTileEntity;
+import ru.itaros.chemlab.tiles.syndication.ISyndicationPiping;
+import ru.itaros.chemlab.tiles.syndication.SyndicationHubTileEntity;
+import ru.itaros.chemlab.tiles.syndication.ISyndicationPiping.PipingMode;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IWorldAccess;

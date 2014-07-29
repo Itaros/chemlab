@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
 import ru.itaros.chemlab.ChemLab;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
+import ru.itaros.hoe.recipes.Recipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;

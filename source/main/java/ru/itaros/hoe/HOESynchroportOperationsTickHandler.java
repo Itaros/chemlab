@@ -2,8 +2,8 @@ package ru.itaros.hoe;
 
 import java.util.ArrayList;
 
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.tiles.MachineTileEntity;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 

@@ -1,6 +1,6 @@
 package ru.itaros.api.hoe.internal;
 
-import ru.itaros.toolkit.hoe.machines.basic.io.connectivity.HOEBiPolarSocket;
+import ru.itaros.hoe.io.HOEBiPolarSocket;
 
 
 

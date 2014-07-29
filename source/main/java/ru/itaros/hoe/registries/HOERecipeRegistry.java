@@ -3,7 +3,7 @@ package ru.itaros.hoe.registries;
 import java.util.Hashtable;
 
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
+import ru.itaros.hoe.recipes.Recipe;
 
 public class HOERecipeRegistry implements IHOERecipeRegistry {
 

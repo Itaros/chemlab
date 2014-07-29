@@ -1,6 +1,6 @@
 package ru.itaros.api.hoe.registries;
 
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
+import ru.itaros.hoe.recipes.Recipe;
 
 public interface IHOERecipeRegistry {
 

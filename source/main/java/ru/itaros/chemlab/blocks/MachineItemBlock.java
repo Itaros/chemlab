@@ -1,6 +1,6 @@
 package ru.itaros.chemlab.blocks;
 
-import ru.itaros.chemlab.minecraft.achievements.ChemLabAchievements;
+import ru.itaros.chemlab.achievements.ChemLabAchievements;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;

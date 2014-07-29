@@ -1,8 +1,8 @@
 package ru.itaros.chemlab.fluids.hoe;
 
 import ru.itaros.chemlab.loader.HOEFluidLoader;
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
-import ru.itaros.toolkit.hoe.facilities.fluid.IFluidExpandable;
+import ru.itaros.hoe.fluid.HOEFluid;
+import ru.itaros.hoe.fluid.IFluidExpandable;
 
 public class AirCompressed extends Air implements IFluidExpandable {
 

@@ -1,6 +1,6 @@
 package ru.itaros.chemlab.items;
 
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
+import ru.itaros.chemlab.ChemLabCreativeTab;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

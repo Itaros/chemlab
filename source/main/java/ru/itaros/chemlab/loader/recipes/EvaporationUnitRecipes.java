@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import net.minecraft.item.ItemStack;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.loader.ItemLoader;
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid.TempShift;
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluidStack;
-import ru.itaros.toolkit.hoe.facilities.fluid.IFluidComposite;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionRecipe;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
+import ru.itaros.hoe.fluid.HOEFluid;
+import ru.itaros.hoe.fluid.HOEFluidStack;
+import ru.itaros.hoe.fluid.IFluidComposite;
+import ru.itaros.hoe.fluid.HOEFluid.TempShift;
+import ru.itaros.hoe.recipes.FixedConversionRecipe;
+import ru.itaros.hoe.recipes.RecipesCollection;
 
 public class EvaporationUnitRecipes {
 	public static final int REQUIRED_TIME=100;

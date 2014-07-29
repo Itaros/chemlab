@@ -3,8 +3,8 @@ package ru.itaros.chemlab.events;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.event.world.BlockEvent;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.ISyndicationPiping;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationPipingTileEntity;
+import ru.itaros.chemlab.tiles.syndication.ISyndicationPiping;
+import ru.itaros.chemlab.tiles.syndication.SyndicationPipingTileEntity;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class SyndicationSystemPipingProtection {

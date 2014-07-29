@@ -5,8 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.loader.ItemLoader;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineCrafterData;
-import ru.itaros.toolkit.hoe.machines.interfaces.IHasReplacableParts;
+import ru.itaros.hoe.data.IHasReplacableParts;
+import ru.itaros.hoe.data.machines.HOEMachineCrafterData;
 
 public class CatalyticTankData extends HOEMachineCrafterData implements IHasReplacableParts {
 	/*

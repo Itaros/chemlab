@@ -3,15 +3,15 @@ package ru.itaros.chemlab.blocks.machines;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import ru.itaros.chemlab.ChemLab;
+import ru.itaros.chemlab.ChemLabCreativeTab;
 import ru.itaros.chemlab.client.ui.MixerContainer;
 import ru.itaros.chemlab.client.ui.QuenchingChamberContainer;
 import ru.itaros.chemlab.client.ui.common.HOEContainer;
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
-import ru.itaros.chemlab.minecraft.tileentity.MixerTileEntity;
-import ru.itaros.chemlab.minecraft.tileentity.QuenchingChamberTileEntity;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
-import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.blocks.IOMachineBlock;
+import ru.itaros.chemlab.tiles.MixerTileEntity;
+import ru.itaros.chemlab.tiles.QuenchingChamberTileEntity;
+import ru.itaros.hoe.blocks.IOMachineBlock;
+import ru.itaros.hoe.tiles.MachineTileEntity;
+import ru.itaros.hoe.utils.MetaIconFolder;
 
 public class QuenchingChamber extends IOMachineBlock {
 

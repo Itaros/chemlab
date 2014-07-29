@@ -3,7 +3,7 @@ package ru.itaros.hoe.data.utils;
 import java.util.ArrayList;
 
 import ru.itaros.chemlab.hoe.data.syndication.SyndicationItemPortData;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationItemPortTileEntity;
+import ru.itaros.chemlab.tiles.syndication.SyndicationItemPortTileEntity;
 
 public class InventoryManager {
 

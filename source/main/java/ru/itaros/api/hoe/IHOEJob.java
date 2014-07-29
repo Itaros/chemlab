@@ -1,6 +1,6 @@
 package ru.itaros.api.hoe;
 
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+import ru.itaros.hoe.data.machines.HOEMachineData;
 
 
 public interface IHOEJob {

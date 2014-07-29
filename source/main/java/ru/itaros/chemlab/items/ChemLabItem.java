@@ -4,8 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
-import ru.itaros.chemlab.minecraft.achievements.ChemLabAchievements;
+import ru.itaros.chemlab.ChemLabCreativeTab;
+import ru.itaros.chemlab.achievements.ChemLabAchievements;
 
 public class ChemLabItem extends Item {
 

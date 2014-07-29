@@ -3,10 +3,10 @@ package ru.itaros.api.chemlab.syndication.utilities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.ISyndicationPiping;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationControllerDescriptorContainer;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationHubTileEntity;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationPipingTileEntity;
+import ru.itaros.chemlab.tiles.syndication.ISyndicationPiping;
+import ru.itaros.chemlab.tiles.syndication.SyndicationControllerDescriptorContainer;
+import ru.itaros.chemlab.tiles.syndication.SyndicationHubTileEntity;
+import ru.itaros.chemlab.tiles.syndication.SyndicationPipingTileEntity;
 
 public abstract class SyndicationUtilityTileEntity extends TileEntity implements ISyndicationUtility,ISyndicationPiping {
 

@@ -1,6 +1,6 @@
 package ru.itaros.chemlab.fluids.hoe;
 
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
+import ru.itaros.hoe.fluid.HOEFluid;
 
 public class PressurizedSteam extends HOEFluid {
 

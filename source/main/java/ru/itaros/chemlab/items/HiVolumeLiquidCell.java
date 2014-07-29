@@ -2,8 +2,8 @@ package ru.itaros.chemlab.items;
 
 import java.util.Hashtable;
 
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
+import ru.itaros.chemlab.ChemLabCreativeTab;
+import ru.itaros.hoe.fluid.HOEFluid;
 import net.minecraft.item.Item;
 
 public class HiVolumeLiquidCell extends Item {

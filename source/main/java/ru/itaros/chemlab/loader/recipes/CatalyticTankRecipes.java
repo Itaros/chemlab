@@ -3,8 +3,8 @@ package ru.itaros.chemlab.loader.recipes;
 import net.minecraft.item.ItemStack;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.FixedConversionRecipe;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
+import ru.itaros.hoe.recipes.FixedConversionRecipe;
+import ru.itaros.hoe.recipes.RecipesCollection;
 
 public class CatalyticTankRecipes {
 

@@ -6,14 +6,14 @@ import ru.itaros.chemlab.Config;
 import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.hoe.HOE;
 import ru.itaros.hoe.signatures.IAllowedConfigArgument;
-import ru.itaros.hoe.toolkit.worldgen.GenDistributionProvider;
-import ru.itaros.hoe.toolkit.worldgen.GenDistributionProviderScattered;
-import ru.itaros.hoe.toolkit.worldgen.GenDistributionProviderSurface;
-import ru.itaros.hoe.toolkit.worldgen.WorldGenOverlay;
-import ru.itaros.hoe.toolkit.worldgen.WorldGenOverlayBiome;
-import ru.itaros.hoe.toolkit.worldgen.WorldGenOverlayRange;
-import ru.itaros.hoe.toolkit.worldgen.WorldGenOverlayRangeLimestone;
-import ru.itaros.hoe.vanilla.registries.WorldGenRegistry;
+import ru.itaros.hoe.worldgen.GenDistributionProvider;
+import ru.itaros.hoe.worldgen.GenDistributionProviderScattered;
+import ru.itaros.hoe.worldgen.GenDistributionProviderSurface;
+import ru.itaros.hoe.worldgen.WorldGenOverlay;
+import ru.itaros.hoe.worldgen.WorldGenOverlayBiome;
+import ru.itaros.hoe.worldgen.WorldGenOverlayRange;
+import ru.itaros.hoe.worldgen.WorldGenOverlayRangeLimestone;
+import ru.itaros.hoe.worldgen.WorldGenRegistry;
 
 public class WorldGenLoaderNative implements IAllowedConfigArgument {
 	

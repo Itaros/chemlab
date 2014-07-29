@@ -2,9 +2,9 @@ package ru.itaros.chemlab.blocks.machines.syndication;
 
 import ru.itaros.api.chemlab.ISyndicationPipeConnectable;
 import ru.itaros.api.chemlab.syndication.utilities.ISyndicationCapacitor;
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationCapacitorTileEntity;
-import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
+import ru.itaros.chemlab.ChemLabCreativeTab;
+import ru.itaros.chemlab.tiles.syndication.SyndicationCapacitorTileEntity;
+import ru.itaros.hoe.utils.MetaIconFolder;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;

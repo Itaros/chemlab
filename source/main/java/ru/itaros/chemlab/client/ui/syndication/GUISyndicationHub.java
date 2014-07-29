@@ -4,11 +4,11 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.hoe.data.syndication.SyndicationHubData;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationHubTileEntity;
-import ru.itaros.hoe.toolkit.ui.Tab;
-import ru.itaros.hoe.toolkit.ui.TabManager;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+import ru.itaros.chemlab.tiles.syndication.SyndicationHubTileEntity;
+import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.gui.Tab;
+import ru.itaros.hoe.gui.TabManager;
+import ru.itaros.hoe.tiles.MachineTileEntity;
 
 public class GUISyndicationHub extends GUIHOEClassicalMachine {
 

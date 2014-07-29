@@ -1,7 +1,7 @@
 package ru.itaros.chemlab.proxy;
 
 import ru.itaros.chemlab.HOELinker;
-import ru.itaros.hoe.vanilla.tiles.MachineCrafterTileEntity;
+import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
 
 public abstract class Proxy {
 

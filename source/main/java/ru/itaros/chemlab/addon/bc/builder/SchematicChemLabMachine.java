@@ -4,10 +4,10 @@ import java.util.LinkedList;
 
 import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold.ManifoldFilter;
 import ru.itaros.chemlab.loader.BlockLoader;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationHubTileEntity;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.blocks.IRotatableBlock;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.blocks.RotatableBlockUtility;
+import ru.itaros.chemlab.tiles.syndication.SyndicationHubTileEntity;
+import ru.itaros.hoe.blocks.IRotatableBlock;
+import ru.itaros.hoe.blocks.RotatableBlockUtility;
+import ru.itaros.hoe.tiles.MachineTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

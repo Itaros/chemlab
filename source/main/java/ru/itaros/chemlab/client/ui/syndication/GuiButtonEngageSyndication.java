@@ -2,10 +2,10 @@ package ru.itaros.chemlab.client.ui.syndication;
 
 import cpw.mods.fml.relauncher.Side;
 import ru.itaros.chemlab.ChemLab;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationHubTileEntity;
 import ru.itaros.chemlab.network.packets.ChemLabSyndicationHubCommand;
 import ru.itaros.chemlab.network.packets.ChemLabSyndicationHubCommand.SyndicationCommandMode;
 import ru.itaros.chemlab.network.packets.SetHOEMachineRecipePacket;
+import ru.itaros.chemlab.tiles.syndication.SyndicationHubTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 

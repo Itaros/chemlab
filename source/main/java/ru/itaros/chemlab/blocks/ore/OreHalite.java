@@ -1,7 +1,7 @@
 package ru.itaros.chemlab.blocks.ore;
 
+import ru.itaros.chemlab.ChemLabCreativeTab;
 import ru.itaros.chemlab.ChemLabValues;
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 

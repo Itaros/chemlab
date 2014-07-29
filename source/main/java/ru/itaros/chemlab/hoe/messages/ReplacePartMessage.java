@@ -2,8 +2,8 @@ package ru.itaros.chemlab.hoe.messages;
 
 import net.minecraft.item.ItemStack;
 import ru.itaros.api.hoe.internal.HOEData;
-import ru.itaros.toolkit.hoe.machines.basic.io.connectivity.HOEDataMessage;
-import ru.itaros.toolkit.hoe.machines.interfaces.IHasReplacableParts;
+import ru.itaros.hoe.data.IHasReplacableParts;
+import ru.itaros.hoe.io.HOEDataMessage;
 
 public class ReplacePartMessage extends HOEDataMessage {
 
