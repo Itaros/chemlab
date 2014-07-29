@@ -134,7 +134,7 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 	}
 	@Override
 	public void rotate(World w, int x, int y, int z) {
-		int off = RotatableBlockUtility.calculateSpinIncrement(w,x,y,z,rotationChain.length);
+		int off = RotatableBlockUtility.calculateSpinIncrement(w.getBlockMetadata(x, y, z),rotationChain.length);
 		w.setBlockMetadataWithNotify(x, y, z, off, 1+2);
 	}
 	public static final ForgeDirection[] rotationChain={ForgeDirection.SOUTH,ForgeDirection.EAST,ForgeDirection.NORTH,ForgeDirection.WEST};

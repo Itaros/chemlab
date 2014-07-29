@@ -50,7 +50,7 @@ public class TileEntitySecurityTracker {
 	
 	public void readFromNBT(NBTTagCompound nbt, String tag){
 		NBTTagCompound n = (NBTTagCompound) nbt.getTag(tag);
-		
+		if(n==null){return;}//There is no security data
 		try{
 			isOwned = n.getBoolean("isOwned");
 			if(isOwned){

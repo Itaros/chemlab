@@ -13,14 +13,20 @@ public class RotatableBlockUtility {
 		0,1,5,4,2,3
 	};	
 	
-	public static int calculateSpinIncrement(World w, int x, int y, int z, int variances) {
-		int off = w.getBlockMetadata(x, y, z);
+	public static int calculateSpinIncrement(int off, int variances) {
 		off++;
 		if(off>=variances){
 			off=0;//Wrap
 		}
 		return off;
 	}
+	public static int calculateSpinIncrementLeft(int off, int variances) {
+		off--;
+		if(off<0){
+			off=variances-1;//Wrap
+		}
+		return off;
+	}	
 
 	public static int getIconIndiceFromSideGrid(int side, int dir,
 			int[] sideGrid) {

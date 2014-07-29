@@ -114,6 +114,7 @@ public class MachineCrafterRecipes implements ICraftingHandler, IUsageHandler {
 
 	@Override
 	public int numRecipes() {
+		if(filtered==null){return 0;}
 		return filtered.length;
 	}
 
@@ -129,10 +130,12 @@ public class MachineCrafterRecipes implements ICraftingHandler, IUsageHandler {
 	}
 
 	private void fillByPatternOut(Object object) {
+		if(!(object instanceof ItemStack)){return;}
 		ItemStack result = (ItemStack) object;
 		filtered = RecipeNEIIncapsulator.findAllByOutput(recipes,result);
 	}
 	private void fillByPatternIn(Object object) {
+		if(!(object instanceof ItemStack)){return;}
 		ItemStack result = (ItemStack) object;
 		filtered = RecipeNEIIncapsulator.findAllByInput(recipes,result);
 	}	
@@ -149,14 +152,18 @@ public class MachineCrafterRecipes implements ICraftingHandler, IUsageHandler {
 	@Override
 	public ICraftingHandler getRecipeHandler(String outputId, Object... results) {
 		MachineCrafterRecipes handler = newInstance();
-		handler.fillByPatternOut(results[0]);
+		if(results.length>0){
+			handler.fillByPatternOut(results[0]);
+		}
 		return handler;
 	}	
 	
 	@Override
 	public IUsageHandler getUsageHandler(String outputId, Object... results) {
 		MachineCrafterRecipes handler = newInstance();
-		handler.fillByPatternIn(results[0]);
+		if(results.length>0){
+			handler.fillByPatternIn(results[0]);
+		}
 		return handler;		
 	}
 

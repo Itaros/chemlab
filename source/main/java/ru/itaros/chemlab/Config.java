@@ -13,6 +13,7 @@ public class Config {
 	public Class<? extends HOEMachineData>[] hoesyndic_blacklist;
 	
 	public String worldgenerator_clid="ru.itaros.chemlab.loader.worldgen.WorldGenLoaderNative";
+	public static int[] worldgenerator_allowedDims={0};
 	
 	
 	private static final String CATEGORY_GFX="GFX";
@@ -33,7 +34,7 @@ public class Config {
 		
 		
 		worldgenerator_clid=cfg.get(CATEGORY_WORLDGEN, "clid", worldgenerator_clid).getString();
-		
+		worldgenerator_allowedDims=cfg.get(CATEGORY_WORLDGEN,"allowedDims",worldgenerator_allowedDims).getIntList();
 
 		loadHOESyndicationBlacklist(cfg);
 		

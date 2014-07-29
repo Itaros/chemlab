@@ -148,17 +148,17 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 	}	
 	
 	@Override
-	public void readNBT(NBTTagCompound nbt) {
-		super.readNBT(nbt);
+	protected void readInventoryNBT(NBTTagCompound nbt) {
+		super.readInventoryNBT(nbt);
 		inbound=StackUtility.readItemStackFromNBT(nbt, "initem");
-		outbound=StackUtility.readItemStackFromNBT(nbt, "outitem");
+		outbound=StackUtility.readItemStackFromNBT(nbt, "outitem");		
 	}
 
 	@Override
-	public void writeNBT(NBTTagCompound nbt) {
-		super.writeNBT(nbt);
+	protected void writeInventoryNBT(NBTTagCompound nbt) {
+		super.writeInventoryNBT(nbt);
 		StackUtility.writeItemStackToNBT(inbound, nbt, "initem");
-		StackUtility.writeItemStackToNBT(outbound, nbt, "outitem");
+		StackUtility.writeItemStackToNBT(outbound, nbt, "outitem");		
 	}
 
 	@Override

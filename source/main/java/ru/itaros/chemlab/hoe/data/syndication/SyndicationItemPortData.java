@@ -99,28 +99,33 @@ public class SyndicationItemPortData extends HOEMachineData implements ISynchrop
 		childd.mode = mode;
 		
 	}
-
+	
 	@Override
-	public void readNBT(NBTTagCompound nbt) {
+	protected void readConfigurationNBT(NBTTagCompound nbt) {
 		filter=StackUtility.readItemStackFromNBT(nbt, "filter");
-		inbound=StackUtility.readItemStackFromNBT(nbt, "in");
-		
 		mode = EnumUtility.readEnumValueImplicitly(SynchroportOperationMode.class, nbt, "mode");
-		
-		super.readNBT(nbt);
+		super.readConfigurationNBT(nbt);
 	}
 
 	@Override
-	public void writeNBT(NBTTagCompound nbt) {
-		StackUtility.writeItemStackToNBT(filter, nbt, "filter");
-		StackUtility.writeItemStackToNBT(inbound, nbt, "in");
-		
+	protected void writeConfigurationNBT(NBTTagCompound nbt) {
 		EnumUtility.writeEnumValueImplicitly(nbt, mode, "mode");
-		
-		super.writeNBT(nbt);
-	}	
-	
-	
+		StackUtility.writeItemStackToNBT(filter, nbt, "filter");
+		super.writeConfigurationNBT(nbt);
+	}
+
+	@Override
+	protected void readInventoryNBT(NBTTagCompound nbt) {
+		super.readInventoryNBT(nbt);
+		inbound=StackUtility.readItemStackFromNBT(nbt, "in");		
+	}
+
+	@Override
+	protected void writeInventoryNBT(NBTTagCompound nbt) {
+		super.writeInventoryNBT(nbt);
+		StackUtility.writeItemStackToNBT(inbound, nbt, "in");			
+	}
+
 	public void setFilter(ItemStack stack){
 		filter=stack;
 	}

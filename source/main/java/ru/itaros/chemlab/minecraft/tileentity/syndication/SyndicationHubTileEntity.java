@@ -237,6 +237,7 @@ public class SyndicationHubTileEntity extends MachineTileEntity {
 	}
 
 	private void makeOnline(){
+		getServerData().setSyndicated(true);
 		for(ISyndicationPiping isp:pipesInSystem){
 			isp.setController(this);
 			isp.setMode(PipingMode.ACTIVE).setBlockMetadata();
@@ -244,6 +245,7 @@ public class SyndicationHubTileEntity extends MachineTileEntity {
 	}
 
 	private void makeOffline(){
+		getServerData().setSyndicated(false);
 		for(ISyndicationPiping isp:pipesInSystem){
 			isp.setController(null);
 			isp.setMode(PipingMode.DISABLED).setBlockMetadata();

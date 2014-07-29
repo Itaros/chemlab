@@ -2,6 +2,7 @@ package ru.itaros.chemlab.loader.worldgen;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.BiomeGenBase;
+import ru.itaros.chemlab.Config;
 import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.hoe.HOE;
 import ru.itaros.hoe.signatures.IAllowedConfigArgument;
@@ -48,7 +49,7 @@ public class WorldGenLoaderNative implements IAllowedConfigArgument {
 	public void execute(){
 		registry=HOE.getInstance().getRegistryWorldGen();
 		
-		
+		HOE.getInstance().getHOEWorldGenerator().setAllowedDims(Config.worldgenerator_allowedDims);
 		
 		
 		asbestos_serpentite=new WorldGenOverlay("serpentite", Blocks.stone , BlockLoader.asbestos_serpentite, 18, NOISEDOWNSAMPLE_ASBESTOS, 425L);

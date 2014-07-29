@@ -107,34 +107,38 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 		}
 	}
 	
-	
-	
 	//NBT
 	@Override
-	public void writeNBT(NBTTagCompound nbt) {
-		super.writeNBT(nbt);
-		//Slots Itself
-		StackUtility.writeItemStacksToNBT(inbound, nbt, "initem");
-		StackUtility.writeItemStacksToNBT(outbound, nbt, "outitem");
+	protected void readConfigurationNBT(NBTTagCompound nbt) {
+		//Types are configured by recipe to reduce network congestion		
+		IHOERecipeRegistry repreg = Recipe.getRecipeRegistry();
+		String reptoken = nbt.getString("reptoken");
+		recipe=repreg.get(reptoken);
+		unfoldStricttypesByRecipe();		
+		super.readConfigurationNBT(nbt);
+	}
+	@Override
+	protected void writeConfigurationNBT(NBTTagCompound nbt) {
 		//Types are configured by recipe to reduce network congestion
 		String reptoken = "";
 		if(recipe!=null){
 			reptoken = recipe.getName();
 		}
 		nbt.setString("reptoken", reptoken);
+		super.writeConfigurationNBT(nbt);
 	}
 	@Override
-	public void readNBT(NBTTagCompound nbt) {
-		super.readNBT(nbt);
-		//Slots Itself
+	protected void readInventoryNBT(NBTTagCompound nbt) {
+		super.readInventoryNBT(nbt);
 		inbound=StackUtility.readItemStacksFromNBT(inbound,nbt, "initem");
 		outbound=StackUtility.readItemStacksFromNBT(outbound,nbt, "outitem");
-		//Types are configured by recipe to reduce network congestion		
-		IHOERecipeRegistry repreg = Recipe.getRecipeRegistry();
-		String reptoken = nbt.getString("reptoken");
-		recipe=repreg.get(reptoken);
-		unfoldStricttypesByRecipe();
-	}	
+	}
+	@Override
+	protected void writeInventoryNBT(NBTTagCompound nbt) {
+		super.writeInventoryNBT(nbt);
+		StackUtility.writeItemStacksToNBT(inbound, nbt, "initem");
+		StackUtility.writeItemStacksToNBT(outbound, nbt, "outitem");
+	}
 	/*
 	 * Client method to slightly lower network GUI congestion
 	 */

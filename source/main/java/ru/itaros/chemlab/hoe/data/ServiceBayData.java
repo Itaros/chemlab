@@ -1,6 +1,7 @@
 package ru.itaros.chemlab.hoe.data;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 
@@ -68,5 +69,17 @@ public class ServiceBayData extends HOEMachineData {
 		if(injectables==null){return false;}
 		if(injectables.stackSize>0){return true;}else{return false;}
 	}
+
+	@Override
+	protected void readInventoryNBT(NBTTagCompound nbt) {
+		super.readInventoryNBT(nbt);
+	}
+
+	@Override
+	protected void writeInventoryNBT(NBTTagCompound nbt) {
+		super.writeInventoryNBT(nbt);
+	}
+	
+	
 	
 }

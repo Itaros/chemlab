@@ -30,7 +30,10 @@ public class HOEWorldGenerator implements IWorldGenerator {
 	
 	WorldGenRegistry registry;
 	
-
+	private int[] allowedDims={0};
+	public void setAllowedDims(int[] ii){
+		allowedDims=ii;
+	}
 	
 	public HOEWorldGenerator(){
 		
@@ -46,11 +49,14 @@ public class HOEWorldGenerator implements IWorldGenerator {
 			IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 		
 		int dim = world.provider.dimensionId;
-		switch(dim){
-		case 0:
-			generateOverworld(random,chunkX,chunkZ,world);
-			break;
+		boolean isPassable=false;
+		for(int i : allowedDims){
+			if(i==dim){isPassable=true;break;}
 		}
+		if(isPassable){
+			generateOverworld(random,chunkX,chunkZ,world);
+		}
+			
 	}
 
 	private void generateOverworld(Random random, int chunkX, int chunkZ,

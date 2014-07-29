@@ -13,6 +13,7 @@ import ru.itaros.api.hoe.IHOEContextDetector.FMLContext;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.chemlab.HOELinker;
+import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold;
 import ru.itaros.chemlab.minecraft.tileentity.syndication.ISyndicationPiping;
 import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationControllerDescriptorContainer;
 import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationHubTileEntity;
@@ -75,7 +76,7 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 			//DUMMY: ASSUMING THIS IS A CLIENT
 			String refltype=nbt.getString("refltype");
 			if(server==null){
-				server=HOEMachineData.generateFromNBT(refltype,nbt);
+				server=HOEMachineData.generateByRefType(refltype);
 			}
 			this.getSuperIO().configureData(server);
 			server.readNBT(nbt);
@@ -91,7 +92,50 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 		}
 	}	
 
+	private HOENBTManifold writeServerStateAsNBTManifold(){
+		HOENBTManifold manifold = new HOENBTManifold();
+		HOEMachineData data = getAvailableData();
+		NBTTagCompound tfd=manifold.holdTypeFactoryData();
+		writeTypeFactoryNBT(tfd,data);
+		data.writeNBT(manifold);
+		return manifold;
+	}
+	private void readServerStateAsNBTManifold(HOENBTManifold manifold){
+		//Generating HOEData
+		if(!isDataAlreadyInjected){//some HOEKA magic
+			if(server==null){
+				String refltype=manifold.holdTypeFactoryData().getString("refltype");
+				server=HOEMachineData.generateByRefType(refltype);
+			}
+			this.getSuperIO().configureData(server);
+			server.readNBT(manifold);
+			if(ContextDetector.getInstance().getContext()==FMLContext.CLIENT){
+				client = server.makeRemote();//ONLY IF IT IS CLIENT!
+			}else{
+				client = (HOEMachineData) server.getChild();
+				server.sync();
+			}
+		}	
+	}
 	
+	private void writeTypeFactoryNBT(NBTTagCompound nbt, HOEMachineData data){
+		if(data!=null){
+			nbt.setString("refltype", data.getClass().getName());
+		}else{
+			//TODO: set manifold abort flag(context is not ready)
+		}
+	}
+	
+	private HOEMachineData getAvailableData(){
+		//HOE is alive and this is a server
+		if(server!=null){return server;}
+		//HOE is dead or this is a client
+		if(client!=null){return client;}
+		//HOE is dead and this is nothing
+		return null;
+	}
+	
+	@Deprecated
 	private void writeServerState(NBTTagCompound host) {
 		NBTTagCompound nbt = new NBTTagCompound();
 		if(server!=null){
@@ -100,6 +144,7 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 			server.writeNBT(nbt);
 		}else if(client!=null){
 			//HOE is dead or this is a client
+			nbt.setString("refltype", client.getClass().getName());
 			client.writeNBT(nbt);
 		}else{
 			//HOE is dead and this is nothing
@@ -140,6 +185,16 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 		
 		syndicationDescriptor.writeToNBT(nbt);
 	}
+	
+	public HOENBTManifold writeBlueprintNBT(){
+		//Should not write MJ storage, syndication and security data
+		return writeServerStateAsNBTManifold();
+	}
+	public void readBlueprintNBT(HOENBTManifold manifold){
+		//Should not read MJ storage, syndication and security data
+		readServerStateAsNBTManifold(manifold);
+	}
+	
 	public abstract HOELinker getLinker();
 
 	public abstract HOEMachineIO getSuperIO();

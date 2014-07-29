@@ -2,6 +2,7 @@ package ru.itaros.chemlab.loader.worldgen;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.BiomeGenBase;
+import ru.itaros.chemlab.Config;
 import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.hoe.HOE;
 import ru.itaros.hoe.signatures.IAllowedConfigArgument;
@@ -52,6 +53,8 @@ public class WorldGenLoaderScattered implements IAllowedConfigArgument {
 	
 	public void execute(){
 		registry=HOE.getInstance().getRegistryWorldGen();
+		
+		HOE.getInstance().getHOEWorldGenerator().setAllowedDims(Config.worldgenerator_allowedDims);
 		
 		scatterer_1 = new GenDistributionProviderScattered(2, 5, 1F, 3, 1225L, 2);
 		scatterer_2 = new GenDistributionProviderScattered(2, 5, 1F, 7, 2256L, 6);

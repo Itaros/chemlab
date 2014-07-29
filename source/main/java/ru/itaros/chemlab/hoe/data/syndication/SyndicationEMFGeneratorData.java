@@ -1,5 +1,6 @@
 package ru.itaros.chemlab.hoe.data.syndication;
 
+import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
 
@@ -13,6 +14,16 @@ public class SyndicationEMFGeneratorData extends HOEMachineData {
 	
 	public SyndicationEMFGeneratorData(){
 		super();
+	}
+
+	@Override
+	protected void readInventoryNBT(NBTTagCompound nbt) {
+		super.readInventoryNBT(nbt);
+	}
+
+	@Override
+	protected void writeInventoryNBT(NBTTagCompound nbt) {
+		super.writeInventoryNBT(nbt);
 	}
 	
 	

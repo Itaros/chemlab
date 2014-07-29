@@ -51,6 +51,7 @@ public class SyndicationHubIO extends HOEMachineIO {
 		
 		HOEMachineData[] machines=d.getListOfMachines();
 		for(HOEMachineData hda:machines){
+			if(hda==data){continue;}
 			if(hda==null){
 				System.out.println("fuck");
 				}

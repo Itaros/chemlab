@@ -3,6 +3,8 @@ package ru.itaros.chemlab.loader;
 import net.minecraft.block.Block;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.registry.GameRegistry;
+import ru.itaros.chemlab.addon.bc.builder.SchematicChemLabMachine;
+import ru.itaros.chemlab.addon.bc.builder.SchematicSyndicationBus;
 import ru.itaros.chemlab.blocks.MachineCasing;
 import ru.itaros.chemlab.blocks.MachineItemBlock;
 import ru.itaros.chemlab.blocks.machines.*;
@@ -188,6 +190,27 @@ public class BlockLoader {
 		OreDictionary.registerOre("orePericlase", orePericlase);
 		
 		
+		registerBCBuilderSchematics();
+		
+	}
+
+
+	private static void registerBCBuilderSchematics() {
+		Block[] hoeblocks = 
+			{
+				biogrinder,centriextractor,washer,impregnator,
+				press,steamboiler,steamexplosionunit,crusher,
+				diaphragmalelectrolyzer,furnace,aircollector,
+				fluidcompressor,turboexpander,evaporationunit,
+				cattank,hiresistmixer,servicebay,hvlcfiller,
+				gaschimney,syndicationhub,
+				syndication_util_capacitor,
+				syndication_emfgenerator,syndication_itemport,
+				mixer,automaticdrawplate,quencher,
+				metformer,wcextruder
+			};
+		SchematicChemLabMachine.init(hoeblocks);
+		SchematicSyndicationBus.init(pipes_syndicationbus);
 	}
 
 

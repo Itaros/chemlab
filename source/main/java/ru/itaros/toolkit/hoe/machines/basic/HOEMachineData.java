@@ -4,10 +4,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.exceptions.HOEWrongSyncDirection;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.api.hoe.internal.HOEIO;
+import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold;
 import ru.itaros.hoe.data.utils.HOEDataFingerprint;
 import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
 
-public class HOEMachineData extends HOEData {
+public abstract class HOEMachineData extends HOEData {
 
 	/*
 	 * Reflection autocaster
@@ -33,39 +34,81 @@ public class HOEMachineData extends HOEData {
 	
 	protected double power;
 
+	@Deprecated
 	public void readNBT(NBTTagCompound nbt){
-		//super.readNBT(nbt);
-		//Power
-		power=nbt.getDouble("power");
-		maxpower=nbt.getDouble("maxpower");
-		//FMLLog.log(Level.INFO, "Maxpower was:"+maxpower);
-		//Ticks
-		ticksRequared=nbt.getInteger("ticksRequared");
-		ticksAccumulated=nbt.getInteger("ticksAccumulated");
-		//Operational state
-		isSyndicated=nbt.getBoolean("isSyndicated");
+		//Inventory
+		readInventoryNBT(nbt);
+		//Configuration
+		readConfigurationNBT(nbt);
 		//IO recognition Signature
 		String ioname = nbt.getString("io_sign");
 		if(ioname!=""){
 			io =  (HOEMachineIO) HOEIO.getIORegistry().get(ioname);
 		}
 	}
-
-	public void writeNBT(NBTTagCompound nbt){
-		//super.writeNBT(nbt);
-		//Power
+	
+	public void readNBT(HOENBTManifold manifold) {
+		readInventoryNBT(manifold.holdInvetory());
+		readConfigurationNBT(manifold.holdConfiguration());
+		readSyndicationNBT(manifold.holdSyndication());
+		
+		String ioname = manifold.holdTypeFactoryData().getString("io_sign");
+		if(ioname!=""){
+			io =  (HOEMachineIO) HOEIO.getIORegistry().get(ioname);
+		}		
+	}	
+	
+	protected void readInventoryNBT(NBTTagCompound nbt){
+		power=nbt.getDouble("power");
+		ticksAccumulated=nbt.getInteger("ticksAccumulated");
+	}
+	protected void writeInventoryNBT(NBTTagCompound nbt){
 		nbt.setDouble("power", power);
-		nbt.setDouble("maxpower", maxpower);
-		//Ticks
-		nbt.setInteger("ticksRequared", ticksRequared);
 		nbt.setInteger("ticksAccumulated", ticksAccumulated);
+	}
+	protected void readConfigurationNBT(NBTTagCompound nbt){
+		//Power
+		maxpower=nbt.getDouble("maxpower");
+		//FMLLog.log(Level.INFO, "Maxpower was:"+maxpower);
+		//Ticks
+		ticksRequared=nbt.getInteger("ticksRequared");
+	}
+	protected void writeConfigurationNBT(NBTTagCompound nbt){
+		//Power
+		nbt.setDouble("maxpower", maxpower);	
+		//Ticks
+		nbt.setInteger("ticksRequared", ticksRequared);	
+	}
+	
+	protected void readSyndicationNBT(NBTTagCompound nbt){
 		//Operational state
-		nbt.setBoolean("isSyndicated",isSyndicated);
+		isSyndicated=nbt.getBoolean("isSyndicated");
+	}
+	protected void writeSyndicationNBT(NBTTagCompound nbt){
+		//Operational state
+		nbt.setBoolean("isSyndicated",isSyndicated);	
+	}
+	
+	@Deprecated
+	public void writeNBT(NBTTagCompound nbt){
+		//Inventory
+		writeInventoryNBT(nbt);
+		//Configuration
+		writeConfigurationNBT(nbt);
 		//IO recognition Signature
 		if(io!=null){
 			nbt.setString("io_sign", io.getClass().getName());
 		}
 	}
+
+	public void writeNBT(HOENBTManifold manifold) {
+		writeInventoryNBT(manifold.holdInvetory());
+		writeConfigurationNBT(manifold.holdConfiguration());
+		writeSyndicationNBT(manifold.holdSyndication());
+		if(io!=null){
+			manifold.holdTypeFactoryData().setString("io_sign", io.getClass().getName());
+		}
+	}	
 	
 	/*
 	 * This method initialized data for first use
@@ -135,11 +178,11 @@ public class HOEMachineData extends HOEData {
 		this.io=io;
 	}
 
-	public static HOEMachineData generateFromNBT(String refltype, NBTTagCompound nbt) {
+	public static HOEMachineData generateByRefType(String refltype) {
 		//HOEMachineData data = new HOEMachineData();
 		HOEMachineData data=null;
 		if(refltype==""){
-			data = new HOEMachineData();
+			data = null;
 		}else{
 			try{
 				data = (HOEMachineData) Class.forName(refltype).getConstructor().newInstance();
@@ -208,14 +251,11 @@ public class HOEMachineData extends HOEData {
 	}
 	@Override
 	public boolean isRunning() {
-		return super.isRunning() & !isSyndicated;
+		return super.isRunning() & isPerformingBlockUpdates();
 	}
 	public HOEMachineData makeRemote() {
 		this.isSided=true;
 		return this;
 	}
-
-	
-
 
 }

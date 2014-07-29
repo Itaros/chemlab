@@ -39,6 +39,11 @@ public class SyndicationHubData extends HOEMachineData implements IEMFCollector 
 
 	
 	
+	@Override
+	public boolean isPerformingBlockUpdates() {
+		return true;//Always :)
+	}
+
 	ArrayList<HOEMachineData> newset;
 	public void startNewInjectionSet(){
 		manager = new InventoryManager();
@@ -133,6 +138,16 @@ public class SyndicationHubData extends HOEMachineData implements IEMFCollector 
 	}
 	
 	
+
+	@Override
+	protected void readInventoryNBT(NBTTagCompound nbt) {
+		super.readInventoryNBT(nbt);
+	}
+
+	@Override
+	protected void writeInventoryNBT(NBTTagCompound nbt) {
+		super.writeInventoryNBT(nbt);
+	}
 
 	//EMF
 	EMFDynamicBattery battery = new EMFDynamicBattery();

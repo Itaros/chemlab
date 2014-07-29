@@ -128,9 +128,6 @@ public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage 
 	public void readNBT(NBTTagCompound nbt) {
 		super.readNBT(nbt);
 		
-		exemplar_cell_in=StackUtility.readItemStackFromNBT(nbt, "in");
-		exemplar_cell_out=StackUtility.readItemStackFromNBT(nbt, "out");
-		
 		fluidDepot.readFromNBT(nbt,"fluiddepot");
 	}
 
@@ -138,10 +135,21 @@ public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage 
 	public void writeNBT(NBTTagCompound nbt) {
 		super.writeNBT(nbt);
 		
+		fluidDepot.writeToNBT(nbt,"fluiddepot");
+	}
+
+	@Override
+	protected void readInventoryNBT(NBTTagCompound nbt) {
+		super.readInventoryNBT(nbt);
+		exemplar_cell_in=StackUtility.readItemStackFromNBT(nbt, "in");
+		exemplar_cell_out=StackUtility.readItemStackFromNBT(nbt, "out");
+	}
+
+	@Override
+	protected void writeInventoryNBT(NBTTagCompound nbt) {
+		super.writeInventoryNBT(nbt);
 		StackUtility.writeItemStackToNBT(exemplar_cell_in, nbt, "in");
 		StackUtility.writeItemStackToNBT(exemplar_cell_out, nbt, "out");
-		
-		fluidDepot.writeToNBT(nbt,"fluiddepot");
 	}		
 	
 	

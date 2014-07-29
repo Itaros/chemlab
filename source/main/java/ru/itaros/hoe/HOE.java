@@ -115,6 +115,10 @@ public class HOE {
     	return  synchroop_tickhandler;
     }
     
+    private HOEWorldGenerator worldgen;
+    public HOEWorldGenerator getHOEWorldGenerator(){
+    	return worldgen;
+    }
     
     @EventHandler
     public void Init(FMLInitializationEvent event)
@@ -125,7 +129,8 @@ public class HOE {
     	synchroop_tickhandler = new HOESynchroportOperationsTickHandler();
     	FMLCommonHandler.instance().bus().register(synchroop_tickhandler);
     	
-    	GameRegistry.registerWorldGenerator(new HOEWorldGenerator(), 100);
+    	worldgen = new HOEWorldGenerator();
+    	GameRegistry.registerWorldGenerator(worldgen, 100);
     }
     
     
