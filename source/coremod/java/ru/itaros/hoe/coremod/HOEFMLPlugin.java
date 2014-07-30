@@ -4,12 +4,12 @@ import java.util.Map;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.TransformerExclusions;
 
-@TransformerExclusions({"ru.itaros.hoe"})
+@TransformerExclusions({"ru.itaros.hoe.coremod"})
 public class HOEFMLPlugin implements IFMLLoadingPlugin {
 
 	@Override
 	public String[] getASMTransformerClass() {
-		return null;
+		return new String[]{"ru.itaros.hoe.coremod.FluidHOEConversionFieldInjector"};
 	}
 
 	@Override

@@ -2,6 +2,9 @@ package ru.itaros.hoe.registries;
 
 import java.util.Hashtable;
 
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import ru.itaros.hoe.fluid.FluidToHOE;
 import ru.itaros.hoe.fluid.HOEFluid;
 
 public class HOEFluidRegistry {
@@ -16,6 +19,19 @@ public class HOEFluidRegistry {
 	
 	public void register(HOEFluid fluid){
 		fluids.put(fluid.getUnlocalizedName(), fluid);
+		createForgeFluidPair(fluid);
+	}
+	private void createForgeFluidPair(HOEFluid fluid) {
+		if(FluidToHOE.isActive()){
+			//Instantianting
+			Fluid f = new Fluid(fluid.getCommonName());
+			//Pairing
+			fluid.setForgeFluid(f);
+			FluidToHOE.set(f, fluid);
+			//Registering
+			FluidRegistry.registerFluid(f);
+			System.out.println("Registered HOEFluid<->ForgeFluid: "+f.getName());
+		}
 	}
 	public HOEFluid pop(String key){
 		return fluids.get(key);
