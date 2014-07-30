@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-pr-2.03i3"
+version = "1.7.10-pr-3.00"
 group= "ru.itaros.chemlab" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "ChemLab"
 
