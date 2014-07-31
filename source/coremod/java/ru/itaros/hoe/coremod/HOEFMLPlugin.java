@@ -32,7 +32,7 @@ public class HOEFMLPlugin implements IFMLLoadingPlugin {
 
 	@Override
 	public String getAccessTransformerClass() {
-		return "ru.itaros.hoe.coremod.HOEAccessTransformer";
+		return null;
 	}
 
 }

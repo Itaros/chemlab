@@ -1,16 +1,16 @@
 package ru.itaros.hoe.data;
 
-import net.minecraft.item.ItemStack;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
 
 public interface IHOEMultiInventoryMachine extends IHOEActiveMachine {
 
-	public ItemStack get_in(int i);
-	public ItemStack get_out(int i);
+	public IUniversalStack get_in(int i);
+	public IUniversalStack get_out(int i);
 	
-	public ItemStack[] get_in();
-	public ItemStack[] get_out();
-	public IHOEMultiInventoryMachine set_in(int i, ItemStack stack);
-	public IHOEMultiInventoryMachine set_out(int i, ItemStack stack);	
+	public IUniversalStack[] get_in();
+	public IUniversalStack[] get_out();
+	public IHOEMultiInventoryMachine set_in(int i, IUniversalStack stack);
+	public IHOEMultiInventoryMachine set_out(int i, IUniversalStack stack);	
 	
 	
 }

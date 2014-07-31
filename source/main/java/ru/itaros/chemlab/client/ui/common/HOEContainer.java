@@ -1,6 +1,8 @@
 package ru.itaros.chemlab.client.ui.common;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -12,6 +14,7 @@ import ru.itaros.hoe.gui.CopierSlot;
 import ru.itaros.hoe.gui.MachineSlot;
 import ru.itaros.hoe.gui.ProgrammerSlot;
 import ru.itaros.hoe.gui.ReadonlySlot;
+import ru.itaros.hoe.gui.UniversalSlot;
 import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
 import ru.itaros.hoe.tiles.MachineTileEntity;
 
@@ -42,7 +45,9 @@ public abstract class HOEContainer extends Container {
 	}
 	
 	
-	public abstract void bindSlots();
+	public void bindSlots(){
+		hoeslots = new LinkedList<UniversalSlot>();
+	}
 
 
 	@Override
@@ -51,6 +56,14 @@ public abstract class HOEContainer extends Container {
 	}
 
 	
+	private LinkedList<UniversalSlot> hoeslots;
+	
+	protected void addHOESlotToContainer(UniversalSlot slot) {
+		hoeslots.push(slot);
+	}
+	public Iterator<UniversalSlot> getHOESlotsIterator(){
+		return hoeslots.iterator();
+	}	
 	
 	
     @Override

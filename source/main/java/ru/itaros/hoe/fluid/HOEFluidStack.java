@@ -1,6 +1,7 @@
 package ru.itaros.hoe.fluid;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidStack;
 
 public class HOEFluidStack {
 
@@ -13,6 +14,11 @@ public class HOEFluidStack {
 	}
 
 	private HOEFluidStack() {
+	}
+
+	public HOEFluidStack(FluidStack proxy) {
+		stackSize = proxy.amount;
+		type = FluidToHOE.get(proxy.getFluid());
 	}
 
 	public HOEFluid getFluid() {
@@ -37,6 +43,37 @@ public class HOEFluidStack {
 		HOEFluidStack stack = new HOEFluidStack();
 		stack.readNBT(tnbt);
 		return stack;
+	}
+
+	public int getMaxStackSize() {
+		return 64;
+	}
+
+	public HOEFluidStack copy() {
+		HOEFluidStack newstack = new HOEFluidStack(type,stackSize);
+		return newstack;
+	}
+
+	public String getUnlocalizedName() {
+		return type.getUnlocalizedName();
+	}
+
+	public static HOEFluidStack loadFluidStackFromNBT(NBTTagCompound nbt) {
+		HOEFluidStack fluidstack = new HOEFluidStack();
+        fluidstack.readFromNBT(nbt);
+        return fluidstack.getFluid() != null ? fluidstack : null;
+	}
+
+	public void readFromNBT(NBTTagCompound nbt) {
+		type=HOEFluid.getFluidRegistry().pop(nbt.getString("id"));
+		stackSize=nbt.getInteger("amount");
+	}
+	
+	public void writeToNBT(NBTTagCompound nbt){
+		if(type!=null){
+			nbt.setString("id", type.getUnlocalizedName());
+			nbt.setInteger("amount", stackSize);
+		}
 	}
 	
 }

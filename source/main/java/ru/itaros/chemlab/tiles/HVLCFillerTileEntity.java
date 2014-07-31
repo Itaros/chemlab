@@ -197,7 +197,7 @@ public class HVLCFillerTileEntity extends MachineTileEntity implements ISidedInv
 		if(hmd!=null){
 			HVLCFillerData fd = (HVLCFillerData)hmd;
 			//Items
-			inbound=fd.tryToPutIn(inbound);
+			inbound=fd.tryToPutItemsIn(inbound);
 			//Fluid
 			tank.setFluid(fd.tryToPutIn(tank.getFluid()));
 		}
@@ -208,7 +208,7 @@ public class HVLCFillerTileEntity extends MachineTileEntity implements ISidedInv
 		HOEMachineData hmd = getServerData();
 		if(hmd!=null){
 			HVLCFillerData fd = (HVLCFillerData)hmd;
-			outbound=fd.tryToGetOut(outbound);
+			outbound=fd.tryToGetItemsOut(outbound);
 		}
 	}
 

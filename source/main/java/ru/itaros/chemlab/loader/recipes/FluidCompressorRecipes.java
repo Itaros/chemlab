@@ -6,6 +6,8 @@ import net.minecraft.item.ItemStack;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.hoe.fluid.HOEFluid;
 import ru.itaros.hoe.fluid.IFluidCompressable;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalStackUtils;
 import ru.itaros.hoe.recipes.FixedConversionRecipe;
 import ru.itaros.hoe.recipes.RecipesCollection;
 
@@ -24,8 +26,8 @@ public class FluidCompressorRecipes {
 			if(f instanceof IFluidCompressable){
 				IFluidCompressable ifc = (IFluidCompressable)f;
 				
-				ItemStack i = new ItemStack(HiVolumeLiquidCell.getByFluid(f));
-				ItemStack o = new ItemStack(HiVolumeLiquidCell.getByFluid(ifc.getCompressedForm()));
+				IUniversalStack i = UniversalStackUtils.convert(new ItemStack(HiVolumeLiquidCell.getByFluid(f)));
+				IUniversalStack o = UniversalStackUtils.convert(new ItemStack(HiVolumeLiquidCell.getByFluid(ifc.getCompressedForm())));
 				int requaredEnergy = ifc.getRequaredEnergyForCompression();
 				FixedConversionRecipe fcr = new FixedConversionRecipe(REQUIRED_TIME,requaredEnergy,i,o);
 				fcr.setUnlocalizedName("fluicomp."+f.getCommonName());

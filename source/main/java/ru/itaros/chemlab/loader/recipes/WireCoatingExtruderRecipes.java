@@ -4,6 +4,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import ru.itaros.chemlab.loader.ItemLoader;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalStackUtils;
 import ru.itaros.hoe.recipes.RecipesCollection;
 import ru.itaros.hoe.recipes.WireDiameterBasedFixedConversionRecipe;
 
@@ -12,12 +14,12 @@ public class WireCoatingExtruderRecipes {
 	public static RecipesCollection recipes;
 	
 	public static void load(){	
-		ItemStack[] i_a,o;
+		IUniversalStack[] i_a,o;
 		Item source;
 		int min,max;
 		
-		i_a=new ItemStack[]{new ItemStack(Items.paper,16)};
-		o  =new ItemStack[]{new ItemStack(ItemLoader.powercable,5)};
+		i_a=UniversalStackUtils.convert(new ItemStack[]{new ItemStack(Items.paper,16)});
+		o  =UniversalStackUtils.convert(new ItemStack[]{new ItemStack(ItemLoader.powercable,5)});
 		source=ItemLoader.rod_swg_iron;
 		min=5;
 		max=12;

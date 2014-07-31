@@ -1,18 +1,19 @@
 package ru.itaros.hoe.recipes;
 
-import net.minecraft.item.ItemStack;
 import ru.itaros.hoe.data.machines.HOEMachineCrafterData;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalStackUtils;
 import ru.itaros.hoe.utils.StackUtility;
 
 public class FixedConversionMetaUnawareRecipe extends FixedConversionRecipe {
 
 
 	public FixedConversionMetaUnawareRecipe(int timeReq, int powerReq,
-			ItemStack[] input, ItemStack[] output) {
+			IUniversalStack[] input, IUniversalStack[] output) {
 		super(timeReq, powerReq, input, output);
 	}
 	public FixedConversionMetaUnawareRecipe(int timeReq, int powerReq,
-			ItemStack input, ItemStack output) {
+			IUniversalStack input, IUniversalStack output) {
 		super(timeReq, powerReq, input, output);
 	}
 	
@@ -25,9 +26,9 @@ public class FixedConversionMetaUnawareRecipe extends FixedConversionRecipe {
 		boolean isInitialStorageSizeValid = super.checkStorage(data);
 		boolean isSWGValid = false;
 		
-		ItemStack outcome = data.get_out(0);
-		if(outcome==null || outcome.stackSize==0){return true;}else{
-			ItemStack income = data.get_in(0);
+		IUniversalStack outcome = data.get_out(0);
+		if(outcome==null || outcome.getStackSize()==0){return true;}else{
+			IUniversalStack income = data.get_in(0);
 			if(income==null){return false;}
 			int sourcedam = income.getItemDamage();
 			isSWGValid = sourcedam==outcome.getItemDamage();
@@ -45,10 +46,10 @@ public class FixedConversionMetaUnawareRecipe extends FixedConversionRecipe {
 
 	public void incrementProduction(HOEMachineCrafterData data, int damage) {
 		for(int i = 0; i<gridOutput.length;i++){
-			int gridSurp = gridOutput[i].stackSize;
-			ItemStack stack = data.get_out(i);
+			int gridSurp = gridOutput[i].getStackSize();
+			IUniversalStack stack = data.get_out(i);
 			if(stack==null){
-				stack=ItemStack.copyItemStack(gridOutput[i]);
+				stack=UniversalStackUtils.copyStack(gridOutput[i]);
 			}else{
 				stack = StackUtility.incrementStack(stack,gridSurp);
 			}
@@ -66,13 +67,13 @@ public class FixedConversionMetaUnawareRecipe extends FixedConversionRecipe {
 	}
 
 	private int pollItemDamage(HOEMachineCrafterData data){
-		ItemStack stack = data.get_in(0);
+		IUniversalStack stack = data.get_in(0);
 		if(stack==null){return 0;}
 		return stack.getItemDamage();
 	}	
 	
 	@Override
-	public int getSlotIdFor(ItemStack type, boolean ignoreMetadata) {
+	public int getSlotIdFor(IUniversalStack type, boolean ignoreMetadata) {
 		return super.getSlotIdFor(type, true);
 	}
 

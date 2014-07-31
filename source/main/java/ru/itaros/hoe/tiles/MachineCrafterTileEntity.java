@@ -7,6 +7,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
 
 import org.apache.logging.log4j.Level;
 
@@ -20,6 +26,8 @@ import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.data.utils.HOEDataFingerprint;
 import ru.itaros.hoe.gui.ProgrammerSlot;
 import ru.itaros.hoe.io.HOEMachineIO;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalStackUtils;
 import ru.itaros.hoe.jobs.HOEMachines;
 import ru.itaros.hoe.recipes.Recipe;
 import ru.itaros.hoe.utils.StackUtility;
@@ -27,7 +35,7 @@ import ru.itaros.hoe.utils.TileEntityHelper;
 import cpw.mods.fml.common.FMLLog;
 
 
-public abstract class MachineCrafterTileEntity extends MachineTileEntity implements ISidedInventory, IHOEInventorySyncable{
+public abstract class MachineCrafterTileEntity extends MachineTileEntity implements ISidedInventory, IUniversalInventory, IHOEInventorySyncable, IFluidHandler{
 
 	ItemStack programmerStack=null;
 	
@@ -47,6 +55,8 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	//INVENTORY	
 	
 	ItemStack in, out;
+	FluidTank fin = new FluidTank(1000);
+	FluidTank fout = new FluidTank(1000);
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
@@ -77,12 +87,7 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	
 
 	
-	@Override
-	public ItemStack getStackInSlot(int slot) {
-		//prgrammer
-		if(slot==ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT){
-			return programmerStack;
-		}
+	public IUniversalStack getStackInHOERemoteSlot(int slot){
 		//hoe synced
 		if(slot<0){
 			HOEMachineCrafterData sd = (HOEMachineCrafterData)this.getClientData();
@@ -100,8 +105,22 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 					return sd.get_out_withRecipe(realdataslot);
 				}				
 			}
-		}
-		
+		}	
+		return null;
+	}
+	
+	
+	/*
+	 * This method ensures retrieval of ItemStacks from slot to go along with minecraft
+	 * (non-Javadoc)
+	 * @see net.minecraft.inventory.IInventory#getStackInSlot(int)
+	 */
+	@Override
+	public ItemStack getStackInSlot(int slot) {
+		//prgrammer
+		if(slot==ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT){
+			return programmerStack;
+		}		
 		//real
 		switch(slot){
 		case 0:
@@ -256,12 +275,13 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	
 	@Override
 	public void pushToHOE() {
-		in=TileEntityHelper.HOEpush(this, in);
+		in=TileEntityHelper.HOEItemPush(this, in);
+		fin.setFluid(TileEntityHelper.HOEFluidPush(this,fin.getFluid()));
 	}
 
 	@Override
 	public void pullFromHOE() {
-		out=TileEntityHelper.HOEpull(this, out);
+		out=TileEntityHelper.HOEItemPull(this, out);
 	}
 	
 	
@@ -288,7 +308,64 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	}
 	private HOEMachineCrafterData getCrafterServer(){
 		return (HOEMachineCrafterData)server;
+	}
+	
+	//Fluids	
+	
+	@Override
+	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
+		FluidStack fl = fin.getFluid();
+		if(fl==null){return fin.fill(resource, doFill);}
+		
+		if(fl.getFluid()==resource.getFluid()){
+			return fin.fill(resource, doFill);
+		}else{
+			if(fl.amount==0){
+				fin.setFluid(new FluidStack(resource.getFluid(),0));
+				return fin.fill(resource, doFill);
+			}
+			return 0;
+		}
+	}
+
+	@Override
+	public FluidStack drain(ForgeDirection from, FluidStack resource,
+			boolean doDrain) {
+		FluidStack fl = fout.getFluid();
+		if(fl==null){return null;}
+		
+		Fluid comparable = resource.getFluid();
+		if(comparable==fl.getFluid()){
+			return fout.drain(resource.amount, doDrain);
+		}else{
+			return null;
+		}
+		
+	}
+
+	@Override
+	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean canFill(ForgeDirection from, Fluid fluid) {
+		return fin.getFluidAmount()==0;
+	}
+
+	@Override
+	public boolean canDrain(ForgeDirection from, Fluid fluid) {
+		return true;//Drain is always possible \o/
+	}
+
+	private FluidTankInfo[] fluidTankInfo = new FluidTankInfo[2];
+	@Override
+	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
+		fluidTankInfo[0]=new FluidTankInfo(fin);
+		fluidTankInfo[1]=new FluidTankInfo(fout);
+		return fluidTankInfo;
 	}	
 	
-	
+
 }

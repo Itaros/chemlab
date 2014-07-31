@@ -11,6 +11,7 @@ import ru.itaros.chemlab.items.ChemLabWireItem;
 import ru.itaros.chemlab.items.CrushedOre;
 import ru.itaros.chemlab.items.DegradableItem;
 import ru.itaros.chemlab.items.Dust;
+import ru.itaros.chemlab.items.HVLCIndex;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.items.HiVolumeLiquidCellEmpty;
 import ru.itaros.chemlab.items.IOMultitool;
@@ -424,10 +425,14 @@ public class ItemLoader {
 	
 	private static void hiVolumeLiquidCellAutoloader() {
 		HOEFluid[] all = HOEFluid.getFluidRegistry().all();
+		HVLCIndex[] index = new HVLCIndex[all.length];
+		int j = -1;
 		for(HOEFluid f : all){
-			HiVolumeLiquidCell hvlc = new HiVolumeLiquidCell(f);
-			GameRegistry.registerItem(hvlc, hvlc.getUnlocalizedName());
+			j++;
+			HVLCIndex i = new HVLCIndex(f);
+			index[j]=i;
 		}
-		
+		HiVolumeLiquidCell hvlc = new HiVolumeLiquidCell(index);
+		GameRegistry.registerItem(hvlc, hvlc.getUnlocalizedName());		
 	}
 }

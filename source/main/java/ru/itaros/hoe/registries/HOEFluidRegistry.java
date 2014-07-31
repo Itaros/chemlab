@@ -2,8 +2,10 @@ package ru.itaros.hoe.registries;
 
 import java.util.Hashtable;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import ru.itaros.hoe.blocks.ForgeSidedFluidBlock;
 import ru.itaros.hoe.fluid.FluidToHOE;
 import ru.itaros.hoe.fluid.ForgeFluidNameFilter;
 import ru.itaros.hoe.fluid.HOEFluid;
@@ -36,6 +38,11 @@ public class HOEFluidRegistry {
 			//Registering
 			if(!FluidRegistry.isFluidRegistered(f)){
 				FluidRegistry.registerFluid(f);
+				
+				//Creating block
+				
+				ForgeSidedFluidBlock b = new ForgeSidedFluidBlock(f);
+				GameRegistry.registerBlock(b, b.getUnlocalizedName());
 			}
 			System.out.println("Registered HOEFluid<->ForgeFluid: "+f.getName());
 		}

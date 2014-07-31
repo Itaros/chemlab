@@ -9,6 +9,9 @@ import ru.itaros.hoe.fluid.HOEFluid;
 import ru.itaros.hoe.fluid.HOEFluidStack;
 import ru.itaros.hoe.fluid.IFluidComposite;
 import ru.itaros.hoe.fluid.HOEFluid.TempShift;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalItemStack;
+import ru.itaros.hoe.itemhandling.UniversalStackUtils;
 import ru.itaros.hoe.recipes.FixedConversionRecipe;
 import ru.itaros.hoe.recipes.RecipesCollection;
 
@@ -27,19 +30,19 @@ public class EvaporationUnitRecipes {
 			if(f instanceof IFluidComposite){
 				IFluidComposite ifc = (IFluidComposite)f;
 				
-				ItemStack[] i = new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(f)),null};
+				IUniversalStack[] i = UniversalStackUtils.convert(new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(f)),null});
 				HOEFluidStack[] composition = ifc.getComposition();
 				
-				ArrayList<ItemStack> os = new ArrayList<ItemStack>();
+				ArrayList<IUniversalStack> os = new ArrayList<IUniversalStack>();
 				int hvlcReq=0-1;//-1 is original HVLC
 				for(HOEFluidStack stack:composition){
-					ItemStack part = new ItemStack(HiVolumeLiquidCell.getByFluid(stack.type),stack.stackSize);
+					IUniversalStack part = new UniversalItemStack(new ItemStack(HiVolumeLiquidCell.getByFluid(stack.type),stack.stackSize));
 					hvlcReq+=stack.stackSize;
 					os.add(part);
 				}
-				ItemStack[] o = new ItemStack[os.size()];
+				IUniversalStack[] o = new IUniversalStack[os.size()];
 				o = os.toArray(o);
-				i[1]=new ItemStack(ItemLoader.emptyhvlc,hvlcReq);//emptyhvlcs
+				i[1]=new UniversalItemStack(new ItemStack(ItemLoader.emptyhvlc,hvlcReq));//emptyhvlcs
 				int requaredEnergy = 1;// ifc.getReleasedEnergyForExpansion();
 				FixedConversionRecipe fxr = new FixedConversionRecipe(REQUIRED_TIME,requaredEnergy,i,o);
 				fxr.setUnlocalizedName("evapunit."+f.getCommonName());

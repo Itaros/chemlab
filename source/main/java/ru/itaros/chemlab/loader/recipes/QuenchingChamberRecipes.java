@@ -5,6 +5,7 @@ import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.chemlab.loader.TierLoader;
+import ru.itaros.hoe.itemhandling.UniversalStackUtils;
 import ru.itaros.hoe.recipes.FixedConversionMetaUnawareRecipe;
 import ru.itaros.hoe.recipes.RecipesCollection;
 
@@ -23,12 +24,12 @@ public class QuenchingChamberRecipes {
 		if(TierLoader.L0_WroughtIron.isEnabled()){
 			ItemStack ww_in = new ItemStack(ItemLoader.rod_swg_hot_wroughtIron,10);
 			ItemStack ww_out = new ItemStack(ItemLoader.rod_swg_wroughtIron,10);
-			quench_wire_wrought = new FixedConversionMetaUnawareRecipe(1000,1000,new ItemStack[]{ww_in,formingGas_in},new ItemStack[]{ww_out,formingGas_out});
+			quench_wire_wrought = new FixedConversionMetaUnawareRecipe(1000,1000,UniversalStackUtils.convert(new ItemStack[]{ww_in,formingGas_in}),UniversalStackUtils.convert(new ItemStack[]{ww_out,formingGas_out}));
 			quench_wire_wrought.setUnlocalizedName("quencher.wire.wrought");
 		}
 			ItemStack i_in = new ItemStack(ItemLoader.rod_swg_hot_iron,10);
 			ItemStack i_out = new ItemStack(ItemLoader.rod_swg_iron,10);
-			quench_wire_iron = new FixedConversionMetaUnawareRecipe(1000,1000,new ItemStack[]{i_in,formingGas_in},new ItemStack[]{i_out,formingGas_out});
+			quench_wire_iron = new FixedConversionMetaUnawareRecipe(1000,1000,UniversalStackUtils.convert(new ItemStack[]{i_in,formingGas_in}),UniversalStackUtils.convert(new ItemStack[]{i_out,formingGas_out}));
 			quench_wire_iron.setUnlocalizedName("quencher.wire.iron");		
 		
 			

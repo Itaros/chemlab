@@ -18,6 +18,11 @@ public class AirLiquid extends Air{
 		return TempShift.cooled;
 	}
 
+	@Override
+	public HOEFluidState getState() {
+		return HOEFluidState.LIQUID;
+	}
+
 
 	
 	

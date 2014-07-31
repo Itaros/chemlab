@@ -172,7 +172,7 @@ public class SyndicationItemPortTileEntity extends MachineTileEntity implements 
 			SyndicationItemPortData fd = (SyndicationItemPortData)hmd;
 			//if(fd==null){throw new RuntimeException("Broken HOEData: "+hmd.getClass().getName());}
 			if(fd.getFilter()==null || inbound!=null && inbound.isItemEqual(fd.getFilter())){
-				inbound=fd.tryToPutIn(inbound, null);
+				inbound=fd.tryToPutItemsIn(inbound, null);
 			}
 		}
 	}
@@ -182,7 +182,7 @@ public class SyndicationItemPortTileEntity extends MachineTileEntity implements 
 		HOEMachineData hmd = getServerData();
 		if(hmd!=null){
 			SyndicationItemPortData fd = (SyndicationItemPortData)hmd;
-			outbound=fd.tryToGetOut(outbound, null);
+			outbound=fd.tryToGetItemsOut(outbound, null);
 		}
 	}
 

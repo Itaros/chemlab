@@ -7,8 +7,9 @@ import ru.itaros.chemlab.hoe.data.GasChimneyData;
 import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.data.utils.SynchroportOperationMode;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.utils.EnumUtility;
-import ru.itaros.hoe.utils.StackTransferTuple;
+import ru.itaros.hoe.utils.ItemStackTransferTuple;
 import ru.itaros.hoe.utils.StackUtility;
 
 public class SyndicationItemPortData extends HOEMachineData implements ISynchroportItems {
@@ -24,14 +25,14 @@ public class SyndicationItemPortData extends HOEMachineData implements ISynchrop
 		super();
 	}
 
-	private ItemStack inbound;
-	private ItemStack filter;
+	private IUniversalStack inbound;
+	private IUniversalStack filter;
 	
 	
-	public ItemStack get_in(){
+	public IUniversalStack get_in(){
 		return inbound;
 	}
-	public void set_in(ItemStack stack) {
+	public void set_in(IUniversalStack stack) {
 		inbound=stack;
 		this.markDirty();
 	}	
@@ -53,14 +54,14 @@ public class SyndicationItemPortData extends HOEMachineData implements ISynchrop
 		return mode;
 	}
 	
-	StackTransferTuple transferTuple = new StackTransferTuple();
+	ItemStackTransferTuple transferTuple = new ItemStackTransferTuple();
 	@Override
-	public ItemStack tryToPutIn(ItemStack source) {
-		return tryToPutIn(source, null);
+	public ItemStack tryToPutItemsIn(ItemStack source) {
+		return tryToPutItemsIn(source, null);
 	}
 
 	@Override
-	public ItemStack tryToPutIn(ItemStack source, ItemStack filter) {
+	public ItemStack tryToPutItemsIn(ItemStack source, ItemStack filter) {
 		if(mode.canIn()){
 			transferTuple.fill(inbound, source);
 			source=StackUtility.tryToPutIn(transferTuple,false,filter);
@@ -71,12 +72,12 @@ public class SyndicationItemPortData extends HOEMachineData implements ISynchrop
 	}
 
 	@Override
-	public ItemStack tryToGetOut(ItemStack target) {
-		return tryToGetOut(target, null);
+	public ItemStack tryToGetItemsOut(ItemStack target) {
+		return tryToGetItemsOut(target, null);
 	}
 
 	@Override
-	public ItemStack tryToGetOut(ItemStack target, ItemStack filter) {
+	public ItemStack tryToGetItemsOut(ItemStack target, ItemStack filter) {
 		if(mode.canOut()){
 			transferTuple.fill(target, inbound);
 			target = StackUtility.tryToGetOut(transferTuple,filter);
@@ -126,11 +127,11 @@ public class SyndicationItemPortData extends HOEMachineData implements ISynchrop
 		StackUtility.writeItemStackToNBT(inbound, nbt, "in");			
 	}
 
-	public void setFilter(ItemStack stack){
+	public void setFilter(IUniversalStack stack){
 		filter=stack;
 	}
 
-	public ItemStack getFilter() {
+	public IUniversalStack getFilter() {
 		return filter;
 	}
 

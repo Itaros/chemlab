@@ -19,10 +19,13 @@ import ru.itaros.chemlab.network.packets.SetHOEMachineRecipePacket;
 import ru.itaros.hoe.gui.Tab;
 import ru.itaros.hoe.io.HOEMachineCrafterIO;
 import ru.itaros.hoe.io.HOEMachineIO;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalItemStack;
 import ru.itaros.hoe.recipes.Recipe;
 import ru.itaros.hoe.recipes.RecipesCollection;
 import ru.itaros.hoe.tiles.ISecured;
 import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
+import ru.itaros.hoe.utils.RenderingUtils;
 
 public class GUIToolProgrammer extends GuiScreen {
 
@@ -249,15 +252,19 @@ public class GUIToolProgrammer extends GuiScreen {
 					//TODO: This shit should be all precached
 					//Drawing incomings
 					int inc_offset=-1;
-					for(ItemStack stack_inc : r.getIncomingStricttypes()){
+					for(IUniversalStack stack_inc : r.getIncomingStricttypes()){
 						inc_offset++;
-						drawItemStack(stack_inc, x+xi+60-10-(inc_offset*(16+2)), y+yi+18+(ystep*i), null);
+						if(stack_inc instanceof UniversalItemStack){
+							RenderingUtils.drawItemStack((ItemStack) stack_inc.getProxy(), x+xi+60-10-(inc_offset*(16+2)), y+yi+18+(ystep*i), null, this.zLevel, this.itemRender, this.fontRendererObj);
+						}
 					}
 					//Drawing outcomings
 					int out_offset=-1;
-					for(ItemStack stack_out : r.getOutcomingStricttypes()){
+					for(IUniversalStack stack_out : r.getOutcomingStricttypes()){
 						out_offset++;
-						drawItemStack(stack_out, x+xi+97+10+(out_offset*(16+2)), y+yi+18+(ystep*i), null);
+						if(stack_out instanceof UniversalItemStack){
+							RenderingUtils.drawItemStack((ItemStack) stack_out.getProxy(), x+xi+97+10+(out_offset*(16+2)), y+yi+18+(ystep*i), null, this.zLevel, this.itemRender, this.fontRendererObj);
+						}
 					}	
 					
 					RenderHelper.enableStandardItemLighting();
@@ -313,22 +320,6 @@ public class GUIToolProgrammer extends GuiScreen {
 	public boolean doesGuiPauseGame() {
 		return false;
 	}
-
-
-	//Mojangcode
-    private void drawItemStack(ItemStack stack, int x, int y, String stackSizeOverride)
-    {
-        GL11.glTranslatef(0.0F, 0.0F, 32.0F);
-        this.zLevel = 100.0F;
-        itemRender.zLevel = 100.0F;
-        FontRenderer font = null;
-        if (stack != null) font = stack.getItem().getFontRenderer(stack);
-        if (font == null) font = fontRendererObj;
-        itemRender.renderItemAndEffectIntoGUI(font, this.mc.getTextureManager(), stack, x, y);
-        itemRender.renderItemOverlayIntoGUI(font, this.mc.getTextureManager(), stack, x, y - 0, stackSizeOverride);//0 or 8
-        this.zLevel = 0.0F;
-        itemRender.zLevel = 0.0F;
-    }
 
 	@Override
 	protected void mouseMovedOrUp(int x2, int y2,

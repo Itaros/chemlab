@@ -6,8 +6,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.BlockFluidFinite;
 import ru.itaros.chemlab.ChemLabCreativeTab;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
+import ru.itaros.hoe.fluid.FluidToHOE;
 import ru.itaros.hoe.fluid.HOEFluid;
 
 public class HiVolumeLiquidCellEmpty extends Item {
@@ -49,7 +51,11 @@ public class HiVolumeLiquidCellEmpty extends Item {
 			}			
 			
 			
-		}		
+		}else if(target instanceof BlockFluidFinite){
+			BlockFluidFinite f = (BlockFluidFinite)target;
+			//HOEFluid hoefl = FluidToHOE.get(f.getFluid());
+			//There is nothing to do. BFF is fragmented thingie :(
+		}
 		
 		return stack;
 	    }

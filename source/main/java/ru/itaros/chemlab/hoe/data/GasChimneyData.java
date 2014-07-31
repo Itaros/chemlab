@@ -9,7 +9,9 @@ import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.fluid.HOEFluid.HOEFluidState;
-import ru.itaros.hoe.utils.StackTransferTuple;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalStackUtils;
+import ru.itaros.hoe.utils.ItemStackTransferTuple;
 import ru.itaros.hoe.utils.StackUtility;
 
 public class GasChimneyData extends HOEMachineData implements ISynchroportItems {
@@ -35,11 +37,11 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 	}
 
 	
-	private ItemStack inbound,outbound;
-	public ItemStack get_cell_in(){
+	private IUniversalStack inbound,outbound;
+	public IUniversalStack get_cell_in(){
 		return inbound;
 	}
-	public ItemStack get_cell_out(){
+	public IUniversalStack get_cell_out(){
 		return outbound;
 	}	
 	//=======WORK TRIGGER=======
@@ -66,12 +68,12 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 		hasWork=checkWork();
 	}
 	private boolean checkWork(){
-		if(outbound!=null && outbound.stackSize>=64){
+		if(outbound!=null && outbound.getStackSize()>=64){
 			return false;
 		}
 		if(inbound==null){
 			return false;
-		}else if(inbound.stackSize<1){
+		}else if(inbound.getStackSize()<1){
 			return false;
 		}
 		return true;
@@ -83,13 +85,13 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 		if(checkWork()){
 			Item i = inbound.getItem();
 			if(isItemValid(i)){
-				inbound.stackSize--;
+				inbound.decrement(1);
 				inbound=StackUtility.verify(inbound);
 				
 				if(outbound==null){
-					outbound = new ItemStack(ItemLoader.emptyhvlc,1);
+					outbound = UniversalStackUtils.convert(new ItemStack(ItemLoader.emptyhvlc,1));
 				}else{
-					outbound.stackSize++;
+					outbound.increment(1);
 				}
 				//Smoke
 				chimneyAccumulatedSmoke+=this.ticksRequared*5;
@@ -98,7 +100,7 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 				}
 			}else{
 				if(outbound==null){
-					ItemStack temp = inbound;
+					IUniversalStack temp = inbound;
 					inbound=null;
 					outbound=temp.copy();
 				}
@@ -122,24 +124,24 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 	
 	
 	
-	StackTransferTuple transferTuple = new StackTransferTuple();
+	ItemStackTransferTuple transferTuple = new ItemStackTransferTuple();
 	
-	public ItemStack tryToPutIn(ItemStack source){
-		return tryToPutIn(source, null);
+	public ItemStack tryToPutItemsIn(ItemStack source){
+		return tryToPutItemsIn(source, null);
 	}
 
-	public ItemStack tryToPutIn(ItemStack source, ItemStack filter){
+	public ItemStack tryToPutItemsIn(ItemStack source, ItemStack filter){
 		transferTuple.fill(inbound, source);
 		source=StackUtility.tryToPutIn(transferTuple,false,null);
 		inbound=transferTuple.retr1();
 		this.markDirty();
 		return source;
 	}
-	public ItemStack tryToGetOut(ItemStack target){
-		return tryToGetOut(target, null);
+	public ItemStack tryToGetItemsOut(ItemStack target){
+		return tryToGetItemsOut(target, null);
 	}
 
-	public ItemStack tryToGetOut(ItemStack target, ItemStack filter){
+	public ItemStack tryToGetItemsOut(ItemStack target, ItemStack filter){
 		transferTuple.fill(target, outbound);
 		target = StackUtility.tryToGetOut(transferTuple,null);
 		outbound=StackUtility.verify(transferTuple.retr2());

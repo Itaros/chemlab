@@ -6,13 +6,14 @@ import java.util.List;
 
 import codechicken.nei.PositionedStack;
 import net.minecraft.item.ItemStack;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.recipes.Recipe;
 
 public class RecipeNEIIncapsulator {
 
 	public RecipeNEIIncapsulator(Recipe recipe){
-		ItemStack[] cl_in = recipe.getIncomingStricttypes();
-		ItemStack[] cl_ou = recipe.getOutcomingStricttypes();
+		IUniversalStack[] cl_in = recipe.getIncomingStricttypes();
+		IUniversalStack[] cl_ou = recipe.getOutcomingStricttypes();
 		
 		PositionedStack[] nei_in=generatePositionedStacks(cl_in,true);
 		PositionedStack[] nei_ou=generatePositionedStacks(cl_ou,false);
@@ -28,8 +29,8 @@ public class RecipeNEIIncapsulator {
 	List<PositionedStack> out;
 	PositionedStack host;
 
-	private PositionedStack[] generatePositionedStacks(ItemStack[] stacks, boolean isIn) {
-		PositionedStack[] ps = new PositionedStack[stacks.length];
+	private PositionedStack[] generatePositionedStacks(IUniversalStack[] cl_in, boolean isIn) {
+		PositionedStack[] ps = new PositionedStack[cl_in.length];
 		
 		int stepping = 19;
 		int y_start = 2;//36-stepping;
@@ -39,10 +40,10 @@ public class RecipeNEIIncapsulator {
 		int horiffset = 0;
 		int step = -1;
 		int i =-1;
-		for(ItemStack s : stacks){
+		for(IUniversalStack s : cl_in){
 			i++;step++;
 			if(step>=3){step=0;horiffset++;}
-			ps[i]=new PositionedStack(s,xpos+(horiffset*stepping*(isIn?-1:1)),y_start+(stepping*step),true);
+			ps[i]=new PositionedStack(s.getProxy(),xpos+(horiffset*stepping*(isIn?-1:1)),y_start+(stepping*step),true);
 		}
 		
 		return ps;

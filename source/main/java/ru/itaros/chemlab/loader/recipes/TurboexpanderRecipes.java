@@ -6,6 +6,8 @@ import net.minecraft.item.ItemStack;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.hoe.fluid.HOEFluid;
 import ru.itaros.hoe.fluid.IFluidExpandable;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalStackUtils;
 import ru.itaros.hoe.recipes.FixedConversionRecipe;
 import ru.itaros.hoe.recipes.RecipesCollection;
 
@@ -23,8 +25,8 @@ public class TurboexpanderRecipes {
 			if(f instanceof IFluidExpandable){
 				IFluidExpandable ifc = (IFluidExpandable)f;
 				
-				ItemStack i = new ItemStack(HiVolumeLiquidCell.getByFluid(f));
-				ItemStack o = new ItemStack(HiVolumeLiquidCell.getByFluid(ifc.getExpandedForm()));
+				IUniversalStack i = UniversalStackUtils.convert(new ItemStack(HiVolumeLiquidCell.getByFluid(f)));
+				IUniversalStack o = UniversalStackUtils.convert(new ItemStack(HiVolumeLiquidCell.getByFluid(ifc.getExpandedForm())));
 				int requaredEnergy = 10;// ifc.getReleasedEnergyForExpansion();
 				FixedConversionRecipe fcr = new FixedConversionRecipe(REQUIRED_TIME,requaredEnergy,i,o);
 				fcr.setUnlocalizedName("turboexp."+f.getCommonName());

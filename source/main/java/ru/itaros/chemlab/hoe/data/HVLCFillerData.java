@@ -9,7 +9,9 @@ import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.hoe.data.IHasLiquidStorage;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.fluid.HOEFluidDepot;
-import ru.itaros.hoe.utils.StackTransferTuple;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalStackUtils;
+import ru.itaros.hoe.utils.ItemStackTransferTuple;
 import ru.itaros.hoe.utils.StackUtility;
 
 public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage {
@@ -37,32 +39,32 @@ public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage 
 		//return FluidUtility.tryToPutIn(target, source, cap);
 	}
 	
-	StackTransferTuple transferTuple = new StackTransferTuple();
+	ItemStackTransferTuple transferTuple = new ItemStackTransferTuple();
 	
-	public ItemStack tryToPutIn(ItemStack source){
+	public IUniversalStack tryToPutIn(IUniversalStack source){
 		transferTuple.fill(exemplar_cell_in, source);
 		source=StackUtility.tryToPutIn(transferTuple,false,null);
 		exemplar_cell_in=transferTuple.retr1();
 		return source;
 	}
-	public ItemStack tryToGetOut(ItemStack target){
+	public IUniversalStack tryToGetOut(IUniversalStack target){
 		transferTuple.fill(target, exemplar_cell_out);
 		target = StackUtility.tryToGetOut(transferTuple,null);
 		exemplar_cell_out=transferTuple.retr2();
 		return target;
 	}
 	
-	private ItemStack exemplar_cell_in;
+	private IUniversalStack exemplar_cell_in;
 	
-	public final ItemStack getExemplar_cell_in() {
+	public final IUniversalStack getExemplar_cell_in() {
 		return exemplar_cell_in;
 	}
 
-	public final ItemStack getExemplar_cell_out() {
+	public final IUniversalStack getExemplar_cell_out() {
 		return exemplar_cell_out;
 	}
 
-	private ItemStack exemplar_cell_out;
+	private IUniversalStack exemplar_cell_out;
 	
 	public static final int DEPOT_CAPACITY=10000;//mb
 	HOEFluidDepot fluidDepot = new HOEFluidDepot(DEPOT_CAPACITY);
@@ -86,18 +88,18 @@ public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage 
 	
 	public boolean isThereSpareCell(){
 		if(exemplar_cell_in==null){return false;}
-		if(exemplar_cell_in.stackSize>0){
+		if(exemplar_cell_in.getStackSize()>0){
 			return true;
 		}else{return false;}
 	}
 	public int getCellsCount() {
 		if(exemplar_cell_out==null){return 0;}
-		return exemplar_cell_out.stackSize;
+		return exemplar_cell_out.getStackSize();
 	}
 
 	public boolean decrementEmptyCells(){
 		if(isThereSpareCell()){
-			exemplar_cell_in.stackSize--;
+			exemplar_cell_in.decrement(1);
 			return true;
 		}else{
 			return false;
@@ -106,9 +108,9 @@ public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage 
 	
 	public void incrementCellsCount() {
 		if(exemplar_cell_out==null){
-			exemplar_cell_out = new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.water_natural));
+			exemplar_cell_out = UniversalStackUtils.convert(new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.water_natural)));
 		}
-		exemplar_cell_out.stackSize++;
+		exemplar_cell_out.increment(1);
 	}
 
 	@Override

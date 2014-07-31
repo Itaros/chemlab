@@ -1,10 +1,14 @@
 package ru.itaros.hoe.recipes;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
+import ru.itaros.api.hoe.exceptions.HOEUnmatchedUniStackException;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
 import ru.itaros.hoe.data.machines.HOEMachineCrafterData;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.io.HOEMachineCrafterIO;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalItemStack;
 import ru.itaros.hoe.utils.StackUtility;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -22,8 +26,8 @@ public abstract class Recipe {
 	public abstract int getIncomingSlots();
 	public abstract int getOutcomingSlots();
 	
-	public abstract ItemStack[] getIncomingStricttypes();
-	public abstract ItemStack[] getOutcomingStricttypes();
+	public abstract IUniversalStack[] getIncomingStricttypes();
+	public abstract IUniversalStack[] getOutcomingStricttypes();
 	
 	
 	//TODO: HOE-style exception
@@ -66,7 +70,7 @@ public abstract class Recipe {
 
 	public int getSlotIdFor(ItemStack type, boolean ignoreMetadata) {
 		if(type==null){return -1;}
-		ItemStack[] stacks = getIncomingStricttypes();
+		IUniversalStack[] stacks = getIncomingStricttypes();
 		for(int i = 0 ; i < stacks.length ; i++){
 			if(stacks[i]==null){continue;}
 			if(StackUtility.isItemEqual(type, stacks[i],ignoreMetadata)){
@@ -74,31 +78,49 @@ public abstract class Recipe {
 			}
 		}
 		return -1;
+	}	
+	public int getSlotIdFor(FluidStack type) {
+		if(type==null){return -1;}
+		IUniversalStack[] stacks = getIncomingStricttypes();
+		for(int i = 0 ; i < stacks.length ; i++){
+			if(stacks[i]==null){continue;}
+			if(StackUtility.isItemEqual(type, stacks[i])){
+				return i;
+			}
+		}
+		return -1;
+	}		
+	public int getSlotIdFor(IUniversalStack type, boolean ignoreMetadata) {
+		if(type instanceof UniversalItemStack){
+			return getSlotIdFor((ItemStack)type.getProxy(), ignoreMetadata);
+		}else{
+			throw new HOEUnmatchedUniStackException();
+		}
 	}
 
 	//Recipe indication
 
 	public void makeFinal() {
-		normalizedIn = new ItemStack[getIncomingSlots()];//getIncomingStricttypes().clone();
-		normalizedOut = new ItemStack[getOutcomingSlots()];//getOutcomingStricttypes().clone();
+		normalizedIn = new IUniversalStack[getIncomingSlots()];//getIncomingStricttypes().clone();
+		normalizedOut = new IUniversalStack[getOutcomingSlots()];//getOutcomingStricttypes().clone();
 		for(int i = 0 ; i < normalizedIn.length; i++){
 			normalizedIn[i]=getIncomingStricttypes()[i].copy();
-			normalizedIn[i].stackSize=0;
+			normalizedIn[i].setStackSize(0);
 		}
 		for(int i = 0 ; i < normalizedOut.length; i++){
 			normalizedOut[i]=getOutcomingStricttypes()[i].copy();
-			normalizedOut[i].stackSize=0;
+			normalizedOut[i].setStackSize(0);
 		}		
 	}	
 	
-	private ItemStack[] normalizedIn;
-	private ItemStack[] normalizedOut;	
+	private IUniversalStack[] normalizedIn;
+	private IUniversalStack[] normalizedOut;	
 	
-	public ItemStack[] getNormalziedIncomingStricttypes() {
+	public IUniversalStack[] getNormalziedIncomingStricttypes() {
 		return normalizedIn;
 	}
 
-	public ItemStack[] getNormalziedOutcomingStricttypes() {
+	public IUniversalStack[] getNormalziedOutcomingStricttypes() {
 		return normalizedOut;
 	}
 

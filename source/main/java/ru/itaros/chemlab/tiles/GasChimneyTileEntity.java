@@ -78,12 +78,12 @@ public class GasChimneyTileEntity extends MachineTileEntity implements ISidedInv
 	
 	@Override
 	public void pushToHOE() {
-		in=TileEntityHelper.HOEpush(this, in);
+		in=TileEntityHelper.HOEItemPush(this, in);
 	}
 
 	@Override
 	public void pullFromHOE() {
-		out=TileEntityHelper.HOEpull(this, out);
+		out=TileEntityHelper.HOEItemPull(this, out);
 	}
 
 	

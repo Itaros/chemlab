@@ -9,6 +9,7 @@ import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.data.utils.InventoryManager;
 import ru.itaros.hoe.io.HOEMachineIO;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.utils.StackUtility;
 
 public class SyndicationHubIO extends HOEMachineIO {
@@ -77,14 +78,14 @@ public class SyndicationHubIO extends HOEMachineIO {
 			//There is no need to transfer items between IPorts
 			return;
 		}
-		ItemStack filter = data.getFilter();
-		ItemStack stack = data.get_in();
+		IUniversalStack filter = data.getFilter();
+		IUniversalStack stack = data.get_in();
 		
 		if(data.getSOM().canIn()){
-			stack=hda.tryToPutIn(stack,filter);
+			stack=hda.tryToPutItemsIn(stack,filter);
 		}
 		if(data.getSOM().canOut()){
-			stack=hda.tryToGetOut(stack,filter);
+			stack=hda.tryToGetItemsOut(stack,filter);
 		}
 		
 		stack=StackUtility.verify(stack);

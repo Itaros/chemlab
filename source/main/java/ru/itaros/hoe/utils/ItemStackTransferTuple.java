@@ -21,7 +21,7 @@ import net.minecraft.item.ItemStack;
 //}
  
 
-public class StackTransferTuple {
+public class ItemStackTransferTuple {
 
 	ItemStack stack1, stack2;
 	

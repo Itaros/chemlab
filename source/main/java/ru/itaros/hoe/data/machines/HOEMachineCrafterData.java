@@ -4,24 +4,29 @@ package ru.itaros.hoe.data.machines;
 
 
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidStack;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
-import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.hoe.data.IHOEMultiInventoryMachine;
 import ru.itaros.hoe.data.ISynchroportItems;
+import ru.itaros.hoe.fluid.HOEFluidStack;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalFluidStack;
+import ru.itaros.hoe.itemhandling.UniversalItemStack;
+import ru.itaros.hoe.itemhandling.UniversalStackUtils;
 import ru.itaros.hoe.recipes.FixedConversionRecipe;
 import ru.itaros.hoe.recipes.Recipe;
-import ru.itaros.hoe.utils.StackTransferTuple;
+import ru.itaros.hoe.utils.FluidStackTransferTuple;
+import ru.itaros.hoe.utils.ItemStackTransferTuple;
 import ru.itaros.hoe.utils.StackUtility;
 
 public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiInventoryMachine, ISynchroportItems{
 	private int incoming_slots,outcoming_slots;
 	//ALIGNED DATA
-	private ItemStack[] inbound;
-	private ItemStack[] outbound;
+	private IUniversalStack[] inbound;
+	private IUniversalStack[] outbound;
 	
 	
 	public boolean isRecipeSet=false;	
@@ -80,8 +85,8 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 
 	@Override
 	protected void init(){
-		inbound=new ItemStack[incoming_slots];
-		outbound=new ItemStack[outcoming_slots];
+		inbound=new IUniversalStack[incoming_slots];
+		outbound=new IUniversalStack[outcoming_slots];
 	}
 
 	public void setRecipe(Recipe recipe){
@@ -192,15 +197,15 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 	public int outSize(){
 		return outcoming_slots;
 	}	
-	public ItemStack get_in_withRecipe(int i){
+	public IUniversalStack get_in_withRecipe(int i){
 		if(!isSided || recipe==null){
 			//Normal Operation
 			return get_in(i);
 		}else{
-			ItemStack current = inbound[i];
+			IUniversalStack current = inbound[i];
 			if(current!=null){return current;}
 			//Try to show recipe
-			ItemStack[] stricts = recipe.getNormalziedIncomingStricttypes();
+			IUniversalStack[] stricts = recipe.getNormalziedIncomingStricttypes();
 			if(!(i<stricts.length)){
 				return null;
 			}else{
@@ -208,15 +213,15 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 			}
 		}		
 	}
-	public ItemStack get_out_withRecipe(int i){
+	public IUniversalStack get_out_withRecipe(int i){
 		if(!isSided || recipe==null){
 			//Normal Operation
 			return get_out(i);
 		}else{
-			ItemStack current = outbound[i];
+			IUniversalStack current = outbound[i];
 			if(current!=null){return current;}
 			//Try to show recipe
-			ItemStack[] stricts = recipe.getNormalziedOutcomingStricttypes();
+			IUniversalStack[] stricts = recipe.getNormalziedOutcomingStricttypes();
 			if(!(i<stricts.length)){
 				return null;
 			}else{
@@ -224,24 +229,24 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 			}
 		}		
 	}	
-	public ItemStack get_in(int i){
+	public IUniversalStack get_in(int i){
 		return inbound[i];
 	}
-	public ItemStack get_out(int i){
+	public IUniversalStack get_out(int i){
 		return outbound[i];
 	}	
-	public IHOEMultiInventoryMachine set_in(int i, ItemStack stack){
+	public IHOEMultiInventoryMachine set_in(int i, IUniversalStack stack){
 		 inbound[i]=stack;
 		 return this;
 	}
-	public IHOEMultiInventoryMachine set_out(int i, ItemStack stack){
+	public IHOEMultiInventoryMachine set_out(int i, IUniversalStack stack){
 		outbound[i]=stack;
 		return this;
 	}
-	public ItemStack[] get_in(){
+	public IUniversalStack[] get_in(){
 		return inbound;
 	}
-	public ItemStack[] get_out(){
+	public IUniversalStack[] get_out(){
 		return outbound;
 	}	
 	
@@ -284,10 +289,10 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 	
 	public boolean evaluateHasItems() {
 		for(int i = 0 ; i<inbound.length;i++){
-			if(inbound[i]!=null && inbound[i].stackSize>0){return true;}
+			if(inbound[i]!=null && inbound[i].getStackSize()>0){return true;}
 		}
 		for(int i = 0 ; i<outbound.length;i++){
-			if(outbound[i]!=null && outbound[i].stackSize>0){return true;}
+			if(!UniversalStackUtils.isNull(outbound[i]) && outbound[i].getStackSize()>0){return true;}
 		}		
 		return false;
 	}
@@ -297,36 +302,62 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 		ignoreInboundMetadata=true;
 	}
 	
-	StackTransferTuple transferTuple = new StackTransferTuple();
+	ItemStackTransferTuple transferTuple = new ItemStackTransferTuple();
+	FluidStackTransferTuple transferFluidTuple = new FluidStackTransferTuple();
 	private int outboundslot=0;
 	@Override
-	public ItemStack tryToPutIn(ItemStack source) {
-		return tryToPutIn(source, null);
+	public ItemStack tryToPutItemsIn(ItemStack source) {
+		return tryToPutItemsIn(source, null);
 	}
 	@Override
-	public ItemStack tryToPutIn(ItemStack source, ItemStack filter) {
+	public ItemStack tryToPutItemsIn(ItemStack source, ItemStack filter) {
 		if(recipe==null){return source;}
 		int slot = recipe.getSlotIdFor(source,ignoreInboundMetadata);
 		if(slot==-1){return source;}
-		transferTuple.fill(inbound[slot], source);
-		source=StackUtility.tryToPutIn(transferTuple,ignoreInboundMetadata,filter);
-		inbound[slot]=transferTuple.retr1();
-		this.markDirty();
+		//There is no hope if this is not an item. But really, this is a mess...
+		if(inbound[slot] instanceof UniversalItemStack || inbound[slot]==null){
+			transferTuple.fill((ItemStack) UniversalStackUtils.getSafeProxy(inbound[slot]), source);
+			source=StackUtility.tryToPutIn(transferTuple,ignoreInboundMetadata,filter);
+			inbound[slot]=UniversalStackUtils.setSafeProxy(inbound[slot],transferTuple.retr1());
+			this.markDirty();
+		}
 		return source;
 	}
+	
 	@Override
-	public ItemStack tryToGetOut(ItemStack target) {
-		return tryToGetOut(target, null);
+	public FluidStack tryToPutFluidsIn(FluidStack source) {
+		return tryToPutFluidsIn(source, null);
 	}
 	@Override
-	public ItemStack tryToGetOut(ItemStack target, ItemStack filter) {
+	public FluidStack tryToPutFluidsIn(FluidStack source, FluidStack filter) {
+		if(recipe==null){return source;}
+		int slot = recipe.getSlotIdFor(source);
+		if(slot==-1){return source;}
+		if(inbound[slot] instanceof UniversalFluidStack || inbound[slot]==null){
+			transferFluidTuple.fill((HOEFluidStack) UniversalStackUtils.getSafeProxy(inbound[slot]), source);
+			source=StackUtility.tryToPutIn(transferFluidTuple,filter,64*1000);
+			inbound[slot]=UniversalStackUtils.setSafeProxy(inbound[slot],transferFluidTuple.retr1());
+			this.markDirty();			
+		}
+		return source;
+	}	
+	
+	@Override
+	public ItemStack tryToGetItemsOut(ItemStack target) {
+		return tryToGetItemsOut(target, null);
+	}
+	@Override
+	public ItemStack tryToGetItemsOut(ItemStack target, ItemStack filter) {
 		if(recipe==null){return target;}
 		if(outboundslot>=outbound.length){outboundslot=0;}
-		transferTuple.fill(target, outbound[outboundslot]);
-		target = StackUtility.tryToGetOut(transferTuple,filter);
-		outbound[outboundslot]=StackUtility.verify(transferTuple.retr2());
-		outboundslot++;
-		this.markDirty();
+		//There is no hope if this is not an item. But really, this is a mess...
+		if(outbound[outboundslot] instanceof UniversalItemStack){
+			transferTuple.fill(target, (ItemStack) outbound[outboundslot].getProxy());
+			target = StackUtility.tryToGetOut(transferTuple,filter);
+			outbound[outboundslot].setProxy(StackUtility.verify(transferTuple.retr2()));
+			outboundslot++;
+			this.markDirty();
+		}
 		return target;
 	}
 
