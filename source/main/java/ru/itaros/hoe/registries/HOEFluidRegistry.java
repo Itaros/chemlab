@@ -5,10 +5,13 @@ import java.util.Hashtable;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import ru.itaros.hoe.fluid.FluidToHOE;
+import ru.itaros.hoe.fluid.ForgeFluidNameFilter;
 import ru.itaros.hoe.fluid.HOEFluid;
 
 public class HOEFluidRegistry {
 
+	ForgeFluidNameFilter namefilter = new ForgeFluidNameFilter();
+	
 	private static HOEFluidRegistry instance;
 	public static HOEFluidRegistry getInstance(){
 		return instance;
@@ -24,12 +27,16 @@ public class HOEFluidRegistry {
 	private void createForgeFluidPair(HOEFluid fluid) {
 		if(FluidToHOE.isActive()){
 			//Instantianting
-			Fluid f = new Fluid(fluid.getCommonName());
+			//Fluid f = new Fluid(fluid.getCommonName());
+			Fluid f = namefilter.process(fluid);
 			//Pairing
 			fluid.setForgeFluid(f);
 			FluidToHOE.set(f, fluid);
+			//Fitlering
 			//Registering
-			FluidRegistry.registerFluid(f);
+			if(!FluidRegistry.isFluidRegistered(f)){
+				FluidRegistry.registerFluid(f);
+			}
 			System.out.println("Registered HOEFluid<->ForgeFluid: "+f.getName());
 		}
 	}
