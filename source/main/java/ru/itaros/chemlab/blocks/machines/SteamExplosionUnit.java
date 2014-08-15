@@ -42,6 +42,7 @@ public class SteamExplosionUnit extends IOMachineBlock {
 
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
+		super.registerBlockIcons(reg, "chemlab");
 		icons = new MetaIconFolder(METADATA_VARIATIONS);
 		icons.Register(0, "chemlab", new String[]{"machine_part_chambernozzle","machine_base","machine_base","machine_steamexplosionunit_face","machine_base","machine_base"}, reg);
 	}

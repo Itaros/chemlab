@@ -41,6 +41,7 @@ public class CentrifugalExtractor extends IOMachineBlock {
 
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
+		super.registerBlockIcons(reg, "chemlab");
 		icons = new MetaIconFolder(METADATA_VARIATIONS);
 		icons.Register(0, "chemlab", new String[]{"machine_part_chambernozzle","machine_centrifugalextractor_topface","machine_part_powerio","machine_base","machine_part_iosocket","machine_part_iosocket"}, reg);
 	}	

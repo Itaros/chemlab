@@ -43,6 +43,7 @@ public class MetalFormationMachine extends IOMachineBlock {
 
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
+		super.registerBlockIcons(reg, "chemlab");
 		icons = new MetaIconFolder(METADATA_VARIATIONS);
 		icons.Register(0, "chemlab", new String[]{"machine_base","machine_mform_top","machine_base","machine_mform_face","machine_base","machine_base"}, reg);
 	}

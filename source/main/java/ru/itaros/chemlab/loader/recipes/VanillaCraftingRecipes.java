@@ -111,10 +111,9 @@ public class VanillaCraftingRecipes {
 		
 		//MACHINE CASING
 		GameRegistry.addShapedRecipe(new ItemStack(BlockLoader.casing), 
-				"PFP",
-				"FCF",
-				"PFP",
-				'F',new ItemStack(ItemLoader.frame),
+				"PPP",
+				"PCP",
+				"PPP",
 				'P',new ItemStack(ItemLoader.panel),
 				'C',new ItemStack(ItemLoader.centralassembly));
 		

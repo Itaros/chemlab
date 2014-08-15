@@ -43,6 +43,7 @@ public class Turboexpander extends IOMachineBlock {
 
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
+		super.registerBlockIcons(reg, "chemlab");
 		icons = new MetaIconFolder(METADATA_VARIATIONS);
 		icons.Register(0, "chemlab", new String[]{"machine_base","machine_base","machine_base","machine_turboexpander_face","machine_base","machine_base"}, reg);
 	}

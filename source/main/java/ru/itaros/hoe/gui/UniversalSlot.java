@@ -10,6 +10,7 @@ import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL21;
 
 import buildcraft.core.render.FluidRenderer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
@@ -58,7 +59,9 @@ public class UniversalSlot {
 					// fontRendererObj.drawStringWithShadow(String.valueOf(o.stackSize), xDisplayPosition+x + 19 - 2 - fontRendererObj.getStringWidth(String.valueOf(o.stackSize)), yDisplayPosition+y + 6 + 3, 16777215);
 					 int angular = (int)(((float)o.stackSize/64000F)*(16F-1F));
 					 screen.setAdditionalsDrawingMode();
-					 screen.drawTexturedModalRect(xDisplayPosition+x, yDisplayPosition+y, 0, 0+(16*angular), 16,16);
+					 GL11.glColor3f(1f, 1f, 1f);
+					 GL11.glDisable(GL11.GL_LIGHTING);
+					 screen.drawTexturedModalRect(xDisplayPosition+x-1, yDisplayPosition+y-1, 0, -1+(16*angular), 18,18);
 				 }
 			 }
 		 }

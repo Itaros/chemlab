@@ -43,6 +43,7 @@ public class HiResistantMixer extends IOMachineBlock {
 
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
+		super.registerBlockIcons(reg, "chemlab");
 		icons = new MetaIconFolder(METADATA_VARIATIONS);
 		icons.Register(0, "chemlab", new String[]{"machine_base","machine_base","machine_base","machine_hiresistmixer_face","machine_base","machine_base"}, reg);
 	}

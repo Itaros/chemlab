@@ -48,6 +48,7 @@ public class DiaphragmalElectrolyzer extends IOMachineBlock {
 
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
+		super.registerBlockIcons(reg, "chemlab");
 		icons = new MetaIconFolder(METADATA_VARIATIONS);
 		icons.Register(0, "chemlab", new String[]{"machine_base","machine_base","machine_diaphragelectrlzr_side","machine_diaphragelectrlzr_face","machine_diaphragelectrlzr_side","machine_diaphragelectrlzr_side"}, reg);
 	}

@@ -15,9 +15,11 @@ import ru.itaros.chemlab.items.HVLCIndex;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.items.HiVolumeLiquidCellEmpty;
 import ru.itaros.chemlab.items.IOMultitool;
+import ru.itaros.chemlab.items.ItemPortApplianceItem;
 import ru.itaros.chemlab.items.PipeWrench;
 import ru.itaros.chemlab.items.Programmer;
 import ru.itaros.hoe.fluid.HOEFluid;
+import ru.itaros.hoe.tiles.ioconfig.PortType;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ItemLoader {
@@ -63,11 +65,15 @@ public class ItemLoader {
 	
 	//general components
 	public static ChemLabItem screw,pcbpad;
-	public static ChemLabItem frame,panel,controlinterface;
+	public static ChemLabItem frame,controlinterface;
+	public static ItemPortApplianceItem panel;
 	public static ChemLabItem mjconversionunit;
 	public static ChemLabItem centralassembly;
 	
 	public static ChemLabItem powercable;
+	//IPAIs
+	public static ItemPortApplianceItem ipai_items;
+	public static ItemPortApplianceItem ipai_fluids;
 	//specialized components
 	public static ChemLabItem heatingelement;
 	public static ChemLabItem pressurenozzle;
@@ -119,7 +125,7 @@ public class ItemLoader {
 		screw=new ChemLabItem("component.screw");
 		pcbpad=new ChemLabItem("component.pcbpad");
 		frame=new ChemLabItem("component.frame");
-		panel=new ChemLabItem("component.panel");
+		panel=new ItemPortApplianceItem("component.panel",null);
 		controlinterface=new ChemLabItem("component.controlinterface");
 		mjconversionunit=new ChemLabItem("component.mjconversionunit");
 		centralassembly=new ChemLabItem("component.centralassembly");
@@ -133,6 +139,13 @@ public class ItemLoader {
 		
 		powercable=new ChemLabItem("component.powercable");
 		GameRegistry.registerItem(powercable,powercable.getUnlocalizedName());
+		
+		//IPAIs
+		ipai_items= new ItemPortApplianceItem("ipai.items",PortType.ITEM);
+		ipai_fluids= new ItemPortApplianceItem("ipai.fluids",PortType.FLUID);
+		GameRegistry.registerItem(ipai_items,ipai_items.getUnlocalizedName());
+		GameRegistry.registerItem(ipai_fluids,ipai_fluids.getUnlocalizedName());
+		
 		//SPECIALIZED COMPONENTS
 		heatingelement=new ChemLabItem("component.heatingelement");
 		pressurenozzle=new ChemLabItem("component.pressurenozzle");

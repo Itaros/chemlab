@@ -26,6 +26,7 @@ public class SyndicationEMFGenerator extends IOMachineBlock implements
 	private static final int METADATA_VARIATIONS = 1;	
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
+		super.registerBlockIcons(reg, "chemlab");
 		icons = new MetaIconFolder(METADATA_VARIATIONS);
 		icons.Register(0, "chemlab", new String[]{"machine_base","machine_base","machine_synd_util_emfgen_side","machine_synd_util_emfgen_face","machine_synd_util_emfgen_side","machine_synd_util_emfgen_side"}, reg);
 	}

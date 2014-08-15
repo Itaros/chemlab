@@ -4,9 +4,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -30,12 +32,15 @@ import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.itemhandling.UniversalStackUtils;
 import ru.itaros.hoe.jobs.HOEMachines;
 import ru.itaros.hoe.recipes.Recipe;
+import ru.itaros.hoe.tiles.ioconfig.IConfigurableIO;
+import ru.itaros.hoe.tiles.ioconfig.PortInfo;
+import ru.itaros.hoe.tiles.ioconfig.PortType;
 import ru.itaros.hoe.utils.StackUtility;
 import ru.itaros.hoe.utils.TileEntityHelper;
 import cpw.mods.fml.common.FMLLog;
 
 
-public abstract class MachineCrafterTileEntity extends MachineTileEntity implements ISidedInventory, IUniversalInventory, IHOEInventorySyncable, IFluidHandler{
+public abstract class MachineCrafterTileEntity extends MachineTileEntity implements ISidedInventory, IUniversalInventory, IHOEInventorySyncable, IFluidHandler, IConfigurableIO{
 
 	ItemStack programmerStack=null;
 	
@@ -66,6 +71,7 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 		out = StackUtility.readItemStackFromNBT(nbt, "out");
 		programmerStack = StackUtility.readItemStackFromNBT(nbt, "prog");
 			
+		this.readIOPortsNBT(nbt);
 		
 	}
 	@Override
@@ -75,6 +81,8 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 		StackUtility.writeItemStackToNBT(in, nbt, "in");
 		StackUtility.writeItemStackToNBT(out, nbt, "out");
 		StackUtility.writeItemStackToNBT(programmerStack, nbt, "prog");
+		
+		this.writeIOPortsNBT(nbt);
 		
 	}
 	
@@ -367,5 +375,60 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 		return fluidTankInfo;
 	}	
 	
+	
+	//ConfigurableIO
+	protected PortInfo[] ports = new PortInfo[PortInfo.amountOfPorts()];
+	@Override
+	public PortInfo[] getPorts(){
+		return ports;
+	}
+	
+	public ItemStack setPortToNothing(int side){
+		return setPort(side,PortType.NOTHING);
+	}
+	
+	public ItemStack setPort(int side, PortType type){
+		PortInfo old = ports[side];
+		
+		ItemStack retr = getOldPortItem(old);
+		if(type!=null){
+			ports[side]=new PortInfo(type,null,false);
+		}else{
+			ports[side]=null;
+		}
+		this.getWorld().markBlockForUpdate(xCoord, yCoord, zCoord);
+		
+		return retr;		
+	}
+	
+	private ItemStack getOldPortItem(PortInfo old){
+		if(old==null){
+			//Assumed plate
+			return  new ItemStack(ItemLoader.panel,1);
+		}else{
+			//There is port!
+			if(old.isNothing()){
+				return null;
+			}else{
+				return old.getType().getRelevantItem();
+			}
+		}
+	}
 
+	public void writeIOPortsNBT(NBTTagCompound stackTagCompound){
+		NBTTagList list = new NBTTagList();
+		for(PortInfo pi:ports){
+			list.appendTag(PortInfo.writeNBT(pi));
+		}
+		stackTagCompound.setTag("ioports", list);
+	}
+	public void readIOPortsNBT(NBTTagCompound stackTagCompound){
+		NBTTagList list = stackTagCompound.getTagList("ioports", Constants.NBT.TAG_COMPOUND);
+		for(int i = 0;i<list.tagCount();i++){
+			NBTTagCompound c = list.getCompoundTagAt(i);
+			ports[i]=PortInfo.readNBT(c);
+		}
+	}
+	
+	
 }

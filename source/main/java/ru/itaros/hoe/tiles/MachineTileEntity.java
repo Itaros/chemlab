@@ -508,4 +508,13 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 		return isHOEAssumesLoaded;
 	}
 	
+	
+	private int blockMetaCache;
+	public void setBlockMeta(int meta){
+		blockMetaCache=meta;
+	}
+	public int getBlockMeta(){
+		return blockMetaCache;
+	}
+	
 }

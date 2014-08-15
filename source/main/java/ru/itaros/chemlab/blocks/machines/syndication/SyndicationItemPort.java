@@ -25,6 +25,7 @@ public class SyndicationItemPort extends IOMachineBlock implements ISyndicationP
 	private static final int METADATA_VARIATIONS = 1;	
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
+		super.registerBlockIcons(reg, "chemlab");
 		icons = new MetaIconFolder(METADATA_VARIATIONS);
 		icons.Register(0, "chemlab", new String[]{"machine_base","machine_base","machine_synd_util_itemport_side","machine_synd_util_itemport_face","machine_synd_util_itemport_side","machine_synd_util_itemport_side"}, reg);
 	}

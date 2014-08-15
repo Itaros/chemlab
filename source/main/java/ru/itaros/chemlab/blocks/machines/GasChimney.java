@@ -49,6 +49,7 @@ public class GasChimney extends IOMachineBlock {
 
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
+		super.registerBlockIcons(reg, "chemlab");
 		icons = new MetaIconFolder(METADATA_VARIATIONS);
 		icons.Register(0, "chemlab", new String[]{"machine_gaschimney_bottom","machine_gaschimney_top","machine_gaschimney_side","machine_gaschimney_side","machine_gaschimney_side","machine_gaschimney_side"}, reg);
 	}
