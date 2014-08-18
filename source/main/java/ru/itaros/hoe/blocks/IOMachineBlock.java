@@ -229,6 +229,7 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 		ItemStack initial = new ItemStack(this,1,0);
 		
 		initial.stackTagCompound=nbtCacheDropState;
+		nbtCacheDropState=null;
 		
 		drops.add(initial);
 		return drops;

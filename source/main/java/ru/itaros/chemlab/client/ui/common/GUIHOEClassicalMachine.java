@@ -38,8 +38,12 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 	
 	protected int x;
 	protected int y;
+	
+	
 	@Override
 	public void initGui() {
+		xSize=176+HOEContainer.xOffset*2;
+		
 		HOEMachineData data = tile.getClientData();
 		detectOngoingSync(data);
 		
@@ -116,13 +120,18 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 				
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 				this.mc.renderEngine.bindTexture(background);
-				this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);		
+				this.drawTexturedModalRect(x+HOEContainer.xOffset, y, 0, 0, xSize-HOEContainer.xOffset*2, ySize);		
+				
+				//Additional SlotsUI
+				this.mc.renderEngine.bindTexture(additionals);
+				this.drawTexturedModalRect(x-(76-34)+3+HOEContainer.xOffset, y+11, 34, 00, (76-34), 66-00);		
+				//Gauges
 				
 				DrawGauges(data);
 				
-				fontRendererObj.drawString(this.getMachineUnlocalizedName(), x+8, y+6, CAPTIONCOLOR);//4210752
+				fontRendererObj.drawString(this.getMachineUnlocalizedName(), HOEContainer.xOffset+x+8, y+6, CAPTIONCOLOR);//4210752
 				
-				fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), x+8, y+ySize - 96 + 2, CAPTIONCOLOR);
+				fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), HOEContainer.xOffset+x+8, y+ySize - 96 + 2 + 2, CAPTIONCOLOR);
 				
 				
 				//Iteminfo

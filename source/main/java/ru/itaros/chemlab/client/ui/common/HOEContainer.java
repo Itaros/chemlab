@@ -34,6 +34,8 @@ public abstract class HOEContainer extends Container {
 	
 	protected MachineTileEntity tile;
 	
+	public static int xOffset=42;
+	
 	public HOEContainer(InventoryPlayer playerInv, MachineTileEntity tile){
 		//this(playerInv,(BiogrinderTileEntity)tile);
 		
@@ -108,12 +110,12 @@ public abstract class HOEContainer extends Container {
         for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 9; j++) {
                         addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,
-                                        8 + j * 18, 84 + i * 18));
+                        		xOffset+8 + j * 18, 84 + 1 + i * 18));
                 }
         }
 
         for (int i = 0; i < 9; i++) {
-                addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 142));
+                addSlotToContainer(new Slot(inventoryPlayer, i, xOffset+8 + i * 18, 142 + 1));
         }
     }
 

@@ -1,5 +1,7 @@
 package ru.itaros.hoe.tiles;
 
+import java.util.ArrayList;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -90,7 +92,7 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	
 	@Override
 	public int getSizeInventory() {
-		return 1+1;//in and out synchrobound! %_%
+		return portIndicesItems.length;
 	}
 	
 
@@ -129,38 +131,54 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 		if(slot==ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT){
 			return programmerStack;
 		}		
-		//real
-		switch(slot){
-		case 0:
-			return in;
-		case 1:
-			return out;
+
+		if(slot<PORTS_SHIFT){
+			if(slot==0){
+				return in;
+			}else if(slot==1){
+				return out;
+			}
 		}
-		return null;
+		
+		PortInfo pi = ports[slot-PORTS_SHIFT];
+		if(pi!=null){
+			return (ItemStack)pi.getStack();
+		}else{
+			return null;
+		}
+		
+		
+		
+		//return null;
 	}
 	
 	
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack stack) {
-		switch(slot){
-		case 0:
-			in=stack;
-			break;
-		case 1:
-			out=stack;
-			break;
-
-			
-			
-		case ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT:
+		
+		if(slot<PORTS_SHIFT){
+			if(slot==0){
+				in=stack;
+			}else if(slot==1){
+				out=stack;
+			}
+			return;
+		}	
+		
+		PortInfo pi = ports[slot-PORTS_SHIFT];
+		if(pi!=null){
+			pi.setStack(stack);
+			return;
+		}
+		
+		if(slot==ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT){
 			programmerStack=stack;
-			if(programmerStack==null){programmerWasOpened=false;break;}
+			if(programmerStack==null){programmerWasOpened=false;return;}
 			if(!programmerWasOpened){
 				programmatorScreenLauncher();
 				programmerWasOpened=true;
 			}
 			//programmerStack=null;//TODO: DEBUG!!!
-			break;
 			
 		}		
 	}
@@ -258,24 +276,20 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side) {
-		return synchroportAccessIndices;
+		int realside = this.getRealSide(side, this.getBlockMeta());
+		return portIndicesItems[realside];
 	}
 	@Override
 	public boolean canInsertItem(int slot, ItemStack item, int side) {
-		if(slot==0){
-			return !false;//Cant insert if failed
-		}else{
-			return false;
-		}
+		int realside = this.getRealSide(side, this.getBlockMeta());
+		PortInfo pi = ports[realside];
+		return pi!=null&&pi.isInput();
 	}
 	@Override
 	public boolean canExtractItem(int slot, ItemStack item, int side) {
-		if(slot==0){
-			return false;
-		}else{
-			//1
-			return true;
-		}
+		int realside = this.getRealSide(side, this.getBlockMeta());
+		PortInfo pi = ports[realside];
+		return pi!=null&&pi.isOutput();		
 	}
 	
 	
@@ -387,6 +401,26 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 		return setPort(side,PortType.NOTHING);
 	}
 	
+	public static int PORTS_SHIFT=2;//Slots 0 and 1(UI)
+	private int[][] portIndicesItems=new int[6][0];
+	/*
+	 * Revalidates io for mod crosscompats
+	 */
+	private void markPortsDirty(){
+		portIndicesItems = new int[6][];//It is better to recreate it instead of cleaning it
+		for(int i = 0 ; i < portIndicesItems.length; i ++){
+			PortInfo pi = ports[i];
+			int[] rslt;
+			if(pi!=null && pi.isItemSocket()){
+				rslt = new int[1];
+				rslt[0]=i+PORTS_SHIFT;
+			}else{
+				rslt=new int[0];
+			}
+			portIndicesItems[i]=rslt;
+		}
+	}
+	
 	public ItemStack setPort(int side, PortType type){
 		PortInfo old = ports[side];
 		
@@ -397,6 +431,8 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 			ports[side]=null;
 		}
 		this.getWorld().markBlockForUpdate(xCoord, yCoord, zCoord);
+		
+		markPortsDirty();
 		
 		return retr;		
 	}
@@ -428,6 +464,7 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 			NBTTagCompound c = list.getCompoundTagAt(i);
 			ports[i]=PortInfo.readNBT(c);
 		}
+		markPortsDirty();
 	}
 	
 	

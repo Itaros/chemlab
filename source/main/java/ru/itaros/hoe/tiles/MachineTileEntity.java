@@ -20,6 +20,8 @@ import ru.itaros.chemlab.tiles.syndication.SyndicationHubTileEntity;
 import ru.itaros.chemlab.tiles.syndication.SyndicationPipingTileEntity;
 import ru.itaros.hoe.ContextDetector;
 import ru.itaros.hoe.HOE;
+import ru.itaros.hoe.blocks.IRotationSolver;
+import ru.itaros.hoe.blocks.RotatableBlockUtility;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.data.utils.HOEDataFingerprint;
 import ru.itaros.hoe.io.HOEMachineIO;
@@ -28,7 +30,7 @@ import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
 import buildcraft.api.power.PowerHandler.PowerReceiver;
 
-public abstract class MachineTileEntity extends TileEntity implements IPowerReceptor, ISecured, ISyndicationPiping {
+public abstract class MachineTileEntity extends TileEntity implements IPowerReceptor, ISecured, ISyndicationPiping, IRotationSolver {
 
 	protected SyndicationControllerDescriptorContainer syndicationDescriptor;
 	
@@ -516,5 +518,18 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 	public int getBlockMeta(){
 		return blockMetaCache;
 	}
+	
+	
+	//Rotation
+	@Override
+	public int getRealSide(int side,int dir) {
+		return RotatableBlockUtility.getIconIndiceFromSideGrid(side,dir,RotatableBlockUtility.DEFAULTSIDEGRID);
+	}
+	public static final ForgeDirection[] rotationChain={ForgeDirection.SOUTH,ForgeDirection.EAST,ForgeDirection.NORTH,ForgeDirection.WEST};
+
+	@Override
+	public ForgeDirection[] getRotationChain() {
+		return rotationChain;
+	}	
 	
 }

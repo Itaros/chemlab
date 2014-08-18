@@ -30,8 +30,8 @@ public class HOECrafterContainer extends HOEContainer {
 		
 		MachineCrafterTileEntity crafter = (MachineCrafterTileEntity)tile;
 		
-		INBOUND=new MachineSlot(crafter,0,16,17,HOESlotType.INPUT);
-		OUTBOUND=new MachineSlot(crafter,1,16,55,HOESlotType.OUTPUT);
+		INBOUND=new MachineSlot(crafter,0,xOffset+16,17,HOESlotType.INPUT);
+		OUTBOUND=new MachineSlot(crafter,1,xOffset+16,55,HOESlotType.OUTPUT);
 		
 		addSlotToContainer(INBOUND);//INBOUND
 		addSlotToContainer(OUTBOUND);//OUTBOUND
@@ -40,14 +40,24 @@ public class HOECrafterContainer extends HOEContainer {
 		int stepping = 19;
 		int y_start = 36-stepping;
 		for(int i = 0 ; i < 3 ; i++){
-			addHOESlotToContainer(new UniversalSlot(crafter,-1-i,48,y_start+(stepping*i)).setType(HOESlotType.INPUT));//INBOUND 1
+			addHOESlotToContainer(new UniversalSlot(crafter,-1-i,xOffset+48,y_start+(stepping*i)).setType(HOESlotType.INPUT));//INBOUND 1
 		}
 		//Adding outbound slots
 		for(int i = 0 ; i < 3 ; i++){		
-			addHOESlotToContainer(new UniversalSlot(crafter,-11-i,112,y_start+(stepping*i)).setType(HOESlotType.OUTPUT));//OUTBOUND 1
+			addHOESlotToContainer(new UniversalSlot(crafter,-11-i,xOffset+112,y_start+(stepping*i)).setType(HOESlotType.OUTPUT));//OUTBOUND 1
+		}
+		//Adding CIO slots
+		int yo=0;
+		int xo=0;
+		for(int i = 0 ; i < 6; i++){
+			Slot s = new Slot(crafter,MachineCrafterTileEntity.PORTS_SHIFT+i,xOffset+0-34+(xo*(16+3)),0+17+(yo*(16+3)));
+			addSlotToContainer(s);
+			yo++;
+			if(yo>2){yo=0;xo++;}
 		}
 		
-		psio = new ProgrammerSlot(crafter,16,29);
+		
+		psio = new ProgrammerSlot(crafter,xOffset+16,29);
 		addSlotToContainer(psio);//PROGRAMMER IO
 
 	}
