@@ -146,9 +146,15 @@ public final class PortInfo {
 	public void setStack(ItemStack stack) {
 		this.stack=stack;
 	}
-
+	public void setStack(FluidStack stack) {
+		this.stack=stack;
+	}
+	
+	
 	public Object getStack() {
 		return stack;
 	}
+
+
 	
 }

@@ -22,7 +22,8 @@ group= "ru.itaros.chemlab" // http://maven.apache.org/guides/mini/guide-naming-c
 archivesBaseName = "ChemLab"
 
 dependencies {
-    compile 'com.mod-buildcraft:buildcraft:6.0.17:dev'
+	compile "appeng:appliedenergistics2:rv1-beta-5:dev"
+	compile 'com.mod-buildcraft:buildcraft:6.0.17:dev'
 	compile files('mods/NotEnoughItems-1.7.10-1.0.2.15-dev.jar')
 }
 

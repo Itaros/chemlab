@@ -8,16 +8,24 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 
+import buildcraft.core.render.FluidRenderer;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.gui.HOESlotType;
+import ru.itaros.hoe.gui.MachineSlot;
 import ru.itaros.hoe.gui.ReadonlySlot;
 import ru.itaros.hoe.gui.UniversalSlot;
+import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
 import ru.itaros.hoe.tiles.MachineTileEntity;
+import ru.itaros.hoe.tiles.ioconfig.IConfigurableIO;
+import ru.itaros.hoe.tiles.ioconfig.PortInfo;
 import ru.itaros.hoe.utils.RenderingUtils;
 
 public abstract class GUIHOEClassicalMachine extends GuiContainer {
@@ -124,7 +132,8 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 				
 				//Additional SlotsUI
 				this.mc.renderEngine.bindTexture(additionals);
-				this.drawTexturedModalRect(x-(76-34)+3+HOEContainer.xOffset, y+11, 34, 00, (76-34), 66-00);		
+				this.drawTexturedModalRect(x-(76-34)+3+HOEContainer.xOffset, y+11, 36, 00, (76-34), 66-00);	
+				drawAuxSlotsMarkings();
 				//Gauges
 				
 				DrawGauges(data);
@@ -146,6 +155,44 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 			}
 
 	
+	private void drawAuxSlotsMarkings() {
+		HOEContainer hc = (HOEContainer)inventorySlots;
+		MachineTileEntity mte = hc.getTile();	
+		if(mte instanceof IConfigurableIO){
+			IConfigurableIO cio = (IConfigurableIO)mte;
+			PortInfo[] rpi = cio.getPorts();
+			for(Object o:this.inventorySlots.inventorySlots){
+				Slot s =(Slot)o;
+				if(!(s instanceof MachineSlot) || ((MachineSlot)s).getType()!=HOESlotType.AUX){continue;}
+				PortInfo crpi = rpi[s.slotNumber-MachineCrafterTileEntity.PORTS_SHIFT];
+				if(crpi==null || crpi.isNothing()){
+					this.drawTexturedModalRect(x+s.xDisplayPosition-1, y+s.yDisplayPosition-1, 37, 67, 16, 16);		
+				}else if(crpi.isItemSocket()){
+					this.drawTexturedModalRect(x+s.xDisplayPosition-1, y+s.yDisplayPosition-1, 56, 67, 16, 16);	
+				}else if(crpi.isFluidSocket()){
+					//this.drawTexturedModalRect(x+s.xDisplayPosition-1, y+s.yDisplayPosition-1, 54, 67, 16, 16);	
+					specialOverrideFluids(s,crpi);
+				}
+			}
+		}
+	}
+
+
+	private void specialOverrideFluids(Slot s, PortInfo crpi) {
+		FluidStack flstack = (FluidStack)crpi.getStack();
+		int angular=0;
+		if(flstack!=null){
+			//Item underlay
+			IIcon fltex = FluidRenderer.getFluidTexture(flstack.getFluid(), false);
+			mc.renderEngine.bindTexture(FluidRenderer.getFluidSheet(flstack.getFluid()));
+			drawTexturedModelRectFromIcon(s.xDisplayPosition+x, s.yDisplayPosition+y, fltex, 16, 16);		
+			angular = (int)(((float)flstack.amount/64000F)*(16F-1F));
+		}
+		//overlay
+		drawTexturedModalRect(s.xDisplayPosition+x-1, s.yDisplayPosition+y-1, 18, -1+(16*angular), 18,18);
+	}
+
+
 	private void drawHOESlots() {
 		RenderingUtils.elevateItemRenderingContext();
 		

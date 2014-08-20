@@ -156,6 +156,17 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack stack) {
 		
+		if(slot==ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT){
+			programmerStack=stack;
+			if(programmerStack==null){programmerWasOpened=false;return;}
+			if(!programmerWasOpened){
+				programmatorScreenLauncher();
+				programmerWasOpened=true;
+			}
+			//programmerStack=null;//TODO: DEBUG!!!
+			
+		}		
+		
 		if(slot<PORTS_SHIFT){
 			if(slot==0){
 				in=stack;
@@ -169,18 +180,8 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 		if(pi!=null){
 			pi.setStack(stack);
 			return;
-		}
+		}	
 		
-		if(slot==ProgrammerSlot.PROGRAMMER_DEFAULT_SLOT){
-			programmerStack=stack;
-			if(programmerStack==null){programmerWasOpened=false;return;}
-			if(!programmerWasOpened){
-				programmatorScreenLauncher();
-				programmerWasOpened=true;
-			}
-			//programmerStack=null;//TODO: DEBUG!!!
-			
-		}		
 	}
 	
 	private boolean programmerWasOpened=false;
@@ -383,7 +384,7 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 
 	private FluidTankInfo[] fluidTankInfo = new FluidTankInfo[2];
 	@Override
-	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
+	public FluidTankInfo[] getTankInfo(ForgeDirection side) {
 		fluidTankInfo[0]=new FluidTankInfo(fin);
 		fluidTankInfo[1]=new FluidTankInfo(fout);
 		return fluidTankInfo;
@@ -403,6 +404,7 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	
 	public static int PORTS_SHIFT=2;//Slots 0 and 1(UI)
 	private int[][] portIndicesItems=new int[6][0];
+	private int[][] portIndicesFluids=new int[6][0];
 	/*
 	 * Revalidates io for mod crosscompats
 	 */
@@ -419,6 +421,19 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 			}
 			portIndicesItems[i]=rslt;
 		}
+		
+		portIndicesFluids = new int[6][];//It is better to recreate it instead of cleaning it
+		for(int i = 0 ; i < portIndicesFluids.length; i ++){
+			PortInfo pi = ports[i];
+			int[] rslt;
+			if(pi!=null && pi.isFluidSocket()){
+				rslt = new int[1];
+				rslt[0]=i+PORTS_SHIFT;
+			}else{
+				rslt=new int[0];
+			}
+			portIndicesFluids[i]=rslt;
+		}		
 	}
 	
 	public ItemStack setPort(int side, PortType type){

@@ -170,7 +170,9 @@ public abstract class HOEContainer extends Container {
     
     
     
-    
+    public MachineTileEntity getTile(){
+    	return tile;
+    }
 
     
 

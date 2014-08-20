@@ -50,7 +50,7 @@ public class HOECrafterContainer extends HOEContainer {
 		int yo=0;
 		int xo=0;
 		for(int i = 0 ; i < 6; i++){
-			Slot s = new Slot(crafter,MachineCrafterTileEntity.PORTS_SHIFT+i,xOffset+0-34+(xo*(16+3)),0+17+(yo*(16+3)));
+			Slot s = new MachineSlot(crafter,MachineCrafterTileEntity.PORTS_SHIFT+i,xOffset+0-34+(xo*(16+3)),0+17+(yo*(16+3)),HOESlotType.AUX);
 			addSlotToContainer(s);
 			yo++;
 			if(yo>2){yo=0;xo++;}
