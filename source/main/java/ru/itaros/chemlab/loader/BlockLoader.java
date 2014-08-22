@@ -5,8 +5,14 @@ import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ru.itaros.chemlab.addon.bc.builder.SchematicChemLabMachine;
 import ru.itaros.chemlab.addon.bc.builder.SchematicSyndicationBus;
+import ru.itaros.chemlab.blocks.AdvancedComponentBlock;
+import ru.itaros.chemlab.blocks.AdvancedComponentBlock.AdvancedComponentBlockType;
 import ru.itaros.chemlab.blocks.MachineCasing;
 import ru.itaros.chemlab.blocks.MachineItemBlock;
+import ru.itaros.chemlab.blocks.StructuralBlock;
+import ru.itaros.chemlab.blocks.StructuralBlock.StructuralBlockType;
+import ru.itaros.chemlab.blocks.items.AdvancedComponentItemBlock;
+import ru.itaros.chemlab.blocks.items.StructuralItemBlock;
 import ru.itaros.chemlab.blocks.machines.*;
 import ru.itaros.chemlab.blocks.machines.syndication.*;
 import ru.itaros.chemlab.blocks.ore.AsbestosMineral;
@@ -14,6 +20,9 @@ import ru.itaros.chemlab.blocks.ore.OreHalite;
 import ru.itaros.chemlab.blocks.ore.OreMetal;
 
 public class BlockLoader {
+	
+	public static StructuralBlock structblock;
+	public static AdvancedComponentBlock advcompblock;
 	
 	public static MachineCasing casing;
 	
@@ -62,6 +71,13 @@ public class BlockLoader {
 	public static OreMetal orePericlase;//MgO
 	
 	public static void loadBlocks(){
+		
+		structblock = new StructuralBlock(new StructuralBlockType[]{StructuralBlockType.HeatResistantBricks,StructuralBlockType.HeatResistantConcrete});
+		GameRegistry.registerBlock(structblock, StructuralItemBlock.class,structblock.getUnlocalizedName());
+		
+		advcompblock = new AdvancedComponentBlock(new AdvancedComponentBlockType[]{AdvancedComponentBlockType.ArcFurnaceElectrodes});
+		GameRegistry.registerBlock(advcompblock,AdvancedComponentItemBlock.class,advcompblock.getUnlocalizedName());
+				
 		
 		casing = new MachineCasing();
 		GameRegistry.registerBlock(casing,casing.getUnlocalizedName());
