@@ -24,6 +24,18 @@ public abstract class MBDefinition {
 	
 	private int axisX,axisY;
 	
+	public final int getOriginLevel() {
+		return originLevel;
+	}	
+	
+	public final int getAxisX() {
+		return axisX;
+	}
+
+	public final int getAxisY() {
+		return axisY;
+	}
+
 	protected void makeSearchRoot(int level, short originBlockDEFID){
 		this.originLevel=level;
 		this.originBlockDEFID=originBlockDEFID;

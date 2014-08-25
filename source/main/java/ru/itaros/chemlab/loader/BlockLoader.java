@@ -60,6 +60,8 @@ public class BlockLoader {
 	
 	public static WireCoatingExtruder wcextruder;
 	
+	public static ArcFurnaceController controller_arcFurnace;
+	
 	public static OreHalite oreHalite;
 	public static OreMetal orePlatinum;
 	public static OreMetal orePyrite;
@@ -156,6 +158,10 @@ public class BlockLoader {
 		
 		wcextruder = new WireCoatingExtruder();
 		GameRegistry.registerBlock(wcextruder,MachineItemBlock.class, wcextruder.getUnlocalizedNameRaw());
+		
+		
+		controller_arcFurnace  = new ArcFurnaceController();
+		GameRegistry.registerBlock(controller_arcFurnace,controller_arcFurnace.getUnlocalizedNameRaw());
 		
 		//GameRegistry.registerBlock(,.getUnlocalizedNameRaw());
 		

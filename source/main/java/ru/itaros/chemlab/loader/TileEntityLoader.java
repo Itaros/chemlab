@@ -22,6 +22,7 @@ import ru.itaros.chemlab.hoe.io.SteamExplosionUnitIO;
 import ru.itaros.chemlab.hoe.io.TurboexpanderIO;
 import ru.itaros.chemlab.hoe.io.WasherIO;
 import ru.itaros.chemlab.hoe.io.WireCoatingExtruderIO;
+import ru.itaros.chemlab.hoe.io.special.ArcFurnaceControllerIO;
 import ru.itaros.chemlab.hoe.io.special.GasChimneyIO;
 import ru.itaros.chemlab.hoe.io.special.HVLCFillerIO;
 import ru.itaros.chemlab.hoe.io.syndication.SyndicationEMFGeneratorIO;
@@ -62,7 +63,8 @@ public class TileEntityLoader {
     			new AutomaticDrawplateIO().setHostBlock(BlockLoader.automaticdrawplate),
     			new QuenchingChamberIO().setHostBlock(BlockLoader.quencher),
     			new MetalFormationMachineIO().setHostBlock(BlockLoader.metformer),
-    			new WireCoatingExtruderIO().setHostBlock(BlockLoader.wcextruder)
+    			new WireCoatingExtruderIO().setHostBlock(BlockLoader.wcextruder),
+    			new ArcFurnaceControllerIO().setHostBlock(BlockLoader.controller_arcFurnace)
     			);
 		iocollection.registerInHOE();
 		
@@ -102,6 +104,8 @@ public class TileEntityLoader {
 		GameRegistry.registerTileEntity(MetalFormationMachineTileEntity.class,MetalFormationMachineTileEntity.class.getName());
 
 		GameRegistry.registerTileEntity(WireCoatingExtruderTileEntity.class,WireCoatingExtruderTileEntity.class.getName());
+		
+		GameRegistry.registerTileEntity(ArcFurnaceControllerTileEntity.class,ArcFurnaceControllerTileEntity.class.getName());
 		//GameRegistry.registerTileEntity(.class,.class.getName());
 		
 		return iocollection;
