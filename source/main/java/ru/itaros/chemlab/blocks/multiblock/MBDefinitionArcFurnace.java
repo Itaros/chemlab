@@ -23,38 +23,38 @@ public class MBDefinitionArcFurnace extends MBDefinition{
 			0,0,0,0,0,0,0,
 			0,2,2,2,2,2,0,
 			0,2,2,2,2,2,0,
-			0,2,2,2,2,2,0,
+			2,2,2,2,2,2,2,
 			0,2,2,2,2,2,0,
 			0,2,2,2,2,2,0,
 			0,0,0,0,0,0,0
-		});
+		},this);
 		layers[1]=new MultiblockTemplateLayer(new short[]{
 			0,0,0,0,0,0,0,
 			0,2,2,2,2,2,0,
 			0,2,3,3,3,2,0,
-			0,2,3,3,3,2,0,
+			2,2,3,3,3,2,2,
 			0,2,3,3,3,2,0,
 			0,2,2,2,2,2,0,
 			0,0,0,0,0,0,0
-		});	
+		},this);	
 		layers[2]=new MultiblockTemplateLayer(new short[]{
 			0,2,2,2,2,2,0,
 			0,3,3,3,3,3,0,
+			0,3,-1,-1,-1,3,0,
 			2,3,-1,-1,-1,3,2,
-			2,3,-1,-1,-1,3,2,
-			2,3,-1,-1,-1,3,2,
+			0,3,-1,-1,-1,3,0,
 			0,3,3,3,3,3,0,
 			0,2,2,2,2,2,0
-		});	
+		},this);	
 		layers[3]=new MultiblockTemplateLayer(new short[]{
 			0,2,2,2,2,2,0,
 			0,3,3,3,3,3,0,
+			0,3,-1,-1,-1,3,0,
 			2,3,-1,-1,-1,3,2,
-			2,3,-1,-1,-1,3,2,
-			2,3,-1,-1,-1,3,2,
+			0,3,-1,-1,-1,3,0,
 			0,3,3,3,3,3,0,
 			0,2,2,2,2,2,0
-		});		
+		},this);		
 		layers[4]=new MultiblockTemplateLayer(new short[]{
 			0,0,0,0,0,0,0,
 			0,0,0,0,0,0,0,
@@ -63,7 +63,7 @@ public class MBDefinitionArcFurnace extends MBDefinition{
 			0,0,0,0,0,0,0,
 			0,0,0,0,0,0,0,
 			0,0,0,0,0,0,0
-		});	
+		},this);	
 		layers[5]=new MultiblockTemplateLayer(new short[]{
 			0,0,0,0,0,0,0,
 			0,0,0,0,0,0,0,
@@ -72,7 +72,7 @@ public class MBDefinitionArcFurnace extends MBDefinition{
 			0,0,3,3,3,0,0,
 			0,0,0,0,0,0,0,
 			0,0,0,0,0,0,0
-		});			
+		},this);			
 		layers[6]=new MultiblockTemplateLayer(new short[]{
 			0,0,0,0,0,0,0,
 			0,0,0,0,0,0,0,
@@ -81,7 +81,7 @@ public class MBDefinitionArcFurnace extends MBDefinition{
 			0,0,0,0,0,0,0,
 			0,0,0,0,0,0,0,
 			0,0,0,0,0,0,0
-		});		
+		},this);		
 		makeSearchRoot(6,DEFID_CU);
 	}
 
@@ -95,7 +95,7 @@ public class MBDefinitionArcFurnace extends MBDefinition{
 		return 7;
 	}
 	@Override
-	public int getYDim() {
+	public int getZDim() {
 		return 7;
 	}
 	

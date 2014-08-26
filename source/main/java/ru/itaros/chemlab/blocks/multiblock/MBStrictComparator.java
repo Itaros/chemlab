@@ -1,5 +1,6 @@
 package ru.itaros.chemlab.blocks.multiblock;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 //TODO: Move to HOE
@@ -36,8 +37,8 @@ public class MBStrictComparator {
 		reset();
 		
 		tx=def.getAxisX();
-		ty=def.getAxisY();
-		tz=def.getOriginLevel();
+		ty=def.getOriginLevel();
+		tz=def.getAxisZ();
 	}
 	private void reset(){
 		x=hostX;
@@ -45,6 +46,54 @@ public class MBStrictComparator {
 		z=hostZ;		
 	}
 	
+	private void resetLateralFrame(int level){
+		//Setting to lower corner
+		tx=0;
+		tz=0;	
+		ty = level;
+		
+		resetXWorldPointer();
+		resetZWorldPointer();
+		y=hostY+(level-def.getOriginLevel())-1;
+	}
+	private void resetXWorldPointer(){
+		x=hostX-def.getAxisX();
+	}
+	private void resetZWorldPointer(){
+		z=hostZ-def.getAxisZ();
+	}	
+	
+	public void fillAll(){
+		//All Layers
+		for(int yl=0; yl < def.getLevels(); yl++){
+			//Frame reset
+			resetLateralFrame(def.getLevels()-yl);			
+			//Getting frame snapshot
+			MultiblockTemplateLayer layer = def.getLevelSnapshot(ty);
+			//Filling
+			fillAgainstLayer(layer);
+		}	
+	}
+	
+	/*
+	 * Make sure world pointer is set correctly!
+	 */
+	private void fillAgainstLayer(MultiblockTemplateLayer layer) {
+		tx=0;
+		resetXWorldPointer();
+		for(;tx<def.getXDim();tx++){
+			tz=0;
+			resetZWorldPointer();
+			for(;tz<def.getZDim();tz++){
+				short query = layer.query(tx,tz);
+				if(query>0){
+					w.setBlock(x, y, z, Blocks.brick_block);
+				}
+				z++;
+			}
+			x++;
+		}
+	}
 	
 	
 	

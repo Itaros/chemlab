@@ -10,12 +10,23 @@ package ru.itaros.chemlab.blocks.multiblock;
 public class MultiblockTemplateLayer {
 	short[] template;
 	
-	public MultiblockTemplateLayer(short[] matrix){
+	public MultiblockTemplateLayer(short[] matrix, MBDefinition host){
 		template = matrix;
+		zDim=host.getZDim();
 	}
 
 	short[] getRaw() {
 		return template;
+	}
+
+	public short query(int x, int z) {
+		return template[(x*getZDim())+z];
+	}
+	
+	private int zDim;
+	
+	private int getZDim(){
+		return zDim;
 	}
 	
 }

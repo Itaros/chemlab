@@ -17,7 +17,7 @@ public abstract class MBDefinition {
 	public abstract int getLevels();
 	
 	public abstract int getXDim();
-	public abstract int getYDim();
+	public abstract int getZDim();
 
 	private int originLevel;
 	private short originBlockDEFID;
@@ -32,7 +32,7 @@ public abstract class MBDefinition {
 		return axisX;
 	}
 
-	public final int getAxisY() {
+	public final int getAxisZ() {
 		return axisY;
 	}
 
@@ -43,8 +43,8 @@ public abstract class MBDefinition {
 		//Looking for origin axis
 		short[] raw = layers[level].getRaw();
 		for(int x = 0 ; x < getXDim() ; x++){
-			for(int y = 0 ; y < getYDim() ; y++){
-				int index = (x*getYDim())+y;
+			for(int y = 0 ; y < getZDim() ; y++){
+				int index = (x*getZDim())+y;
 				if(raw[index]==this.originBlockDEFID){
 					axisX=x;
 					axisY=y;
@@ -52,6 +52,10 @@ public abstract class MBDefinition {
 				}
 			}
 		}
+	}
+
+	public MultiblockTemplateLayer getLevelSnapshot(int tz) {
+		return layers[tz-1];
 	}
 	
 }

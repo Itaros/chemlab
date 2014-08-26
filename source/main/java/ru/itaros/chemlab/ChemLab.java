@@ -12,6 +12,7 @@ import ru.itaros.chemlab.loader.DamageSourceLoader;
 import ru.itaros.chemlab.loader.GUILoader;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.chemlab.loader.ItemLoader;
+import ru.itaros.chemlab.loader.MultiblockLoader;
 import ru.itaros.chemlab.loader.RecipesLoader;
 import ru.itaros.chemlab.loader.TierLoader;
 import ru.itaros.chemlab.loader.TileEntityLoader;
@@ -95,6 +96,7 @@ public class ChemLab
  		BlockLoader.loadBlocks();
  		ItemLoader.loadItems();
 		iocollection = TileEntityLoader.load();   
+		MultiblockLoader.load();
 		
 		DamageSourceLoader.load();
 		
