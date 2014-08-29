@@ -5,7 +5,7 @@ import ru.itaros.chemlab.blocks.multiblock.MBDefinitionArcFurnace;
 
 public class MultiblockLoader {
 
-	public static MBDefinition arcFurnace;
+	public static MBDefinitionArcFurnace arcFurnace;
 	
 	public static void load(){
 		

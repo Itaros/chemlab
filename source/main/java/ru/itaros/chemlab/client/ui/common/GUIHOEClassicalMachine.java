@@ -131,9 +131,11 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 				this.drawTexturedModalRect(x+HOEContainer.xOffset, y, 0, 0, xSize-HOEContainer.xOffset*2, ySize);		
 				
 				//Additional SlotsUI
-				this.mc.renderEngine.bindTexture(additionals);
-				this.drawTexturedModalRect(x-(76-34)+3+HOEContainer.xOffset, y+11, 36, 00, (76-34), 66-00);	
-				drawAuxSlotsMarkings();
+				if(this.tile instanceof IConfigurableIO){
+					this.mc.renderEngine.bindTexture(additionals);
+					this.drawTexturedModalRect(x-(76-34)+3+HOEContainer.xOffset, y+11, 36, 00, (76-34), 66-00);	
+					drawAuxSlotsMarkings();
+				}
 				//Gauges
 				
 				DrawGauges(data);

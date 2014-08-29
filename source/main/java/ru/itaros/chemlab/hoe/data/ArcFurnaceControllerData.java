@@ -14,6 +14,23 @@ public class ArcFurnaceControllerData extends HOEMachineData {
 	
 	public ArcFurnaceControllerData(){
 		super();
+	}
+
+	private float heatResistance=0;
+	private float volumeResistance=0;
+	
+	public void setHeatResistance(float f) {
+		heatResistance=f;
+	}
+	public void setVolumeResistance(float f) {
+		volumeResistance=f;
+	}
+
+	public float getHeatResistance() {
+		return heatResistance;
+	}
+	public float getVoluResistance() {
+		return volumeResistance;
 	}	
 	
 }

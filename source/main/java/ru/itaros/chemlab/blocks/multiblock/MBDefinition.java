@@ -1,5 +1,10 @@
 package ru.itaros.chemlab.blocks.multiblock;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+
 //TODO: Move to HOE
 
 /*
@@ -56,6 +61,52 @@ public abstract class MBDefinition {
 
 	public MultiblockTemplateLayer getLevelSnapshot(int tz) {
 		return layers[tz-1];
+	}
+
+	public abstract boolean compare(MBAssociativeDataPayload payload, Block block, int meta, TileEntity te, short query);
+	
+	protected static Integer compareBlock(Block b, int meta, ItemStack[] set){
+		int step=-1;
+		for(ItemStack is:set){
+			step++;
+			boolean answer = ((ItemBlock)is.getItem()).field_150939_a==b&&meta==is.getItemDamage();
+			if(answer){return step;}
+		}
+		return -1;
+	}
+
+	public boolean isSuatableForTEPointer(short query) {
+		return query>0;
+	}
+	
+	private int samples[];
+	
+	public int getPartCount(int index){
+		return samples[index];
+	}
+	
+	protected void prepareSamplesValues(){
+		int max = 0;
+		//Getting maximal
+		for(int i = 1 ; i <= getLevels(); i++){
+			MultiblockTemplateLayer snap = getLevelSnapshot(i);
+			short[] r = snap.getRaw();
+			for(short s:r){
+				if(s>max){max=s;}
+			}
+		}
+		//Allocating
+		samples = new int[max+1];
+		//Counting
+		for(int i = 1 ; i <= getLevels(); i++){
+			MultiblockTemplateLayer snap = getLevelSnapshot(i);
+			short[] r = snap.getRaw();
+			for(short s:r){	
+				if(s<0){continue;}
+				samples[s]++;
+			}
+		}
+		
 	}
 	
 }

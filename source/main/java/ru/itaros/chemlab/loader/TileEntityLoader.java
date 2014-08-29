@@ -1,5 +1,6 @@
 package ru.itaros.chemlab.loader;
 
+import ru.itaros.chemlab.blocks.multiblock.MultiblockPointerTileEntity;
 import ru.itaros.chemlab.hoe.io.AirCollectorIO;
 import ru.itaros.chemlab.hoe.io.AutomaticDrawplateIO;
 import ru.itaros.chemlab.hoe.io.BiogrinderIO;
@@ -107,6 +108,9 @@ public class TileEntityLoader {
 		
 		GameRegistry.registerTileEntity(ArcFurnaceControllerTileEntity.class,ArcFurnaceControllerTileEntity.class.getName());
 		//GameRegistry.registerTileEntity(.class,.class.getName());
+		
+		//TODO: Move to HOE
+		GameRegistry.registerTileEntity(MultiblockPointerTileEntity.class,MultiblockPointerTileEntity.class.getName());
 		
 		return iocollection;
 	}
