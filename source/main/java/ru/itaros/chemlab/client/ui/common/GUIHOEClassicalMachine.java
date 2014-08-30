@@ -166,7 +166,8 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 			for(Object o:this.inventorySlots.inventorySlots){
 				Slot s =(Slot)o;
 				if(!(s instanceof MachineSlot) || ((MachineSlot)s).getType()!=HOESlotType.AUX){continue;}
-				PortInfo crpi = rpi[s.slotNumber-MachineCrafterTileEntity.PORTS_SHIFT];
+				
+				PortInfo crpi = rpi[s.getSlotIndex()-MachineCrafterTileEntity.PORTS_SHIFT];
 				if(crpi==null || crpi.isNothing()){
 					this.drawTexturedModalRect(x+s.xDisplayPosition-1, y+s.yDisplayPosition-1, 37, 67, 16, 16);		
 				}else if(crpi.isItemSocket()){

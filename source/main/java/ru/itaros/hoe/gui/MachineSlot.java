@@ -31,7 +31,7 @@ public class MachineSlot extends Slot {
 	public boolean isItemValid(ItemStack stack) {
 		if(type==HOESlotType.AUX && cio!=null){
 			PortInfo[] pis = cio.getPorts();
-			PortInfo c = pis[this.slotNumber-MachineCrafterTileEntity.PORTS_SHIFT];
+			PortInfo c = pis[this.getSlotIndex()-MachineCrafterTileEntity.PORTS_SHIFT];
 			if(c!=null && !c.isNothing()){
 				if(c.isItemSocket()){
 					return true;

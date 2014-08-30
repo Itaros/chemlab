@@ -7,16 +7,19 @@ import java.util.LinkedList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import ru.itaros.chemlab.achievements.ChemLabAchievements;
 import ru.itaros.hoe.gui.CopierSlot;
+import ru.itaros.hoe.gui.HOESlotType;
 import ru.itaros.hoe.gui.MachineSlot;
 import ru.itaros.hoe.gui.ProgrammerSlot;
 import ru.itaros.hoe.gui.ReadonlySlot;
 import ru.itaros.hoe.gui.UniversalSlot;
 import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
 import ru.itaros.hoe.tiles.MachineTileEntity;
+import ru.itaros.hoe.tiles.ioconfig.IConfigurableIO;
 
 public abstract class HOEContainer extends Container {
 
@@ -49,6 +52,19 @@ public abstract class HOEContainer extends Container {
 	
 	public void bindSlots(){
 		hoeslots = new LinkedList<UniversalSlot>();
+		
+		
+		//Adding CIO slots
+		if(this.tile instanceof IConfigurableIO){
+			int yo=0;
+			int xo=0;
+			for(int i = 0 ; i < 6; i++){
+				Slot s = new MachineSlot((IInventory) tile,MachineCrafterTileEntity.PORTS_SHIFT+i,xOffset+0-34+(xo*(16+3)),0+17+(yo*(16+3)),HOESlotType.AUX);
+				addSlotToContainer(s);
+				yo++;
+				if(yo>2){yo=0;xo++;}
+			}
+		}
 	}
 
 

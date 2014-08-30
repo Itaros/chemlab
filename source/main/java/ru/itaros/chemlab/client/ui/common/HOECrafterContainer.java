@@ -16,6 +16,7 @@ import ru.itaros.hoe.gui.ReadonlySlot;
 import ru.itaros.hoe.gui.UniversalSlot;
 import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
 import ru.itaros.hoe.tiles.MachineTileEntity;
+import ru.itaros.hoe.tiles.ioconfig.IConfigurableIO;
 
 public class HOECrafterContainer extends HOEContainer {
 
@@ -46,16 +47,6 @@ public class HOECrafterContainer extends HOEContainer {
 		for(int i = 0 ; i < 3 ; i++){		
 			addHOESlotToContainer(new UniversalSlot(crafter,-11-i,xOffset+112,y_start+(stepping*i)).setType(HOESlotType.OUTPUT));//OUTBOUND 1
 		}
-		//Adding CIO slots
-		int yo=0;
-		int xo=0;
-		for(int i = 0 ; i < 6; i++){
-			Slot s = new MachineSlot(crafter,MachineCrafterTileEntity.PORTS_SHIFT+i,xOffset+0-34+(xo*(16+3)),0+17+(yo*(16+3)),HOESlotType.AUX);
-			addSlotToContainer(s);
-			yo++;
-			if(yo>2){yo=0;xo++;}
-		}
-		
 		
 		psio = new ProgrammerSlot(crafter,xOffset+16,29);
 		addSlotToContainer(psio);//PROGRAMMER IO

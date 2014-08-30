@@ -1,6 +1,7 @@
 package ru.itaros.chemlab.hoe.data;
 
 import ru.itaros.api.hoe.internal.HOEData;
+import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 
 public class ArcFurnaceControllerData extends HOEMachineData {
@@ -31,6 +32,34 @@ public class ArcFurnaceControllerData extends HOEMachineData {
 	}
 	public float getVoluResistance() {
 		return volumeResistance;
+	}
+
+	@Override
+	public void readNBT(HOENBTManifold manifold) {
+		super.readNBT(manifold);
+		heatResistance=manifold.holdInvetory().getFloat("heatResistance");
+		volumeResistance=manifold.holdInvetory().getFloat("volumeResistance");
+	}
+
+	@Override
+	public void writeNBT(HOENBTManifold manifold) {
+		super.writeNBT(manifold);
+		manifold.holdInvetory().setFloat("heatResistance", heatResistance);
+		manifold.holdInvetory().setFloat("volumeResistance", volumeResistance);		
+	}
+
+	@Override
+	public void sync() {
+		
+		ArcFurnaceControllerData ch = (ArcFurnaceControllerData) this.child;
+		ch.heatResistance=heatResistance;
+		ch.volumeResistance=volumeResistance;
+		
+		super.sync();
 	}	
+	
+	
+	
+	
 	
 }
