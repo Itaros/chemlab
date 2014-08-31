@@ -6,6 +6,7 @@ import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.itemhandling.MixtureStack;
+import ru.itaros.hoe.itemhandling.UniversalItemStack;
 
 public class ArcFurnaceControllerData extends HOEMachineData {
 
@@ -64,7 +65,7 @@ public class ArcFurnaceControllerData extends HOEMachineData {
 	//Arc Furnace
 	private MixtureStack vat;
 	
-	private IUniversalStack injectionCache;
+	private volatile IUniversalStack injectionCache;
 	public float getVolumeCapacity(){
 		return 18F;
 	}
@@ -72,7 +73,21 @@ public class ArcFurnaceControllerData extends HOEMachineData {
 		return getVolumeCapacity()-vat.getTotalVolume();
 	}
 	public ItemStack queryAddition(ItemStack candidate){
-		
+		if(injectionCache!=null){return candidate;}//Already transferring
+		float realV = UniversalItemStack.getVolume(candidate.stackSize, candidate.getItem());
+		float deltaV = getFreeVolume()-realV;
+		if(deltaV>=0F){
+			//Fits
+			injectionCache = new UniversalItemStack(candidate.copy());
+			return null;
+		}else{
+			//Doesn't fit
+			UniversalItemStack local = new UniversalItemStack(candidate.copy());
+			int excess = local.substractVolume(deltaV);
+			injectionCache=local;
+			candidate.stackSize-=excess;
+			return candidate;
+		}
 	}
 	
 }
