@@ -1,8 +1,11 @@
 package ru.itaros.chemlab.hoe.data;
 
+import net.minecraft.item.ItemStack;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold;
 import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.MixtureStack;
 
 public class ArcFurnaceControllerData extends HOEMachineData {
 
@@ -58,8 +61,18 @@ public class ArcFurnaceControllerData extends HOEMachineData {
 		super.sync();
 	}	
 	
+	//Arc Furnace
+	private MixtureStack vat;
 	
-	
-	
+	private IUniversalStack injectionCache;
+	public float getVolumeCapacity(){
+		return 18F;
+	}
+	public float getFreeVolume(){
+		return getVolumeCapacity()-vat.getTotalVolume();
+	}
+	public ItemStack queryAddition(ItemStack candidate){
+		
+	}
 	
 }

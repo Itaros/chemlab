@@ -1,6 +1,7 @@
 package ru.itaros.hoe.itemhandling;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -109,7 +110,23 @@ public class UniversalItemStack implements IUniversalStack {
 		this.proxy = (ItemStack) proxy;
 		return this;
 	}
-	
+
+	@Override
+	public float getVolume() {
+		return getVolume(getStackSize(), getItem());
+	}
+	public static float getVolume(int amount, Object prototype){
+		return (prototype instanceof ItemBlock)?1F*amount:(1F/9F)*amount;
+	}
+
+	public int substractVolume(float deltaV) {
+		float specifiedVolume = getVolume()+deltaV;
+		//Exaggerate to make sure volume containment will never overflow
+		int stackS = (int) Math.ceil(specifiedVolume * ((this.getItem() instanceof ItemBlock)?1F:(1F/9F)));
+		int oldSize=getStackSize();
+		setStackSize(stackS);
+		return oldSize-getStackSize();
+	}
 	
 	
 	

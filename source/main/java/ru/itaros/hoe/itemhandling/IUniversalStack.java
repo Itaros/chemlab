@@ -38,5 +38,10 @@ public interface IUniversalStack {
 	public Object getProxy();
 
 	public IUniversalStack setProxy(Object proxy);
+
+	/*
+	 * Return folume for mixture. Ideally, blocks should return 1F, items 1F/9F, fluids 1F;
+	 */
+	public float getVolume();
 		
 }

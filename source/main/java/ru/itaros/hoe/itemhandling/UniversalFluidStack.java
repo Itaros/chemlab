@@ -103,5 +103,13 @@ public class UniversalFluidStack implements IUniversalStack {
 	public IUniversalStack setProxy(Object proxy) {
 		this.proxy=(HOEFluidStack) proxy;
 		return this;
+	}
+
+	@Override
+	public float getVolume() {
+		return getVolume(this.getStackSize());
 	}	
+	public static float getVolume(float amount){
+		return 1F*amount;
+	}
 }
