@@ -22,6 +22,7 @@ import ru.itaros.hoe.gui.HOESlotType;
 import ru.itaros.hoe.gui.MachineSlot;
 import ru.itaros.hoe.gui.ReadonlySlot;
 import ru.itaros.hoe.gui.UniversalSlot;
+import ru.itaros.hoe.itemhandling.WidgetMixtureIndicator;
 import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
 import ru.itaros.hoe.tiles.MachineTileEntity;
 import ru.itaros.hoe.tiles.ioconfig.IConfigurableIO;
@@ -294,6 +295,19 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 	public void setAdditionalsDrawingMode(){
 		this.mc.renderEngine.bindTexture(additionals);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+	}
+
+
+	public int getX(){
+		return x;
+	}
+	public int getY(){
+		return y;
+	}
+
+
+	public MachineTileEntity getTile() {
+		return tile;
 	}	
 
 	

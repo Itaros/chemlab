@@ -1,6 +1,7 @@
 package ru.itaros.chemlab.hoe.data;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold;
 import ru.itaros.hoe.data.machines.HOEMachineData;
@@ -36,20 +37,20 @@ public class ArcFurnaceControllerData extends HOEMachineData {
 	}
 	public float getVoluResistance() {
 		return volumeResistance;
+	}	
+	
+	@Override
+	protected void readInventoryNBT(NBTTagCompound nbt) {
+		heatResistance=nbt.getFloat("heatResistance");
+		volumeResistance=nbt.getFloat("volumeResistance");
+		vat.readNBT(nbt, "mixvat");
 	}
 
 	@Override
-	public void readNBT(HOENBTManifold manifold) {
-		super.readNBT(manifold);
-		heatResistance=manifold.holdInvetory().getFloat("heatResistance");
-		volumeResistance=manifold.holdInvetory().getFloat("volumeResistance");
-	}
-
-	@Override
-	public void writeNBT(HOENBTManifold manifold) {
-		super.writeNBT(manifold);
-		manifold.holdInvetory().setFloat("heatResistance", heatResistance);
-		manifold.holdInvetory().setFloat("volumeResistance", volumeResistance);		
+	protected void writeInventoryNBT(NBTTagCompound nbt) {
+		nbt.setFloat("heatResistance",heatResistance);
+		nbt.setFloat("volumeResistance",volumeResistance);
+		vat.writeNBT(nbt, "mixvat");		
 	}
 
 	@Override
@@ -59,11 +60,13 @@ public class ArcFurnaceControllerData extends HOEMachineData {
 		ch.heatResistance=heatResistance;
 		ch.volumeResistance=volumeResistance;
 		
+		ch.vat=vat;//HACK: SYNC, not assign! DANGER!
+		
 		super.sync();
 	}	
 	
 	//Arc Furnace
-	private MixtureStack vat;
+	private MixtureStack vat = new MixtureStack();
 	
 	private volatile IUniversalStack injectionCache;
 	public float getVolumeCapacity(){
@@ -73,6 +76,7 @@ public class ArcFurnaceControllerData extends HOEMachineData {
 		return getVolumeCapacity()-vat.getTotalVolume();
 	}
 	public ItemStack queryAddition(ItemStack candidate){
+		if(candidate==null){return candidate;}
 		if(injectionCache!=null){return candidate;}//Already transferring
 		float realV = UniversalItemStack.getVolume(candidate.stackSize, candidate.getItem());
 		float deltaV = getFreeVolume()-realV;
@@ -88,6 +92,17 @@ public class ArcFurnaceControllerData extends HOEMachineData {
 			candidate.stackSize-=excess;
 			return candidate;
 		}
+	}
+
+	public void pushCache() {
+		if(injectionCache!=null){
+			vat.add(injectionCache);
+		}
+		injectionCache=null;//Make cache clean
+	}
+
+	public MixtureStack getMixtureVat() {
+		return vat;
 	}
 	
 }

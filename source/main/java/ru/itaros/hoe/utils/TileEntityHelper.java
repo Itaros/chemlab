@@ -3,6 +3,7 @@ package ru.itaros.hoe.utils;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import ru.itaros.chemlab.hoe.data.ArcFurnaceControllerData;
 import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
@@ -10,6 +11,20 @@ import ru.itaros.hoe.tiles.IHOEInventorySyncable;
 
 public class TileEntityHelper {
 
+	public static ItemStack HOEItemPushIntoVat(IHOEInventorySyncable tile, ItemStack item){
+		HOEMachineData hmd = tile.getServerData();
+		if(hmd!=null){
+			if(hmd instanceof ArcFurnaceControllerData){
+				//TODO: should be vat interface
+				ArcFurnaceControllerData vat = (ArcFurnaceControllerData)hmd;
+				//item=synchroport.tryToPutItemsIn(item, null);
+				return vat.queryAddition(item);
+			}
+		}
+		return item;
+	}	
+	
+	
 	public static ItemStack HOEItemPush(IHOEInventorySyncable tile, ItemStack item){
 		HOEMachineData hmd = tile.getServerData();
 		if(hmd!=null){

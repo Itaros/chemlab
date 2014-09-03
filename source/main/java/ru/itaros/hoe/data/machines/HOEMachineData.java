@@ -47,7 +47,7 @@ public abstract class HOEMachineData extends HOEData {
 		}
 	}
 	
-	public void readNBT(HOENBTManifold manifold) {
+	public final void readNBT(HOENBTManifold manifold) {
 		readInventoryNBT(manifold.holdInvetory());
 		readConfigurationNBT(manifold.holdConfiguration());
 		readSyndicationNBT(manifold.holdSyndication());
@@ -101,7 +101,7 @@ public abstract class HOEMachineData extends HOEData {
 		}
 	}
 
-	public void writeNBT(HOENBTManifold manifold) {
+	public final void writeNBT(HOENBTManifold manifold) {
 		writeInventoryNBT(manifold.holdInvetory());
 		writeConfigurationNBT(manifold.holdConfiguration());
 		writeSyndicationNBT(manifold.holdSyndication());

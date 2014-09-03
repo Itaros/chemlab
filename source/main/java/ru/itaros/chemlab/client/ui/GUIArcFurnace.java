@@ -5,6 +5,7 @@ import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.hoe.data.ArcFurnaceControllerData;
 import ru.itaros.chemlab.tiles.ArcFurnaceControllerTileEntity;
 import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.itemhandling.WidgetMixtureIndicator;
 import ru.itaros.hoe.tiles.MachineTileEntity;
 
 public class GUIArcFurnace extends GUIHOEClassicalMachine {
@@ -26,8 +27,10 @@ public class GUIArcFurnace extends GUIHOEClassicalMachine {
 		super.initGui();
 		//inputRect = new Rect(133+x,20+y,16,51);
 		//tankRect = new Rect(48+x,18+y,16,51);
+		
+		mixtureIndicator = new WidgetMixtureIndicator(this);
 	}
-	
+	private WidgetMixtureIndicator mixtureIndicator;
 	
 	@Override
 	public String getMachineUnlocalizedName() {
@@ -45,5 +48,7 @@ public class GUIArcFurnace extends GUIHOEClassicalMachine {
 		this.fontRendererObj.drawString("Mt: "+fc.getHeatResistance(), x+44+60, y+14, 4210752,false);
 		this.fontRendererObj.drawString("Mf: "+((int)Math.floor(fc.getVoluResistance()*100F))+"%", x+44+60, y+14+9, 4210752,false);		
 		
+		
+		mixtureIndicator.draw(fontRendererObj);
 	}
 }

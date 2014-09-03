@@ -55,6 +55,7 @@ public class MixtureStack {
 		return false;
 	}
 	public MixtureStack add(IUniversalStack in){
+		if(in==null){return this;}//Wut?
 		//Comparing against existant ones.
 		//Does not allocate iterator to preserve GC operation time
 		for(int i = 0 ; i < mixture.size() ; i++){
@@ -70,8 +71,7 @@ public class MixtureStack {
 	}
 	
 	
-	public void writeNBT(HOENBTManifold manifold, String tag){
-		NBTTagCompound inv = manifold.holdInvetory();
+	public void writeNBT(NBTTagCompound nbt, String tag){
 		NBTTagCompound mix = new NBTTagCompound();
 		
 		NBTTagList list = new NBTTagList();
@@ -84,11 +84,10 @@ public class MixtureStack {
 		}
 		mix.setTag("mix", list);
 		mix.setFloat("volume", volume);
-		inv.setTag(tag, mix);
+		nbt.setTag(tag, mix);
 	}
-	public void readNBT(HOENBTManifold manifold, String tag){
-		NBTTagCompound inv = manifold.holdInvetory();
-		NBTTagCompound mix = inv.getCompoundTag(tag);
+	public void readNBT(NBTTagCompound nbt, String tag){
+		NBTTagCompound mix = nbt.getCompoundTag(tag);
 		if(mix!=null){
 			NBTTagList list = mix.getTagList("mix", Constants.NBT.TAG_COMPOUND);
 			if(list!=null){
@@ -97,7 +96,7 @@ public class MixtureStack {
 				for(int i = 0 ; i<list.tagCount();i++){
 					NBTTagCompound local = list.getCompoundTagAt(i);
 					IUniversalStack cmp = UniversalStackUtils.loadItemStackFromNBT(local);
-					mixture.set(i, cmp);
+					mixture.add(cmp);
 				}
 				
 			}
@@ -105,9 +104,9 @@ public class MixtureStack {
 			volume = mix.getFloat("volume");
 		}
 	}
-	public static MixtureStack constructFromNBT(HOENBTManifold manifold, String tag){
+	public static MixtureStack constructFromNBT(NBTTagCompound nbt, String tag){
 		MixtureStack me = new MixtureStack();
-		me.readNBT(manifold, tag);
+		me.readNBT(nbt, tag);
 		return me;
 	}
 	
