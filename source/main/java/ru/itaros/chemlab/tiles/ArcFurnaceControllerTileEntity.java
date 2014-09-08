@@ -20,13 +20,14 @@ import ru.itaros.hoe.gui.ProgrammerSlot;
 import ru.itaros.hoe.io.HOEMachineIO;
 import ru.itaros.hoe.jobs.HOEMachines;
 import ru.itaros.hoe.tiles.IHOEInventorySyncable;
+import ru.itaros.hoe.tiles.IRedstoneControllable;
 import ru.itaros.hoe.tiles.MachineTileEntity;
 import ru.itaros.hoe.tiles.ioconfig.IConfigurableIO;
 import ru.itaros.hoe.tiles.ioconfig.PortInfo;
 import ru.itaros.hoe.tiles.ioconfig.PortType;
 import ru.itaros.hoe.utils.TileEntityHelper;
 
-public class ArcFurnaceControllerTileEntity extends MachineTileEntity implements IHOEInventorySyncable, IMultiblockController, ISidedInventory, IConfigurableIO{
+public class ArcFurnaceControllerTileEntity extends MachineTileEntity implements IHOEInventorySyncable, IMultiblockController, ISidedInventory, IConfigurableIO, IRedstoneControllable{
 
 	private static final float MAX_HEATRESIST = 1600F;
 	private static final float MAX_VOLRESIST = 1F;
@@ -340,6 +341,13 @@ public class ArcFurnaceControllerTileEntity extends MachineTileEntity implements
 	public void pullFromHOE() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void setPowered(boolean isPowered) {
+		ArcFurnaceControllerData d = (ArcFurnaceControllerData)this.getServerData();
+		d.setPowered(isPowered);
+		System.out.println("Switched to: "+isPowered);
 	}
 	
 }

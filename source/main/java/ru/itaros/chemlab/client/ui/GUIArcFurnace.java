@@ -43,12 +43,15 @@ public class GUIArcFurnace extends GUIHOEClassicalMachine {
 	
 	
 	@Override
-	protected void DrawGauges(HOEMachineData data) {
+	protected void DrawGauges(HOEMachineData data, int mx, int my) {
 		ArcFurnaceControllerData fc = (ArcFurnaceControllerData)data;
 		this.fontRendererObj.drawString("Mt: "+fc.getHeatResistance(), x+44+60, y+14, 4210752,false);
 		this.fontRendererObj.drawString("Mf: "+((int)Math.floor(fc.getVoluResistance()*100F))+"%", x+44+60, y+14+9, 4210752,false);		
+		this.fontRendererObj.drawString("T: "+((int)Math.floor(fc.getMixtureVat().getCurrentTemperature())), x+44+60, y+14+9*2, 4210752,false);		
+		
+		mixtureIndicator.draw(fontRendererObj,mx,my,0);//Graph
+		mixtureIndicator.draw(fontRendererObj,mx,my,1);//Tooltips
 		
 		
-		mixtureIndicator.draw(fontRendererObj);
 	}
 }

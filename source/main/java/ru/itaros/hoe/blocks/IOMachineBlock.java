@@ -21,6 +21,7 @@ import ru.itaros.api.chemlab.ISyndicationPipeConnectable;
 import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.tiles.IHOEInventorySyncable;
+import ru.itaros.hoe.tiles.IRedstoneControllable;
 import ru.itaros.hoe.tiles.MachineTileEntity;
 import ru.itaros.hoe.tiles.TileEntitySecurityTracker;
 import ru.itaros.hoe.tiles.ioconfig.IConfigurableIO;
@@ -249,6 +250,21 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 		}		
 		
 		
+	}
+	@Override
+	public void onNeighborBlockChange(World w, int x,
+			int y, int z, Block block) {
+		
+		TileEntity te = w.getTileEntity(x, y, z);
+		if(te!=null){
+			if(te instanceof IRedstoneControllable){
+				IRedstoneControllable irc = (IRedstoneControllable)te;
+				irc.setPowered(w.isBlockIndirectlyGettingPowered(x, y, z));
+			}
+		}
+		
+		super.onNeighborBlockChange(w, x, y, z,
+				block);
 	}
 
 	

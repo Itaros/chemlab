@@ -41,5 +41,14 @@ public class UIUtility {
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 	}
 	
+	public static boolean isMouseIn(int x1, int y1, int x2, int y2, int mx, int my){
+		if(mx>=x1 & mx<=x2){
+			if(my>=y1 & my<=y2){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	
 }

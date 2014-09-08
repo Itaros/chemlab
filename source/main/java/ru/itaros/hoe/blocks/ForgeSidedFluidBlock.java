@@ -2,23 +2,17 @@ package ru.itaros.hoe.blocks;
 
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import ru.itaros.api.hoe.IHOEContextDetector.FMLContext;
-import ru.itaros.hoe.ContextDetector;
-import ru.itaros.hoe.fluid.FluidToHOE;
-import ru.itaros.hoe.fluid.HOEFluid;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EffectRenderer;
-import net.minecraft.client.particle.EntityBubbleFX;
-import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidFinite;
 import net.minecraftforge.fluids.Fluid;
+import ru.itaros.hoe.fluid.FluidToHOE;
+import ru.itaros.hoe.fluid.HOEFluid;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ForgeSidedFluidBlock extends BlockFluidFinite {
 
@@ -76,12 +70,13 @@ public class ForgeSidedFluidBlock extends BlockFluidFinite {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World world, int x,
 			int y, int z, Random r) {
 		if(getFluid().isGaseous()){
 			if(world.isRemote){
 				for(int i = 0; i<3;i++){
-					EntityFX effect = new EntityBubbleFX(world, x+r.nextDouble(), y+0.1D, z+r.nextDouble(), 0.0D, 0.1D+r.nextDouble(), 0.0D);
+					net.minecraft.client.particle.EntityFX effect = new net.minecraft.client.particle.EntityBubbleFX(world, x+r.nextDouble(), y+0.1D, z+r.nextDouble(), 0.0D, 0.1D+r.nextDouble(), 0.0D);
 					Minecraft.getMinecraft().effectRenderer.addEffect(effect);
 				}
 			}			

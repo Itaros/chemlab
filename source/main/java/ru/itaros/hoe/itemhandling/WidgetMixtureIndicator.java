@@ -1,6 +1,10 @@
 package ru.itaros.hoe.itemhandling;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Iterator;
+
+import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -9,6 +13,7 @@ import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.client.ui.common.HOEContainer;
 import ru.itaros.chemlab.hoe.data.ArcFurnaceControllerData;
 import ru.itaros.hoe.client.IUIWidget;
+import ru.itaros.hoe.utils.UIUtility;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -22,7 +27,7 @@ public class WidgetMixtureIndicator implements IUIWidget{
 		this.uisource=uisource;
 	}
 	
-	public void draw(FontRenderer font){
+	public void draw(FontRenderer font, int mx, int my, int pass){
 		ArcFurnaceControllerData data = (ArcFurnaceControllerData) uisource.getTile().getClientData();
 		
 		MixtureStack stack = data.getMixtureVat();
@@ -39,15 +44,26 @@ public class WidgetMixtureIndicator implements IUIWidget{
 		//Drawing bars
 		sti = stack.getViewIterator();
 		int step=0;
+		GL11.glDisable(GL11.GL_LIGHTING);
 		while(sti.hasNext()){
+			
 			IUniversalStack i = sti.next();
 			float p = i.getVolume()/maxv;
 		
 			int ix=uisource.getX()+9+(step*3)+HOEContainer.xOffset;
-			int iy=(int) (uisource.getY()+38+WINDOW_HEIGHT);
+			int iy=(int) (uisource.getY()+38+WINDOW_HEIGHT);			
 			
-			Gui.drawRect(ix, iy-(int)(WINDOW_HEIGHT*p), ix+2, iy, 0xFF0000FF);
-			//host.
+			if(pass==0){
+				Gui.drawRect(ix, iy-(int)(WINDOW_HEIGHT*p), ix+2, iy, 0xFF0000FF);
+			}
+			if(pass==1){
+				if(UIUtility.isMouseIn(ix, iy-(int)(WINDOW_HEIGHT*p), ix+2, iy, mx, my)){
+					Gui.drawRect(ix, iy-(int)(WINDOW_HEIGHT*p), ix+2, iy, 0xFFFF0000);
+					List<String> t = new ArrayList<String>();
+					t.add(i.getLocalizedName());
+					uisource.renderSimpleTooltip(t, mx, my);
+				}
+			}
 			
 			step++;
 		}

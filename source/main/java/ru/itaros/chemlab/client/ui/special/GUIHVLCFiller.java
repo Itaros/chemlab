@@ -52,7 +52,7 @@ public class GUIHVLCFiller extends GUIHOEClassicalMachine {
 	Rect inputRect,tankRect;
 	
 	@Override
-	protected void DrawGauges(HOEMachineData data) {
+	protected void DrawGauges(HOEMachineData data, int mx, int my) {
 		//HVLCFillerData fd = (HVLCFillerData)data;
 		HVLCFillerTileEntity htile = (HVLCFillerTileEntity)tile;
 		FluidTank info = htile.getInputTank();

@@ -15,6 +15,7 @@ import ru.itaros.chemlab.items.HVLCIndex;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.items.HiVolumeLiquidCellEmpty;
 import ru.itaros.chemlab.items.IOMultitool;
+import ru.itaros.chemlab.items.IronScraps;
 import ru.itaros.chemlab.items.ItemPortApplianceItem;
 import ru.itaros.chemlab.items.PipeWrench;
 import ru.itaros.chemlab.items.Programmer;
@@ -61,7 +62,8 @@ public class ItemLoader {
 	
 	public static ChemLabItem magnesiumsulfide;
 	
-	public static ChemLabItem scraps_iron,scraps_wrought;
+	public static IronScraps scraps_iron;
+	public static ChemLabItem scraps_wrought;
 	
 	//general components
 	public static ChemLabItem screw,pcbpad;
@@ -312,7 +314,7 @@ public class ItemLoader {
 		rod_swg_iron = new ChemLabWireItem("wire.iron",10);
 		GameRegistry.registerItem(rod_swg_iron,rod_swg_iron.getUnlocalizedName());		
 		
-		scraps_iron = new ChemLabItem("scraps.iron");
+		scraps_iron = new IronScraps("scraps.iron");
 		GameRegistry.registerItem(scraps_iron,scraps_iron.getUnlocalizedName());
 		
 		

@@ -2,6 +2,7 @@ package ru.itaros.hoe.itemhandling;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import ru.itaros.hoe.fluid.HOEFluid;
 import ru.itaros.hoe.fluid.HOEFluidStack;
 
@@ -111,5 +112,11 @@ public class UniversalFluidStack implements IUniversalStack {
 	}	
 	public static float getVolume(float amount){
 		return 1F*amount;
+	}
+
+	@Override
+	public String getLocalizedName() {
+		if(proxy==null){return "???";}
+		return ("" + StatCollector.translateToLocal(proxy.getUnlocalizedName() + ".name")).trim();
 	}
 }

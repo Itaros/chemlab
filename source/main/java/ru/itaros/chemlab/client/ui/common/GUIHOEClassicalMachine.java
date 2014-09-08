@@ -1,6 +1,7 @@
 package ru.itaros.chemlab.client.ui.common;
 
 import java.util.Iterator;
+import java.util.List;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -139,7 +140,7 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 				}
 				//Gauges
 				
-				DrawGauges(data);
+				DrawGauges(data, var2, var3);
 				
 				fontRendererObj.drawString(this.getMachineUnlocalizedName(), HOEContainer.xOffset+x+8, y+6, CAPTIONCOLOR);//4210752
 				
@@ -210,7 +211,7 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 	}
 
 
-	protected void DrawGauges(HOEMachineData data){
+	protected void DrawGauges(HOEMachineData data, int mx, int my){
 		DrawPowerGauge(data);
 		DrawProgressbar(data);		
 	}
@@ -309,6 +310,9 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 	public MachineTileEntity getTile() {
 		return tile;
 	}	
-
+	
+	public void renderSimpleTooltip(List<String> list, int x, int y){
+		 drawHoveringText(list, x, y, fontRendererObj);
+	}
 	
 }

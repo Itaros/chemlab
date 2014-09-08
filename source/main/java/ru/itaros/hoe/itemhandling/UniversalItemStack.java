@@ -127,6 +127,12 @@ public class UniversalItemStack implements IUniversalStack {
 		setStackSize(stackS);
 		return oldSize-getStackSize();
 	}
+
+	@Override
+	public String getLocalizedName() {
+		if(proxy==null){return "???";}
+		return proxy.getItem().getItemStackDisplayName(proxy);
+	}
 	
 	
 	

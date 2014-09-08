@@ -7,6 +7,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
 import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold;
+import ru.itaros.hoe.physics.IEnergyReceiver;
+import ru.itaros.hoe.physics.IMatterState;
 import ru.itaros.hoe.utils.StackUtility;
 
 /*
@@ -15,12 +17,34 @@ import ru.itaros.hoe.utils.StackUtility;
  * events of mixing.
  * THERE IS NO THREAD SAFETY. CONTROL YOUR CONTEXTS!
  */
-public class MixtureStack {
+public class MixtureStack implements IEnergyReceiver{
 
+	private volatile boolean hasAdditionalComponents=true;
+	
+	public boolean queryAdditionalComponents(){
+		if(hasAdditionalComponents){
+			hasAdditionalComponents=false;
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	//TODO: Might be beneficial to have the ability to create mapped mixtures to boost performance on automated advanced machines
 	private ArrayList<IUniversalStack> mixture = new ArrayList<IUniversalStack>();
 	
-	private float volume;
+	private float volume=0F;
+	
+	private float heatCapacity=0F;
+	
+	/*
+	 * Returns average heat capacity of a mixture in MJoules/K.
+	 * Note: if state is transfered it doesn't invoke heat capacity recalc,
+	 * until full transformation is encountered for performance reasons.
+	 */
+	public float getHeatCapacity(){
+		return heatCapacity;
+	}
 	
 	/*
 	 * This method provides an iterator to enumerate through mixture compounds.
@@ -50,6 +74,7 @@ public class MixtureStack {
 		if(StackUtility.isItemEqual(comparable, in, true)){
 			comparable.increment(in.getStackSize());
 			volume+=in.getVolume();
+			addHeatCapacity(in);
 			return true;
 		}
 		return false;
@@ -67,10 +92,19 @@ public class MixtureStack {
 		//No match. Injecting
 		mixture.add(in);
 		volume+=in.getVolume();
+		addHeatCapacity(in);
+		hasAdditionalComponents=true;
 		return this;
 	}
 	
 	
+	private void addHeatCapacity(IUniversalStack in) {
+		if(in.getItem() instanceof IMatterState){
+			IMatterState ims = (IMatterState)in.getItem();
+			heatCapacity+=ims.heatCapacity()*in.getVolume();
+		}
+	}
+
 	public void writeNBT(NBTTagCompound nbt, String tag){
 		NBTTagCompound mix = new NBTTagCompound();
 		
@@ -84,6 +118,9 @@ public class MixtureStack {
 		}
 		mix.setTag("mix", list);
 		mix.setFloat("volume", volume);
+		mix.setFloat("heatCapacity", heatCapacity);
+		mix.setFloat("temperature", temperature);
+		mix.setFloat("floatingEnergy", floatingEnergy);
 		nbt.setTag(tag, mix);
 	}
 	public void readNBT(NBTTagCompound nbt, String tag){
@@ -102,6 +139,9 @@ public class MixtureStack {
 			}
 			
 			volume = mix.getFloat("volume");
+			heatCapacity = mix.getFloat("heatCapacity");
+			temperature = mix.getFloat("temperature");
+			floatingEnergy = mix.getFloat("floatingEnergy");
 		}
 	}
 	public static MixtureStack constructFromNBT(NBTTagCompound nbt, String tag){
@@ -109,5 +149,65 @@ public class MixtureStack {
 		me.readNBT(nbt, tag);
 		return me;
 	}
+
+	
+	private float temperature;
+	//Energy which is not accounted as part of temperature shift
+	private float floatingEnergy;
+	
+	@Override
+	public float getCurrentTemperature() {
+		return temperature;
+	}
+
+	@Override
+	public void setCurrentTemperature(float temp) {
+		temperature=temp;
+	}
+
+	@Override
+	public void giveEnergy(float mj) {
+		floatingEnergy+=mj;
+		if(floatingEnergy>heatCapacity){
+			float rem = floatingEnergy%heatCapacity;
+			temperature+=(float)((int)floatingEnergy/(int)heatCapacity);
+			floatingEnergy=rem;
+		}
+	}
+
+	@Override
+	public float receiveEnergy(float mj) {
+		if(floatingEnergy>=mj){floatingEnergy-=mj;return mj;}
+		if(temperature>0){
+			float mjacc = temperature*heatCapacity;
+			if(mjacc>=mj){
+				mjacc-=mj;
+				temperature = mjacc/heatCapacity;
+				return mj;
+			}else{
+				float reminder = mj-mjacc;
+				temperature=0;
+				return reminder;
+			}
+		}
+		temperature=0;
+		return 0;
+	}
+
+	public IUniversalStack getUpperLayer() {
+		int last = mixture.size()-1;
+		if(last<0){return null;}
+		while(mixture.get(last)==null){
+			last--;
+			if(last<0){return null;}
+		}
+		return mixture.get(last);
+	}
+
+	public void remove(IUniversalStack s) {
+		mixture.remove(s);
+		//I don't think it needs reevaluation, because IReaction will check anyway
+	}
+	
 	
 }

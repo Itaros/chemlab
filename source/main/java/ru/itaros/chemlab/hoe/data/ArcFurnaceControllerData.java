@@ -8,6 +8,7 @@ import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.itemhandling.MixtureStack;
 import ru.itaros.hoe.itemhandling.UniversalItemStack;
+import ru.itaros.hoe.physics.IMatterState;
 
 public class ArcFurnaceControllerData extends HOEMachineData {
 
@@ -103,6 +104,33 @@ public class ArcFurnaceControllerData extends HOEMachineData {
 
 	public MixtureStack getMixtureVat() {
 		return vat;
+	}
+
+	
+	private volatile boolean isRedstonePowered=false;
+	public void setPowered(boolean isPowered) {
+		isRedstonePowered=isPowered;
+	}
+	public boolean getPowered(){
+		return isRedstonePowered;
+	}
+
+	public static final float VOLTAGE = 900;//V
+	public static final float VA_PER_TICK = (VOLTAGE*VOLTAGE)/20F*0.0001F*20F;//VoltAmperes/tick
+	//0.0001F is nOhm to Mj scaleframe factor
+	//20F is RL Time to MC Time frame factor
+	
+	public void putCurrent() {
+		if(isRedstonePowered){
+			IUniversalStack contactor = vat.getUpperLayer();
+			if(contactor==null){return;}//Nowhere to apply
+			if(contactor.getItem() instanceof IMatterState){
+				IMatterState matter = (IMatterState) contactor.getItem();
+				float resistantEnergy = VA_PER_TICK/matter.resistance();
+				vat.giveEnergy(resistantEnergy);
+			}
+			
+		}
 	}
 	
 }

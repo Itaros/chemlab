@@ -37,7 +37,7 @@ public class GUIGasChimney extends GUIHOEClassicalMachine {
 	//Rect inputRect,tankRect;
 	
 	@Override
-	protected void DrawGauges(HOEMachineData data) {
+	protected void DrawGauges(HOEMachineData data, int mx, int my) {
 		DrawProgressbar(data);
 	}
 	

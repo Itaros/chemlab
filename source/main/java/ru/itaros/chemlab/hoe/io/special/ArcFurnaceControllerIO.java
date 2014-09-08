@@ -24,6 +24,7 @@ public class ArcFurnaceControllerIO extends HOEMachineIO {
 		ArcFurnaceControllerData arc = (ArcFurnaceControllerData)data;
 
 		arc.pushCache();
+		arc.putCurrent();
 	}
 
 }
