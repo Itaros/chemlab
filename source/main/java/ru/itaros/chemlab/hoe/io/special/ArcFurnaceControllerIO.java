@@ -23,6 +23,8 @@ public class ArcFurnaceControllerIO extends HOEMachineIO {
 	protected void produce(HOEData data, boolean doReal) {
 		ArcFurnaceControllerData arc = (ArcFurnaceControllerData)data;
 
+		arc.getReactionFramework().update();
+		
 		arc.pushCache();
 		arc.putCurrent();
 	}

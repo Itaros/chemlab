@@ -9,6 +9,7 @@ import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.itemhandling.MixtureStack;
 import ru.itaros.hoe.itemhandling.UniversalItemStack;
 import ru.itaros.hoe.physics.IMatterState;
+import ru.itaros.hoe.physics.MixtureReactionFramework;
 
 public class ArcFurnaceControllerData extends HOEMachineData {
 
@@ -68,6 +69,8 @@ public class ArcFurnaceControllerData extends HOEMachineData {
 	
 	//Arc Furnace
 	private MixtureStack vat = new MixtureStack();
+	
+	MixtureReactionFramework framework = new MixtureReactionFramework(vat);
 	
 	private volatile IUniversalStack injectionCache;
 	public float getVolumeCapacity(){
@@ -131,6 +134,10 @@ public class ArcFurnaceControllerData extends HOEMachineData {
 			}
 			
 		}
+	}
+
+	public MixtureReactionFramework getReactionFramework() {
+		return framework;
 	}
 	
 }

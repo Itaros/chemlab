@@ -47,6 +47,11 @@ public class MixtureReactionFramework {
 	
 	private IMixtureReactionGraphEvaluator evaluator;
 	
+	public MixtureReactionFramework setEvaluator(IMixtureReactionGraphEvaluator evaluator){
+		this.evaluator=evaluator;
+		return this;
+	}
+	
 	public void update(){
 		if(vat!=null){
 			//Evaluating state transitions due to energy supplied/taken

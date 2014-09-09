@@ -38,7 +38,7 @@ public class StateTransition implements IReaction, IReactionTempCutoffNotifier {
 		Iterator<IUniversalStack> i = stack.getViewIterator();
 		while(i.hasNext()){
 			IUniversalStack s = i.next();
-			if(s.getProxy()==matter){
+			if(s.getItem()==matter){
 				IMatterState n=null;
 				if(stack.getCurrentTemperature()>=getHigh()){
 					n=matter.upperForm();
