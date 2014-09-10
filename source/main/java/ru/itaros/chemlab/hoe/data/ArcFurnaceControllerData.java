@@ -10,6 +10,7 @@ import ru.itaros.hoe.itemhandling.MixtureStack;
 import ru.itaros.hoe.itemhandling.UniversalItemStack;
 import ru.itaros.hoe.physics.IMatterState;
 import ru.itaros.hoe.physics.MixtureReactionFramework;
+import ru.itaros.hoe.physics.StateOnlyTransmutationGraphEvaluator;
 
 public class ArcFurnaceControllerData extends HOEMachineData {
 
@@ -18,10 +19,15 @@ public class ArcFurnaceControllerData extends HOEMachineData {
 	 */
 	public ArcFurnaceControllerData(HOEData parent){
 		super(parent);
+		configure();
 	}	
 	
 	public ArcFurnaceControllerData(){
 		super();
+		configure();
+	}
+	private void configure(){
+		framework.setEvaluator(new StateOnlyTransmutationGraphEvaluator());
 	}
 
 	private float heatResistance=0;

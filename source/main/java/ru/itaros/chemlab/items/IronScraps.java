@@ -1,6 +1,6 @@
 package ru.itaros.chemlab.items;
 
-import ru.itaros.hoe.physics.IEnergyReceiver;
+import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.hoe.physics.IMatterState;
 
 public class IronScraps extends ChemLabItem implements IMatterState{
@@ -29,6 +29,16 @@ public class IronScraps extends ChemLabItem implements IMatterState{
 	@Override
 	public long resistance() {
 		return 97L;//nOhm
+	}
+
+	@Override
+	public IMatterState lowerForm() {
+		return null;
+	}
+
+	@Override
+	public IMatterState upperForm() {
+		return HOEFluidLoader.moltenIron;
 	}
 
 	

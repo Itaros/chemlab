@@ -59,8 +59,10 @@ public class MixtureReactionFramework {
 			float temp = vat.getCurrentTemperature();
 			if(temp<lowestTempCutoff){
 				reaction=lowerNeareastTempEventCutoff;
+				lowerNeareastTempEventCutoff=null;
 			}else if(temp>higherTempCutoff){
 				reaction=higherNeareastTempEventCutoff;
+				higherNeareastTempEventCutoff=null;
 			}
 			if(reaction!=null){
 				reaction.perform(vat);
@@ -74,6 +76,11 @@ public class MixtureReactionFramework {
 					evaluator.evaluateAgainstMixture(vat,this);
 				}else{
 					throw new IllegalStateException("MixtureReactionGraphEvaluator is not specified!");
+				}
+			}else{
+				IReaction timeshifted = happensNow.poll();
+				if(timeshifted!=null){
+					timeshifted.perform(vat);
 				}
 			}
 		}
@@ -93,6 +100,7 @@ public class MixtureReactionFramework {
 					}else{
 						//HAPPENED IN THE PAST. FFFFUUUCK!
 						happensNow.add(r);
+						System.out.println("PPSM");
 					}
 				}
 				if(irctcn.getHigh()<higherTempCutoff){
@@ -103,6 +111,7 @@ public class MixtureReactionFramework {
 					}else{
 						//HAPPENED IN THE PAST. FFFFUUUCK!
 						happensNow.add(r);
+						System.out.println("PPSM");
 					}
 				}				
 			}

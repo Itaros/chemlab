@@ -7,6 +7,8 @@ import ru.itaros.hoe.registries.HOEFluidRegistry;
 
 public class HOEFluidLoader {
 	
+	public static MoltenIron moltenIron;
+	
 	public static CellulosalExtractives cellulosal_extractives_high;
 	public static Water water_natural;
 	public static PressurizedSteam steam_pressurized;
@@ -44,6 +46,9 @@ public class HOEFluidLoader {
 		//TODO: should be API interface
 		HOEFluidRegistry registry = HOEFluid.getFluidRegistry();
 		
+		moltenIron = new MoltenIron();
+		registry.register(moltenIron);
+				
 		cellulosal_extractives_high = new CellulosalExtractives();
 		registry.register(cellulosal_extractives_high);
 		
