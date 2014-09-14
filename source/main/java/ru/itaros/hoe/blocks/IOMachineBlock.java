@@ -251,6 +251,13 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 		
 		
 	}
+	
+	@Override
+	public void onBlockAdded(World w, int x,
+			int y, int z) {
+		
+		super.onBlockAdded(w, x, y, z);
+	}
 	@Override
 	public void onNeighborBlockChange(World w, int x,
 			int y, int z, Block block) {

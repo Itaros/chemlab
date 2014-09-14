@@ -1,7 +1,10 @@
 package ru.itaros.hoe.tiles;
 
+import java.util.EnumSet;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -14,23 +17,222 @@ import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.chemlab.HOELinker;
 import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold;
+import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.chemlab.tiles.syndication.ISyndicationPiping;
 import ru.itaros.chemlab.tiles.syndication.SyndicationControllerDescriptorContainer;
 import ru.itaros.chemlab.tiles.syndication.SyndicationHubTileEntity;
 import ru.itaros.chemlab.tiles.syndication.SyndicationPipingTileEntity;
 import ru.itaros.hoe.ContextDetector;
 import ru.itaros.hoe.HOE;
+import ru.itaros.hoe.addon.ae.power.IHOEVolatileAEPowerCache;
 import ru.itaros.hoe.blocks.IRotationSolver;
 import ru.itaros.hoe.blocks.RotatableBlockUtility;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.data.utils.HOEDataFingerprint;
 import ru.itaros.hoe.io.HOEMachineIO;
 import ru.itaros.hoe.jobs.HOEMachines;
+import appeng.api.AEApi;
+import appeng.api.config.Actionable;
+import appeng.api.networking.GridFlags;
+import appeng.api.networking.GridNotification;
+import appeng.api.networking.IGrid;
+import appeng.api.networking.IGridBlock;
+import appeng.api.networking.IGridHost;
+import appeng.api.networking.IGridNode;
+import appeng.api.networking.events.MENetworkEventSubscribe;
+import appeng.api.networking.events.MENetworkPowerStatusChange;
+import appeng.api.util.AECableType;
+import appeng.api.util.AEColor;
+import appeng.api.util.DimensionalCoord;
+import appeng.util.Platform;
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
 import buildcraft.api.power.PowerHandler.PowerReceiver;
 
-public abstract class MachineTileEntity extends TileEntity implements IPowerReceptor, ISecured, ISyndicationPiping, IRotationSolver {
+public abstract class MachineTileEntity extends TileEntity implements IPowerReceptor, ISecured, ISyndicationPiping, IRotationSolver, IGridHost, IGridBlock, IHOEVolatileAEPowerCache{
+
+	@Override
+	public AECableType getCableConnectionType(ForgeDirection arg0) {
+		return AECableType.COVERED;
+	}
+
+	
+	IGridNode aeNode=null;
+	@Override
+	public IGridNode getGridNode(ForgeDirection dir) {
+		if(aeNode==null && Platform.isServer()){
+			aeNode = AEApi.instance().createGridNode(this);
+			aeNode.updateState();
+			revalidatePowerStatus();
+		}
+		return aeNode;
+	}
+
+
+	@Override
+	public void securityBreak() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static EnumSet<ForgeDirection> getcsCache = EnumSet.allOf(ForgeDirection.class);
+	private static EnumSet<GridFlags> getflgsCache;
+	
+	static{
+		getflgsCache = EnumSet.noneOf(GridFlags.class);
+		getflgsCache.add(GridFlags.CANNOT_CARRY);
+	}
+	
+	
+	
+	@Override
+	public EnumSet<ForgeDirection> getConnectableSides() {
+		return getcsCache;
+	}
+
+	
+	@Override
+	public EnumSet<GridFlags> getFlags() {
+		return getflgsCache;
+	}
+
+
+	@Override
+	public AEColor getGridColor() {
+		return AEColor.Transparent;
+	}
+
+
+	@Override
+	public double getIdlePowerUsage() {
+		return 1;
+	}
+	
+	private long lastTimeStamp=-1;
+	private boolean isCharging=false;
+	
+	@MENetworkEventSubscribe
+	public void onPowerStateChange(MENetworkPowerStatusChange event){
+		revalidatePowerStatus();
+	}
+	private void revalidatePowerStatus(){
+		if(aeNode!=null){
+			if(lastTimeStamp<0){
+				//No known universe state in existed timeframe
+				lastTimeStamp=System.currentTimeMillis();
+				isCharging=aeNode.isActive();
+				return;
+			}else{
+				if(isCharging){
+					//Was charging
+					long endTime=System.currentTimeMillis();
+					long totalTime = endTime - lastTimeStamp;
+					
+					double aeSumUp = (((double)totalTime)/(50D))*getIdlePowerUsage();
+					injectAEPower(aeSumUp, Actionable.MODULATE);
+					System.out.println("Injected: "+this.getAECurrentPower()+"/"+this.getAEMaxPower());
+					
+					lastTimeStamp=System.currentTimeMillis();
+					isCharging=aeNode.isActive();
+					
+					
+				}else{
+					//Was doing nothing
+					lastTimeStamp=System.currentTimeMillis();
+					isCharging=aeNode.isActive();
+					return;
+				}
+			}
+			
+		}
+	}
+	
+
+	@Override
+	public DimensionalCoord getLocation() {
+		return new DimensionalCoord(this);
+	}
+
+
+	@Override
+	public IGridHost getMachine() {
+		return this;
+	}
+
+
+	@Override
+	public ItemStack getMachineRepresentation() {
+		return new ItemStack(BlockLoader.casing);
+	}
+
+
+	@Override
+	public void gridChanged() {
+		revalidatePowerStatus();
+		
+	}
+
+
+	@Override
+	public boolean isWorldAccessable() {
+		return true;
+	}
+
+
+	@Override
+	public void onGridNotification(GridNotification arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setNetworkStatus(IGrid arg0, int arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	protected volatile double localAEPower=0;
+	protected static double localAEPowerMax = 1000;
+	
+	@Override
+	public double extractAEPower(double amt, Actionable mode) {
+		return 0;//Can't extract
+	}
+
+	@Override
+	public double injectAEPower(double amt, Actionable mode) {
+		double d = getAEMaxPower()-getAECurrentPower();
+		if(d>0){
+			if(amt<=d){
+				if(mode==Actionable.MODULATE){
+					localAEPower+=amt;
+				}
+				return 0;
+			}else{
+				double leftovers = amt-d;
+				if(mode==Actionable.MODULATE){
+					localAEPower+=d;
+				}
+				return leftovers;
+			}
+		}
+		return amt;//Can't receive
+	}
+	
+	@Override
+	public double getAECurrentPower() {
+		return localAEPower;
+	}
+
+
+	@Override
+	public double getAEMaxPower() {
+		return localAEPowerMax;
+	}
+
+
+
+	
 
 	protected SyndicationControllerDescriptorContainer syndicationDescriptor;
 	
@@ -159,6 +361,9 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 		}else{
 			readServerState(nbt.getCompoundTag("hoemdata"));
 		}
+		
+		localAEPower=nbt.getDouble("ae");
+		
 		MJ.readFromNBT(nbt, "mj");
 		security.readFromNBT(nbt, "security");
 		
@@ -179,6 +384,9 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 				nbt.setTag("hoemdata",cachedPayload);//Writeback(unfinished)
 			}
 		}
+		
+		nbt.setDouble("ae", localAEPower);
+		
 		MJ.writeToNBT(nbt, "mj");
 		security.writeToNBT(nbt, "security");
 		
@@ -208,6 +416,12 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 		if(!waitsForPostload){return;}
 		waitsForPostload=false;
 		isHOEAssumesLoaded=true;
+		
+		//AE
+		
+		getGridNode(ForgeDirection.UNKNOWN);
+		
+		//HOE
 		
 		HOE.getInstance().getTESynchroOpManager().register(this);
 		
@@ -250,6 +464,7 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 		}
 		
 	}
+	
 	
 	public MachineTileEntity() {
 		super();
@@ -377,6 +592,15 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 		}
 		super.onChunkUnload();
 	}
+	
+	@Override
+	public void invalidate() {
+		if(aeNode!=null){
+			aeNode.destroy();
+		}
+		super.invalidate();
+	}
+
 
 	//NBT SYNC
 	@Override
