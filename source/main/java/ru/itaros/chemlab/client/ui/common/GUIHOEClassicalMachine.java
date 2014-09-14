@@ -132,15 +132,18 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 				this.mc.renderEngine.bindTexture(background);
 				this.drawTexturedModalRect(x+HOEContainer.xOffset, y, 0, 0, xSize-HOEContainer.xOffset*2, ySize);		
 				
+				//Gauges
+				DrawGauges(data, var2, var3);
+				
 				//Additional SlotsUI
 				if(this.tile instanceof IConfigurableIO){
 					this.mc.renderEngine.bindTexture(additionals);
 					this.drawTexturedModalRect(x-(76-34)+3+HOEContainer.xOffset, y+11, 36, 00, (76-34), 66-00);	
 					drawAuxSlotsMarkings();
 				}
-				//Gauges
 				
-				DrawGauges(data, var2, var3);
+				
+				//Vanilla notations
 				
 				fontRendererObj.drawString(this.getMachineUnlocalizedName(), HOEContainer.xOffset+x+8, y+6, CAPTIONCOLOR);//4210752
 				
@@ -222,7 +225,7 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 		float currentT = data.getTicks();
 		float maxT = data.ticksRequared;
 		int percent = (int) ((currentT/maxT)*100);
-		DrawProgressbarRaw(66, 37, 187, 2, percent);
+		DrawProgressbarRaw(66+HOEContainer.xOffset, 37, 187, 2, percent);
 	}
 
 	protected void DrawProgressbarRaw(int xl, int yl, int u, int v, int percents){
@@ -248,11 +251,11 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 		//timers
 		//->
 		if(energySmoothed<0D){energySmoothed=power;}
-		if(mjSmoothed<0D){mjSmoothed=tile.getCurrentMJ();}
+		if(aeSmoothed<0D){aeSmoothed=tile.getAECurrentPower();}
 		if(tcom>TIMEOFFSET){
 			tcom-=TIMEOFFSET;
 			energySmoothed=(energySmoothed+power)/2D;
-			mjSmoothed=(mjSmoothed+tile.getCurrentMJ())/2D;
+			aeSmoothed=(aeSmoothed+tile.getAECurrentPower())/2D;
 		}
 		//<-
 		
@@ -261,13 +264,13 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 		double diff = energySmoothed/(double)powerMax;
 		int offset = (int) (66D*diff);
 		int inverted = 66-offset;
-		drawTexturedModalRect(x+159, y+13+inverted, 177, 2+inverted, 9+1, offset);
+		drawTexturedModalRect(x+159+HOEContainer.xOffset, y+13+inverted, 177, 2+inverted, 9+1, offset);
 		
 		//MJs
-		double mjdiff = mjSmoothed/tile.getMaximumMJ();
+		double mjdiff = aeSmoothed/tile.getAEMaxPower();
 		offset = (int) ((66D-6D)*mjdiff);	
 		inverted = 66-6-offset;
-		drawTexturedModalRect(x+159, y+12+inverted, 177, 67, 9,6);
+		drawTexturedModalRect(x+159+HOEContainer.xOffset, y+12+inverted, 177, 67, 9,6);
 		
 		//fontRendererObj.drawString(tile.getCurrentMJ()+"/"+tile.getMaximumMJ(), x+8, y+6+30, CAPTIONCOLOR);
 		
@@ -277,10 +280,10 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 	private long new_time;
 	private int tcom;
 	private double energySmoothed;
-	private double mjSmoothed;
+	private double aeSmoothed;
 	private void resetEyeCandy() {
 		energySmoothed=-1;
-		mjSmoothed=-1;
+		aeSmoothed=-1;
 		
 		tcom=0;
 		last_time=System.nanoTime();
