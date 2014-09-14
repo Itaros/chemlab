@@ -45,11 +45,8 @@ import appeng.api.util.AECableType;
 import appeng.api.util.AEColor;
 import appeng.api.util.DimensionalCoord;
 import appeng.util.Platform;
-import buildcraft.api.power.IPowerReceptor;
-import buildcraft.api.power.PowerHandler;
-import buildcraft.api.power.PowerHandler.PowerReceiver;
 
-public abstract class MachineTileEntity extends TileEntity implements IPowerReceptor, ISecured, ISyndicationPiping, IRotationSolver, IGridHost, IGridBlock, IHOEVolatileAEPowerCache{
+public abstract class MachineTileEntity extends TileEntity implements ISecured, ISyndicationPiping, IRotationSolver, IGridHost, IGridBlock, IHOEVolatileAEPowerCache, IHOEInventorySyncable{
 
 	@Override
 	public AECableType getCableConnectionType(ForgeDirection arg0) {
@@ -105,7 +102,7 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 
 	@Override
 	public double getIdlePowerUsage() {
-		return 1;
+		return 5;
 	}
 	
 	private long lastTimeStamp=-1;
@@ -119,26 +116,30 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 		if(aeNode!=null){
 			if(lastTimeStamp<0){
 				//No known universe state in existed timeframe
-				lastTimeStamp=System.currentTimeMillis();
+				lastTimeStamp=this.worldObj.getWorldTime();
 				isCharging=aeNode.isActive();
 				return;
 			}else{
 				if(isCharging){
 					//Was charging
-					long endTime=System.currentTimeMillis();
+					long endTime=this.worldObj.getWorldTime();
 					long totalTime = endTime - lastTimeStamp;
+					if(totalTime<0){
+						//Inverted due to sun rotation lol
+						totalTime = 24000L+totalTime;//reversal cutoff
+					}
 					
-					double aeSumUp = (((double)totalTime)/(50D))*getIdlePowerUsage();
+					double aeSumUp = totalTime*getIdlePowerUsage();
 					injectAEPower(aeSumUp, Actionable.MODULATE);
 					System.out.println("Injected: "+this.getAECurrentPower()+"/"+this.getAEMaxPower());
 					
-					lastTimeStamp=System.currentTimeMillis();
+					lastTimeStamp=this.worldObj.getWorldTime();
 					isCharging=aeNode.isActive();
 					
 					
 				}else{
 					//Was doing nothing
-					lastTimeStamp=System.currentTimeMillis();
+					lastTimeStamp=this.worldObj.getWorldTime();
 					isCharging=aeNode.isActive();
 					return;
 				}
@@ -202,7 +203,7 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 	@Override
 	public double injectAEPower(double amt, Actionable mode) {
 		double d = getAEMaxPower()-getAECurrentPower();
-		if(d>0){
+		if(d>0D){
 			if(amt<=d){
 				if(mode==Actionable.MODULATE){
 					localAEPower+=amt;
@@ -215,8 +216,9 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 				}
 				return leftovers;
 			}
+		}else{
+			return amt;//Can't receive
 		}
-		return amt;//Can't receive
 	}
 	
 	@Override
@@ -364,7 +366,6 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 		
 		localAEPower=nbt.getDouble("ae");
 		
-		MJ.readFromNBT(nbt, "mj");
 		security.readFromNBT(nbt, "security");
 		
 		syndicationDescriptor.readFromNBT(nbt);
@@ -387,7 +388,6 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 		
 		nbt.setDouble("ae", localAEPower);
 		
-		MJ.writeToNBT(nbt, "mj");
 		security.writeToNBT(nbt, "security");
 		
 		syndicationDescriptor.writeToNBT(nbt);
@@ -471,8 +471,6 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 		
 		syndicationDescriptor = new SyndicationControllerDescriptorContainer(this);
 		
-		initMJ();//MJ, MC side
-		
 		HOE.getInstance().getTEPostLoadManager().pushTile(this);
 		
 	}
@@ -505,7 +503,25 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 	}
 	
 	
-	//MJ POWER
+	//AE->HOE POWER
+	
+	@Override
+	public void pushToHOE() {
+		//Power Transfer
+		revalidatePowerStatus();
+		
+		HOEMachineData c = getServerData();
+		if(c==null){return;}
+		double overflow = c.incrementPower(getAECurrentPower());
+		this.localAEPower=overflow;
+	}
+
+
+	@Override
+	public void pullFromHOE() {
+		
+		
+	}	
 	
 	/*
 	 * Convenience method. Provides a way to get a synched client before actual sync operation
@@ -517,52 +533,11 @@ public abstract class MachineTileEntity extends TileEntity implements IPowerRece
 			c.incrementPower(power);
 		}
 	}
-	
-	@Override
-	public void doWork(PowerHandler handler) {
-		HOEMachineData s = getServerData();
-		if(s==null){return;}
-		
-		double diff = (s.getPowerMax()-s.getPower());
-		if(diff>=MJ_BATCH){
-			double used = handler.useEnergy(MJ_BATCH, MJ_BATCH, true);
-			//TODO: Is this "used" needed?
-			s.incrementPower(MJ_BATCH);
-			clientPowerInjection(MJ_BATCH);
-			//This is save because it is ATOMIC
-		}
-		
-	}
-
-	public static final int MJ_MIN=1;
-	public static final int MJ_BATCH=ChemLabValues.ENERGY_FRACTION;	
-	public static final int MJ_MAX=1024;
-	public static final int MJ_CAPACITY=1000;
-
-	
-	private void initMJ(){
-		MJ = new PowerHandler(this, PowerHandler.Type.MACHINE);
-		MJ.configure(MJ_MIN, MJ_MAX, MJ_BATCH, MJ_CAPACITY);
-	}
-	
-	private PowerHandler MJ;
-	@Override
-	public PowerReceiver getPowerReceiver(ForgeDirection arg0) {
-		return MJ.getPowerReceiver();
-	}
 
 	@Override
 	public World getWorld() {
 		return this.worldObj;
 	}	
-	
-	
-	public double getCurrentMJ(){
-		return MJ.getEnergyStored();
-	}
-	public double getMaximumMJ(){
-		return MJ.getMaxEnergyStored();
-	}
 	
 	
 	//HOE Interop

@@ -267,8 +267,8 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 		drawTexturedModalRect(x+159+HOEContainer.xOffset, y+13+inverted, 177, 2+inverted, 9+1, offset);
 		
 		//MJs
-		double mjdiff = aeSmoothed/tile.getAEMaxPower();
-		offset = (int) ((66D-6D)*mjdiff);	
+		double aediff = aeSmoothed/tile.getAEMaxPower();
+		offset = (int) ((66D-6D)*aediff);	
 		inverted = 66-6-offset;
 		drawTexturedModalRect(x+159+HOEContainer.xOffset, y+12+inverted, 177, 67, 9,6);
 		

@@ -219,6 +219,7 @@ public abstract class HOEMachineData extends HOEData {
 		power+=i;
 		if(power>maxpower){
 			double overflow = power-maxpower;
+			power-=overflow;
 			return overflow;
 		}
 		return 0;

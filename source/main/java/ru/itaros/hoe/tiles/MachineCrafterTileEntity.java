@@ -300,11 +300,13 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	public void pushToHOE() {
 		in=TileEntityHelper.HOEItemPush(this, in);
 		fin.setFluid(TileEntityHelper.HOEFluidPush(this,fin.getFluid()));
+		super.pushToHOE();
 	}
 
 	@Override
 	public void pullFromHOE() {
 		out=TileEntityHelper.HOEItemPull(this, out);
+		super.pullFromHOE();
 	}
 	
 	
