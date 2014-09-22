@@ -24,7 +24,7 @@ public class UniversalItemStack implements IUniversalStack {
 
 	@Override
 	public int getStackSize() {
-		return proxy.stackSize;
+		return proxy==null?0:proxy.stackSize;
 	}
 
 	@Override
@@ -135,7 +135,10 @@ public class UniversalItemStack implements IUniversalStack {
 	}
 	
 	
-	
+	@Override
+	public IUniversalStack verifyProxy() {
+		return proxy==null?null:this;
+	}	
 	
 	
 }

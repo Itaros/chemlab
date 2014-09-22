@@ -15,6 +15,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.IFluidHandler;
 import ru.itaros.chemlab.ChemLabCreativeTab;
 import ru.itaros.hoe.fluid.HOEFluid;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.utils.StackUtility;
 
 public class HiVolumeLiquidCell extends Item {
@@ -39,6 +40,10 @@ public class HiVolumeLiquidCell extends Item {
 	public HOEFluid getFluid(ItemStack stack){
 		return index[stack.getItemDamage()].getFluid();
 	}
+	
+	public HOEFluid getFluid(IUniversalStack stack) {
+		return getFluid((ItemStack) stack.getProxy());
+	}	
 	
 	public static HiVolumeLiquidCell getByFluid(HOEFluid fluid){
 		return registered.get(fluid);

@@ -22,14 +22,16 @@ import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.data.utils.HOEDataFingerprint;
 import ru.itaros.hoe.io.HOEMachineIO;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.jobs.HOEMachines;
 import ru.itaros.hoe.tiles.IHOEInventorySyncable;
 import ru.itaros.hoe.tiles.ITileEntityParticleManager;
+import ru.itaros.hoe.tiles.IUniversalInventory;
 import ru.itaros.hoe.tiles.MachineTileEntity;
 import ru.itaros.hoe.utils.StackUtility;
 import ru.itaros.hoe.utils.TileEntityHelper;
 
-public class GasChimneyTileEntity extends MachineTileEntity implements ISidedInventory, IHOEInventorySyncable, ITileEntityParticleManager {
+public class GasChimneyTileEntity extends MachineTileEntity implements ISidedInventory, IUniversalInventory, IHOEInventorySyncable, ITileEntityParticleManager {
 
 	public static Random random = new Random();
 	
@@ -144,19 +146,7 @@ public class GasChimneyTileEntity extends MachineTileEntity implements ISidedInv
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int slot) {
-		//hoe synced
-		if(slot<0){
-			GasChimneyData sd = (GasChimneyData)this.getClientData();
-			if(sd==null){return null;}
-			switch(slot){
-			case -1:
-				return sd.get_cell_in();
-			case -2:
-				return sd.get_cell_out();
-			}
-		}
-		
+	public ItemStack getStackInSlot(int slot) {	
 		//real
 		switch(slot){
 		case 0:
@@ -288,6 +278,17 @@ public class GasChimneyTileEntity extends MachineTileEntity implements ISidedInv
 		}
 		this.getPFXL().clear();
 		
+	}
+
+	@Override
+	public IUniversalStack getStackInHOERemoteSlot(int slot) {
+		if(slot<0){
+			GasChimneyData data = (GasChimneyData) this.getClientData();
+			if(data!=null){
+				return slot==-1?data.get_cell_in():data.get_cell_out();
+			}
+		}
+		return null;
 	}
 	
 	

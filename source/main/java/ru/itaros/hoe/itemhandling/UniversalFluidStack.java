@@ -25,7 +25,7 @@ public class UniversalFluidStack implements IUniversalStack {
 
 	@Override
 	public int getStackSize() {
-		return proxy.stackSize;
+		return proxy==null?0:proxy.stackSize;
 	}
 
 	@Override
@@ -118,5 +118,10 @@ public class UniversalFluidStack implements IUniversalStack {
 	public String getLocalizedName() {
 		if(proxy==null){return "???";}
 		return ("" + StatCollector.translateToLocal(proxy.getUnlocalizedName() + ".name")).trim();
+	}
+
+	@Override
+	public IUniversalStack verifyProxy() {
+		return proxy==null?null:this;
 	}
 }

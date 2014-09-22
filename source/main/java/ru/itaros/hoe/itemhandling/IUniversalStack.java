@@ -46,4 +46,8 @@ public interface IUniversalStack {
 
 	public String getLocalizedName();
 		
+	/*
+	 * This method tests if proxy is healthy(not null). If not it returns null instead of self
+	 */
+	public IUniversalStack verifyProxy();
 }

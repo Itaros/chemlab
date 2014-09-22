@@ -3,13 +3,16 @@ package ru.itaros.chemlab.hoe.data;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidStack;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.fluid.HOEFluid;
 import ru.itaros.hoe.fluid.HOEFluid.HOEFluidState;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalItemStack;
 import ru.itaros.hoe.itemhandling.UniversalStackUtils;
 import ru.itaros.hoe.utils.ItemStackTransferTuple;
 import ru.itaros.hoe.utils.StackUtility;
@@ -83,8 +86,7 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 	 */
 	public void produce(boolean doReal) {
 		if(checkWork()){
-			Item i = inbound.getItem();
-			if(isItemValid(i)){
+			if(isItemValid(inbound)){
 				inbound.decrement(1);
 				inbound=StackUtility.verify(inbound);
 				
@@ -111,10 +113,13 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 			}
 		}
 	}
-	private boolean isItemValid(Item i) {
-		if(i instanceof HiVolumeLiquidCell){
-			HiVolumeLiquidCell cell = (HiVolumeLiquidCell)i;
-			return cell.getFluid().getState()==HOEFluidState.GAS;
+	private boolean isItemValid(IUniversalStack stack) {
+		Object pre = stack.getItem();
+		if(pre instanceof HiVolumeLiquidCell){
+			HiVolumeLiquidCell cell = (HiVolumeLiquidCell)pre;
+			return cell.getFluid(stack).getState()==HOEFluidState.GAS;
+		}else if(pre instanceof HOEFluid){
+			return ((HOEFluid) pre).getState()==HOEFluidState.GAS;
 		}else{
 			return false;
 		}
@@ -130,30 +135,39 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 		return tryToPutItemsIn(source, null);
 	}
 
-	public ItemStack tryToPutItemsIn(ItemStack source, ItemStack filter){
-		transferTuple.fill(inbound, source);
-		source=StackUtility.tryToPutIn(transferTuple,false,null);
-		inbound=transferTuple.retr1();
-		this.markDirty();
+	@Override
+	public ItemStack tryToPutItemsIn(ItemStack source, ItemStack filter) {
+		//There is no hope if this is not an item. But really, this is a mess...
+		if(inbound instanceof UniversalItemStack || inbound==null){
+			transferTuple.fill((ItemStack) UniversalStackUtils.getSafeProxy(inbound), source);
+			source=StackUtility.tryToPutIn(transferTuple,false,filter);
+			inbound=UniversalStackUtils.setSafeProxy(inbound,transferTuple.retr1());
+			this.markDirty();
+		}
 		return source;
 	}
 	public ItemStack tryToGetItemsOut(ItemStack target){
 		return tryToGetItemsOut(target, null);
 	}
 
-	public ItemStack tryToGetItemsOut(ItemStack target, ItemStack filter){
-		transferTuple.fill(target, outbound);
-		target = StackUtility.tryToGetOut(transferTuple,null);
-		outbound=StackUtility.verify(transferTuple.retr2());
-		this.markDirty();
+	@Override
+	public ItemStack tryToGetItemsOut(ItemStack target, ItemStack filter) {
+		//There is no hope if this is not an item. But really, this is a mess...
+		if(outbound instanceof UniversalItemStack){
+			transferTuple.fill(target, (ItemStack) outbound.getProxy());
+			target = StackUtility.tryToGetOut(transferTuple,filter);
+			outbound.setProxy(StackUtility.verify(transferTuple.retr2()));
+			outbound=outbound.verifyProxy();
+			this.markDirty();
+		}
 		return target;
-	}	
+	}
 	
 	@Override
 	protected void readInventoryNBT(NBTTagCompound nbt) {
 		super.readInventoryNBT(nbt);
-		inbound=StackUtility.readItemStackFromNBT(nbt, "initem");
-		outbound=StackUtility.readItemStackFromNBT(nbt, "outitem");		
+		inbound=StackUtility.readUniversalStackFromNBT(nbt, "initem");
+		outbound=StackUtility.readUniversalStackFromNBT(nbt, "outitem");		
 	}
 
 	@Override
@@ -188,6 +202,17 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 		boolean cache = isDirty;
 		isDirty=false;
 		return cache;
+	}
+
+	//HACK: Fluids are discarded
+	@Override
+	public FluidStack tryToPutFluidsIn(FluidStack fluid) {
+		return fluid;
+	}
+
+	@Override
+	public FluidStack tryToPutFluidsIn(FluidStack fluid, FluidStack filter) {
+		return fluid;
 	}
 	
 	
