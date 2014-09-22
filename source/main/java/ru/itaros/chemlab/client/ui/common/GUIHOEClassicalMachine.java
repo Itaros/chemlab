@@ -137,6 +137,8 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 				
 				//Additional SlotsUI
 				if(this.tile instanceof IConfigurableIO){
+					GL11.glColor4f(1F, 1F, 1F, 1F);
+					GL11.glDisable(GL11.GL_LIGHTING);
 					this.mc.renderEngine.bindTexture(additionals);
 					this.drawTexturedModalRect(x-(76-34)+3+HOEContainer.xOffset, y+11, 36, 00, (76-34), 66-00);	
 					drawAuxSlotsMarkings();
