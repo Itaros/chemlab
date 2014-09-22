@@ -170,7 +170,7 @@ public class MixtureStack implements IEnergyReceiver{
 		floatingEnergy+=mj;
 		if(floatingEnergy>heatCapacity){
 			float rem = floatingEnergy%heatCapacity;
-			temperature+=(float)((int)floatingEnergy/(int)heatCapacity);
+			temperature+=(float)((int)floatingEnergy/((int)heatCapacity+1));
 			floatingEnergy=rem;
 		}
 	}
