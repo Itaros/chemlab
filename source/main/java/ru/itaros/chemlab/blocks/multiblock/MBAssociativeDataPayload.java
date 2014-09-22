@@ -14,9 +14,16 @@ public class MBAssociativeDataPayload {
 	
 	public void set(String key, Object value){
 		assoc.put(key, value);
+		isInitialized=true;
 	}
 	public Object get(String key){
 		return assoc.get(key);
 	}
+	
+	private boolean isInitialized=false;
+	public boolean isInitialized() {
+		return isInitialized;
+	}
+
 	
 }

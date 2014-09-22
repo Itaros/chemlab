@@ -69,9 +69,13 @@ public class ArcFurnaceController extends IOMachineBlock {
 	public void onBlockAdded(World w, int x,
 			int y, int z) {
 		
+		if(w.isRemote){super.onBlockAdded(w, x, y, z);}
+		
 		MBAssociativeDataPayload payload = new MBAssociativeDataPayload();
 		MBStrictComparator comparator = new MBStrictComparator(MultiblockLoader.arcFurnace, w, x, y, z);
+		MultiblockLoader.arcFurnace.initialize(payload);
 		comparator.compareAll(payload);
+		//comparator.fillAll();
 		
 		if(comparator.getErrorMargin()==0F){
 			//No errors, valid.

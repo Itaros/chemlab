@@ -67,6 +67,10 @@ public class MBStrictComparator {
 	}	
 	
 	public void compareAll(MBAssociativeDataPayload payload){
+		if(!payload.isInitialized()){
+			throw new IllegalStateException("Payload was uninitialized");
+		}
+		
 		int errors=0;
 		//All Layers
 		for(int yl=0; yl < def.getLevels(); yl++){

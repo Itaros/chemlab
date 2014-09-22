@@ -25,11 +25,12 @@ import ru.itaros.hoe.tiles.MachineTileEntity;
 import ru.itaros.hoe.tiles.ioconfig.IConfigurableIO;
 import ru.itaros.hoe.tiles.ioconfig.PortInfo;
 import ru.itaros.hoe.tiles.ioconfig.PortType;
+import ru.itaros.hoe.utils.HOEInteger;
 import ru.itaros.hoe.utils.TileEntityHelper;
 
 public class ArcFurnaceControllerTileEntity extends MachineTileEntity implements IHOEInventorySyncable, IMultiblockController, ISidedInventory, IConfigurableIO, IRedstoneControllable{
 
-	private static final float MAX_HEATRESIST = 1600F;
+	private static final float MAX_HEATRESIST = 2000F;
 	private static final float MAX_VOLRESIST = 1F;
 
 	public ArcFurnaceControllerTileEntity(){
@@ -69,23 +70,21 @@ public class ArcFurnaceControllerTileEntity extends MachineTileEntity implements
 	public void setValues(MBAssociativeDataPayload payload) {
 		//tempresist
 		//volresist
-		Integer tempresist = (Integer) payload.get("tempresist");
-		Integer volresist = (Integer) payload.get("volresist");
-
-		if(tempresist==null){tempresist=0;}
-		if(volresist==null){volresist=0;}
+		HOEInteger tempresist = (HOEInteger) payload.get("tempresist");
+		HOEInteger volresist = (HOEInteger) payload.get("volresist");
 		
 		//Calculating factor
-		float tempResistFactor=(float)tempresist/(float)MBDefinitionArcFurnace.DEFID_INSULATION;
-		float volumeResistFactor=(float)volresist/(float)MBDefinitionArcFurnace.DEFID_CHASSIS;
+		//57 is amount of specific blocks in definition(insulators)
+		float tempResistFactor=tempresist.toFloat()/57F;
+		float volumeResistFactor=volresist.toFloat()/(float)MBDefinitionArcFurnace.DEFID_CHASSIS;
 		
 		//Enforce postload. It is already populated
 		this.onPostLoad();
 		
 		//Pushing factors to HOE
 		ArcFurnaceControllerData data = (ArcFurnaceControllerData) this.getServerData();
-		data.setHeatResistance(tempResistFactor*MAX_HEATRESIST/MultiblockLoader.arcFurnace.getInsulationLevels());
-		data.setVolumeResistance(volumeResistFactor*MAX_VOLRESIST/MultiblockLoader.arcFurnace.getChassisLevels());
+		data.setHeatResistance(tempResistFactor*MAX_HEATRESIST/(MultiblockLoader.arcFurnace.getInsulationLevels()-1));
+		data.setVolumeResistance(volumeResistFactor*MAX_VOLRESIST/(MultiblockLoader.arcFurnace.getChassisLevels()-1));
 	}
 
 	

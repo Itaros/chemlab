@@ -108,5 +108,7 @@ public abstract class MBDefinition {
 		}
 		
 	}
+
+	public abstract void initialize(MBAssociativeDataPayload payload);
 	
 }
