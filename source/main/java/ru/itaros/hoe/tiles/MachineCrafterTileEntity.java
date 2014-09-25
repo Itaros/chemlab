@@ -295,23 +295,8 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	
 	
 	//Sync
-	private int pushToHOECIOSequence=0;
 	@Override
-	public void pushToHOE() {
-		//CIO
-		PortInfo[] pis = getPorts();
-		if(pushToHOECIOSequence<pis.length){
-			PortInfo p = pis[pushToHOECIOSequence];
-			if(p!=null){
-				if(p.isItemSocket() && p.isInput()){
-					p.setStack(TileEntityHelper.HOEItemPush(this, (ItemStack)p.getStack()));
-				}
-			}
-			pushToHOECIOSequence++;
-		}else{
-			pushToHOECIOSequence=0;
-		}
-		
+	public void pushToHOE() {		
 		//Main Inventory
 		in=TileEntityHelper.HOEItemPush(this, in);
 		fin.setFluid(TileEntityHelper.HOEFluidPush(this,fin.getFluid()));

@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import ru.itaros.chemlab.items.CIOWrench;
 import ru.itaros.chemlab.items.ChemLabItem;
 import ru.itaros.chemlab.items.ChemLabWireItem;
 import ru.itaros.chemlab.items.CrushedOre;
@@ -27,6 +28,7 @@ public class ItemLoader {
 
 	public static Programmer programmer;
 	public static PipeWrench wrench;
+	public static CIOWrench ciowrench;
 	public static IOMultitool iomultitool;
 	
 	public static HiVolumeLiquidCellEmpty emptyhvlc;
@@ -215,6 +217,9 @@ public class ItemLoader {
 		
 		wrench = new PipeWrench();
 		GameRegistry.registerItem(wrench,wrench.getUnlocalizedName());
+		
+		ciowrench = new CIOWrench();
+		GameRegistry.registerItem(ciowrench,ciowrench.getUnlocalizedName());
 		
 		iomultitool = new IOMultitool();
 		GameRegistry.registerItem(iomultitool,iomultitool.getUnlocalizedName());

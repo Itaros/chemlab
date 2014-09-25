@@ -70,6 +70,9 @@ public final class PortInfo {
 	public void enable(){
 		isEnabled=true;
 	}
+	public void switchDirection(){
+		isOutput=!isOutput;
+	}
 
 	
 	public IIcon getIcon(IconsLibrary library) {

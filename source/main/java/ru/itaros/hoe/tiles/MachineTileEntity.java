@@ -31,6 +31,9 @@ import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.data.utils.HOEDataFingerprint;
 import ru.itaros.hoe.io.HOEMachineIO;
 import ru.itaros.hoe.jobs.HOEMachines;
+import ru.itaros.hoe.tiles.ioconfig.IConfigurableIO;
+import ru.itaros.hoe.tiles.ioconfig.PortInfo;
+import ru.itaros.hoe.utils.TileEntityHelper;
 import appeng.api.AEApi;
 import appeng.api.config.Actionable;
 import appeng.api.networking.GridFlags;
@@ -504,9 +507,29 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 	
 	
 	//AE->HOE POWER
-	
+	//CIO
+	private int pushToHOECIOSequence=0;
+	private int pullFromHOECIOSequence=0;
 	@Override
 	public void pushToHOE() {
+		//CIO		
+		if(this instanceof IConfigurableIO){
+			IConfigurableIO cio = (IConfigurableIO)this;
+			PortInfo[] pis = cio.getPorts();
+			if(pushToHOECIOSequence<pis.length){
+				PortInfo p = pis[pushToHOECIOSequence];
+				if(p!=null){
+					if(p.isItemSocket() && p.isInput()){
+						p.setStack(TileEntityHelper.HOEItemPush(this, (ItemStack)p.getStack()));
+					}
+				}
+				pushToHOECIOSequence++;
+			}else{
+				pushToHOECIOSequence=0;
+			}			
+		}
+		
+		
 		//Power Transfer
 		revalidatePowerStatus();
 		
@@ -519,7 +542,22 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 
 	@Override
 	public void pullFromHOE() {
-		
+		//CIO		
+		if(this instanceof IConfigurableIO){
+			IConfigurableIO cio = (IConfigurableIO)this;
+			PortInfo[] pis = cio.getPorts();
+			if(pullFromHOECIOSequence<pis.length){
+				PortInfo p = pis[pullFromHOECIOSequence];
+				if(p!=null){
+					if(p.isItemSocket() && p.isOutput()){
+						p.setStack(TileEntityHelper.HOEItemPull(this, (ItemStack)p.getStack()));
+					}
+				}
+				pullFromHOECIOSequence++;
+			}else{
+				pullFromHOECIOSequence=0;
+			}			
+		}		
 		
 	}	
 	
