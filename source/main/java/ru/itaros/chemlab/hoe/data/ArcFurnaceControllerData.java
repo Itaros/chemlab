@@ -157,7 +157,12 @@ public class ArcFurnaceControllerData extends HOEMachineData  implements ISynchr
 
 	@Override
 	public ItemStack tryToPutItemsIn(ItemStack source, ItemStack filter) {
-		return queryAddition(source);
+		if(source!=null){
+			if(source.getItem() instanceof IMatterState){
+				return queryAddition(source);
+			}
+		}
+		return source;
 	}
 
 	@Override
