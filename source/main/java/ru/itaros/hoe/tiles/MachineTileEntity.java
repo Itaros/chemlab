@@ -134,7 +134,7 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 					
 					double aeSumUp = totalTime*getIdlePowerUsage();
 					injectAEPower(aeSumUp, Actionable.MODULATE);
-					System.out.println("Injected: "+this.getAECurrentPower()+"/"+this.getAEMaxPower());
+					//System.out.println("Injected: "+this.getAECurrentPower()+"/"+this.getAEMaxPower());
 					
 					lastTimeStamp=this.worldObj.getWorldTime();
 					isCharging=aeNode.isActive();
