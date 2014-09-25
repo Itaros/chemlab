@@ -2,8 +2,10 @@ package ru.itaros.chemlab.hoe.data;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidStack;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold;
+import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.itemhandling.MixtureStack;
@@ -11,8 +13,9 @@ import ru.itaros.hoe.itemhandling.UniversalItemStack;
 import ru.itaros.hoe.physics.IMatterState;
 import ru.itaros.hoe.physics.MixtureReactionFramework;
 import ru.itaros.hoe.physics.StateOnlyTransmutationGraphEvaluator;
+import ru.itaros.hoe.utils.StackUtility;
 
-public class ArcFurnaceControllerData extends HOEMachineData {
+public class ArcFurnaceControllerData extends HOEMachineData  implements ISynchroportItems {
 
 	/*
 	 * Reflection autocaster
@@ -100,7 +103,7 @@ public class ArcFurnaceControllerData extends HOEMachineData {
 			int excess = local.substractVolume(deltaV);
 			injectionCache=local;
 			candidate.stackSize-=excess;
-			return candidate;
+			return StackUtility.verify(candidate);
 		}
 	}
 
@@ -144,6 +147,52 @@ public class ArcFurnaceControllerData extends HOEMachineData {
 
 	public MixtureReactionFramework getReactionFramework() {
 		return framework;
+	}
+
+	//ISynchroportItems
+	@Override
+	public ItemStack tryToPutItemsIn(ItemStack source) {
+		return tryToPutItemsIn(source, null);
+	}
+
+	@Override
+	public ItemStack tryToPutItemsIn(ItemStack source, ItemStack filter) {
+		return queryAddition(source);
+	}
+
+	@Override
+	public ItemStack tryToGetItemsOut(ItemStack target) {
+		return tryToGetItemsOut(target, null);
+	}
+
+	@Override
+	public ItemStack tryToGetItemsOut(ItemStack target, ItemStack filter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public FluidStack tryToPutFluidsIn(FluidStack fluid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public FluidStack tryToPutFluidsIn(FluidStack fluid, FluidStack filter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	protected boolean isDirty=false;
+	@Override
+	public void markDirty() {
+		isDirty=true;
+	}
+	@Override
+	public boolean pollDirty() {
+		boolean cache = isDirty;
+		isDirty=false;
+		return cache;
 	}
 	
 }

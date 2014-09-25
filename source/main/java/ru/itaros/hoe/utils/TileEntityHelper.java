@@ -10,20 +10,6 @@ import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.tiles.IHOEInventorySyncable;
 
 public class TileEntityHelper {
-
-	public static ItemStack HOEItemPushIntoVat(IHOEInventorySyncable tile, ItemStack item){
-		HOEMachineData hmd = tile.getServerData();
-		if(hmd!=null){
-			if(hmd instanceof ArcFurnaceControllerData){
-				//TODO: should be vat interface
-				ArcFurnaceControllerData vat = (ArcFurnaceControllerData)hmd;
-				//item=synchroport.tryToPutItemsIn(item, null);
-				return vat.queryAddition(item);
-			}
-		}
-		return item;
-	}	
-	
 	
 	public static ItemStack HOEItemPush(IHOEInventorySyncable tile, ItemStack item){
 		HOEMachineData hmd = tile.getServerData();

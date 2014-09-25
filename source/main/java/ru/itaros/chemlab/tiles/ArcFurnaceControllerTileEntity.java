@@ -329,17 +329,14 @@ public class ArcFurnaceControllerTileEntity extends MachineTileEntity implements
 	
 	@Override
 	public void pushToHOE() {
-		for(PortInfo pi:ports){
-			if(pi!=null && pi.isItemSocket()){
-				pi.setStack(TileEntityHelper.HOEItemPushIntoVat(this, (ItemStack)pi.getStack()));
-			}
-		}
+
+		super.pushToHOE();
 	}
 
 	@Override
 	public void pullFromHOE() {
-		// TODO Auto-generated method stub
 		
+		super.pullFromHOE();
 	}
 
 	@Override
