@@ -32,7 +32,7 @@ public class ForgeSidedFluidBlock extends BlockFluidFinite {
 		
 		this.setRenderPass(1);//Transparent
 		
-		this.setBlockName(fnative.getCommonName());
+		this.setBlockName(fluid.getUnlocalizedName());
 	}
 
 	@Override

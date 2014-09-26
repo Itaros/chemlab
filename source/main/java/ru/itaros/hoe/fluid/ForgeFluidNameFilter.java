@@ -33,8 +33,9 @@ public class ForgeFluidNameFilter {
 		String[] nameparts= name.split("\\.");
 		name="";
 		for(int i = nameparts.length-1;i>=0;i--){
-			name+=nameparts[i];
+			name+=nameparts[i]+'.';
 		}
+		name=name.substring(0, name.length()-1);
 		return name;
 	}
 
@@ -43,7 +44,10 @@ public class ForgeFluidNameFilter {
 		
 		commonName=cleanFromStatePostfixes(commonName);
 		
-		
+		if(commonName.contains("molten.")){
+			//Special handling for molten metals to work along TiCo
+			commonName="molten."+commonName.replace("molten.", "");
+		}
 		
 		return commonName;
 	}
