@@ -5,6 +5,7 @@ import java.util.EnumMap;
 import net.minecraftforge.common.MinecraftForge;
 import ru.itaros.api.hoe.internal.HOEIO;
 import ru.itaros.chemlab.achievements.ChemLabAchievements;
+import ru.itaros.chemlab.addon.cl3.userspace.CL3AddonLoader;
 import ru.itaros.chemlab.client.ui.common.GUIHandler;
 import ru.itaros.chemlab.events.SyndicationSystemPipingProtection;
 import ru.itaros.chemlab.loader.BlockLoader;
@@ -74,6 +75,8 @@ public class ChemLab
     	return cfg;
     }
     
+    private CL3AddonLoader cl3addons;
+    
     VersionCheckerIntegration versioncheck;
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -84,6 +87,7 @@ public class ChemLab
     	TierLoader.loadTiers();
     	
     	cfg = new Config().loadConfig(event);
+    	
     	
     	channels = NetworkRegistry.INSTANCE.newChannel("chemlabchannel", new ChemLabChannel());
     	
@@ -99,6 +103,10 @@ public class ChemLab
 		MultiblockLoader.load();
 		
 		DamageSourceLoader.load();
+		
+		//CL3 Addons
+		cl3addons = new CL3AddonLoader(event.getModConfigurationDirectory());
+		cl3addons.getItemLoader().registerItems();
 		
 		//GFX
 		proxy.registerGFX();
@@ -126,6 +134,7 @@ public class ChemLab
     {
 		RecipesLoader.load();
 		HOEIO.getIORegistry().claimOwnership();
+		cl3addons.getRecipesLoader().registerRecipes();
 		
 		new GUIHandler();
     }   
