@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import ru.itaros.chemlab.hoe.data.ArcFurnaceControllerData;
+import ru.itaros.hoe.data.ISynchroportFluids;
 import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
@@ -24,8 +25,8 @@ public class TileEntityHelper {
 	public static FluidStack HOEFluidPush(IHOEInventorySyncable tile, FluidStack fluid) {
 		HOEMachineData hmd = tile.getServerData();
 		if(hmd!=null){
-			if(hmd instanceof ISynchroportItems){
-				ISynchroportItems synchroport = (ISynchroportItems)hmd;
+			if(hmd instanceof ISynchroportFluids){
+				ISynchroportFluids synchroport = (ISynchroportFluids)hmd;
 				fluid=synchroport.tryToPutFluidsIn(fluid, null);
 			}
 		}
@@ -46,8 +47,8 @@ public class TileEntityHelper {
 	public static FluidStack HOEFluidPull(IHOEInventorySyncable tile, FluidStack fluid){
 		HOEMachineData hmd = tile.getServerData();
 		if(hmd!=null){
-			if(hmd instanceof ISynchroportItems){
-				ISynchroportItems synchroport = (ISynchroportItems)hmd;
+			if(hmd instanceof ISynchroportFluids){
+				ISynchroportFluids synchroport = (ISynchroportFluids)hmd;
 				fluid=synchroport.tryToGetFluidsOut(fluid, null);
 			}
 		}

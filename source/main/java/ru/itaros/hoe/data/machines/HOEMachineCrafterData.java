@@ -10,6 +10,7 @@ import net.minecraftforge.fluids.FluidStack;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
 import ru.itaros.hoe.data.IHOEMultiInventoryMachine;
+import ru.itaros.hoe.data.ISynchroportFluids;
 import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.fluid.HOEFluidStack;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
@@ -22,7 +23,7 @@ import ru.itaros.hoe.utils.FluidStackTransferTuple;
 import ru.itaros.hoe.utils.ItemStackTransferTuple;
 import ru.itaros.hoe.utils.StackUtility;
 
-public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiInventoryMachine, ISynchroportItems{
+public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiInventoryMachine, ISynchroportItems, ISynchroportFluids{
 	private int incoming_slots,outcoming_slots;
 	//ALIGNED DATA
 	private IUniversalStack[] inbound;

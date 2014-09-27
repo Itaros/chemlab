@@ -178,27 +178,6 @@ public class ArcFurnaceControllerData extends HOEMachineData  implements ISynchr
 		return null;
 	}
 
-	@Override
-	public FluidStack tryToPutFluidsIn(FluidStack fluid) {
-		return tryToPutFluidsIn(fluid,null);
-	}
-
-	@Override
-	public FluidStack tryToPutFluidsIn(FluidStack fluid, FluidStack filter) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public FluidStack tryToGetFluidsOut(FluidStack fluid) {
-		return tryToGetFluidsOut(fluid, null);
-	}
-
-	@Override
-	public FluidStack tryToGetFluidsOut(FluidStack fluid, FluidStack filter) {
-		return fluid;
-	}	
-
 	protected boolean isDirty=false;
 	@Override
 	public void markDirty() {

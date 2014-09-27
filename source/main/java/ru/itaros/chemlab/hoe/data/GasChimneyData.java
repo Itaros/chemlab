@@ -203,18 +203,5 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 		isDirty=false;
 		return cache;
 	}
-
-	//HACK: Fluids are discarded
-	@Override
-	public FluidStack tryToPutFluidsIn(FluidStack fluid) {
-		return fluid;
-	}
-
-	@Override
-	public FluidStack tryToPutFluidsIn(FluidStack fluid, FluidStack filter) {
-		return fluid;
-	}
-	
-	
 	
 }
