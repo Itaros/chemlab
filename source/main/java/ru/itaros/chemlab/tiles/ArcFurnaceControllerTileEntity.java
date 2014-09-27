@@ -198,7 +198,10 @@ public class ArcFurnaceControllerTileEntity extends MachineTileEntity implements
 		
 		PortInfo pi = ports[slot-PORTS_SHIFT];
 		if(pi!=null){
-			return (ItemStack)pi.getStack();
+			if(pi.getType()==PortType.ITEM){
+				return (ItemStack)pi.getStack();
+			}
+			return null;
 		}else{
 			return null;
 		}

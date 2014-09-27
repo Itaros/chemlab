@@ -360,6 +360,15 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 		}
 		return target;
 	}
+	
+	@Override
+	public FluidStack tryToGetFluidsOut(FluidStack fluid) {
+		return tryToGetFluidsOut(fluid,null);
+	}
+	@Override
+	public FluidStack tryToGetFluidsOut(FluidStack fluid, FluidStack filter) {
+		return fluid;
+	}	
 
 	//Synchromanager(visual inventory sync)
 	protected boolean isDirty=false;
@@ -373,6 +382,7 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 		isDirty=false;
 		return cache;
 	}
+
 
 	
 }

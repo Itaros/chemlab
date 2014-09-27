@@ -12,6 +12,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidStack;
 import ru.itaros.api.hoe.IHOEContextDetector.FMLContext;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.ChemLabValues;
@@ -549,8 +550,12 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 			if(pullFromHOECIOSequence<pis.length){
 				PortInfo p = pis[pullFromHOECIOSequence];
 				if(p!=null){
-					if(p.isItemSocket() && p.isOutput()){
-						p.setStack(TileEntityHelper.HOEItemPull(this, (ItemStack)p.getStack()));
+					if(p.isOutput()){
+						if(p.isItemSocket()){
+							p.setStack(TileEntityHelper.HOEItemPull(this, (ItemStack)p.getStack()));
+						}else if(p.isFluidSocket()){
+							p.setStack(TileEntityHelper.HOEFluidPull(this, (FluidStack) p.getStack()));
+						}
 					}
 				}
 				pullFromHOECIOSequence++;

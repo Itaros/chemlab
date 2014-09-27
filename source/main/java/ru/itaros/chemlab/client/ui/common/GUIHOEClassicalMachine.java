@@ -197,6 +197,12 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 			mc.renderEngine.bindTexture(FluidRenderer.getFluidSheet(flstack.getFluid()));
 			drawTexturedModelRectFromIcon(s.xDisplayPosition+x, s.yDisplayPosition+y, fltex, 16, 16);		
 			angular = (int)(((float)flstack.amount/64000F)*(16F-1F));
+			
+			fontRendererObj.drawString("A:"+flstack.amount, s.xDisplayPosition+x+16+1, s.yDisplayPosition+y, CAPTIONCOLOR);//4210752
+			GL11.glDisable(GL11.GL_LIGHTING);
+			GL11.glColor4f(1F, 1F, 1F, 1F);
+			//returning context back
+			this.mc.renderEngine.bindTexture(additionals);
 		}
 		//overlay
 		drawTexturedModalRect(s.xDisplayPosition+x-1, s.yDisplayPosition+y-1, 18, -1+(16*angular), 18,18);

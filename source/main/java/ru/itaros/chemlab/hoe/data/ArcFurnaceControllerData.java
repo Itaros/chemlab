@@ -7,8 +7,10 @@ import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold;
 import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.fluid.HOEFluidStack;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.itemhandling.MixtureStack;
+import ru.itaros.hoe.itemhandling.UniversalFluidStack;
 import ru.itaros.hoe.itemhandling.UniversalItemStack;
 import ru.itaros.hoe.physics.IMatterState;
 import ru.itaros.hoe.physics.MixtureReactionFramework;
@@ -178,8 +180,7 @@ public class ArcFurnaceControllerData extends HOEMachineData  implements ISynchr
 
 	@Override
 	public FluidStack tryToPutFluidsIn(FluidStack fluid) {
-		// TODO Auto-generated method stub
-		return null;
+		return tryToPutFluidsIn(fluid,null);
 	}
 
 	@Override
@@ -187,6 +188,16 @@ public class ArcFurnaceControllerData extends HOEMachineData  implements ISynchr
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public FluidStack tryToGetFluidsOut(FluidStack fluid) {
+		return tryToGetFluidsOut(fluid, null);
+	}
+
+	@Override
+	public FluidStack tryToGetFluidsOut(FluidStack fluid, FluidStack filter) {
+		return fluid;
+	}	
 
 	protected boolean isDirty=false;
 	@Override

@@ -33,7 +33,7 @@ public class MixtureStack implements IEnergyReceiver{
 	//TODO: Might be beneficial to have the ability to create mapped mixtures to boost performance on automated advanced machines
 	private ArrayList<IUniversalStack> mixture = new ArrayList<IUniversalStack>();
 	
-	private float volume=0F;
+	private volatile float volume=0F;
 	
 	private float heatCapacity=0F;
 	
@@ -52,6 +52,10 @@ public class MixtureStack implements IEnergyReceiver{
 	 */
 	public Iterator<IUniversalStack> getViewIterator(){
 		return mixture.iterator();
+	}
+	
+	public int getComponentsCount(){
+		return mixture.size();
 	}
 	
 	public float getVolumeOf(IUniversalStack template){
@@ -138,10 +142,12 @@ public class MixtureStack implements IEnergyReceiver{
 				
 			}
 			
-			volume = mix.getFloat("volume");
+			//volume = mix.getFloat("volume");
 			heatCapacity = mix.getFloat("heatCapacity");
 			temperature = mix.getFloat("temperature");
 			floatingEnergy = mix.getFloat("floatingEnergy");
+			
+			recalculateVolume();
 		}
 	}
 	public static MixtureStack constructFromNBT(NBTTagCompound nbt, String tag){
@@ -150,6 +156,15 @@ public class MixtureStack implements IEnergyReceiver{
 		return me;
 	}
 
+	
+	protected void recalculateVolume(){
+		float newvolume=0;
+		for(int i = 0 ; i < mixture.size() ; i++){
+			IUniversalStack component = mixture.get(i);
+			newvolume+=component.getVolume();
+		}
+		volume=newvolume;
+	}
 	
 	private float temperature;
 	//Energy which is not accounted as part of temperature shift
@@ -202,10 +217,12 @@ public class MixtureStack implements IEnergyReceiver{
 			if(last<0){return null;}
 		}
 		return mixture.get(last);
-	}
+	}	
 
 	public void remove(IUniversalStack s) {
 		mixture.remove(s);
+		
+		volume-=s.getVolume();
 		//I don't think it needs reevaluation, because IReaction will check anyway
 	}
 	

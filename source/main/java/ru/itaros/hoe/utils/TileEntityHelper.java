@@ -42,7 +42,17 @@ public class TileEntityHelper {
 		}
 		return item;
 	}
-
+	
+	public static FluidStack HOEFluidPull(IHOEInventorySyncable tile, FluidStack fluid){
+		HOEMachineData hmd = tile.getServerData();
+		if(hmd!=null){
+			if(hmd instanceof ISynchroportItems){
+				ISynchroportItems synchroport = (ISynchroportItems)hmd;
+				fluid=synchroport.tryToGetFluidsOut(fluid, null);
+			}
+		}
+		return fluid;
+	}
 	
 	
 	
