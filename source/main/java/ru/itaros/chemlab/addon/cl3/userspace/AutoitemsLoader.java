@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ru.itaros.chemlab.items.ChemLabItem;
+import ru.itaros.hoe.fluid.HOEFluid;
 
 public class AutoitemsLoader {
 
 	ArrayList<ChemLabItem> items = new ArrayList<ChemLabItem>();
+	ArrayList<HOEFluid> fluids = new ArrayList<HOEFluid>();
 	
 	void parse(String[] data) {
 		for(int x = 0 ; x < data.length ; x ++){
@@ -18,6 +20,11 @@ public class AutoitemsLoader {
 				ChemLabItem item = new ChemLabItem(newname);
 				items.add(item);
 			}
+			if(cur.equalsIgnoreCase("ADD_HOEFLUIDS:")){
+				x++;
+				String newname = data[x];
+				//TODO: Finish this ^
+			}			
 		}
 		
 	}
