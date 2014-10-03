@@ -7,14 +7,16 @@ import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.hoe.data.IHasLiquidStorage;
+import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.fluid.HOEFluidDepot;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalItemStack;
 import ru.itaros.hoe.itemhandling.UniversalStackUtils;
 import ru.itaros.hoe.utils.ItemStackTransferTuple;
 import ru.itaros.hoe.utils.StackUtility;
 
-public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage {
+public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage, ISynchroportItems {
 
 	/*
 	 * Reflection autocaster
@@ -41,30 +43,45 @@ public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage 
 	
 	ItemStackTransferTuple transferTuple = new ItemStackTransferTuple();
 	
-	public IUniversalStack tryToPutIn(IUniversalStack source){
-		transferTuple.fill(exemplar_cell_in, source);
-		source=StackUtility.tryToPutIn(transferTuple,false,null);
-		exemplar_cell_in=transferTuple.retr1();
+	public ItemStack tryToPutItemsIn(ItemStack source){
+		return tryToPutItemsIn(source, null);
+	}
+
+	@Override
+	public ItemStack tryToPutItemsIn(ItemStack source, ItemStack filter) {
+		//There is no hope if this is not an item. But really, this is a mess...
+		if(inbound instanceof UniversalItemStack || inbound==null){
+			transferTuple.fill((ItemStack) UniversalStackUtils.getSafeProxy(inbound), source);
+			source=StackUtility.tryToPutIn(transferTuple,false,filter);
+			inbound=UniversalStackUtils.setSafeProxy(inbound,transferTuple.retr1());
+			this.markDirty();
+		}
 		return source;
 	}
-	public IUniversalStack tryToGetOut(IUniversalStack target){
-		transferTuple.fill(target, exemplar_cell_out);
-		target = StackUtility.tryToGetOut(transferTuple,null);
-		exemplar_cell_out=transferTuple.retr2();
+	public ItemStack tryToGetItemsOut(ItemStack target){
+		return tryToGetItemsOut(target, null);
+	}
+
+	@Override
+	public ItemStack tryToGetItemsOut(ItemStack target, ItemStack filter) {
+		//There is no hope if this is not an item. But really, this is a mess...
+		if(outbound instanceof UniversalItemStack){
+			transferTuple.fill(target, (ItemStack) outbound.getProxy());
+			target = StackUtility.tryToGetOut(transferTuple,filter);
+			outbound.setProxy(StackUtility.verify(transferTuple.retr2()));
+			outbound=outbound.verifyProxy();
+			this.markDirty();
+		}
 		return target;
 	}
 	
-	private IUniversalStack exemplar_cell_in;
-	
-	public final IUniversalStack getExemplar_cell_in() {
-		return exemplar_cell_in;
+	private IUniversalStack inbound,outbound;
+	public IUniversalStack get_cell_in(){
+		return inbound;
 	}
-
-	public final IUniversalStack getExemplar_cell_out() {
-		return exemplar_cell_out;
+	public IUniversalStack get_cell_out(){
+		return outbound;
 	}
-
-	private IUniversalStack exemplar_cell_out;
 	
 	public static final int DEPOT_CAPACITY=10000;//mb
 	HOEFluidDepot fluidDepot = new HOEFluidDepot(DEPOT_CAPACITY);
@@ -87,19 +104,19 @@ public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage 
 
 	
 	public boolean isThereSpareCell(){
-		if(exemplar_cell_in==null){return false;}
-		if(exemplar_cell_in.getStackSize()>0){
+		if(inbound==null){return false;}
+		if(inbound.getStackSize()>0){
 			return true;
 		}else{return false;}
 	}
 	public int getCellsCount() {
-		if(exemplar_cell_out==null){return 0;}
-		return exemplar_cell_out.getStackSize();
+		if(outbound==null){return 0;}
+		return outbound.getStackSize();
 	}
 
 	public boolean decrementEmptyCells(){
 		if(isThereSpareCell()){
-			exemplar_cell_in.decrement(1);
+			inbound.decrement(1);
 			return true;
 		}else{
 			return false;
@@ -107,10 +124,10 @@ public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage 
 	}
 	
 	public void incrementCellsCount() {
-		if(exemplar_cell_out==null){
-			exemplar_cell_out = UniversalStackUtils.convert(new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.water_natural)));
+		if(outbound==null){
+			outbound = UniversalStackUtils.convert(new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.water_natural)));
 		}
-		exemplar_cell_out.increment(1);
+		outbound.increment(1);
 	}
 
 	@Override
@@ -119,8 +136,8 @@ public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage 
 		
 		HVLCFillerData childd=(HVLCFillerData) child;
 		
-		childd.exemplar_cell_in=StackUtility.syncItemStacks(childd.exemplar_cell_in, exemplar_cell_in);
-		childd.exemplar_cell_out=StackUtility.syncItemStacks(childd.exemplar_cell_out, exemplar_cell_out);
+		childd.inbound=StackUtility.syncItemStacks(childd.inbound, inbound);
+		childd.outbound=StackUtility.syncItemStacks(childd.outbound, outbound);
 
 		//Should I do that?
 		childd.fluidDepot=fluidDepot;
@@ -143,16 +160,30 @@ public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage 
 	@Override
 	protected void readInventoryNBT(NBTTagCompound nbt) {
 		super.readInventoryNBT(nbt);
-		exemplar_cell_in=StackUtility.readItemStackFromNBT(nbt, "in");
-		exemplar_cell_out=StackUtility.readItemStackFromNBT(nbt, "out");
+		inbound=StackUtility.readUniversalStackFromNBT(nbt, "in");
+		outbound=StackUtility.readUniversalStackFromNBT(nbt, "out");
 	}
 
 	@Override
 	protected void writeInventoryNBT(NBTTagCompound nbt) {
 		super.writeInventoryNBT(nbt);
-		StackUtility.writeItemStackToNBT(exemplar_cell_in, nbt, "in");
-		StackUtility.writeItemStackToNBT(exemplar_cell_out, nbt, "out");
-	}		
+		StackUtility.writeItemStackToNBT(inbound, nbt, "in");
+		StackUtility.writeItemStackToNBT(outbound, nbt, "out");
+	}
+
+	
+	//Synchromanager(visual inventory sync)
+	protected boolean isDirty=false;
+	@Override
+	public void markDirty() {
+		isDirty=true;
+	}
+	@Override
+	public boolean pollDirty() {
+		boolean cache = isDirty;
+		isDirty=false;
+		return cache;
+	}	
 	
 	
 	

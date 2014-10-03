@@ -30,6 +30,7 @@ public class HOEFluidDepot {
 	
 	public HOEFluidTank getCorrespondingTank(HOEFluid fluid){
 		for(HOEFluidTank t:tanks){
+			if(t==null){return null;}
 			if(t.getFluid()==fluid){return t;}
 		}
 		return null;
