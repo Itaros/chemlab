@@ -78,15 +78,16 @@ public class SyndicationHubIO extends HOEMachineIO {
 			//There is no need to transfer items between IPorts
 			return;
 		}
-		IUniversalStack filter = data.getFilter();
+		//IUniversalStack filter = data.getFilter();
 		IUniversalStack stack = data.get_in();
 		
 		if(data.getSOM().canIn()){
-			stack=hda.tryToPutItemsIn(stack,filter);
+			//stack=hda.tryToPutItemsIn(stack,filter);
 		}
 		if(data.getSOM().canOut()){
-			stack=hda.tryToGetItemsOut(stack,filter);
+			//stack=hda.tryToGetItemsOut(stack,filter);
 		}
+		//TODO: ^ Fixme
 		
 		stack=StackUtility.verify(stack);
 		data.set_in(stack);

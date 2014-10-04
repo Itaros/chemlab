@@ -82,7 +82,7 @@ public class StackUtility {
 	/*
 	 * Server->Child sync helper
 	 */
-	public static IUniversalStack[] syncItemStacks(IUniversalStack[] target, IUniversalStack[] source){
+	public static IUniversalStack[] syncUniversalStacks(IUniversalStack[] target, IUniversalStack[] source){
 		//nullchecks
 		if(source==null){target=null;return target;}
 		//size aligning
@@ -92,12 +92,12 @@ public class StackUtility {
 		//normal sync
 		int size = target.length;
 		for(int i = 0 ; i < size ; i++){
-			target[i]=syncItemStacks(target[i], source[i]);
+			target[i]=syncUniversalStacks(target[i], source[i]);
 		}
 		
 		return target;
 	}
-	public static IUniversalStack syncItemStacks(IUniversalStack target, IUniversalStack source){
+	public static IUniversalStack syncUniversalStacks(IUniversalStack target, IUniversalStack source){
 		
 		if(source==null){
 			target=null;

@@ -69,9 +69,6 @@ public class SyndicationItemPortTileEntity extends MachineTileEntity implements 
 			return inbound;
 		case 1:
 			return outbound;
-		case -1:
-			SyndicationItemPortData data = (SyndicationItemPortData) this.getServerData();
-			return data==null?null:data.get_in();
 		}		
 		
 		return null;

@@ -185,8 +185,8 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 		
 		childd.hasWork=hasWork;
 		
-		childd.inbound = StackUtility.syncItemStacks(childd.inbound, inbound);
-		childd.outbound = StackUtility.syncItemStacks(childd.outbound, outbound);
+		childd.inbound = StackUtility.syncUniversalStacks(childd.inbound, inbound);
+		childd.outbound = StackUtility.syncUniversalStacks(childd.outbound, outbound);
 		
 	}
 

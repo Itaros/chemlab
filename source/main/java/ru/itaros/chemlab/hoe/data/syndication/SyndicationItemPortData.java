@@ -2,12 +2,17 @@ package ru.itaros.chemlab.hoe.data.syndication;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidStack;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.hoe.data.GasChimneyData;
 import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.data.utils.SynchroportOperationMode;
+import ru.itaros.hoe.fluid.HOEFluidStack;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalFluidStack;
+import ru.itaros.hoe.itemhandling.UniversalItemStack;
+import ru.itaros.hoe.itemhandling.UniversalStackUtils;
 import ru.itaros.hoe.utils.EnumUtility;
 import ru.itaros.hoe.utils.ItemStackTransferTuple;
 import ru.itaros.hoe.utils.StackUtility;
@@ -26,7 +31,7 @@ public class SyndicationItemPortData extends HOEMachineData implements ISynchrop
 	}
 
 	private IUniversalStack inbound;
-	private IUniversalStack filter;
+	private ItemStack filter;
 	
 	
 	public IUniversalStack get_in(){
@@ -57,35 +62,36 @@ public class SyndicationItemPortData extends HOEMachineData implements ISynchrop
 	ItemStackTransferTuple transferTuple = new ItemStackTransferTuple();
 	@Override
 	public ItemStack tryToPutItemsIn(ItemStack source) {
-		return tryToPutItemsIn(source, null);
+		return tryToPutItemsIn(source, filter);
 	}
-
 	@Override
 	public ItemStack tryToPutItemsIn(ItemStack source, ItemStack filter) {
-		if(mode.canIn()){
-			transferTuple.fill(inbound, source);
+		//There is no hope if this is not an item. But really, this is a mess...
+		if(inbound instanceof UniversalItemStack || inbound==null){
+			transferTuple.fill((ItemStack) UniversalStackUtils.getSafeProxy(inbound), source);
 			source=StackUtility.tryToPutIn(transferTuple,false,filter);
-			inbound=transferTuple.retr1();
+			inbound=UniversalStackUtils.setSafeProxy(inbound,transferTuple.retr1());
+			this.markDirty();
 		}
-		this.markDirty();
 		return source;
 	}
-
+	
 	@Override
 	public ItemStack tryToGetItemsOut(ItemStack target) {
-		return tryToGetItemsOut(target, null);
+		return tryToGetItemsOut(target, filter);
 	}
-
 	@Override
 	public ItemStack tryToGetItemsOut(ItemStack target, ItemStack filter) {
-		if(mode.canOut()){
-			transferTuple.fill(target, inbound);
+		//There is no hope if this is not an item. But really, this is a mess...
+		if(inbound instanceof UniversalItemStack){
+			transferTuple.fill(target, (ItemStack) inbound.getProxy());
 			target = StackUtility.tryToGetOut(transferTuple,filter);
-			inbound=StackUtility.verify(transferTuple.retr2());
+			inbound.setProxy(StackUtility.verify(transferTuple.retr2()));
+			this.markDirty();
 		}
-		this.markDirty();
 		return target;
 	}
+
 
 	@Override
 	public void sync() {
@@ -94,8 +100,9 @@ public class SyndicationItemPortData extends HOEMachineData implements ISynchrop
 		SyndicationItemPortData childd=(SyndicationItemPortData) child;
 		
 		//childd.hasWork=hasWork;		
-		childd.inbound = StackUtility.syncItemStacks(childd.inbound, inbound);
-		childd.filter = StackUtility.syncItemStacks(childd.filter, filter);
+		childd.inbound = StackUtility.syncUniversalStacks(childd.inbound, inbound);
+		//childd.filter = StackUtility.syncUniversalStacks(childd.filter, filter);
+		//TODO: ^ Fixme
 		
 		childd.mode = mode;
 		
@@ -118,7 +125,7 @@ public class SyndicationItemPortData extends HOEMachineData implements ISynchrop
 	@Override
 	protected void readInventoryNBT(NBTTagCompound nbt) {
 		super.readInventoryNBT(nbt);
-		inbound=StackUtility.readItemStackFromNBT(nbt, "in");		
+		inbound=StackUtility.readUniversalStackFromNBT(nbt, "in");		
 	}
 
 	@Override
@@ -127,11 +134,11 @@ public class SyndicationItemPortData extends HOEMachineData implements ISynchrop
 		StackUtility.writeItemStackToNBT(inbound, nbt, "in");			
 	}
 
-	public void setFilter(IUniversalStack stack){
+	public void setFilter(ItemStack stack){
 		filter=stack;
 	}
 
-	public IUniversalStack getFilter() {
+	public ItemStack getFilter() {
 		return filter;
 	}
 
