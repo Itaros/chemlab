@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
@@ -75,7 +76,8 @@ public class CL3AddonLoader {
 		for(ZipEntry z:autoitems){
 			System.out.println("Deploying Items: "+z.getName());
 			String[] data = readZippedFile(zf,z);
-			loaderAutoitems.parse(data);
+			String groupname = consolidateName(Paths.get(zf.getName()).getFileName().toString())+"."+selectCapitalLetters(Paths.get(z.getName()).getFileName().toString());
+			loaderAutoitems.parse(groupname,data);
 		}
 		//DirProc
 		for(ZipEntry z:dirproc){
@@ -86,6 +88,29 @@ public class CL3AddonLoader {
 		
 	}
 	
+	
+	private static String consolidateName(String name){
+		String sname="";
+		for(int x = 0 ; x < name.length(); x++){
+			char c = name.charAt(x);
+			if(c=='.'){break;}//No need for extension
+			if(c=='_'){continue;}
+			sname+=c;
+			
+		}
+		return sname.toLowerCase();
+	}	
+	private static String selectCapitalLetters(String name){
+		String sname="";
+		for(int x = 0 ; x < name.length(); x++){
+			char c = name.charAt(x);
+			if(c=='.'){break;}//No need for extension
+			if(Character.isUpperCase(c)){
+				sname+=c;
+			}
+		}
+		return sname.toLowerCase();
+	}
 	
 	private String[] readZippedFile(ZipFile f, ZipEntry e) throws IOException{
         ArrayList<String> s = new ArrayList<String>();

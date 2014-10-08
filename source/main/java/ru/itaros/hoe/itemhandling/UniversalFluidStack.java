@@ -10,7 +10,7 @@ public class UniversalFluidStack implements IUniversalStack {
 
 	private HOEFluidStack proxy;
 
-	UniversalFluidStack(HOEFluidStack proxy){
+	public UniversalFluidStack(HOEFluidStack proxy){
 		this.proxy=proxy;
 	}
 	

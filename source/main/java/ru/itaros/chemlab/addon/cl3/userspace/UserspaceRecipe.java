@@ -13,9 +13,6 @@ import ru.itaros.hoe.recipes.RecipesCollection;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class UserspaceRecipe {
-
-	public static final String DEFCONST_ITEM="[ITEM]";
-	public static final String DEFCONST_FLUID="[FLUID]";
 	
 	ArrayList<String> recipeBy = new ArrayList<String>();
 	ArrayList<String> in_string = new ArrayList<String>();
@@ -56,32 +53,11 @@ public class UserspaceRecipe {
 	
 	private void parseItems(ArrayList<String> source, ArrayList<IUniversalStack> target){
 		for(String s:source){
-			if(s.startsWith(DEFCONST_ITEM)){
-				s=s.replace(DEFCONST_ITEM, "");
-				String[] d = s.split(" # ");
-				String sourcename = d[0];
-				String hostMod = sourcename.split(":")[0];
-				sourcename = sourcename.replace(hostMod+":", "");
-				int meta = 0;
-				if(sourcename.contains("[")){
-					//Contains meta
-					int mix = sourcename.indexOf('[');
-					int max = sourcename.indexOf(']');
-					String metastring = sourcename.substring(mix+1, max);
-					meta = Integer.parseInt(metastring);
-					sourcename=sourcename.replace("["+meta+"]", "");
-				}
-				int amount = Integer.parseInt(d[1]);
-				
-				//Search
-				Item i = GameRegistry.findItem(hostMod, sourcename);
-				ItemStack proxy = new ItemStack(i,amount,meta);
-				//Constructing stack
-				IUniversalStack targetStack = new UniversalItemStack(proxy);
-				//targetStack.setStackSize(amount);
-				target.add(targetStack);
-			}		
+			IUniversalStack addition = UserspaceParsingAssist.parseLinkString(s);	
+			target.add(addition);
 		}
 	}
+
+
 	
 }
