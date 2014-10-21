@@ -1,7 +1,9 @@
 package ru.itaros.hoe;
 
 
+import net.minecraftforge.common.MinecraftForge;
 import ru.itaros.api.hoe.IHOEInterfacer;
+import ru.itaros.hoe.client.ExternalTextureStitcher;
 import ru.itaros.hoe.interfacer.HOEInterfacer;
 import ru.itaros.hoe.proxy.HOEProxy;
 import ru.itaros.hoe.registries.HOEFluidRegistry;
@@ -63,6 +65,10 @@ public class HOE {
     public Config getConfig(){
     	return config;
     }
+    
+    public ExternalTextureStitcher getExternalStitcher(){
+    	return stitcher;
+    }
 
     
     //============MTA============
@@ -80,6 +86,9 @@ public class HOE {
     private WorldGenRegistry worldgenregistry;
     private Config config;
     //===========================
+    //===========CLIENT==========
+    private ExternalTextureStitcher stitcher;
+    //===========================
     
     
     
@@ -91,6 +100,9 @@ public class HOE {
     	if(config.threading_keepalive){
     		keepalive = new HOEKeepAliveMonitorInternalized();
     	}
+    	
+    	stitcher = new ExternalTextureStitcher();
+    	MinecraftForge.EVENT_BUS.register(stitcher);
     	
     	hoeexec = new HOEExecutor();
     	

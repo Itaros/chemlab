@@ -15,19 +15,21 @@ public class AutoitemsLoader {
 	ArrayList<Item> items = new ArrayList<Item>();
 	ArrayList<HOEFluid> fluids = new ArrayList<HOEFluid>();
 	
-	void parse(String groupname, String[] data) {
+	void parse(String groupname, String[] data, CL3AddonLoader invoker) {
 		for(int x = 0 ; x < data.length ; x ++){
 			String cur = data[x];
 			if(cur.equalsIgnoreCase("ADD_ITEMS:")){
 				x++;
 				String newname = data[x];
 				ChemLabItem item = new ChemLabItem(newname);
+				item.setIcon(invoker);
 				items.add(item);
 			}
 			if(cur.equalsIgnoreCase("ADD_ITEMS_IMS:")){
 				x++;
 				String newname = data[x];
 				ChemLabUserspaceIMSItem item = new ChemLabUserspaceIMSItem(groupname,newname);
+				item.setIcon(invoker);
 				items.add(item);
 				//Upper Point
 				x++;item.setUpperPoint(Integer.parseInt(data[x]));

@@ -1,15 +1,21 @@
 package ru.itaros.chemlab.addon.cl3.userspace;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
+
+import ru.itaros.hoe.HOE;
+import ru.itaros.hoe.client.textures.ExternalTextureAtlasSprite;
 
 /*
  * This class loads all addons and prepares loaders to be fired
@@ -51,6 +57,7 @@ public class CL3AddonLoader {
 
 	ArrayList<ZipEntry> autoitems = new ArrayList<ZipEntry>();
 	ArrayList<ZipEntry> dirproc = new ArrayList<ZipEntry>();
+	ArrayList<ZipEntry> tex = new ArrayList<ZipEntry>();
 	
 	/*
 	 * Reads packages and fills loaders
@@ -68,23 +75,32 @@ public class CL3AddonLoader {
 				if(ze.getName().startsWith("dirproc/")){
 					dirproc.add(ze);
 				}
+				if(ze.getName().startsWith("assets/itex/")){
+					tex.add(ze);
+				}
 			}
 		}
 		
 		//Reading data
+		//TextureStitchers
+		for(ZipEntry z:tex){
+			System.out.println("Deploying Texture: "+z.getName());
+			uploadTexture(zf,z);
+		}		
 		//AutoItems
 		for(ZipEntry z:autoitems){
 			System.out.println("Deploying Items: "+z.getName());
 			String[] data = readZippedFile(zf,z);
 			String groupname = consolidateName(Paths.get(zf.getName()).getFileName().toString())+"."+selectCapitalLetters(Paths.get(z.getName()).getFileName().toString());
-			loaderAutoitems.parse(groupname,data);
+			loaderAutoitems.parse(groupname,data, this);
 		}
 		//DirProc
 		for(ZipEntry z:dirproc){
 			System.out.println("Deploying Dirprocs: "+z.getName());
 			String[] data = readZippedFile(zf,z);
 			loaderDirproc.parse(data);
-		}		
+		}
+
 		
 	}
 	
@@ -127,11 +143,28 @@ public class CL3AddonLoader {
             return arr;
 	}
 
+	private void uploadTexture(ZipFile f, ZipEntry e) throws IOException{
+		//Getting memCache
+		InputStream str = f.getInputStream(e);
+		byte[] blob = new byte[(int) e.getSize()];
+		str.read(blob);
+		//Constructing sprite loading instructions
+		ExternalTextureAtlasSprite etas = new ExternalTextureAtlasSprite(e.getName().replace("assets/itex/", "chemlab:").replace(".png", ""),blob);
+		//Registering
+		textureHash.put(etas.getIconName(), etas);
+	}
+	
+	private Hashtable<String,ExternalTextureAtlasSprite> textureHash = new Hashtable<String,ExternalTextureAtlasSprite>();
+	
 	public AutoitemsLoader getItemLoader() {
 		return loaderAutoitems;
 	}
 	public SimpleRecipesLoader getRecipesLoader(){
 		return loaderDirproc;
+	}
+	
+	public ExternalTextureAtlasSprite getTexture(String iconName){
+		return textureHash.get(iconName);
 	}
 	
 }

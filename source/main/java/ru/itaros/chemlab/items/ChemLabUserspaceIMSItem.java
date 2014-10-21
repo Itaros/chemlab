@@ -1,7 +1,6 @@
 package ru.itaros.chemlab.items;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import ru.itaros.chemlab.ChemLabCreativeTab;
@@ -10,15 +9,15 @@ import ru.itaros.chemlab.addon.cl3.userspace.UserspaceParsingAssist;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.physics.IMatterState;
 
-public class ChemLabUserspaceIMSItem extends Item implements IMatterState {
+public class ChemLabUserspaceIMSItem extends ChemLabItem implements IMatterState {
 
 	
 	private String groupname,name;
 	public ChemLabUserspaceIMSItem(String groupname, String name){
-		super();
+		super(groupname+"."+name);
 		this.name=name;
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
-		this.setUnlocalizedName(groupname+"."+name);
+		this.setUnlocalizedName(groupname+"."+name);//Override
 		this.setTextureName("chemlab:"+groupname+"."+name);
 	}
 	@Override
@@ -105,5 +104,9 @@ public class ChemLabUserspaceIMSItem extends Item implements IMatterState {
 			upperForm = (IMatterState)upperFormStack.getItem();
 		}
 	}
+
+	
+	
+	
 
 }
