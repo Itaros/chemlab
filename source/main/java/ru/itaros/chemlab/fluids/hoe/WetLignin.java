@@ -4,6 +4,10 @@ import ru.itaros.hoe.fluid.HOEFluid;
 
 public class WetLignin extends HOEFluid {
 
+	public WetLignin(){
+		detectCommonName();
+	}
+	
 	@Override
 	public String getUnlocalizedName() {
 		return "chemlab:lignin-wet";

@@ -6,6 +6,10 @@ import ru.itaros.hoe.fluid.IFluidExpandable;
 
 public class AirCompressed extends Air implements IFluidExpandable {
 
+	public AirCompressed(){
+		detectCommonName();
+	}	
+	
 	@Override
 	public String getUnlocalizedName() {
 		return "chemlab:air.compressed";

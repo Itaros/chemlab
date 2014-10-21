@@ -4,6 +4,10 @@ import ru.itaros.hoe.fluid.HOEFluid;
 
 public class CarbonMonooxideGas extends HOEFluid {
 
+	public CarbonMonooxideGas(){
+		detectCommonName();
+	}
+	
 	@Override
 	public String getUnlocalizedName() {
 		return "chemlab:carbonmonooxide-gas";

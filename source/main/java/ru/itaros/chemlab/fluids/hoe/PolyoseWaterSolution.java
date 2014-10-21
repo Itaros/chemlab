@@ -4,6 +4,10 @@ import ru.itaros.hoe.fluid.HOEFluid;
 
 public class PolyoseWaterSolution extends HOEFluid {
 
+	public PolyoseWaterSolution(){
+		detectCommonName();
+	}
+	
 	@Override
 	public String getUnlocalizedName() {
 		return "chemlab:polyose-proteined";

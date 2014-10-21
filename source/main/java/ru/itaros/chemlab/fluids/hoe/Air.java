@@ -12,6 +12,10 @@ public class Air extends HOEFluid implements IFluidComposite, IFluidCompressable
 	public static final int COMPRESSION_ENERGY=100*ChemLabValues.OILPOWER_FACTOR;
 	public static final int COMPRESSION_RATIO=10;
 	
+	public Air(){
+		detectCommonName();
+	}
+	
 	
 	@Override
 	public String getUnlocalizedName() {

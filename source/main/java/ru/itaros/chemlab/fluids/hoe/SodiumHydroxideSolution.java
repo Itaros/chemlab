@@ -4,6 +4,10 @@ import ru.itaros.hoe.fluid.HOEFluid;
 
 public class SodiumHydroxideSolution extends HOEFluid {
 
+	public SodiumHydroxideSolution(){
+		detectCommonName();
+	}
+	
 	@Override
 	public String getUnlocalizedName() {
 		return "chemlab:sodiumhydroxide-solution";

@@ -4,6 +4,10 @@ import ru.itaros.hoe.fluid.HOEFluid;
 
 public class NitrogenGas extends HOEFluid {
 
+	public NitrogenGas(){
+		detectCommonName();
+	}
+	
 	@Override
 	public String getUnlocalizedName() {
 		return "chemlab:nitrogen-gas";

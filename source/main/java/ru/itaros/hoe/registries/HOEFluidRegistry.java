@@ -57,6 +57,15 @@ public class HOEFluidRegistry {
 	
 	private Hashtable<String,HOEFluid> fluids = new Hashtable<String,HOEFluid>();
 	
+	public String dumpAllEntries() {
+		String base="HOE FluidRegistry Dump:\n";
+		for(String s:fluids.keySet()){
+			base+=s+"\n";
+		}
+		base+="END-OF-DUMP";
+		return base;
+	}
+	
 	
 	
 	

@@ -6,6 +6,10 @@ import ru.itaros.hoe.fluid.HOEFluid;
 
 public class Water extends HOEFluid {
 
+	public Water(){
+		detectCommonName();
+	}
+	
 	@Override
 	public String getUnlocalizedName() {
 		return "chemlab:water-natural";

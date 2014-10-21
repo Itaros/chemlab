@@ -49,8 +49,9 @@ public class UserspaceParsingAssist {
 			linkString=linkString.replace(DEFCONST_FLUID, "");
 			String[] d = linkString.split(" # ");
 			String sourcename = d[0];
-			String hostMod = sourcename.split(":")[0];
-			sourcename = sourcename.replace(hostMod+":", "");
+			//DON'T REMOVE HOSTMOD FROM FLUID
+			//String hostMod = sourcename.split(":")[0];
+			//sourcename = sourcename.replace(hostMod+":", "");
 			int meta = 0;
 			if(sourcename.contains("[")){
 				//Contains meta

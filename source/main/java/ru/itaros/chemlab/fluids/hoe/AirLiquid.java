@@ -3,6 +3,10 @@ package ru.itaros.chemlab.fluids.hoe;
 
 public class AirLiquid extends Air{
 
+	public AirLiquid(){
+		detectCommonName();
+	}
+	
 	@Override
 	public String getUnlocalizedName() {
 		return "chemlab:air.liquid";

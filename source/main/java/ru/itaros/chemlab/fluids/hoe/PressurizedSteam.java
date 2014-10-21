@@ -4,6 +4,9 @@ import ru.itaros.hoe.fluid.HOEFluid;
 
 public class PressurizedSteam extends HOEFluid {
 
+	public PressurizedSteam(){
+		detectCommonName();
+	}
 	
 	//Item should use getItemDisplayName for coloring
 	@Override

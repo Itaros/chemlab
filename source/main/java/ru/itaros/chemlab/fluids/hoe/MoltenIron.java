@@ -6,6 +6,10 @@ import ru.itaros.hoe.physics.IMatterState;
 
 public class MoltenIron extends HOEFluid implements IMatterState {
 
+	public MoltenIron(){
+		detectCommonName();
+	}
+	
 	@Override
 	public String getUnlocalizedName() {
 		return "chemlab:molten.iron";

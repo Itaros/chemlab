@@ -4,6 +4,10 @@ import ru.itaros.hoe.fluid.HOEFluid;
 
 public class SulphurDioxideGas extends HOEFluid {
 
+	public SulphurDioxideGas(){
+		detectCommonName();
+	}
+	
 	@Override
 	public String getUnlocalizedName() {
 		return "chemlab:sulphurdioxide-gas";

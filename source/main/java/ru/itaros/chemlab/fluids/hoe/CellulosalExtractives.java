@@ -4,6 +4,10 @@ import ru.itaros.hoe.fluid.HOEFluid;
 
 public class CellulosalExtractives extends HOEFluid {
 
+	public CellulosalExtractives(){
+		detectCommonName();
+	}
+	
 	@Override
 	public String getUnlocalizedName() {
 		return "chemlab:extractives-cellulo-high";

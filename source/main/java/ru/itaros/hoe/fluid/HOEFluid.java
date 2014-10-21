@@ -7,10 +7,10 @@ public abstract class HOEFluid {
 
 	
 	public HOEFluid(){
-		detectCommonName();
+		
 	}
 	
-	private void detectCommonName() {
+	protected void detectCommonName() {
 		String d = getUnlocalizedName();
 		int index = d.indexOf(":");
 		d = d.substring(index+1, d.length());

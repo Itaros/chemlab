@@ -4,6 +4,10 @@ import ru.itaros.hoe.fluid.HOEFluid;
 
 public class SulphuricAcidSolution extends HOEFluid {
 
+	public SulphuricAcidSolution(){
+		detectCommonName();
+	}
+	
 	@Override
 	public String getUnlocalizedName() {
 		return "chemlab:sulphuricacid-solution";
