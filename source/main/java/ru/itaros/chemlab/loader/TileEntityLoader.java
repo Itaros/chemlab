@@ -25,12 +25,38 @@ import ru.itaros.chemlab.hoe.io.WasherIO;
 import ru.itaros.chemlab.hoe.io.WireCoatingExtruderIO;
 import ru.itaros.chemlab.hoe.io.special.ArcFurnaceControllerIO;
 import ru.itaros.chemlab.hoe.io.special.GasChimneyIO;
-import ru.itaros.chemlab.hoe.io.special.HVLCFillerIO;
 import ru.itaros.chemlab.hoe.io.syndication.SyndicationEMFGeneratorIO;
 import ru.itaros.chemlab.hoe.io.syndication.SyndicationHubIO;
 import ru.itaros.chemlab.hoe.io.syndication.SyndicationItemPortIO;
-import ru.itaros.chemlab.tiles.*;
-import ru.itaros.chemlab.tiles.syndication.*;
+import ru.itaros.chemlab.tiles.AirCollectorTileEntity;
+import ru.itaros.chemlab.tiles.ArcFurnaceControllerTileEntity;
+import ru.itaros.chemlab.tiles.AutomaticDrawplateTileEntity;
+import ru.itaros.chemlab.tiles.BiogrinderTileEntity;
+import ru.itaros.chemlab.tiles.CatalyticTankTileEntity;
+import ru.itaros.chemlab.tiles.CentrifugalExtractorTileEntity;
+import ru.itaros.chemlab.tiles.CrusherTileEntity;
+import ru.itaros.chemlab.tiles.DiaphragmalElectrolyzerTileEntity;
+import ru.itaros.chemlab.tiles.EvaporationUnitTileEntity;
+import ru.itaros.chemlab.tiles.FluidCompressorTileEntity;
+import ru.itaros.chemlab.tiles.GasChimneyTileEntity;
+import ru.itaros.chemlab.tiles.HiResistantMixerTileEntity;
+import ru.itaros.chemlab.tiles.HiTFurnaceTileEntity;
+import ru.itaros.chemlab.tiles.ImpregnatorTileEntity;
+import ru.itaros.chemlab.tiles.MetalFormationMachineTileEntity;
+import ru.itaros.chemlab.tiles.MixerTileEntity;
+import ru.itaros.chemlab.tiles.PressTileEntity;
+import ru.itaros.chemlab.tiles.QuenchingChamberTileEntity;
+import ru.itaros.chemlab.tiles.ServiceBayTileEntity;
+import ru.itaros.chemlab.tiles.SteamBoilerTileEntity;
+import ru.itaros.chemlab.tiles.SteamExplosionUnitTileEntity;
+import ru.itaros.chemlab.tiles.TurboexpanderTileEntity;
+import ru.itaros.chemlab.tiles.WasherTileEntity;
+import ru.itaros.chemlab.tiles.WireCoatingExtruderTileEntity;
+import ru.itaros.chemlab.tiles.syndication.SyndicationCapacitorTileEntity;
+import ru.itaros.chemlab.tiles.syndication.SyndicationEMFGeneratorTileEntity;
+import ru.itaros.chemlab.tiles.syndication.SyndicationHubTileEntity;
+import ru.itaros.chemlab.tiles.syndication.SyndicationItemPortTileEntity;
+import ru.itaros.chemlab.tiles.syndication.SyndicationPipingTileEntity;
 import ru.itaros.hoe.io.IOCollectionHelper;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -55,7 +81,7 @@ public class TileEntityLoader {
     			new CatalyticTankIO().setHostBlock(BlockLoader.cattank),
     			new HiResistantMixerIO().setHostBlock(BlockLoader.hiresistmixer),
     			new ServiceBayIO().setHostBlock(BlockLoader.servicebay),
-    			new HVLCFillerIO().setHostBlock(BlockLoader.hvlcfiller),
+    			//new HVLCFillerIO().setHostBlock(BlockLoader.hvlcfiller),
     			new GasChimneyIO().setHostBlock(BlockLoader.gaschimney),
     			new SyndicationHubIO().setHostBlock(BlockLoader.syndicationhub),
     			new SyndicationEMFGeneratorIO().setHostBlock(BlockLoader.syndication_emfgenerator),
@@ -88,7 +114,7 @@ public class TileEntityLoader {
 		GameRegistry.registerTileEntity(CatalyticTankTileEntity.class,CatalyticTankTileEntity.class.getName());
 		GameRegistry.registerTileEntity(HiResistantMixerTileEntity.class,HiResistantMixerTileEntity.class.getName());
 		GameRegistry.registerTileEntity(ServiceBayTileEntity.class,ServiceBayTileEntity.class.getName());
-		GameRegistry.registerTileEntity(HVLCFillerTileEntity.class,HVLCFillerTileEntity.class.getName());
+		//GameRegistry.registerTileEntity(HVLCFillerTileEntity.class,HVLCFillerTileEntity.class.getName());
 		GameRegistry.registerTileEntity(GasChimneyTileEntity.class,GasChimneyTileEntity.class.getName());
 
 		GameRegistry.registerTileEntity(SyndicationHubTileEntity.class,SyndicationHubTileEntity.class.getName());

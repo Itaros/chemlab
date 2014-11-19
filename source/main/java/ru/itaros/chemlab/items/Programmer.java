@@ -1,12 +1,11 @@
 package ru.itaros.chemlab.items;
 
-import ru.itaros.chemlab.ChemLabCreativeTab;
-import ru.itaros.chemlab.achievements.ChemLabAchievements;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import ru.itaros.chemlab.ChemLabCreativeTab;
 
 
 public class Programmer extends Item {
@@ -31,7 +30,7 @@ public class Programmer extends Item {
 	@Override
 	public void onCreated(ItemStack stack, World world,
 			EntityPlayer player) {
-		ChemLabAchievements.onCrafting(player,stack);
+		//ChemLabAchievements.onCrafting(player,stack);
 		super.onCreated(stack, world, player);
 	}	
 	

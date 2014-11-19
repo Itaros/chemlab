@@ -3,7 +3,6 @@ package ru.itaros.hoe.fluid;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
-import ru.itaros.chemlab.fluids.hoe.Water;
 
 public class HOEFluidDepot {
 

@@ -1,18 +1,5 @@
 package ru.itaros.chemlab.loader.recipes;
 
-import java.util.ArrayList;
-
-import net.minecraft.item.ItemStack;
-import ru.itaros.chemlab.items.HiVolumeLiquidCell;
-import ru.itaros.chemlab.loader.ItemLoader;
-import ru.itaros.hoe.fluid.HOEFluid;
-import ru.itaros.hoe.fluid.HOEFluidStack;
-import ru.itaros.hoe.fluid.IFluidComposite;
-import ru.itaros.hoe.fluid.HOEFluid.TempShift;
-import ru.itaros.hoe.itemhandling.IUniversalStack;
-import ru.itaros.hoe.itemhandling.UniversalItemStack;
-import ru.itaros.hoe.itemhandling.UniversalStackUtils;
-import ru.itaros.hoe.recipes.FixedConversionRecipe;
 import ru.itaros.hoe.recipes.RecipesCollection;
 
 public class EvaporationUnitRecipes {
@@ -21,40 +8,7 @@ public class EvaporationUnitRecipes {
 	public static RecipesCollection recipes;
 	
 	public static void load(){
-		
-		ArrayList<FixedConversionRecipe> templist = new ArrayList<FixedConversionRecipe>();
-		
-		HOEFluid[] fluids = HOEFluid.getFluidRegistry().all();
-		for(HOEFluid f:fluids){
-			if(f.getTemperature()!=TempShift.cooled){continue;}
-			if(f instanceof IFluidComposite){
-				IFluidComposite ifc = (IFluidComposite)f;
-				
-				IUniversalStack[] i = UniversalStackUtils.convert(new ItemStack[]{new ItemStack(HiVolumeLiquidCell.getByFluid(f)),null});
-				HOEFluidStack[] composition = ifc.getComposition();
-				
-				ArrayList<IUniversalStack> os = new ArrayList<IUniversalStack>();
-				int hvlcReq=0-1;//-1 is original HVLC
-				for(HOEFluidStack stack:composition){
-					IUniversalStack part = new UniversalItemStack(new ItemStack(HiVolumeLiquidCell.getByFluid(stack.type),stack.stackSize));
-					hvlcReq+=stack.stackSize;
-					os.add(part);
-				}
-				IUniversalStack[] o = new IUniversalStack[os.size()];
-				o = os.toArray(o);
-				i[1]=new UniversalItemStack(new ItemStack(ItemLoader.emptyhvlc,hvlcReq));//emptyhvlcs
-				int requaredEnergy = 1;// ifc.getReleasedEnergyForExpansion();
-				FixedConversionRecipe fxr = new FixedConversionRecipe(REQUIRED_TIME,requaredEnergy,i,o);
-				fxr.setUnlocalizedName("evapunit."+f.getCommonName());
-				templist.add(fxr);
-			}
-		}
-		
-		FixedConversionRecipe[] rca = new FixedConversionRecipe[templist.size()];
-		rca=templist.toArray(rca);
-		
-		recipes = new RecipesCollection(rca);
+		recipes = new RecipesCollection();
 		recipes.register();
-		
 	}
 }

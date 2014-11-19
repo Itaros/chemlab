@@ -57,39 +57,39 @@ public class DiaphragmalElectrolyzer extends IOMachineBlock {
 	
 	//SPECIAL
 	
-	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z,
-			EntityPlayer entplayer, int unknown, float px, float py, float pz) {
-		
-		ItemStack current = entplayer.inventory.getCurrentItem();
-		if(current!=null ){
-			if(current.getItem()==ItemLoader.asbestos_diaphragm || current.getItem()==ItemLoader.graphite_anode ){
-				TileEntity te = world.getTileEntity(x, y, z);
-				DiaphragmalElectrolyzerTileEntity dete = (DiaphragmalElectrolyzerTileEntity)te;
-				ItemStack rslt;
-				if(current.getItem()==ItemLoader.asbestos_diaphragm){
-					rslt=dete.exchangeDiaphragm(current);
-				}else{
-					rslt=dete.exchangeAnode(current);
-				}
-				if(rslt==null){
-					current.stackSize=0;
-				}else{
-					current.setItemDamage(rslt.getItemDamage());
-				}
-				return true;
-			}else{
-				//GUI and stuff
-				return super.onBlockActivated(world, x, y, z, entplayer, unknown, px, py, pz);
-			}
-		}else{
-			//GUI and stuff
-			return super.onBlockActivated(world, x, y, z, entplayer, unknown, px, py, pz);
-		}
-		
-		
-		
-	}
+//	@Override
+//	public boolean onBlockActivated(World world, int x, int y, int z,
+//			EntityPlayer entplayer, int unknown, float px, float py, float pz) {
+//		
+//		ItemStack current = entplayer.inventory.getCurrentItem();
+//		if(current!=null ){
+//			if(current.getItem()==ItemLoader.asbestos_diaphragm || current.getItem()==ItemLoader.graphite_anode ){
+//				TileEntity te = world.getTileEntity(x, y, z);
+//				DiaphragmalElectrolyzerTileEntity dete = (DiaphragmalElectrolyzerTileEntity)te;
+//				ItemStack rslt;
+//				if(current.getItem()==ItemLoader.asbestos_diaphragm){
+//					rslt=dete.exchangeDiaphragm(current);
+//				}else{
+//					rslt=dete.exchangeAnode(current);
+//				}
+//				if(rslt==null){
+//					current.stackSize=0;
+//				}else{
+//					current.setItemDamage(rslt.getItemDamage());
+//				}
+//				return true;
+//			}else{
+//				//GUI and stuff
+//				return super.onBlockActivated(world, x, y, z, entplayer, unknown, px, py, pz);
+//			}
+//		}else{
+//			//GUI and stuff
+//			return super.onBlockActivated(world, x, y, z, entplayer, unknown, px, py, pz);
+//		}
+//		
+//		
+//		
+//	}
 	
 	
 	

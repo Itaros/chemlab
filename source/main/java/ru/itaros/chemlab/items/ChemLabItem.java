@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import ru.itaros.chemlab.ChemLabCreativeTab;
-import ru.itaros.chemlab.achievements.ChemLabAchievements;
 import ru.itaros.chemlab.addon.cl3.userspace.CL3AddonLoader;
 
 public class ChemLabItem extends Item {
@@ -20,13 +19,13 @@ public class ChemLabItem extends Item {
 		super();
 		this.name=name;
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
-		this.setUnlocalizedName("genericitem."+name);
-		this.setTextureName("chemlab:genericitem."+name);
+		this.setUnlocalizedName(""+name);
+		this.setTextureName("chemlab:"+name);
 	}
 	@Override
 	public void onCreated(ItemStack stack, World world,
 			EntityPlayer player) {
-		ChemLabAchievements.onCrafting(player,stack);
+		//ChemLabAchievements.onCrafting(player,stack);
 		super.onCreated(stack, world, player);
 	}
 	

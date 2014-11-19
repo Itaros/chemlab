@@ -9,7 +9,6 @@ import ru.itaros.chemlab.loader.recipes.FluidCompressorRecipes;
 import ru.itaros.chemlab.loader.recipes.HiTFurnaceRecipes;
 import ru.itaros.chemlab.loader.recipes.MixerRecipes;
 import ru.itaros.chemlab.loader.recipes.TurboexpanderRecipes;
-import ru.itaros.chemlab.loader.recipes.VanillaCraftingRecipes;
 import ru.itaros.chemlab.loader.recipes.WasherRecipes;
 import ru.itaros.chemlab.loader.recipes.WoodChainRecipes;
 import ru.itaros.chemlab.loader.recipes.bc.BCRecipesLoader;
@@ -18,7 +17,6 @@ import ru.itaros.chemlab.loader.recipes.*;
 
 public class RecipesLoader {
 	public static void load(){
-		VanillaCraftingRecipes.load();
 		
 		CrusherRecipes.load();
 		HiTFurnaceRecipes.load();

@@ -4,20 +4,17 @@ import java.util.EnumMap;
 
 import net.minecraftforge.common.MinecraftForge;
 import ru.itaros.api.hoe.internal.HOEIO;
-import ru.itaros.chemlab.achievements.ChemLabAchievements;
 import ru.itaros.chemlab.addon.cl3.userspace.CL3AddonLoader;
 import ru.itaros.chemlab.client.ui.common.GUIHandler;
 import ru.itaros.chemlab.events.SyndicationSystemPipingProtection;
 import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.chemlab.loader.DamageSourceLoader;
 import ru.itaros.chemlab.loader.GUILoader;
-import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.chemlab.loader.MultiblockLoader;
 import ru.itaros.chemlab.loader.RecipesLoader;
 import ru.itaros.chemlab.loader.TierLoader;
 import ru.itaros.chemlab.loader.TileEntityLoader;
-import ru.itaros.chemlab.loader.recipes.optional.VanillaTweaks;
 import ru.itaros.chemlab.network.ChemLabChannel;
 import ru.itaros.chemlab.network.IPacketCodecDescriptor;
 import ru.itaros.chemlab.proxy.Proxy;
@@ -28,7 +25,6 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
@@ -94,8 +90,6 @@ public class ChemLab
     	GUILoader.loadGUIs();
     	
     	new ChemLabCreativeTab();//There is forgebug somewhere close
-    
-    	HOEFluidLoader.load();
     	
  		BlockLoader.loadBlocks();
  		ItemLoader.loadItems();
@@ -111,15 +105,11 @@ public class ChemLab
 		//GFX
 		proxy.registerGFX();
 		
-		//Tweaks
-		VanillaTweaks.tweakIron();
-		VanillaTweaks.createWroughtIronTools();
-		
 		//Block Breaking Events
 		MinecraftForge.EVENT_BUS.register(new SyndicationSystemPipingProtection());
 		
 		//Achievements
-		ChemLabAchievements.load();
+		//ChemLabAchievements.load();
     	
     }     
     @EventHandler
@@ -127,7 +117,6 @@ public class ChemLab
     {
     	versioncheck.makeFinal();
     	
-    	HOE.getInstance().getHOEExecutor().execute(cfg.worldgenerator_clid);
     }
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)

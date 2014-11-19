@@ -10,11 +10,7 @@ public class Config {
 	public boolean gfx_AdvancedParticleInjectorHack;
 	public boolean gfx_gasChimneyFX;
 	
-	public Class<? extends HOEMachineData>[] hoesyndic_blacklist;
-	
-	public String worldgenerator_clid="ru.itaros.chemlab.loader.worldgen.WorldGenLoaderNative";
-	public static int[] worldgenerator_allowedDims={0};
-	
+	public Class<? extends HOEMachineData>[] hoesyndic_blacklist;	
 	
 	private static final String CATEGORY_GFX="GFX";
 	private static final String CATEGORY_WORLDGEN="WORLDGEN";
@@ -32,9 +28,6 @@ public class Config {
 			gfx_AdvancedParticleInjectorHack=false;
 		}
 		
-		
-		worldgenerator_clid=cfg.get(CATEGORY_WORLDGEN, "clid", worldgenerator_clid).getString();
-		worldgenerator_allowedDims=cfg.get(CATEGORY_WORLDGEN,"allowedDims",worldgenerator_allowedDims).getIntList();
 
 		loadHOESyndicationBlacklist(cfg);
 		

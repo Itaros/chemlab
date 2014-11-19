@@ -1,7 +1,6 @@
 package ru.itaros.chemlab.tiles.syndication;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,7 +8,6 @@ import ru.itaros.api.chemlab.syndication.utilities.ISyndicationUtility;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.HOELinker;
 import ru.itaros.chemlab.client.ui.syndication.SyndicationItemPortContainer;
-import ru.itaros.chemlab.hoe.data.HVLCFillerData;
 import ru.itaros.chemlab.hoe.data.syndication.SyndicationItemPortData;
 import ru.itaros.chemlab.hoe.io.syndication.SyndicationItemPortIO;
 import ru.itaros.hoe.data.machines.HOEMachineData;

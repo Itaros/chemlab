@@ -37,15 +37,15 @@ public class CatalyticTankTileEntity extends MachineCrafterTileEntity {
 		return data;
 	}
 	
-	public ItemStack exchangeCatalyzer(ItemStack n){
-		HOEData data = this.server;
-		if(data!=null){
-			CatalyticTankData ded = (CatalyticTankData)data;
-			return ded.exchangeCatalyzer(n);
-		}else{
-			return null;//Derp \o/
-		}
-	}
+//	public ItemStack exchangeCatalyzer(ItemStack n){
+//		HOEData data = this.server;
+//		if(data!=null){
+//			CatalyticTankData ded = (CatalyticTankData)data;
+//			return ded.exchangeCatalyzer(n);
+//		}else{
+//			return null;//Derp \o/
+//		}
+//	}
 
 	
 

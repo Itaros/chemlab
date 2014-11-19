@@ -92,13 +92,13 @@ public class CL3AddonLoader {
 			System.out.println("Deploying Items: "+z.getName());
 			String[] data = readZippedFile(zf,z);
 			String groupname = consolidateName(Paths.get(zf.getName()).getFileName().toString())+"."+selectCapitalLetters(Paths.get(z.getName()).getFileName().toString());
-			loaderAutoitems.parse(groupname,data, this);
+			//loaderAutoitems.parse(groupname,data, this);
 		}
 		//DirProc
 		for(ZipEntry z:dirproc){
 			System.out.println("Deploying Dirprocs: "+z.getName());
 			String[] data = readZippedFile(zf,z);
-			loaderDirproc.parse(data);
+			//loaderDirproc.parse(data);
 		}
 
 		

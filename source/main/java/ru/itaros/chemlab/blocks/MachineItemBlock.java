@@ -1,6 +1,5 @@
 package ru.itaros.chemlab.blocks;
 
-import ru.itaros.chemlab.achievements.ChemLabAchievements;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
@@ -16,7 +15,7 @@ public class MachineItemBlock extends ItemBlock {
 	@Override
 	public void onCreated(ItemStack stack, World par2World,
 			EntityPlayer player) {
-		ChemLabAchievements.onCrafting(player, stack);
+		//ChemLabAchievements.onCrafting(player, stack);
 		super.onCreated(stack, par2World, player);
 	}
 	

@@ -2,7 +2,6 @@ package ru.itaros.chemlab.loader;
 
 import net.minecraft.block.Block;
 import net.minecraftforge.oredict.OreDictionary;
-import cpw.mods.fml.common.registry.GameRegistry;
 import ru.itaros.chemlab.addon.bc.builder.SchematicChemLabMachine;
 import ru.itaros.chemlab.addon.bc.builder.SchematicSyndicationBus;
 import ru.itaros.chemlab.blocks.AdvancedComponentBlock;
@@ -13,11 +12,36 @@ import ru.itaros.chemlab.blocks.StructuralBlock;
 import ru.itaros.chemlab.blocks.StructuralBlock.StructuralBlockType;
 import ru.itaros.chemlab.blocks.items.AdvancedComponentItemBlock;
 import ru.itaros.chemlab.blocks.items.StructuralItemBlock;
-import ru.itaros.chemlab.blocks.machines.*;
-import ru.itaros.chemlab.blocks.machines.syndication.*;
-import ru.itaros.chemlab.blocks.ore.AsbestosMineral;
-import ru.itaros.chemlab.blocks.ore.OreHalite;
-import ru.itaros.chemlab.blocks.ore.OreMetal;
+import ru.itaros.chemlab.blocks.machines.AirCollector;
+import ru.itaros.chemlab.blocks.machines.ArcFurnaceController;
+import ru.itaros.chemlab.blocks.machines.AutomaticDrawplate;
+import ru.itaros.chemlab.blocks.machines.Biogrinder;
+import ru.itaros.chemlab.blocks.machines.CatalyticTank;
+import ru.itaros.chemlab.blocks.machines.CentrifugalExtractor;
+import ru.itaros.chemlab.blocks.machines.Crusher;
+import ru.itaros.chemlab.blocks.machines.DiaphragmalElectrolyzer;
+import ru.itaros.chemlab.blocks.machines.EvaporationUnit;
+import ru.itaros.chemlab.blocks.machines.FluidCompressor;
+import ru.itaros.chemlab.blocks.machines.GasChimney;
+import ru.itaros.chemlab.blocks.machines.HiResistantMixer;
+import ru.itaros.chemlab.blocks.machines.HiTFurnace;
+import ru.itaros.chemlab.blocks.machines.Impregnator;
+import ru.itaros.chemlab.blocks.machines.MetalFormationMachine;
+import ru.itaros.chemlab.blocks.machines.Mixer;
+import ru.itaros.chemlab.blocks.machines.Press;
+import ru.itaros.chemlab.blocks.machines.QuenchingChamber;
+import ru.itaros.chemlab.blocks.machines.ServiceBay;
+import ru.itaros.chemlab.blocks.machines.SteamBoiler;
+import ru.itaros.chemlab.blocks.machines.SteamExplosionUnit;
+import ru.itaros.chemlab.blocks.machines.Turboexpander;
+import ru.itaros.chemlab.blocks.machines.Washer;
+import ru.itaros.chemlab.blocks.machines.WireCoatingExtruder;
+import ru.itaros.chemlab.blocks.machines.syndication.SyndicationBus;
+import ru.itaros.chemlab.blocks.machines.syndication.SyndicationCapacitor;
+import ru.itaros.chemlab.blocks.machines.syndication.SyndicationEMFGenerator;
+import ru.itaros.chemlab.blocks.machines.syndication.SyndicationHub;
+import ru.itaros.chemlab.blocks.machines.syndication.SyndicationItemPort;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockLoader {
 	
@@ -43,7 +67,7 @@ public class BlockLoader {
 	public static CatalyticTank cattank;
 	public static HiResistantMixer hiresistmixer;
 	public static ServiceBay servicebay;
-	public static HVLCFiller hvlcfiller;
+	//public static HVLCFiller hvlcfiller;
 	public static GasChimney gaschimney;
 	
 	public static SyndicationHub syndicationhub;
@@ -62,15 +86,15 @@ public class BlockLoader {
 	
 	public static ArcFurnaceController controller_arcFurnace;
 	
-	public static OreHalite oreHalite;
-	public static OreMetal orePlatinum;
-	public static OreMetal orePyrite;
-	public static OreMetal oreMetaAnthracite;
+	//public static OreHalite oreHalite;
+	//public static OreMetal orePlatinum;
+	//public static OreMetal orePyrite;
+	//public static OreMetal oreMetaAnthracite;
 	
-	public static OreMetal oreLimestone;
-	public static OreMetal oreHematite;
+	//public static OreMetal oreLimestone;
+	//public static OreMetal oreHematite;
 	
-	public static OreMetal orePericlase;//MgO
+	//public static OreMetal orePericlase;//MgO
 	
 	public static void loadBlocks(){
 		
@@ -138,8 +162,8 @@ public class BlockLoader {
 		servicebay = new ServiceBay();
 		GameRegistry.registerBlock(servicebay, MachineItemBlock.class, servicebay.getUnlocalizedNameRaw());
 		
-		hvlcfiller = new HVLCFiller();
-		GameRegistry.registerBlock(hvlcfiller,MachineItemBlock.class, hvlcfiller.getUnlocalizedNameRaw());
+		//hvlcfiller = new HVLCFiller();
+		//GameRegistry.registerBlock(hvlcfiller,MachineItemBlock.class, hvlcfiller.getUnlocalizedNameRaw());
 		
 		gaschimney = new GasChimney();
 		GameRegistry.registerBlock(gaschimney,MachineItemBlock.class, gaschimney.getUnlocalizedNameRaw());
@@ -183,33 +207,33 @@ public class BlockLoader {
 		
 		//Ores
 		
-		oreHalite = new OreHalite();
-		GameRegistry.registerBlock(oreHalite, oreHalite.getUnlocalizedName());
+		//oreHalite = new OreHalite();
+		//GameRegistry.registerBlock(oreHalite, oreHalite.getUnlocalizedName());
 		
-		orePlatinum = new OreMetal("Platinum");
-		GameRegistry.registerBlock(orePlatinum,orePlatinum.getUnlocalizedName());
-		OreDictionary.registerOre("orePlatinum", orePlatinum);
+		//orePlatinum = new OreMetal("Platinum");
+		//GameRegistry.registerBlock(orePlatinum,orePlatinum.getUnlocalizedName());
+		//OreDictionary.registerOre("orePlatinum", orePlatinum);
 		
 		
-		orePyrite = new OreMetal("Pyrite");
-		GameRegistry.registerBlock(orePyrite,orePyrite.getUnlocalizedName());
-		OreDictionary.registerOre("orePyrite", orePyrite);
+		//orePyrite = new OreMetal("Pyrite");
+		//GameRegistry.registerBlock(orePyrite,orePyrite.getUnlocalizedName());
+		//OreDictionary.registerOre("orePyrite", orePyrite);
 		
-		oreMetaAnthracite = new OreMetal("MetaAnthracite");
-		GameRegistry.registerBlock(oreMetaAnthracite,oreMetaAnthracite.getUnlocalizedName());
-		OreDictionary.registerOre("oreMetaAnthracite", oreMetaAnthracite);
+		//oreMetaAnthracite = new OreMetal("MetaAnthracite");
+		//GameRegistry.registerBlock(oreMetaAnthracite,oreMetaAnthracite.getUnlocalizedName());
+		//OreDictionary.registerOre("oreMetaAnthracite", oreMetaAnthracite);
 		
-		oreLimestone = new OreMetal("Limestone");
-		GameRegistry.registerBlock(oreLimestone, oreLimestone.getUnlocalizedName());
-		OreDictionary.registerOre("oreLimestone",oreLimestone);
+		//oreLimestone = new OreMetal("Limestone");
+		//GameRegistry.registerBlock(oreLimestone, oreLimestone.getUnlocalizedName());
+		//OreDictionary.registerOre("oreLimestone",oreLimestone);
 		
-		oreHematite = new OreMetal("Hematite");
-		GameRegistry.registerBlock(oreHematite,oreHematite.getUnlocalizedName());
-		OreDictionary.registerOre("oreHematite", oreHematite);
+		//oreHematite = new OreMetal("Hematite");
+		//GameRegistry.registerBlock(oreHematite,oreHematite.getUnlocalizedName());
+		//OreDictionary.registerOre("oreHematite", oreHematite);
 		
-		orePericlase = new OreMetal("Periclase");
-		GameRegistry.registerBlock(orePericlase,orePericlase.getUnlocalizedName());
-		OreDictionary.registerOre("orePericlase", orePericlase);
+		//orePericlase = new OreMetal("Periclase");
+		//GameRegistry.registerBlock(orePericlase,orePericlase.getUnlocalizedName());
+		//OreDictionary.registerOre("orePericlase", orePericlase);
 		
 		
 		registerBCBuilderSchematics();
@@ -224,7 +248,7 @@ public class BlockLoader {
 				press,steamboiler,steamexplosionunit,crusher,
 				diaphragmalelectrolyzer,furnace,aircollector,
 				fluidcompressor,turboexpander,evaporationunit,
-				cattank,hiresistmixer,servicebay,hvlcfiller,
+				cattank,hiresistmixer,servicebay,//hvlcfiller,
 				gaschimney,syndicationhub,
 				syndication_util_capacitor,
 				syndication_emfgenerator,syndication_itemport,
@@ -236,20 +260,20 @@ public class BlockLoader {
 	}
 
 
-	public static AsbestosMineral  asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite,asbestos_serpentite;
+	//public static AsbestosMineral  asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite,asbestos_serpentite;
 	
 	private static void loadAsbestosMinerals() {
 		
-		asbestos_crocidolite 	= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Crocidolite);
-		asbestos_tremolite		= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Tremolite);
-		asbestos_anthophyllite	= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Anthophyllite);
-		asbestos_actinolite		= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Actinolite);
-		asbestos_serpentite		= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Serpentinite);
+		//asbestos_crocidolite 	= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Crocidolite);
+		//asbestos_tremolite		= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Tremolite);
+		//asbestos_anthophyllite	= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Anthophyllite);
+		//asbestos_actinolite		= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Actinolite);
+		//asbestos_serpentite		= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Serpentinite);
 		
-		HelperRegisterBlocks(asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite,asbestos_serpentite);
-		HelperRegisterAllinOreDict("oreAsbestos",asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite,asbestos_serpentite);
-		HelperRegisterAllinOreDict("oreSerpentineAsbestos",asbestos_serpentite);
-		HelperRegisterAllinOreDict("oreAmphiboleAsbestos",asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite);
+		//HelperRegisterBlocks(asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite,asbestos_serpentite);
+		//HelperRegisterAllinOreDict("oreAsbestos",asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite,asbestos_serpentite);
+		//HelperRegisterAllinOreDict("oreSerpentineAsbestos",asbestos_serpentite);
+		//HelperRegisterAllinOreDict("oreAmphiboleAsbestos",asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite);
 	}
 	
 	private static void HelperRegisterAllinOreDict(String oredictname,Block... items){

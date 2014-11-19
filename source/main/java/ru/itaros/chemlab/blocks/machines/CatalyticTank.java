@@ -57,37 +57,37 @@ public class CatalyticTank extends IOMachineBlock {
 	
 	//SPECIAL
 	
-	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z,
-			EntityPlayer entplayer, int unknown, float px, float py, float pz) {
-		
-		ItemStack current = entplayer.inventory.getCurrentItem();
-		if(current!=null ){
-			if(current.getItem()==ItemLoader.platinum_catalization_grid){
-				TileEntity te = world.getTileEntity(x, y, z);
-				CatalyticTankTileEntity dete = (CatalyticTankTileEntity)te;
-				ItemStack rslt;
-				
-				rslt=dete.exchangeCatalyzer(current);
-
-				if(rslt==null){
-					current.stackSize=0;
-				}else{
-					current.setItemDamage(rslt.getItemDamage());
-				}
-				return true;
-			}else{
-				//GUI and stuff
-				return super.onBlockActivated(world, x, y, z, entplayer, unknown, px, py, pz);
-			}
-		}else{
-			//GUI and stuff
-			return super.onBlockActivated(world, x, y, z, entplayer, unknown, px, py, pz);
-		}
-		
-		
-		
-	}
+//	@Override
+//	public boolean onBlockActivated(World world, int x, int y, int z,
+//			EntityPlayer entplayer, int unknown, float px, float py, float pz) {
+//		
+//		ItemStack current = entplayer.inventory.getCurrentItem();
+//		if(current!=null ){
+//			if(current.getItem()==ItemLoader.platinum_catalization_grid){
+//				TileEntity te = world.getTileEntity(x, y, z);
+//				CatalyticTankTileEntity dete = (CatalyticTankTileEntity)te;
+//				ItemStack rslt;
+//				
+//				rslt=dete.exchangeCatalyzer(current);
+//
+//				if(rslt==null){
+//					current.stackSize=0;
+//				}else{
+//					current.setItemDamage(rslt.getItemDamage());
+//				}
+//				return true;
+//			}else{
+//				//GUI and stuff
+//				return super.onBlockActivated(world, x, y, z, entplayer, unknown, px, py, pz);
+//			}
+//		}else{
+//			//GUI and stuff
+//			return super.onBlockActivated(world, x, y, z, entplayer, unknown, px, py, pz);
+//		}
+//		
+//		
+//		
+//	}
 	
 	
 

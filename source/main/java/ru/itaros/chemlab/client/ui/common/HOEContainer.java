@@ -10,12 +10,10 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import ru.itaros.chemlab.achievements.ChemLabAchievements;
 import ru.itaros.hoe.gui.CopierSlot;
 import ru.itaros.hoe.gui.HOESlotType;
 import ru.itaros.hoe.gui.MachineSlot;
 import ru.itaros.hoe.gui.ProgrammerSlot;
-import ru.itaros.hoe.gui.ReadonlySlot;
 import ru.itaros.hoe.gui.UniversalSlot;
 import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
 import ru.itaros.hoe.tiles.MachineTileEntity;
@@ -94,7 +92,7 @@ public abstract class HOEContainer extends Container {
 	    	if(s!=null){
 	    		//Achievements
 	    		ItemStack poken = s.getStack();
-	    		ChemLabAchievements.testForItem(player,poken,s);
+	    		//ChemLabAchievements.testForItem(player,poken,s);
 	    	}    		
     		return super.slotClick(slotid, button, par3, player);
     	}	

@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import ru.itaros.chemlab.ChemLabCreativeTab;
-import ru.itaros.chemlab.achievements.ChemLabAchievements;
 import ru.itaros.chemlab.addon.cl3.userspace.UserspaceParsingAssist;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.physics.IMatterState;
@@ -23,7 +22,7 @@ public class ChemLabUserspaceIMSItem extends ChemLabItem implements IMatterState
 	@Override
 	public void onCreated(ItemStack stack, World world,
 			EntityPlayer player) {
-		ChemLabAchievements.onCrafting(player,stack);
+		//ChemLabAchievements.onCrafting(player,stack);
 		super.onCreated(stack, world, player);
 	}	
 	

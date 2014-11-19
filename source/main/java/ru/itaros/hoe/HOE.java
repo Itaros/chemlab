@@ -12,8 +12,7 @@ import ru.itaros.hoe.registries.HOERecipeRegistry;
 import ru.itaros.hoe.signatures.HOEExecutor;
 import ru.itaros.hoe.threading.HOEKeepAliveMonitorInternalized;
 import ru.itaros.hoe.threading.HOEThreadController;
-import ru.itaros.hoe.worldgen.HOEWorldGenerator;
-import ru.itaros.hoe.worldgen.WorldGenRegistry;
+import appeng.core.features.registries.WorldGenRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -50,10 +49,6 @@ public class HOE {
     	return instance;
     }
     
-    public WorldGenRegistry getRegistryWorldGen(){
-    	return worldgenregistry;
-    }
-    
     public HOEExecutor getHOEExecutor(){
     	return hoeexec;
     }
@@ -83,7 +78,6 @@ public class HOE {
     private HOEExecutor hoeexec;
     //===========================
     //============VMC============
-    private WorldGenRegistry worldgenregistry;
     private Config config;
     //===========================
     //===========CLIENT==========
@@ -110,8 +104,6 @@ public class HOE {
     	
     	ForgeFixer.forgeOreDictFix();
     	
-    	worldgenregistry=new WorldGenRegistry();
-    	
     	hoefluidregistry=new HOEFluidRegistry();
     	ioregistry =new HOEIORegistry();
     	reciperegistrry=new HOERecipeRegistry();
@@ -128,11 +120,6 @@ public class HOE {
     	return  synchroop_tickhandler;
     }
     
-    private HOEWorldGenerator worldgen;
-    public HOEWorldGenerator getHOEWorldGenerator(){
-    	return worldgen;
-    }
-    
     @EventHandler
     public void Init(FMLInitializationEvent event)
     {   
@@ -142,8 +129,6 @@ public class HOE {
     	synchroop_tickhandler = new HOESynchroportOperationsTickHandler();
     	FMLCommonHandler.instance().bus().register(synchroop_tickhandler);
     	
-    	worldgen = new HOEWorldGenerator();
-    	GameRegistry.registerWorldGenerator(worldgen, 100);
     }
     
     

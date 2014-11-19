@@ -36,24 +36,24 @@ public class DiaphragmalElectrolyzerTileEntity extends MachineCrafterTileEntity 
 		return data;
 	}
 	
-	public ItemStack exchangeDiaphragm(ItemStack n){
-		HOEData data = this.server;
-		if(data!=null){
-			DiaphragmalElectrolyzerData ded = (DiaphragmalElectrolyzerData)data;
-			return ded.exchangeDiaphragm(n);
-		}else{
-			return null;//Derp \o/
-		}
-	}
-	public ItemStack exchangeAnode(ItemStack n){
-		HOEData data = this.server;
-		if(data!=null){
-			DiaphragmalElectrolyzerData ded = (DiaphragmalElectrolyzerData)data;
-			return ded.exchangeAnode(n);
-		}else{
-			return null;//Derp \o/
-		}
-	}	
+//	public ItemStack exchangeDiaphragm(ItemStack n){
+//		HOEData data = this.server;
+//		if(data!=null){
+//			DiaphragmalElectrolyzerData ded = (DiaphragmalElectrolyzerData)data;
+//			return ded.exchangeDiaphragm(n);
+//		}else{
+//			return null;//Derp \o/
+//		}
+//	}
+//	public ItemStack exchangeAnode(ItemStack n){
+//		HOEData data = this.server;
+//		if(data!=null){
+//			DiaphragmalElectrolyzerData ded = (DiaphragmalElectrolyzerData)data;
+//			return ded.exchangeAnode(n);
+//		}else{
+//			return null;//Derp \o/
+//		}
+//	}	
 	
 	
 	
