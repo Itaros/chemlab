@@ -53,7 +53,7 @@ public class ExternalTextureAtlasSprite extends TextureAtlasSprite {
 			bfis[0] = ImageIO.read(bais);
 			//bais.close();
 			
-			super.loadSprite(bfis, null, false);
+			super.loadSprite(bfis, null, true);
 			bais.close();
 			
 		}catch(Exception e){

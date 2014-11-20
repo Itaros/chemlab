@@ -42,6 +42,7 @@ public class ChemLabItem extends Item {
 	}
 	@Override
 	public void registerIcons(IIconRegister reg) {
+		//System.out.println("IS: "+this.iconString);
 		if(overridenExternalIcon!=null){
 			if(reg instanceof TextureMap){
 				TextureMap map = (TextureMap)reg;

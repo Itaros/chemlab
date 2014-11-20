@@ -156,6 +156,7 @@ public class CL3AddonLoader {
 		str.read(blob);
 		//Constructing sprite loading instructions
 		ExternalTextureAtlasSprite etas = new ExternalTextureAtlasSprite(e.getName().replace("assets/itex/", "chemlab:").replace(".png", ""),blob);
+		System.out.println("ICORN: "+etas.getIconName());
 		//Registering
 		textureHash.put(etas.getIconName(), etas);
 	}

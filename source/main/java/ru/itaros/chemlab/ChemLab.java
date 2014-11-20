@@ -102,7 +102,7 @@ public class ChemLab
 		
 		//CL3 Addons
 		cl3addons = new CL3AddonLoader(event.getModConfigurationDirectory());
-		CollectorsLinker cl3linker = new CollectorsLinker(cl3addons.getCollectors());
+		CollectorsLinker cl3linker = new CollectorsLinker(cl3addons);
 		cl3linker.deploy();
 		
 		//GFX
