@@ -1,14 +1,18 @@
 package ru.itaros.chemlab.addon.cl3.userspace;
 
 import java.io.File;
+import java.io.InputStream;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 public class DebugCompositorEntrypoint {
 
 	public static void main(String[] args) {
+		
+		System.out.println("ABDO COMPLETE THE FUCKING THAUMIC WARDEN ALREADY");
 		
 		ContractCollector collector = new ContractCollector();
 
@@ -36,5 +40,13 @@ public class DebugCompositorEntrypoint {
 		marshaller.marshal(collector, target);
 		System.out.println("File is written to: "+target.getAbsolutePath());
 	}
+	
+	public static ContractCollector MarshallOut(InputStream stream) throws JAXBException{
+		JAXBContext context = JAXBContext.newInstance(ContractCollector.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		ContractCollector collector = (ContractCollector)unmarshaller.unmarshal(stream);
+		return collector;
+	}
+	
 
 }

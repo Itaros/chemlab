@@ -5,6 +5,8 @@ import java.util.EnumMap;
 import net.minecraftforge.common.MinecraftForge;
 import ru.itaros.api.hoe.internal.HOEIO;
 import ru.itaros.chemlab.addon.cl3.userspace.CL3AddonLoader;
+import ru.itaros.chemlab.addon.cl3.userspace.CollectorsLinker;
+import ru.itaros.chemlab.addon.cl3.userspace.ContractCollector;
 import ru.itaros.chemlab.client.ui.common.GUIHandler;
 import ru.itaros.chemlab.events.SyndicationSystemPipingProtection;
 import ru.itaros.chemlab.loader.BlockLoader;
@@ -100,7 +102,8 @@ public class ChemLab
 		
 		//CL3 Addons
 		cl3addons = new CL3AddonLoader(event.getModConfigurationDirectory());
-		cl3addons.getItemLoader().registerItems();
+		CollectorsLinker cl3linker = new CollectorsLinker(cl3addons.getCollectors());
+		cl3linker.deploy();
 		
 		//GFX
 		proxy.registerGFX();
@@ -123,7 +126,6 @@ public class ChemLab
     {
 		RecipesLoader.load();
 		HOEIO.getIORegistry().claimOwnership();
-		cl3addons.getRecipesLoader().registerRecipes();
 		
 		new GUIHandler();
     }   

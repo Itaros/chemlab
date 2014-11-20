@@ -14,6 +14,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
+import javax.xml.bind.JAXBException;
+
 import ru.itaros.hoe.HOE;
 import ru.itaros.hoe.client.textures.ExternalTextureAtlasSprite;
 
@@ -21,9 +23,6 @@ import ru.itaros.hoe.client.textures.ExternalTextureAtlasSprite;
  * This class loads all addons and prepares loaders to be fired
  */
 public class CL3AddonLoader {
-
-	private AutoitemsLoader loaderAutoitems = new AutoitemsLoader();
-	private SimpleRecipesLoader loaderDirproc = new SimpleRecipesLoader();
 	
 	public CL3AddonLoader(File cfgdir){
 		File root = cfgdir.getAbsoluteFile().getParentFile();
@@ -55,9 +54,10 @@ public class CL3AddonLoader {
 		
 	}
 
-	ArrayList<ZipEntry> autoitems = new ArrayList<ZipEntry>();
-	ArrayList<ZipEntry> dirproc = new ArrayList<ZipEntry>();
+	ZipEntry indexEntry;
 	ArrayList<ZipEntry> tex = new ArrayList<ZipEntry>();
+	
+	private ArrayList<ContractCollector> collector = new ArrayList<ContractCollector>();
 	
 	/*
 	 * Reads packages and fills loaders
@@ -69,11 +69,8 @@ public class CL3AddonLoader {
 		while(zenum.hasMoreElements()){
 			ZipEntry ze = zenum.nextElement();
 			if(!ze.isDirectory()){
-				if(ze.getName().startsWith("autoitems/")){
-					autoitems.add(ze);
-				}
-				if(ze.getName().startsWith("dirproc/")){
-					dirproc.add(ze);
+				if(ze.getName().startsWith("index.xml")){
+					indexEntry=ze;
 				}
 				if(ze.getName().startsWith("assets/itex/")){
 					tex.add(ze);
@@ -87,19 +84,24 @@ public class CL3AddonLoader {
 			System.out.println("Deploying Texture: "+z.getName());
 			uploadTexture(zf,z);
 		}		
+		
+		System.out.println("Deploying index: "+indexEntry.getName());
+		InputStream is = readZippedFileRaw(zf,indexEntry);
+		try {
+			ContractCollector coll = DebugCompositorEntrypoint.MarshallOut(is);
+			coll.groupName=consolidateName(Paths.get(zf.getName()).getFileName().toString());
+			collector.add(coll);
+		} catch (JAXBException e) {
+			throw new UserspaceLinkageException(e);
+		}
+		
 		//AutoItems
-		for(ZipEntry z:autoitems){
-			System.out.println("Deploying Items: "+z.getName());
-			String[] data = readZippedFile(zf,z);
-			String groupname = consolidateName(Paths.get(zf.getName()).getFileName().toString())+"."+selectCapitalLetters(Paths.get(z.getName()).getFileName().toString());
-			//loaderAutoitems.parse(groupname,data, this);
-		}
-		//DirProc
-		for(ZipEntry z:dirproc){
-			System.out.println("Deploying Dirprocs: "+z.getName());
-			String[] data = readZippedFile(zf,z);
-			//loaderDirproc.parse(data);
-		}
+		//for(ZipEntry z:autoitems){
+		//	System.out.println("Deploying Items: "+z.getName());
+		//	String[] data = readZippedFile(zf,z);
+		//	String groupname = consolidateName(Paths.get(zf.getName()).getFileName().toString())+"."+selectCapitalLetters(Paths.get(z.getName()).getFileName().toString());
+		//	//loaderAutoitems.parse(groupname,data, this);
+		//}
 
 		
 	}
@@ -126,6 +128,10 @@ public class CL3AddonLoader {
 			}
 		}
 		return sname.toLowerCase();
+	}
+	
+	private InputStream readZippedFileRaw(ZipFile f, ZipEntry e) throws IOException{
+		return f.getInputStream(e);
 	}
 	
 	private String[] readZippedFile(ZipFile f, ZipEntry e) throws IOException{
@@ -156,11 +162,10 @@ public class CL3AddonLoader {
 	
 	private Hashtable<String,ExternalTextureAtlasSprite> textureHash = new Hashtable<String,ExternalTextureAtlasSprite>();
 	
-	public AutoitemsLoader getItemLoader() {
-		return loaderAutoitems;
-	}
-	public SimpleRecipesLoader getRecipesLoader(){
-		return loaderDirproc;
+	public ContractCollector[] getCollectors() {
+		ContractCollector[] coll = new ContractCollector[collector.size()];
+		coll = collector.toArray(coll);
+		return coll;
 	}
 	
 	public ExternalTextureAtlasSprite getTexture(String iconName){
