@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 public class ChemLabWireItem extends ChemLabItem {
 
 	public ChemLabWireItem(String name, int maxGauge) {
-		super(name);
+		super("wirecl",name);
 		
 		this.setMaxDamage(maxGauge);
 		this.setNoRepair();

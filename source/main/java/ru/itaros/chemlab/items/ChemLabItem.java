@@ -15,12 +15,12 @@ public class ChemLabItem extends Item {
 
 	
 	private String name;
-	public ChemLabItem(String name){
+	public ChemLabItem(String groupname, String name){
 		super();
 		this.name=name;
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
-		this.setUnlocalizedName(""+name);
-		this.setTextureName("chemlab:"+name);
+		this.setUnlocalizedName(groupname+"."+name);
+		this.setTextureName("chemlab:"+groupname+"."+name);
 	}
 	@Override
 	public void onCreated(ItemStack stack, World world,

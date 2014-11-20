@@ -13,11 +13,11 @@ public class ChemLabUserspaceIMSItem extends ChemLabItem implements IMatterState
 	
 	private String groupname,name;
 	public ChemLabUserspaceIMSItem(String groupname, String name){
-		super(groupname+"."+name);
+		super(groupname,name);
 		this.name=name;
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		this.setUnlocalizedName(groupname+"."+name);//Override
-		this.setTextureName("chemlab:"+groupname+"."+name);
+		//this.setTextureName("chemlab:"+groupname+"."+name);
 	}
 	@Override
 	public void onCreated(ItemStack stack, World world,

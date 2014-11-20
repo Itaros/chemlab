@@ -17,7 +17,7 @@ public class ItemPortApplianceItem extends ChemLabItem {
 	private PortType type;
 	
 	public ItemPortApplianceItem(String name, PortType type) {
-		super(name);
+		super("ipai",name);
 		this.type=type;
 		if(type!=null){
 			type.setRelevantItem(new ItemStack(this,1));
