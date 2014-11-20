@@ -15,6 +15,11 @@ public class ChemLabItem extends Item {
 
 	
 	private String name;
+	
+	public String getInternalName(){
+		return name;
+	}
+	
 	public ChemLabItem(String groupname, String name){
 		super();
 		this.name=name;

@@ -23,6 +23,16 @@ public class DebugCompositorEntrypoint {
 		collector.genericItems[0].nodeName="ore.crushed.borax";
 		collector.genericItems[1].nodeName="ore.crushed.bif";
 		
+		collector.rigidProcesses = new UserspaceRigidProcess[1];
+		collector.rigidProcesses[0]=new UserspaceRigidProcess();
+		//collector.rigidProcesses[1]=new UserspaceRigidProcess();
+		collector.rigidProcesses[0].in=new UserspaceLink[1];
+		collector.rigidProcesses[0].in[0]=new UserspaceLink();
+		collector.rigidProcesses[0].in[0].nodeName="ore.crushed.bif";
+		collector.rigidProcesses[0].out=new UserspaceLink[1];
+		collector.rigidProcesses[0].out[0]=new UserspaceLink();
+		collector.rigidProcesses[0].out[0].nodeName="ore.crushed.bif";		
+		
 		try {
 			MarshallIn(collector);
 		} catch (JAXBException e) {

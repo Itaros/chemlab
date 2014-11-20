@@ -74,6 +74,7 @@ public class ChemLab
     }
     
     private CL3AddonLoader cl3addons;
+    private CollectorsLinker cl3addonsLinker;
     
     VersionCheckerIntegration versioncheck;
     @EventHandler
@@ -102,8 +103,8 @@ public class ChemLab
 		
 		//CL3 Addons
 		cl3addons = new CL3AddonLoader(event.getModConfigurationDirectory());
-		CollectorsLinker cl3linker = new CollectorsLinker(cl3addons);
-		cl3linker.deploy();
+		cl3addonsLinker = new CollectorsLinker(cl3addons);
+		cl3addonsLinker.deployPre();
 		
 		//GFX
 		proxy.registerGFX();
@@ -125,6 +126,9 @@ public class ChemLab
     public void postInit(FMLPostInitializationEvent event)
     {
 		RecipesLoader.load();
+		
+		cl3addonsLinker.deployPost();
+		
 		HOEIO.getIORegistry().claimOwnership();
 		
 		new GUIHandler();
