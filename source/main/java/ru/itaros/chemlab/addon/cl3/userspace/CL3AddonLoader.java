@@ -16,6 +16,8 @@ import java.util.zip.ZipFile;
 
 import javax.xml.bind.JAXBException;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 import ru.itaros.hoe.HOE;
 import ru.itaros.hoe.client.textures.ExternalTextureAtlasSprite;
 
@@ -80,10 +82,12 @@ public class CL3AddonLoader {
 		
 		//Reading data
 		//TextureStitchers
-		for(ZipEntry z:tex){
-			System.out.println("Deploying Texture: "+z.getName());
-			uploadTexture(zf,z);
-		}		
+		if(FMLCommonHandler.instance().getEffectiveSide()==Side.CLIENT){
+			for(ZipEntry z:tex){
+				System.out.println("Deploying Texture: "+z.getName());
+				uploadTexture(zf,z);
+			}		
+		}
 		
 		System.out.println("Deploying index: "+indexEntry.getName());
 		InputStream is = readZippedFileRaw(zf,indexEntry);

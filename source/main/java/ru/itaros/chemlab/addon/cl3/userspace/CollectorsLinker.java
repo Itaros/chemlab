@@ -14,7 +14,9 @@ import ru.itaros.hoe.itemhandling.UniversalStackFactory;
 import ru.itaros.hoe.recipes.FixedConversionRecipe;
 import ru.itaros.hoe.recipes.RecipesCollection;
 import ru.itaros.hoe.registries.HOEFluidRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 public class CollectorsLinker {
 	
@@ -120,7 +122,9 @@ public class CollectorsLinker {
 			for(UserspaceGenericItemContract ugic : cc.genericItems){
 				System.out.print(cc.groupName+"."+ugic.nodeName);
 				ChemLabItem item = new ChemLabItem(cc.groupName,ugic.nodeName);
-				item.setIcon(invoker);
+				if(FMLCommonHandler.instance().getEffectiveSide()==Side.CLIENT){
+					item.setIcon(invoker);
+				}
 				GameRegistry.registerItem(item, item.getInternalName());
 				System.out.println("[ACCEPTED]");
 			}
