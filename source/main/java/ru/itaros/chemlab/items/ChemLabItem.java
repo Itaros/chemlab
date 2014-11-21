@@ -1,5 +1,7 @@
 package ru.itaros.chemlab.items;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -37,7 +39,9 @@ public class ChemLabItem extends Item {
 	/*
 	 * Tries to load texture from CL3 addons
 	 */
+	@SideOnly(Side.CLIENT)
 	private TextureAtlasSprite overridenExternalIcon;
+	@SideOnly(Side.CLIENT)
 	public void setIcon(CL3AddonLoader invoker) {
 		TextureAtlasSprite i = invoker.getTexture(this.iconString);
 		if(i!=null){

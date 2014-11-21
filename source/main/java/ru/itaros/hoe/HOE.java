@@ -95,9 +95,6 @@ public class HOE {
     		keepalive = new HOEKeepAliveMonitorInternalized();
     	}
     	
-    	stitcher = new ExternalTextureStitcher();
-    	MinecraftForge.EVENT_BUS.register(stitcher);
-    	
     	hoeexec = new HOEExecutor();
     	
     	contextdetector = new ContextDetector();
