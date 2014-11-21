@@ -448,6 +448,13 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 		
 			//}
 			
+			if(hoeio==null){
+				//This is bad. This TE has no HOE identity. PANIC!!!
+				System.out.println(this.getClass().getName()+" lost its HOE identity. Invalidating!");
+				this.invalidate();
+				return;
+			}
+			
 			hoeio.configureData(server);
 			
 			if(server.getChild()==null){
