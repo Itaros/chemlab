@@ -22,8 +22,8 @@ group= "ru.itaros.chemlab" // http://maven.apache.org/guides/mini/guide-naming-c
 archivesBaseName = "ChemLab"
 
 dependencies {
-	compile "appeng:appliedenergistics2:rv1-beta-5:dev"
-	compile files('mods/NotEnoughItems-1.7.10-1.0.2.15-dev.jar')
+	compile files('devmods/appliedenergistics2-rv2-alpha-23-dev.jar')
+	compile files('devmods/NotEnoughItems-1.7.10-1.0.3.67-dev.jar')
 }
 
 minecraft {

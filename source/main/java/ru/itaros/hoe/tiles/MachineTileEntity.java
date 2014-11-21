@@ -179,7 +179,7 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 
 
 	@Override
-	public boolean isWorldAccessable() {
+	public boolean isWorldAccessible() {
 		return true;
 	}
 
