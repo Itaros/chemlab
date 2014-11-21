@@ -23,6 +23,7 @@ import ru.itaros.chemlab.blocks.machines.DiaphragmalElectrolyzer;
 import ru.itaros.chemlab.blocks.machines.EvaporationUnit;
 import ru.itaros.chemlab.blocks.machines.FluidCompressor;
 import ru.itaros.chemlab.blocks.machines.GasChimney;
+import ru.itaros.chemlab.blocks.machines.GravMag;
 import ru.itaros.chemlab.blocks.machines.HiResistantMixer;
 import ru.itaros.chemlab.blocks.machines.HiTFurnace;
 import ru.itaros.chemlab.blocks.machines.Impregnator;
@@ -67,6 +68,7 @@ public class BlockLoader {
 	public static CatalyticTank cattank;
 	public static HiResistantMixer hiresistmixer;
 	public static ServiceBay servicebay;
+	public static GravMag gravmag;
 	//public static HVLCFiller hvlcfiller;
 	public static GasChimney gaschimney;
 	
@@ -161,6 +163,9 @@ public class BlockLoader {
 		
 		servicebay = new ServiceBay();
 		GameRegistry.registerBlock(servicebay, MachineItemBlock.class, servicebay.getUnlocalizedNameRaw());
+		
+		gravmag = new GravMag();
+		GameRegistry.registerBlock(gravmag, MachineItemBlock.class, gravmag.getUnlocalizedNameRaw());
 		
 		//hvlcfiller = new HVLCFiller();
 		//GameRegistry.registerBlock(hvlcfiller,MachineItemBlock.class, hvlcfiller.getUnlocalizedNameRaw());

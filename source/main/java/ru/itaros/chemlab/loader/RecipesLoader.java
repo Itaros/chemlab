@@ -7,6 +7,7 @@ import ru.itaros.chemlab.loader.recipes.CrusherRecipes;
 import ru.itaros.chemlab.loader.recipes.DiaphragmalElectrolyzerRecipes;
 import ru.itaros.chemlab.loader.recipes.EvaporationUnitRecipes;
 import ru.itaros.chemlab.loader.recipes.FluidCompressorRecipes;
+import ru.itaros.chemlab.loader.recipes.GravMagRecipes;
 import ru.itaros.chemlab.loader.recipes.HiRMixerRecipes;
 import ru.itaros.chemlab.loader.recipes.HiTFurnaceRecipes;
 import ru.itaros.chemlab.loader.recipes.MetalFormationMachineRecipes;
@@ -44,6 +45,8 @@ public class RecipesLoader {
 		MetalFormationMachineRecipes.load();
 		
 		WireCoatingExtruderRecipes.load();
+		
+		GravMagRecipes.load();
 		
 	}
 

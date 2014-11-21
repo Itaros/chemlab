@@ -10,6 +10,7 @@ import ru.itaros.chemlab.hoe.io.CrusherIO;
 import ru.itaros.chemlab.hoe.io.DiaphragmalElectrolyzerIO;
 import ru.itaros.chemlab.hoe.io.EvaporationUnitIO;
 import ru.itaros.chemlab.hoe.io.FluidCompressorIO;
+import ru.itaros.chemlab.hoe.io.GravMagIO;
 import ru.itaros.chemlab.hoe.io.HiResistantMixerIO;
 import ru.itaros.chemlab.hoe.io.HiTFurnaceIO;
 import ru.itaros.chemlab.hoe.io.ImpregnatorIO;
@@ -39,6 +40,7 @@ import ru.itaros.chemlab.tiles.DiaphragmalElectrolyzerTileEntity;
 import ru.itaros.chemlab.tiles.EvaporationUnitTileEntity;
 import ru.itaros.chemlab.tiles.FluidCompressorTileEntity;
 import ru.itaros.chemlab.tiles.GasChimneyTileEntity;
+import ru.itaros.chemlab.tiles.GravMagTileEntity;
 import ru.itaros.chemlab.tiles.HiResistantMixerTileEntity;
 import ru.itaros.chemlab.tiles.HiTFurnaceTileEntity;
 import ru.itaros.chemlab.tiles.ImpregnatorTileEntity;
@@ -81,6 +83,7 @@ public class TileEntityLoader {
     			new CatalyticTankIO().setHostBlock(BlockLoader.cattank),
     			new HiResistantMixerIO().setHostBlock(BlockLoader.hiresistmixer),
     			new ServiceBayIO().setHostBlock(BlockLoader.servicebay),
+    			new GravMagIO().setHostBlock(BlockLoader.gravmag),
     			//new HVLCFillerIO().setHostBlock(BlockLoader.hvlcfiller),
     			new GasChimneyIO().setHostBlock(BlockLoader.gaschimney),
     			new SyndicationHubIO().setHostBlock(BlockLoader.syndicationhub),
@@ -114,6 +117,7 @@ public class TileEntityLoader {
 		GameRegistry.registerTileEntity(CatalyticTankTileEntity.class,CatalyticTankTileEntity.class.getName());
 		GameRegistry.registerTileEntity(HiResistantMixerTileEntity.class,HiResistantMixerTileEntity.class.getName());
 		GameRegistry.registerTileEntity(ServiceBayTileEntity.class,ServiceBayTileEntity.class.getName());
+		GameRegistry.registerTileEntity(GravMagTileEntity.class,GravMagTileEntity.class.getName());
 		//GameRegistry.registerTileEntity(HVLCFillerTileEntity.class,HVLCFillerTileEntity.class.getName());
 		GameRegistry.registerTileEntity(GasChimneyTileEntity.class,GasChimneyTileEntity.class.getName());
 
