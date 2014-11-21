@@ -3,12 +3,10 @@ package ru.itaros.chemlab.client.ui.common;
 import java.util.Iterator;
 import java.util.List;
 
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
@@ -16,14 +14,12 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 
-import buildcraft.core.render.FluidRenderer;
 import ru.itaros.api.hoe.internal.HOEData;
+import ru.itaros.hoe.client.textures.TextureAccessor;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.gui.HOESlotType;
 import ru.itaros.hoe.gui.MachineSlot;
-import ru.itaros.hoe.gui.ReadonlySlot;
 import ru.itaros.hoe.gui.UniversalSlot;
-import ru.itaros.hoe.itemhandling.WidgetMixtureIndicator;
 import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
 import ru.itaros.hoe.tiles.MachineTileEntity;
 import ru.itaros.hoe.tiles.ioconfig.IConfigurableIO;
@@ -193,8 +189,8 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 		int angular=0;
 		if(flstack!=null){
 			//Item underlay
-			IIcon fltex = FluidRenderer.getFluidTexture(flstack.getFluid(), false);
-			mc.renderEngine.bindTexture(FluidRenderer.getFluidSheet(flstack.getFluid()));
+			IIcon fltex = TextureAccessor.getFluidTexture(flstack.getFluid());
+			mc.renderEngine.bindTexture(TextureAccessor.getCommonSheet());
 			drawTexturedModelRectFromIcon(s.xDisplayPosition+x, s.yDisplayPosition+y, fltex, 16, 16);		
 			angular = (int)(((float)flstack.amount/64000F)*(16F-1F));
 			

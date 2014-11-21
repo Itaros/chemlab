@@ -36,7 +36,7 @@ import cpw.mods.fml.common.network.FMLOutboundHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = ChemLab.MODID, version = ChemLab.VERSION, dependencies="required-after:hoelib;required-after:BuildCraft|Core")
+@Mod(modid = ChemLab.MODID, version = ChemLab.VERSION, dependencies="required-after:hoelib")//;required-after:
 public class ChemLab
 {
 	public ChemLab(){

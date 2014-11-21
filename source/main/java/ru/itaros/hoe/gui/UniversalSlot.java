@@ -1,19 +1,16 @@
 package ru.itaros.hoe.gui;
 
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL21;
 
-import buildcraft.core.render.FluidRenderer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
+import ru.itaros.hoe.client.textures.TextureAccessor;
 import ru.itaros.hoe.fluid.HOEFluidStack;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.itemhandling.UniversalStackUtils;
@@ -52,8 +49,8 @@ public class UniversalSlot {
 					//drawGradientRect(xDisplayPosition+x, yDisplayPosition+y, xDisplayPosition + 16 + x, yDisplayPosition + 16+y, -2130706433, -2130706433, 0D);
 					 HOEFluidStack o = (HOEFluidStack)proxy;
 					 
-					IIcon fltex = FluidRenderer.getFluidTexture(o.getFluid().getForgeFluid(), false);
-					screen.mc.renderEngine.bindTexture(FluidRenderer.getFluidSheet(o.getFluid().getForgeFluid()));
+					IIcon fltex = TextureAccessor.getFluidTexture(o.getFluid().getForgeFluid());
+					screen.mc.renderEngine.bindTexture(TextureAccessor.getCommonSheet());
 					screen.drawTexturedModelRectFromIcon(xDisplayPosition+x, yDisplayPosition+y, fltex, 16, 16);
 					
 					// fontRendererObj.drawStringWithShadow(String.valueOf(o.stackSize), xDisplayPosition+x + 19 - 2 - fontRendererObj.getStringWidth(String.valueOf(o.stackSize)), yDisplayPosition+y + 6 + 3, 16777215);

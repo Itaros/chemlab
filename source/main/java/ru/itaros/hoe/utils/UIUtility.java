@@ -1,13 +1,13 @@
 package ru.itaros.hoe.utils;
 
-import buildcraft.core.render.FluidRenderer;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import ru.itaros.hoe.client.textures.TextureAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class UIUtility {
@@ -16,7 +16,7 @@ public class UIUtility {
 	
 	
 	public static void drawFluidGauge(GuiScreen screen, FluidStack fluid, double amount,double max, Rect rect){
-		ResourceLocation tex = FluidRenderer.getFluidSheet(fluid);
+		ResourceLocation tex = TextureAccessor.getCommonSheet();
 		Minecraft.getMinecraft().renderEngine.bindTexture(tex);
 		
 		if(fluid==null){return;}

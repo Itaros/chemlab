@@ -2,7 +2,6 @@ package ru.itaros.chemlab.loader;
 
 import ru.itaros.chemlab.items.CIOWrench;
 import ru.itaros.chemlab.items.HiVolumeLiquidCellEmpty;
-import ru.itaros.chemlab.items.IOMultitool;
 import ru.itaros.chemlab.items.ItemPortApplianceItem;
 import ru.itaros.chemlab.items.PipeWrench;
 import ru.itaros.chemlab.items.Programmer;
@@ -14,7 +13,6 @@ public class ItemLoader {
 	public static Programmer programmer;
 	public static PipeWrench wrench;
 	public static CIOWrench ciowrench;
-	public static IOMultitool iomultitool;
 	
 	public static HiVolumeLiquidCellEmpty emptyhvlc;
 
@@ -48,10 +46,6 @@ public class ItemLoader {
 		
 		ciowrench = new CIOWrench();
 		GameRegistry.registerItem(ciowrench,ciowrench.getUnlocalizedName());
-		
-		iomultitool = new IOMultitool();
-		GameRegistry.registerItem(iomultitool,iomultitool.getUnlocalizedName());
-		
 		
 		emptyhvlc = new HiVolumeLiquidCellEmpty();
 		GameRegistry.registerItem(emptyhvlc,emptyhvlc.getUnlocalizedName());
