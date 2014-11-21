@@ -48,6 +48,9 @@ public class HOEFluidRegistry {
 		}
 	}
 	public HOEFluid pop(String key){
+		//for(String s : fluids.keySet()){
+		//	System.out.println(s);
+		//}
 		return fluids.get(key);
 	}
 	public HOEFluid[] all(){

@@ -9,6 +9,9 @@ public class ContractCollector {
 
 	@XmlElement(name="genericItem")
 	public UserspaceGenericItemContract[] genericItems;
+	@XmlElement(name="genericHOEFluid")
+	public UserspaceGenericHOEFluid[] genericFluids;
+	
 	@XmlElement(name="rigidProcess")
 	public UserspaceRigidProcess[] rigidProcesses;	
 	

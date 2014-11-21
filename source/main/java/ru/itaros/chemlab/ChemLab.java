@@ -94,17 +94,17 @@ public class ChemLab
     	
     	new ChemLabCreativeTab();//There is forgebug somewhere close
     	
+		//CL3 Addons
+		cl3addons = new CL3AddonLoader(event.getModConfigurationDirectory());
+		cl3addonsLinker = new CollectorsLinker(cl3addons);
+		cl3addonsLinker.deployPre(); 	
+    	
  		BlockLoader.loadBlocks();
  		ItemLoader.loadItems();
 		iocollection = TileEntityLoader.load();   
 		MultiblockLoader.load();
 		
 		DamageSourceLoader.load();
-		
-		//CL3 Addons
-		cl3addons = new CL3AddonLoader(event.getModConfigurationDirectory());
-		cl3addonsLinker = new CollectorsLinker(cl3addons);
-		cl3addonsLinker.deployPre();
 		
 		//GFX
 		proxy.registerGFX();

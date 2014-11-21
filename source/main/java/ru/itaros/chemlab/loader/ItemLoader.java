@@ -1,10 +1,13 @@
 package ru.itaros.chemlab.loader;
 
 import ru.itaros.chemlab.items.CIOWrench;
+import ru.itaros.chemlab.items.HVLCIndex;
+import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.items.HiVolumeLiquidCellEmpty;
 import ru.itaros.chemlab.items.ItemPortApplianceItem;
 import ru.itaros.chemlab.items.PipeWrench;
 import ru.itaros.chemlab.items.Programmer;
+import ru.itaros.hoe.fluid.HOEFluid;
 import ru.itaros.hoe.tiles.ioconfig.PortType;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -32,8 +35,8 @@ public class ItemLoader {
 		
 		
 		//IPAIs
-		ipai_items= new ItemPortApplianceItem("ipai.items",PortType.ITEM);
-		ipai_fluids= new ItemPortApplianceItem("ipai.fluids",PortType.FLUID);
+		ipai_items= new ItemPortApplianceItem("items",PortType.ITEM);
+		ipai_fluids= new ItemPortApplianceItem("fluids",PortType.FLUID);
 		GameRegistry.registerItem(ipai_items,ipai_items.getUnlocalizedName());
 		GameRegistry.registerItem(ipai_fluids,ipai_fluids.getUnlocalizedName());
 		
@@ -51,6 +54,22 @@ public class ItemLoader {
 		GameRegistry.registerItem(emptyhvlc,emptyhvlc.getUnlocalizedName());
 		
 		
+		hiVolumeLiquidCellAutoloader();
+		
 	}
+	
+	private static void hiVolumeLiquidCellAutoloader() {
+		HOEFluid[] all = HOEFluid.getFluidRegistry().all();
+		HVLCIndex[] index = new HVLCIndex[all.length];
+		int j = -1;
+		for (HOEFluid f : all) {
+			j++;
+			HVLCIndex i = new HVLCIndex(f);
+			index[j] = i;
+		}
+		HiVolumeLiquidCell hvlc = new HiVolumeLiquidCell(index);
+		GameRegistry.registerItem(hvlc, hvlc.getUnlocalizedName());
+	}	
+	
 
 }

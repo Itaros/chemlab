@@ -8,10 +8,11 @@ public class UserspaceHOEFluid extends HOEFluid{
 	private int color;
 	private HOEFluidState state;
 	
-	public UserspaceHOEFluid(String unlocalizedName, int color, HOEFluidState state){
-		this.name=unlocalizedName;
+	public UserspaceHOEFluid(String groupname,String name, int color, HOEFluidState state){
+		this.name=name;
 		this.color=color;
 		this.state=state;
+		detectCommonName();
 	}
 	
 	@Override
