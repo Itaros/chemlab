@@ -115,10 +115,14 @@ public abstract class HOEMachineData extends HOEData {
 	 */
 	protected void init(){}
 
-	public void sync(){
+	/*
+	 * Return true if sync-step is passed
+	 */
+	public boolean sync(){
 		if(child==null){
-			throw new HOEWrongSyncDirection();
-			}
+			//throw new HOEWrongSyncDirection();
+			return false;//Sync is halted in that case. No child!
+		}
 		
 		
 		HOEMachineData childd=(HOEMachineData) child;
@@ -128,6 +132,7 @@ public abstract class HOEMachineData extends HOEData {
 		childd.ticksRequared=ticksRequared;
 		childd.ticksAccumulated=ticksAccumulated;
 		
+		return true;
 	}
 	
 	/*

@@ -73,15 +73,19 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 	
 	
 	@Override
-	public void sync() {
-		super.sync();
-		HOEMachineCrafterData childd=(HOEMachineCrafterData) child;
-
-		childd.hasWork=hasWork;
-		
-		childd.inbound = StackUtility.syncUniversalStacks(childd.inbound, inbound);
-		childd.outbound = StackUtility.syncUniversalStacks(childd.outbound, outbound);
-		
+	public boolean sync() {
+		if(super.sync()){
+			HOEMachineCrafterData childd=(HOEMachineCrafterData) child;
+	
+			childd.hasWork=hasWork;
+			
+			childd.inbound = StackUtility.syncUniversalStacks(childd.inbound, inbound);
+			childd.outbound = StackUtility.syncUniversalStacks(childd.outbound, outbound);
+			
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	@Override

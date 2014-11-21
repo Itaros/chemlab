@@ -178,15 +178,21 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 	}
 
 	@Override
-	public void sync() {
-		super.sync();
-		
-		GasChimneyData childd=(GasChimneyData) child;
-		
-		childd.hasWork=hasWork;
-		
-		childd.inbound = StackUtility.syncUniversalStacks(childd.inbound, inbound);
-		childd.outbound = StackUtility.syncUniversalStacks(childd.outbound, outbound);
+	public boolean sync() {
+		if(super.sync()){
+			
+			GasChimneyData childd=(GasChimneyData) child;
+			
+			childd.hasWork=hasWork;
+			
+			childd.inbound = StackUtility.syncUniversalStacks(childd.inbound, inbound);
+			childd.outbound = StackUtility.syncUniversalStacks(childd.outbound, outbound);
+			
+			return true;
+			
+		}else{
+			return false;
+		}
 		
 	}
 

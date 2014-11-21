@@ -67,15 +67,20 @@ public class ArcFurnaceControllerData extends HOEMachineData  implements ISynchr
 	}
 
 	@Override
-	public void sync() {
+	public boolean sync() {
+		if(super.sync()){
+			ArcFurnaceControllerData ch = (ArcFurnaceControllerData) this.child;
+			ch.heatResistance=heatResistance;
+			ch.volumeResistance=volumeResistance;
+			
+			ch.vat=vat;//HACK: SYNC, not assign! DANGER!
+			
+			return true;
 		
-		ArcFurnaceControllerData ch = (ArcFurnaceControllerData) this.child;
-		ch.heatResistance=heatResistance;
-		ch.volumeResistance=volumeResistance;
+		}else{
+			return false;
+		}
 		
-		ch.vat=vat;//HACK: SYNC, not assign! DANGER!
-		
-		super.sync();
 	}	
 	
 	//Arc Furnace

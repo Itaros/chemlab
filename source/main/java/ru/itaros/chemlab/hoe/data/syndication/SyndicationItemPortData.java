@@ -94,17 +94,21 @@ public class SyndicationItemPortData extends HOEMachineData implements ISynchrop
 
 
 	@Override
-	public void sync() {
-		super.sync();
-		
-		SyndicationItemPortData childd=(SyndicationItemPortData) child;
-		
-		//childd.hasWork=hasWork;		
-		childd.inbound = StackUtility.syncUniversalStacks(childd.inbound, inbound);
-		//childd.filter = StackUtility.syncUniversalStacks(childd.filter, filter);
-		//TODO: ^ Fixme
-		
-		childd.mode = mode;
+	public boolean sync() {
+		if(super.sync()){
+			SyndicationItemPortData childd=(SyndicationItemPortData) child;
+			
+			//childd.hasWork=hasWork;		
+			childd.inbound = StackUtility.syncUniversalStacks(childd.inbound, inbound);
+			//childd.filter = StackUtility.syncUniversalStacks(childd.filter, filter);
+			//TODO: ^ Fixme
+			
+			childd.mode = mode;
+			
+			return true;
+		}else{
+			return false;
+		}
 		
 	}
 	
