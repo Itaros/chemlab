@@ -17,6 +17,7 @@ import org.lwjgl.opengl.GL11;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.hoe.client.textures.TextureAccessor;
 import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.fluid.FluidToHOE;
 import ru.itaros.hoe.gui.HOESlotType;
 import ru.itaros.hoe.gui.MachineSlot;
 import ru.itaros.hoe.gui.UniversalSlot;
@@ -192,7 +193,7 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 			IIcon fltex = TextureAccessor.getFluidTexture(flstack.getFluid());
 			mc.renderEngine.bindTexture(TextureAccessor.getCommonSheet());
 			drawTexturedModelRectFromIcon(s.xDisplayPosition+x, s.yDisplayPosition+y, fltex, 16, 16);		
-			angular = (int)(((float)flstack.amount/64000F)*(16F-1F));
+			angular = (int)(((float)flstack.amount/(float)FluidToHOE.get(flstack.getFluid()).getMaxStack())*(16F-1F));
 			
 			fontRendererObj.drawString("A:"+flstack.amount, s.xDisplayPosition+x+16+1, s.yDisplayPosition+y, CAPTIONCOLOR);//4210752
 			GL11.glDisable(GL11.GL_LIGHTING);

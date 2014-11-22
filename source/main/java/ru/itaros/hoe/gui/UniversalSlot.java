@@ -54,7 +54,7 @@ public class UniversalSlot {
 					screen.drawTexturedModelRectFromIcon(xDisplayPosition+x, yDisplayPosition+y, fltex, 16, 16);
 					
 					// fontRendererObj.drawStringWithShadow(String.valueOf(o.stackSize), xDisplayPosition+x + 19 - 2 - fontRendererObj.getStringWidth(String.valueOf(o.stackSize)), yDisplayPosition+y + 6 + 3, 16777215);
-					 int angular = (int)(((float)o.stackSize/o.getFluid().getMaxStack())*(16F-1F));
+					 int angular = (int)(((float)o.stackSize/(float)o.getFluid().getMaxStack())*(16F-1F));
 					 screen.setAdditionalsDrawingMode();
 					 GL11.glColor3f(1f, 1f, 1f);
 					 GL11.glDisable(GL11.GL_LIGHTING);
