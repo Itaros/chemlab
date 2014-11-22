@@ -41,66 +41,68 @@ public class CollectorsLinker {
 		ru.itaros.api.hoe.registries.IIORegistry iior = HOEIO.getIORegistry();
 		System.out.println("(IORegistry is acquared. Proceeding with injections)");
 		for(ContractCollector cc : collectors){
-			for(UserspaceRigidProcess urp : cc.rigidProcesses){
-				System.out.print(urp.IOPackage);
-				HOEIO hoeio = iior.get(urp.IOPackage);
-				HOEMachineCrafterIO hmcio = (HOEMachineCrafterIO)hoeio;
-				RecipesCollection col = hmcio.getRecipesCollection();
-				HOEFluidRegistry hoeflreg = HOEFluidRegistry.getInstance();
-				System.out.print("[REFFOUND]");
-				
-				IUniversalStack[] iinn = new IUniversalStack[urp.in.length];
-				IUniversalStack[] ioutt = new IUniversalStack[urp.out.length];
-				System.out.print("[MEMALLOCATED]");
-				
-				for(int i = 0 ; i < urp.in.length; i++){
-					UserspaceLink l = urp.in[i];
-					String[] search = filterSearchString(l.nodeName);
-					Item item = GameRegistry.findItem(search[0], search[1]);
-					if(item!=null){
-						//If item
-						ItemStack stack = new ItemStack(item,l.count,l.meta);
-						iinn[i] = UniversalStackFactory.wrap(stack);
-					}else{
-						//Trying with fluid
-						HOEFluid hoefl = hoeflreg.pop(search[1]);
-						if(hoefl!=null){
-							HOEFluidStack stack = new HOEFluidStack(hoefl,l.count);
+			if(cc.rigidProcesses!=null){
+				for(UserspaceRigidProcess urp : cc.rigidProcesses){
+					System.out.print(urp.IOPackage);
+					HOEIO hoeio = iior.get(urp.IOPackage);
+					HOEMachineCrafterIO hmcio = (HOEMachineCrafterIO)hoeio;
+					RecipesCollection col = hmcio.getRecipesCollection();
+					HOEFluidRegistry hoeflreg = HOEFluidRegistry.getInstance();
+					System.out.print("[REFFOUND]");
+					
+					IUniversalStack[] iinn = new IUniversalStack[urp.in.length];
+					IUniversalStack[] ioutt = new IUniversalStack[urp.out.length];
+					System.out.print("[MEMALLOCATED]");
+					
+					for(int i = 0 ; i < urp.in.length; i++){
+						UserspaceLink l = urp.in[i];
+						String[] search = filterSearchString(l.nodeName);
+						Item item = GameRegistry.findItem(search[0], search[1]);
+						if(item!=null){
+							//If item
+							ItemStack stack = new ItemStack(item,l.count,l.meta);
 							iinn[i] = UniversalStackFactory.wrap(stack);
 						}else{
-							//Shit...
-							throw new UserspaceLinkageException("Can't find: "+search[0]+":"+search[1]);
+							//Trying with fluid
+							HOEFluid hoefl = hoeflreg.pop(search[1]);
+							if(hoefl!=null){
+								HOEFluidStack stack = new HOEFluidStack(hoefl,l.count);
+								iinn[i] = UniversalStackFactory.wrap(stack);
+							}else{
+								//Shit...
+								throw new UserspaceLinkageException("Can't find: "+search[0]+":"+search[1]);
+							}
 						}
 					}
-				}
-				System.out.print("[IN:"+urp.in.length+"]");
-				for(int i = 0 ; i < urp.out.length; i++){
-					UserspaceLink l = urp.out[i];
-					String[] search = filterSearchString(l.nodeName);
-					Item item = GameRegistry.findItem(search[0], search[1]);
-					if(item!=null){
-						//If item
-						ItemStack stack = new ItemStack(item,l.count,l.meta);
-						ioutt[i] = UniversalStackFactory.wrap(stack);
-					}else{
-						//Trying with fluid
-						HOEFluid hoefl = hoeflreg.pop(search[1]);
-						if(hoefl!=null){
-							HOEFluidStack stack = new HOEFluidStack(hoefl,l.count);
+					System.out.print("[IN:"+urp.in.length+"]");
+					for(int i = 0 ; i < urp.out.length; i++){
+						UserspaceLink l = urp.out[i];
+						String[] search = filterSearchString(l.nodeName);
+						Item item = GameRegistry.findItem(search[0], search[1]);
+						if(item!=null){
+							//If item
+							ItemStack stack = new ItemStack(item,l.count,l.meta);
 							ioutt[i] = UniversalStackFactory.wrap(stack);
 						}else{
-							//Shit...
-							throw new UserspaceLinkageException("Can't find: "+search[0]+":"+search[1]);
+							//Trying with fluid
+							HOEFluid hoefl = hoeflreg.pop(search[1]);
+							if(hoefl!=null){
+								HOEFluidStack stack = new HOEFluidStack(hoefl,l.count);
+								ioutt[i] = UniversalStackFactory.wrap(stack);
+							}else{
+								//Shit...
+								throw new UserspaceLinkageException("Can't find: "+search[0]+":"+search[1]);
+							}
 						}
 					}
+					System.out.print("[OUT:"+urp.out.length+"]");				
+					
+					FixedConversionRecipe fcr = new FixedConversionRecipe(urp.time,urp.power,iinn,ioutt);
+					
+					col.injectAfter(fcr);
+					col.register();
+					System.out.println("[ACCEPTED]");
 				}
-				System.out.print("[OUT:"+urp.out.length+"]");				
-				
-				FixedConversionRecipe fcr = new FixedConversionRecipe(urp.time,urp.power,iinn,ioutt);
-				
-				col.injectAfter(fcr);
-				col.register();
-				System.out.println("[ACCEPTED]");
 			}
 		}
 		System.out.println("...Done!");
@@ -119,24 +121,28 @@ public class CollectorsLinker {
 		
 		for(ContractCollector cc : collectors){
 			System.out.println("(Items)");
-			for(UserspaceGenericItemContract ugic : cc.genericItems){
-				System.out.print(cc.groupName+"."+ugic.nodeName);
-				ChemLabItem item = new ChemLabItem(cc.groupName,ugic.nodeName);
-				if(FMLCommonHandler.instance().getEffectiveSide()==Side.CLIENT){
-					item.setIcon(invoker);
+			if(cc.genericItems!=null){
+				for(UserspaceGenericItemContract ugic : cc.genericItems){
+					System.out.print(cc.groupName+"."+ugic.nodeName);
+					ChemLabItem item = new ChemLabItem(cc.groupName,ugic.nodeName);
+					if(FMLCommonHandler.instance().getEffectiveSide()==Side.CLIENT){
+						item.setIcon(invoker);
+					}
+					GameRegistry.registerItem(item, item.getInternalName());
+					System.out.println("[ACCEPTED]");
 				}
-				GameRegistry.registerItem(item, item.getInternalName());
-				System.out.println("[ACCEPTED]");
 			}
 			System.out.println("(HOEFluids)");
 			HOEFluidRegistry fluidreg = HOEFluidRegistry.getInstance();
-			for(UserspaceGenericHOEFluid ugfc : cc.genericFluids){
-				System.out.print(cc.groupName+"."+ugfc.nodeName);
-				
-				UserspaceHOEFluid uhf = new UserspaceHOEFluid(cc.groupName,ugfc.nodeName, 0, HOEFluidState.LIQUID);
-				fluidreg.register(uhf);
-				
-				System.out.println("[ACCEPTED]");
+			if(cc.genericFluids!=null){
+				for(UserspaceGenericHOEFluid ugfc : cc.genericFluids){
+					System.out.print(cc.groupName+"."+ugfc.nodeName);
+					
+					UserspaceHOEFluid uhf = new UserspaceHOEFluid(cc.groupName,ugfc.nodeName, 0, HOEFluidState.LIQUID);
+					fluidreg.register(uhf);
+					
+					System.out.println("[ACCEPTED]");
+				}
 			}
 			
 		}
