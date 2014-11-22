@@ -76,5 +76,12 @@ public abstract class HOEFluid {
 			throw new RuntimeException(e);
 		}
 	}
+
+	/*
+	 * Amount of liquid in 1m3
+	 */
+	public int getMaxStack() {
+		return 1000;
+	}
 	
 }

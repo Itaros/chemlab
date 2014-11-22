@@ -46,7 +46,7 @@ public class HOEFluidStack {
 	}
 
 	public int getMaxStackSize() {
-		return 64;
+		return type.getMaxStack();
 	}
 
 	public HOEFluidStack copy() {
