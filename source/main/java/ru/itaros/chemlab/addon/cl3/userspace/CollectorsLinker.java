@@ -50,11 +50,12 @@ public class CollectorsLinker {
 					HOEFluidRegistry hoeflreg = HOEFluidRegistry.getInstance();
 					System.out.print("[REFFOUND]");
 					
-					IUniversalStack[] iinn = new IUniversalStack[urp.in.length];
-					IUniversalStack[] ioutt = new IUniversalStack[urp.out.length];
+					
+					IUniversalStack[] iinn = new IUniversalStack[urp.in!=null?urp.in.length:0];
+					IUniversalStack[] ioutt = new IUniversalStack[urp.out!=null?urp.out.length:0];
 					System.out.print("[MEMALLOCATED]");
 					
-					for(int i = 0 ; i < urp.in.length; i++){
+					for(int i = 0 ; i < iinn.length; i++){
 						UserspaceLink l = urp.in[i];
 						String[] search = filterSearchString(l.nodeName);
 						Item item = GameRegistry.findItem(search[0], search[1]);
@@ -74,8 +75,8 @@ public class CollectorsLinker {
 							}
 						}
 					}
-					System.out.print("[IN:"+urp.in.length+"]");
-					for(int i = 0 ; i < urp.out.length; i++){
+					System.out.print("[IN:"+iinn.length+"]");
+					for(int i = 0 ; i < ioutt.length; i++){
 						UserspaceLink l = urp.out[i];
 						String[] search = filterSearchString(l.nodeName);
 						Item item = GameRegistry.findItem(search[0], search[1]);
@@ -95,7 +96,7 @@ public class CollectorsLinker {
 							}
 						}
 					}
-					System.out.print("[OUT:"+urp.out.length+"]");				
+					System.out.print("[OUT:"+ioutt.length+"]");				
 					
 					FixedConversionRecipe fcr = new FixedConversionRecipe(urp.time,urp.power,iinn,ioutt);
 					
