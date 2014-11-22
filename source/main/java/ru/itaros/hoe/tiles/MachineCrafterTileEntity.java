@@ -28,6 +28,7 @@ import ru.itaros.hoe.ContextDetector;
 import ru.itaros.hoe.data.machines.HOEMachineCrafterData;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.data.utils.HOEDataFingerprint;
+import ru.itaros.hoe.fluid.FluidToHOE;
 import ru.itaros.hoe.gui.ProgrammerSlot;
 import ru.itaros.hoe.io.HOEMachineIO;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
@@ -357,42 +358,58 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	}
 
 	@Override
-	public FluidStack drain(ForgeDirection from, FluidStack resource,
+	public FluidStack drain(ForgeDirection side, FluidStack resource,
 			boolean doDrain) {
-		FluidStack fl = fout.getFluid();
-		if(fl==null){return null;}
-		
-		Fluid comparable = resource.getFluid();
-		if(comparable==fl.getFluid()){
-			return fout.drain(resource.amount, doDrain);
-		}else{
-			return null;
-		}
-		
+		return drain(side, resource.amount, doDrain);
 	}
 
 	@Override
-	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-		// TODO Auto-generated method stub
+	public FluidStack drain(ForgeDirection side, int maxDrain, boolean doDrain) {
+		PortInfo pi = ports[side.ordinal()];
+		if(pi.isFluidSocket()){
+			FluidStack flst = (FluidStack)pi.getStack();
+			if(flst!=null && flst.amount>0){
+				FluidStack drain;
+				int differential = flst.amount-maxDrain;
+				if(differential<0){
+					//underflow
+					drain = new FluidStack(flst.getFluid(),maxDrain+differential);
+					if(doDrain){pi.setStack((FluidStack)null);}
+				}else{
+					//overflow
+					drain = new FluidStack(flst.getFluid(),maxDrain);
+					if(doDrain){
+						flst.amount=differential;
+						pi.setStack(flst);
+					}
+				}
+				return drain;
+			}
+		}
+		
 		return null;
 	}
 
 	@Override
-	public boolean canFill(ForgeDirection from, Fluid fluid) {
-		return fin.getFluidAmount()==0;
+	public boolean canFill(ForgeDirection side, Fluid fluid) {
+		PortInfo pi = ports[side.ordinal()];
+		return pi.isFluidSocket() && pi.isInput();
 	}
 
 	@Override
-	public boolean canDrain(ForgeDirection from, Fluid fluid) {
-		return true;//Drain is always possible \o/
+	public boolean canDrain(ForgeDirection side, Fluid fluid) {
+		PortInfo pi = ports[side.ordinal()];
+		return pi.isFluidSocket() && pi.isOutput();
 	}
 
-	private FluidTankInfo[] fluidTankInfo = new FluidTankInfo[2];
 	@Override
 	public FluidTankInfo[] getTankInfo(ForgeDirection side) {
-		fluidTankInfo[0]=new FluidTankInfo(fin);
-		fluidTankInfo[1]=new FluidTankInfo(fout);
-		return fluidTankInfo;
+		PortInfo pi = ports[side.ordinal()];
+		if(pi.isFluidSocket()){
+			FluidStack flst = (FluidStack)pi.getStack();
+			return new FluidTankInfo[]{new FluidTankInfo(flst,FluidToHOE.get(flst.getFluid()).getMaxStack())};
+		}
+		return null;
 	}	
 	
 	
