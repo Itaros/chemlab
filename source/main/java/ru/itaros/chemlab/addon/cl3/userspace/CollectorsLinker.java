@@ -41,6 +41,12 @@ public class CollectorsLinker {
 		ru.itaros.api.hoe.registries.IIORegistry iior = HOEIO.getIORegistry();
 		System.out.println("(IORegistry is acquared. Proceeding with injections)");
 		for(ContractCollector cc : collectors){
+			if(cc.gridCraftings!=null){
+				for(UserspaceGridCrafting ugc : cc.gridCraftings){
+					System.out.println("Attempting to register GCR for "+ugc.result.nodeName);
+					ugc.registerRecipe();
+				}
+			}
 			if(cc.rigidProcesses!=null){
 				for(UserspaceRigidProcess urp : cc.rigidProcesses){
 					System.out.print(urp.IOPackage);

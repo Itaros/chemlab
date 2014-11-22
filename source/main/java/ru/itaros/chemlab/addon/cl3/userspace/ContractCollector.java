@@ -15,6 +15,9 @@ public class ContractCollector {
 	@XmlElement(name="rigidProcess")
 	public UserspaceRigidProcess[] rigidProcesses;	
 	
+	@XmlElement(name="gridCrafting")
+	public UserspaceGridCrafting[] gridCraftings;		
+	
 	@XmlTransient
 	public String groupName;
 	
