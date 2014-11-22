@@ -75,5 +75,16 @@ public class HOEFluidStack {
 			nbt.setInteger("amount", stackSize);
 		}
 	}
+
+	public boolean isFluidEqual(FluidStack filter) {
+		return type.getForgeFluid()==filter.getFluid();
+	}
+
+	/*
+	 * This method creates garbage. Avoid it.
+	 */
+	public FluidStack toForgeFluidStack() {
+		return new FluidStack(getFluid().getForgeFluid(),stackSize);
+	}
 	
 }

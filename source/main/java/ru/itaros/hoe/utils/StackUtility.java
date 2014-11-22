@@ -1,6 +1,7 @@
 package ru.itaros.hoe.utils;
 
 import ru.itaros.hoe.fluid.FluidToHOE;
+import ru.itaros.hoe.fluid.HOEFluid;
 import ru.itaros.hoe.fluid.HOEFluidStack;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.itemhandling.UniversalStackUtils;
@@ -29,6 +30,21 @@ public class StackUtility {
 		
 		target.setItemDamage(source.getItemDamage());
 	}
+	private static void mergeInto(FluidStack target, HOEFluidStack source) {
+		HOEFluid hoefl = FluidToHOE.get(target.getFluid());
+		int max = hoefl!=null?hoefl.getMaxStack():1000;
+		int diff = max-target.amount;
+		int operative;
+		if(source.stackSize>diff){
+			operative=diff;
+		}else{
+			operative=source.stackSize;
+		}
+		source.stackSize-=operative;
+		target.amount+=operative;
+		
+		//target.setItemDamage(source.getItemDamage());//Not happens in fluids...I hope...
+	}	
 	public static void mergeInto(ItemStack target, ItemStack source){
 		int max = target.getMaxStackSize();
 		int diff = max-target.stackSize;
@@ -99,7 +115,7 @@ public class StackUtility {
 	}
 	public static IUniversalStack syncUniversalStacks(IUniversalStack target, IUniversalStack source){
 		
-		if(source==null){
+		if(source==null || source.getProxy()==null){
 			target=null;
 			return target;
 		}
@@ -213,17 +229,17 @@ public class StackUtility {
 	}
 	public static FluidStack tryToPutIn(FluidStackTransferTuple tuple, FluidStack filter, int max){
 		//ItemStack tuple.stack1, ItemStack tuple.stack2
-		if(tuple.stack2==null){return null;}
-		if(filter!=null && !isItemEqual(tuple.stack2,filter)){return tuple.stack2;}
+		if(tuple.stack2_kl==null){return null;}
+		if(filter!=null && !isItemEqual(tuple.stack2_kl,filter)){return tuple.stack2_kl;}
 		if(tuple.stack1==null){
-			tuple.stack1=new HOEFluidStack(tuple.stack2.copy());
+			tuple.stack1=new HOEFluidStack(tuple.stack2_kl.copy());
 			return null;
 		}else{
-			if(isItemEqualStackSizeProtection(tuple.stack1, tuple.stack2)){
-				StackUtility.mergeInto(tuple.stack1, tuple.stack2, max);
-				return StackUtility.verify(tuple.stack2);
+			if(isItemEqualStackSizeProtection(tuple.stack1, tuple.stack2_kl)){
+				StackUtility.mergeInto(tuple.stack1, tuple.stack2_kl, max);
+				return StackUtility.verify(tuple.stack2_kl);
 			}else{
-				return tuple.stack2;
+				return tuple.stack2_kl;
 			}
 		}		
 	}	
@@ -331,6 +347,34 @@ public class StackUtility {
 		}
 	}
 
+	public static FluidStack tryToGetOut(FluidStackTransferTuple tuple, FluidStack filter){
+		//ItemStack tuple.stack1, ItemStack tuple.stack2
+		if(tuple.stack1_kl==null){
+			if(tuple.stack2==null){
+				return null;
+			}
+			if(filter!=null && !tuple.stack2.isFluidEqual(filter)){return null;}
+			HOEFluidStack tmp = tuple.stack2.copy();
+			//tuple.stack2.stackSize=0;
+			tuple.stack2=null;
+			//tuple.stack2=verify(tuple.stack2);
+			return tmp.toForgeFluidStack();//verify(tmp);
+		}else{
+			if(tuple.stack2==null){
+				//No items to transfer
+				return tuple.stack1_kl;
+			}
+			if(filter!=null && !tuple.stack2.isFluidEqual(filter)){return tuple.stack1_kl;}
+			if(tuple.stack2.isFluidEqual(tuple.stack1_kl)){
+				StackUtility.mergeInto(tuple.stack1_kl, tuple.stack2);
+				
+				return tuple.stack1_kl;
+			}else{
+				return tuple.stack1_kl;
+			}
+		}
+	}	
+	
 	public static IUniversalStack decrementStack(IUniversalStack stack, int amount) {
 		if(UniversalStackUtils.isNull(stack)){return null;}
 		stack.setStackSize(stack.getStackSize()-amount);

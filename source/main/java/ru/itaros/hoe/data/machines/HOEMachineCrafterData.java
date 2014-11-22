@@ -307,7 +307,7 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 		ignoreInboundMetadata=true;
 	}
 	
-	ItemStackTransferTuple transferTuple = new ItemStackTransferTuple();
+	ItemStackTransferTuple transferItemStackTuple = new ItemStackTransferTuple();
 	FluidStackTransferTuple transferFluidTuple = new FluidStackTransferTuple();
 	private int outboundslot=0;
 	@Override
@@ -321,9 +321,9 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 		if(slot==-1){return source;}
 		//There is no hope if this is not an item. But really, this is a mess...
 		if(inbound[slot] instanceof UniversalItemStack || inbound[slot]==null){
-			transferTuple.fill((ItemStack) UniversalStackUtils.getSafeProxy(inbound[slot]), source);
-			source=StackUtility.tryToPutIn(transferTuple,ignoreInboundMetadata,filter);
-			inbound[slot]=UniversalStackUtils.setSafeProxy(inbound[slot],transferTuple.retr1());
+			transferItemStackTuple.fill((ItemStack) UniversalStackUtils.getSafeProxy(inbound[slot]), source);
+			source=StackUtility.tryToPutIn(transferItemStackTuple,ignoreInboundMetadata,filter);
+			inbound[slot]=UniversalStackUtils.setSafeProxy(inbound[slot],transferItemStackTuple.retr1());
 			this.markDirty();
 		}
 		return source;
@@ -355,11 +355,10 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 	public ItemStack tryToGetItemsOut(ItemStack target, ItemStack filter) {
 		if(recipe==null){return target;}
 		if(outboundslot>=outbound.length){outboundslot=0;}
-		//There is no hope if this is not an item. But really, this is a mess...
 		if(outbound[outboundslot] instanceof UniversalItemStack){
-			transferTuple.fill(target, (ItemStack) outbound[outboundslot].getProxy());
-			target = StackUtility.tryToGetOut(transferTuple,filter);
-			outbound[outboundslot].setProxy(StackUtility.verify(transferTuple.retr2()));
+			transferItemStackTuple.fill(target, (ItemStack) outbound[outboundslot].getProxy());
+			target = StackUtility.tryToGetOut(transferItemStackTuple,filter);
+			outbound[outboundslot].setProxy(StackUtility.verify(transferItemStackTuple.retr2()));
 			outboundslot++;
 			this.markDirty();
 		}
@@ -371,8 +370,18 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 		return tryToGetFluidsOut(fluid,null);
 	}
 	@Override
-	public FluidStack tryToGetFluidsOut(FluidStack fluid, FluidStack filter) {
-		return fluid;
+	public FluidStack tryToGetFluidsOut(FluidStack target, FluidStack filter) {
+		if(recipe==null){return target;}
+		if(outboundslot>=outbound.length){outboundslot=0;}
+		if(outbound[outboundslot] instanceof UniversalFluidStack){
+			HOEFluidStack hflst = (HOEFluidStack) UniversalStackUtils.getSafeProxy(outbound[outboundslot]);
+			transferFluidTuple.fill(target,  hflst);
+			target = StackUtility.tryToGetOut(transferFluidTuple,filter);
+			outbound[outboundslot].setProxy(transferFluidTuple.retr2());
+			outboundslot++;
+			this.markDirty();
+		}
+		return target;
 	}	
 
 	//Synchromanager(visual inventory sync)
