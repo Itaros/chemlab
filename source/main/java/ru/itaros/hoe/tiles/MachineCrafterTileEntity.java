@@ -405,9 +405,9 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	@Override
 	public FluidTankInfo[] getTankInfo(ForgeDirection side) {
 		PortInfo pi = ports[side.ordinal()];
-		if(pi.isFluidSocket()){
+		if(pi!=null && pi.isFluidSocket()){
 			FluidStack flst = (FluidStack)pi.getStack();
-			return new FluidTankInfo[]{new FluidTankInfo(flst,FluidToHOE.get(flst.getFluid()).getMaxStack())};
+			return new FluidTankInfo[]{new FluidTankInfo(flst,flst!=null?FluidToHOE.get(flst.getFluid()).getMaxStack():250)};
 		}
 		return null;
 	}	
