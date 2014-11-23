@@ -44,6 +44,7 @@ item.tool.shovel.wrought.name=Wrought Iron Shovel
 item.tool.sword.wrought.name=Wrought Iron Sword
 
 tile.machine.aircollector.name=Air Collector
+tile.machine.gravmag.name=Gravimagnetic Separator
 tile.machine.biogrinder.name=Biogrinder
 tile.machine.cattank.name=Catalization Tank
 tile.machine.centrifugalextractor.name=Centrifugal Extractor
