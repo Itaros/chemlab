@@ -10,7 +10,7 @@ public class GravMagIO extends HOEMachineCrafterIO {
 
 	public static final int MAXPOWER = 1000;
 	public static final int INCOMING_PORTS		=	1;
-	public static final int OUTCOMING_PORTS	=	1;
+	public static final int OUTCOMING_PORTS	=	3;
 	
 	
 	@Override
