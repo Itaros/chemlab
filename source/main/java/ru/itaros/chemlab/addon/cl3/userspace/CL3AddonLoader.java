@@ -107,6 +107,7 @@ public class CL3AddonLoader {
 		//	//loaderAutoitems.parse(groupname,data, this);
 		//}
 
+		tex.clear();
 		
 	}
 	
