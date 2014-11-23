@@ -29,8 +29,8 @@ public class RecipeNEIIncapsulator {
 	List<PositionedStack> out;
 	PositionedStack host;
 
-	private PositionedStack[] generatePositionedStacks(IUniversalStack[] cl_in, boolean isIn) {
-		PositionedStack[] ps = new PositionedStack[cl_in.length];
+	private PositionedStack[] generatePositionedStacks(IUniversalStack[] unistacks, boolean isIn) {
+		ArrayList<PositionedStack> ps = new ArrayList<PositionedStack>();
 		
 		int stepping = 19;
 		int y_start = 2;//36-stepping;
@@ -40,13 +40,17 @@ public class RecipeNEIIncapsulator {
 		int horiffset = 0;
 		int step = -1;
 		int i =-1;
-		for(IUniversalStack s : cl_in){
+		for(IUniversalStack s : unistacks){
 			i++;step++;
 			if(step>=3){step=0;horiffset++;}
-			ps[i]=new PositionedStack(s.getProxy(),xpos+(horiffset*stepping*(isIn?-1:1)),y_start+(stepping*step),true);
+			if(s.getProxy() instanceof ItemStack){
+				ps.add(new PositionedStack(s.getProxy(),xpos+(horiffset*stepping*(isIn?-1:1)),y_start+(stepping*step),true));
+			}
 		}
 		
-		return ps;
+		PositionedStack[] psarr = new PositionedStack[ps.size()];
+		psarr = ps.toArray(psarr);
+		return psarr;
 	}
 	
 	public static RecipeNEIIncapsulator[] generateFromRecipes(Recipe[] recipes){
