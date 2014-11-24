@@ -7,7 +7,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import ru.itaros.hoe.fluid.HOEFluid;
 import ru.itaros.hoe.fluid.HOEFluidStack;
-import ru.itaros.hoe.itemhandling.UniversalStackFactory;
 import ru.itaros.hoe.registries.HOEFluidRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -18,6 +17,9 @@ public class UserspaceLink extends UserspaceContract {
 	
 	public int count=1;
 	
+	public Object getTargetForCrafting(){
+		return (oreDict==null || oreDict.length==0)?getTarget(null):oreDict[0];
+	}
 	
 	public Object getTarget(HOEFluidRegistry hoeflreg){
 		

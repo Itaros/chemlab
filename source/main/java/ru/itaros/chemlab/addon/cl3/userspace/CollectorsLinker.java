@@ -2,6 +2,7 @@ package ru.itaros.chemlab.addon.cl3.userspace;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import ru.itaros.api.hoe.internal.HOEIO;
 import ru.itaros.chemlab.fluids.hoe.UserspaceHOEFluid;
 import ru.itaros.chemlab.items.ChemLabItem;
@@ -136,6 +137,11 @@ public class CollectorsLinker {
 						item.setIcon(invoker);
 					}
 					GameRegistry.registerItem(item, item.getInternalName());
+					if(ugic.oreDict!=null && ugic.oreDict.length>0){
+						for(String s : ugic.oreDict){
+							OreDictionary.registerOre(s, new ItemStack(item));
+						}
+					}
 					System.out.println("[ACCEPTED]");
 				}
 			}

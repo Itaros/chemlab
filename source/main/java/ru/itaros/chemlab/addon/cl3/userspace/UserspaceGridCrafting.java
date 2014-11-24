@@ -3,6 +3,7 @@ package ru.itaros.chemlab.addon.cl3.userspace;
 import javax.xml.bind.annotation.XmlElement;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class UserspaceGridCrafting extends UserspaceContract {
@@ -30,11 +31,13 @@ public class UserspaceGridCrafting extends UserspaceContract {
 			UserspaceCraftingLink ucl = components[o];
 			parr[i]=ucl.literal.charAt(0);
 			i++;
-			parr[i]=ucl.getTarget(null);//Only ItemStack
+			parr[i]=ucl.getTargetForCrafting();//Only ItemStack
 			i++;
 		}
 		
-		GameRegistry.addRecipe(res, parr);
+		ShapedOreRecipe orerecipe = new ShapedOreRecipe(res,false,parr);
+		
+		GameRegistry.addRecipe(orerecipe);
 	}
 	
 }
