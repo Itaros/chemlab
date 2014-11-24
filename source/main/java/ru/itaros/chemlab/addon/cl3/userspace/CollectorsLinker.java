@@ -107,6 +107,8 @@ public class CollectorsLinker {
 					
 					FixedConversionRecipe fcr = new FixedConversionRecipe(urp.time,urp.power,iinn,ioutt);
 					
+					fcr.setUnlocalizedName(urp.nodeName);
+					
 					col.injectAfter(fcr);
 					col.register();
 					System.out.println("[ACCEPTED]");
