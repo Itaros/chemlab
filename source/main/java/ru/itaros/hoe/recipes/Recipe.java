@@ -1,6 +1,7 @@
 package ru.itaros.hoe.recipes;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 import ru.itaros.api.hoe.exceptions.HOEUnmatchedUniStackException;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
@@ -64,7 +65,7 @@ public abstract class Recipe {
 		if(unlocalizedName==""){
 			return "error.notset.name";
 		}
-		String r = LanguageRegistry.instance().getStringLocalization(unlocalizedName+".name");
+		String r = StatCollector.translateToLocal(unlocalizedName+".name");
 		if(r==""){return unlocalizedName;}else{return r;}
 	}
 
