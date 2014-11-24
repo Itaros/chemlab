@@ -309,7 +309,8 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 	
 	ItemStackTransferTuple transferItemStackTuple = new ItemStackTransferTuple();
 	FluidStackTransferTuple transferFluidTuple = new FluidStackTransferTuple();
-	private int outboundslot=0;
+	private int outboundslotItems=0;
+	private int outboundslotFluids=0;
 	@Override
 	public ItemStack tryToPutItemsIn(ItemStack source) {
 		return tryToPutItemsIn(source, null);
@@ -354,14 +355,14 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 	@Override
 	public ItemStack tryToGetItemsOut(ItemStack target, ItemStack filter) {
 		if(recipe==null){return target;}
-		if(outboundslot>=outbound.length){outboundslot=0;}
-		if(outbound[outboundslot] instanceof UniversalItemStack){
-			transferItemStackTuple.fill(target, (ItemStack) outbound[outboundslot].getProxy());
+		if(outboundslotItems>=outbound.length){outboundslotItems=0;}
+		if(outbound[outboundslotItems] instanceof UniversalItemStack){
+			transferItemStackTuple.fill(target, (ItemStack) outbound[outboundslotItems].getProxy());
 			target = StackUtility.tryToGetOut(transferItemStackTuple,filter);
-			outbound[outboundslot].setProxy(StackUtility.verify(transferItemStackTuple.retr2()));
-			outboundslot++;
+			outbound[outboundslotItems].setProxy(StackUtility.verify(transferItemStackTuple.retr2()));
 			this.markDirty();
 		}
+		outboundslotItems++;
 		return target;
 	}
 	
@@ -372,15 +373,15 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 	@Override
 	public FluidStack tryToGetFluidsOut(FluidStack target, FluidStack filter) {
 		if(recipe==null){return target;}
-		if(outboundslot>=outbound.length){outboundslot=0;}
-		if(outbound[outboundslot] instanceof UniversalFluidStack){
-			HOEFluidStack hflst = (HOEFluidStack) UniversalStackUtils.getSafeProxy(outbound[outboundslot]);
+		if(outboundslotFluids>=outbound.length){outboundslotFluids=0;}
+		if(outbound[outboundslotFluids] instanceof UniversalFluidStack){
+			HOEFluidStack hflst = (HOEFluidStack) UniversalStackUtils.getSafeProxy(outbound[outboundslotFluids]);
 			transferFluidTuple.fill(target,  hflst);
 			target = StackUtility.tryToGetOut(transferFluidTuple,filter);
-			outbound[outboundslot].setProxy(transferFluidTuple.retr2());
-			outboundslot++;
+			outbound[outboundslotFluids].setProxy(transferFluidTuple.retr2());
 			this.markDirty();
 		}
+		outboundslotFluids++;
 		return target;
 	}	
 
