@@ -259,7 +259,7 @@ ui.prefix.owner=Владелец:
 ui.prefix.power=Энергостатус 
 ui.prefix.power.max=Макс: 
 ui.prefix.power.cur=Мин : 
-ui.postfix= MJ
+ui.postfix= AE
 
 death.attack.syndic_pressure=%1$s пытался казаться умным перед кабелем под напряжением
 death.attack.syndic_pressure.player=%1$s пытался казаться умным перед кабелем под напряжением

@@ -260,7 +260,7 @@ ui.prefix.owner=Owner:
 ui.prefix.power=Power Status 
 ui.prefix.power.max=Max: 
 ui.prefix.power.cur=Cur: 
-ui.postfix= MJ
+ui.postfix= AE
 
 death.attack.syndic_pressure=%1$s tried to be smart with powered cables
 death.attack.syndic_pressure.player=%1$s tried to be smart with powered cables
