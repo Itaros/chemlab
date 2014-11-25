@@ -195,7 +195,7 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 			drawTexturedModelRectFromIcon(s.xDisplayPosition+x, s.yDisplayPosition+y, fltex, 16, 16);		
 			angular = (int)(((float)flstack.amount/(float)FluidToHOE.get(flstack.getFluid()).getMaxStack())*(16F-1F));
 			
-			fontRendererObj.drawString("A:"+flstack.amount, s.xDisplayPosition+x+16+1, s.yDisplayPosition+y, CAPTIONCOLOR);//4210752
+			//fontRendererObj.drawString("A:"+flstack.amount, s.xDisplayPosition+x+16+1, s.yDisplayPosition+y, CAPTIONCOLOR);//4210752
 			GL11.glDisable(GL11.GL_LIGHTING);
 			GL11.glColor4f(1F, 1F, 1F, 1F);
 			//returning context back
