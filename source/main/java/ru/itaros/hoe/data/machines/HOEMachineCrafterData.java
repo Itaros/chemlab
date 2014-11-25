@@ -341,7 +341,8 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 		if(slot==-1){return source;}
 		if(inbound[slot] instanceof UniversalFluidStack || inbound[slot]==null){
 			transferFluidTuple.fill((HOEFluidStack) UniversalStackUtils.getSafeProxy(inbound[slot]), source);
-			source=StackUtility.tryToPutIn(transferFluidTuple,filter,64*1000);
+			int max = recipe.getIncomingStricttypes()[slot].getMaxStackSize();
+			source=StackUtility.tryToPutIn(transferFluidTuple,filter,max);
 			inbound[slot]=UniversalStackUtils.setSafeProxy(inbound[slot],transferFluidTuple.retr1());
 			this.markDirty();			
 		}
