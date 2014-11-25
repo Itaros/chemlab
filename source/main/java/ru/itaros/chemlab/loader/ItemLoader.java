@@ -1,5 +1,6 @@
 package ru.itaros.chemlab.loader;
 
+import ru.itaros.chemlab.addon.cl3.userspace.CL3AddonLoader;
 import ru.itaros.chemlab.items.CIOWrench;
 import ru.itaros.chemlab.items.HVLCIndex;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
@@ -27,7 +28,7 @@ public class ItemLoader {
 	public static ItemPortApplianceItem ipai_items;
 	public static ItemPortApplianceItem ipai_fluids;	
 	
-	public static void loadItems(){
+	public static void loadItems(CL3AddonLoader addonLoader){
 		
 		//COMPONENTS
 		panel=new ItemPortApplianceItem("component.panel",null);
@@ -54,11 +55,11 @@ public class ItemLoader {
 		GameRegistry.registerItem(emptyhvlc,emptyhvlc.getUnlocalizedName());
 		
 		
-		hiVolumeLiquidCellAutoloader();
+		hiVolumeLiquidCellAutoloader(addonLoader);
 		
 	}
 	
-	private static void hiVolumeLiquidCellAutoloader() {
+	private static void hiVolumeLiquidCellAutoloader(CL3AddonLoader addonLoader) {
 		HOEFluid[] all = HOEFluid.getFluidRegistry().all();
 		HVLCIndex[] index = new HVLCIndex[all.length];
 		int j = -1;
@@ -68,6 +69,7 @@ public class ItemLoader {
 			index[j] = i;
 		}
 		HiVolumeLiquidCell hvlc = new HiVolumeLiquidCell(index);
+		hvlc.setIcon(addonLoader);
 		GameRegistry.registerItem(hvlc, hvlc.getUnlocalizedName());
 	}	
 	

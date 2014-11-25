@@ -1,10 +1,13 @@
 package ru.itaros.chemlab.items;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import ru.itaros.chemlab.ChemLabCreativeTab;
+import ru.itaros.chemlab.addon.cl3.userspace.CL3AddonLoader;
 import ru.itaros.hoe.fluid.HOEFluid;
 
 public class HVLCIndex {
@@ -21,7 +24,7 @@ public class HVLCIndex {
 		pairCached = new FluidStack(pair,1000);
 		
 		this.setUnlocalizedName("item.hvlc."+fluid.getCommonName());	
-		this.setTextureName("chemlab:hvlc-"+fluid.getCommonName());
+		this.setTextureName("chemlab:item.hvlc."+fluid.getCommonName());
 	}
 	
 	private String unlocalized;
@@ -35,8 +38,14 @@ public class HVLCIndex {
 	protected void setTextureName(String s){
 		texname=s;
 	}
-	public void registerIcons(IIconRegister register) {
-		icon=register.registerIcon(texname);
+	public void registerIcons(IIconRegister reg, CL3AddonLoader invoker) {
+		icon = invoker.getTexture(this.texname);
+		if(reg instanceof TextureMap){
+			TextureMap map = (TextureMap)reg;
+			TextureAtlasSprite tas = (TextureAtlasSprite) icon;
+			map.setTextureEntry(tas.getIconName(), tas);
+		}
+		//icon=register.registerIcon(texname);
 	}
 	public IIcon getIcon() {
 		return icon;

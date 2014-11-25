@@ -14,18 +14,19 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.IFluidHandler;
 import ru.itaros.chemlab.ChemLabCreativeTab;
+import ru.itaros.chemlab.addon.cl3.userspace.CL3AddonLoader;
 import ru.itaros.hoe.fluid.HOEFluid;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.utils.StackUtility;
 
-public class HiVolumeLiquidCell extends Item {
+public class HiVolumeLiquidCell extends ChemLabItem {
 	
 	private static Hashtable<HOEFluid,HiVolumeLiquidCell> registered = new Hashtable<HOEFluid,HiVolumeLiquidCell>(); 
 	
 	private HVLCIndex[] index;
 	
 	public HiVolumeLiquidCell(HVLCIndex...indexes){
-		super();
+		super("hvlc","cell");
 		this.index=indexes;
 		this.setCreativeTab(ChemLabCreativeTab.getInstance());
 		
@@ -49,10 +50,17 @@ public class HiVolumeLiquidCell extends Item {
 		return registered.get(fluid);
 	}
 
+	CL3AddonLoader invoker;
+	
+	@Override
+	public void setIcon(CL3AddonLoader invoker) {
+		this.invoker=invoker;
+	}
+
 	@Override
 	public void registerIcons(IIconRegister p_94581_1_) {
 		for(HVLCIndex i:index){
-			i.registerIcons(p_94581_1_);
+			i.registerIcons(p_94581_1_,invoker);
 		}
 	}
 	

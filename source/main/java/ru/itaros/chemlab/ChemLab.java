@@ -100,7 +100,7 @@ public class ChemLab
 		cl3addonsLinker.deployPre(); 	
     	
  		BlockLoader.loadBlocks();
- 		ItemLoader.loadItems();
+ 		ItemLoader.loadItems(cl3addons);
 		iocollection = TileEntityLoader.load();   
 		MultiblockLoader.load();
 		
