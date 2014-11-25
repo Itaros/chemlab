@@ -376,6 +376,7 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 		if(outboundslotFluids>=outbound.length){outboundslotFluids=0;}
 		if(outbound[outboundslotFluids] instanceof UniversalFluidStack){
 			HOEFluidStack hflst = (HOEFluidStack) UniversalStackUtils.getSafeProxy(outbound[outboundslotFluids]);
+			if(hflst!=null && hflst.stackSize==0){hflst=null;}//TODO: put in more optimized place
 			transferFluidTuple.fill(target,  hflst);
 			target = StackUtility.tryToGetOut(transferFluidTuple,filter);
 			outbound[outboundslotFluids].setProxy(transferFluidTuple.retr2());

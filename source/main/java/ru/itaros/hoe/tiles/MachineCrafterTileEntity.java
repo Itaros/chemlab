@@ -380,7 +380,11 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 					drain = new FluidStack(flst.getFluid(),maxDrain);
 					if(doDrain){
 						flst.amount=differential;
-						pi.setStack(flst);
+						if(flst.amount==0){
+							pi.setStack((FluidStack)null);
+						}else{
+							pi.setStack(flst);
+						}
 					}
 				}
 				return drain;
