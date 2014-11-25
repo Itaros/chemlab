@@ -13,8 +13,7 @@ public class ForgeFluidNameFilter {
 		//}
 		//TODO: Railcraft Steam
 		
-		String name = processName(f.getCommonName());
-		name = reverseName(name);
+		String name = processName(f.getCommonName());//Fuck TiCo
 		
 		Fluid fluid = new Fluid(name);
 		
@@ -38,14 +37,7 @@ public class ForgeFluidNameFilter {
 	}
 
 	private String processName(String commonName) {
-		commonName=commonName.replace('-', '.');//Quick Fix for namederps
-		
-		commonName=cleanFromStatePostfixes(commonName);
-		
-		if(commonName.contains("molten.")){
-			//Special handling for molten metals to work along TiCo
-			commonName="molten."+commonName.replace("molten.", "");
-		}
+		commonName=commonName.replace("fluid.", "");
 		
 		return commonName;
 	}
