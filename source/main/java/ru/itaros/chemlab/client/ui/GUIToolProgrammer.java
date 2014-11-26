@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -166,8 +167,8 @@ public class GUIToolProgrammer extends GuiScreen {
 			String powerPrefix_cur = LanguageRegistry.instance().getStringLocalization("ui.prefix.power.cur");
 			String powerPostfix = LanguageRegistry.instance().getStringLocalization("ui.postfix");
 			
-			
-			fontRendererObj.drawString(namePrefix+"UNDEFINED", xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);		
+			String machinename = mio.getHostBlock().getLocalizedName();
+			fontRendererObj.drawString(namePrefix+machinename, xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);		
 			i++;
 			ISecured secte = (ISecured) tile;
 			fontRendererObj.drawString(ownerPrefix+secte.getSecurity().getOwnerName(), xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);		
