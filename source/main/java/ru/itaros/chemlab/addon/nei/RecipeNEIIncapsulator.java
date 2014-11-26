@@ -6,6 +6,9 @@ import java.util.List;
 
 import codechicken.nei.PositionedStack;
 import net.minecraft.item.ItemStack;
+import ru.itaros.chemlab.items.HiVolumeLiquidCell;
+import ru.itaros.hoe.fluid.HOEFluid;
+import ru.itaros.hoe.fluid.HOEFluidStack;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.recipes.Recipe;
 
@@ -43,9 +46,17 @@ public class RecipeNEIIncapsulator {
 		for(IUniversalStack s : unistacks){
 			i++;step++;
 			if(step>=3){step=0;horiffset++;}
+			ItemStack toAppend;//ItemStack hvlcWrap = 
 			if(s.getProxy() instanceof ItemStack){
-				ps.add(new PositionedStack(s.getProxy(),xpos+(horiffset*stepping*(isIn?-1:1)),y_start+(stepping*step),true));
+				toAppend = (ItemStack) s.getProxy();
+			}else if(s.getProxy() instanceof HOEFluidStack){
+				HOEFluidStack hoefls = (HOEFluidStack) s.getProxy();
+				toAppend = HiVolumeLiquidCell.getByFluid(hoefls.getFluid());
+				toAppend.stackSize=hoefls.stackSize;
+			}else{
+				toAppend=null;
 			}
+			ps.add(new PositionedStack(toAppend,xpos+(horiffset*stepping*(isIn?-1:1)),y_start+(stepping*step),true));
 		}
 		
 		PositionedStack[] psarr = new PositionedStack[ps.size()];
