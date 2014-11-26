@@ -16,11 +16,14 @@ import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import ru.itaros.chemlab.ChemLab;
+import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.network.packets.SetHOEMachineRecipePacket;
+import ru.itaros.hoe.fluid.HOEFluid;
 import ru.itaros.hoe.gui.Tab;
 import ru.itaros.hoe.io.HOEMachineCrafterIO;
 import ru.itaros.hoe.io.HOEMachineIO;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalFluidStack;
 import ru.itaros.hoe.itemhandling.UniversalItemStack;
 import ru.itaros.hoe.recipes.Recipe;
 import ru.itaros.hoe.recipes.RecipesCollection;
@@ -258,6 +261,12 @@ public class GUIToolProgrammer extends GuiScreen {
 						if(stack_inc instanceof UniversalItemStack){
 							RenderingUtils.drawItemStack((ItemStack) stack_inc.getProxy(), x+xi+60-10-(inc_offset*(16+2)), y+yi+18+(ystep*i), null, this.zLevel, this.itemRender, this.fontRendererObj);
 						}
+						if(stack_inc instanceof UniversalFluidStack){
+							UniversalFluidStack ufs = (UniversalFluidStack)stack_inc;
+							ItemStack hvlcWrap = HiVolumeLiquidCell.getByFluid((HOEFluid)ufs.getItem());
+							hvlcWrap.stackSize=ufs.getStackSize();
+							RenderingUtils.drawItemStack(hvlcWrap, x+xi+60-10-(inc_offset*(16+2)), y+yi+18+(ystep*i), null, this.zLevel, this.itemRender, this.fontRendererObj);
+						}
 					}
 					//Drawing outcomings
 					int out_offset=-1;
@@ -265,6 +274,12 @@ public class GUIToolProgrammer extends GuiScreen {
 						out_offset++;
 						if(stack_out instanceof UniversalItemStack){
 							RenderingUtils.drawItemStack((ItemStack) stack_out.getProxy(), x+xi+97+10+(out_offset*(16+2)), y+yi+18+(ystep*i), null, this.zLevel, this.itemRender, this.fontRendererObj);
+						}
+						if(stack_out instanceof UniversalFluidStack){
+							UniversalFluidStack ufs = (UniversalFluidStack)stack_out;
+							ItemStack hvlcWrap = HiVolumeLiquidCell.getByFluid((HOEFluid)ufs.getItem());
+							hvlcWrap.stackSize=ufs.getStackSize();
+							RenderingUtils.drawItemStack(hvlcWrap, x+xi+97+10+(out_offset*(16+2)), y+yi+18+(ystep*i), null, this.zLevel, this.itemRender, this.fontRendererObj);
 						}
 					}	
 					

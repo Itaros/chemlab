@@ -21,7 +21,7 @@ import ru.itaros.hoe.utils.StackUtility;
 
 public class HiVolumeLiquidCell extends ChemLabItem {
 	
-	private static Hashtable<HOEFluid,HiVolumeLiquidCell> registered = new Hashtable<HOEFluid,HiVolumeLiquidCell>(); 
+	private static Hashtable<HOEFluid,ItemStack> registered = new Hashtable<HOEFluid,ItemStack>(); 
 	
 	private HVLCIndex[] index;
 	
@@ -34,7 +34,7 @@ public class HiVolumeLiquidCell extends ChemLabItem {
 		this.hasSubtypes=true;
 		
 		for(int i = 0; i<index.length;i++){
-			registered.put(index[i].getFluid(), this);
+			registered.put(index[i].getFluid(), new ItemStack(this,1,i));
 		}
 	}
 	
@@ -46,8 +46,8 @@ public class HiVolumeLiquidCell extends ChemLabItem {
 		return getFluid((ItemStack) stack.getProxy());
 	}	
 	
-	public static HiVolumeLiquidCell getByFluid(HOEFluid fluid){
-		return registered.get(fluid);
+	public static ItemStack getByFluid(HOEFluid fluid){
+		return registered.get(fluid).copy();
 	}
 
 	CL3AddonLoader invoker;
