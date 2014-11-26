@@ -64,43 +64,21 @@ public class CollectorsLinker {
 					
 					for(int i = 0 ; i < iinn.length; i++){
 						UserspaceLink l = urp.in[i];
-						String[] search = filterSearchString(l.nodeName);
-						Item item = GameRegistry.findItem(search[0], search[1]);
-						if(item!=null){
-							//If item
-							ItemStack stack = new ItemStack(item,l.count,l.meta);
-							iinn[i] = UniversalStackFactory.wrap(stack);
+						ItemStack oreCandidate = l.tryResolveOreDictFirst();
+						if(oreCandidate!=null){
+							iinn[i] = UniversalStackFactory.wrap(oreCandidate);
 						}else{
-							//Trying with fluid
-							HOEFluid hoefl = hoeflreg.pop(search[1]);
-							if(hoefl!=null){
-								HOEFluidStack stack = new HOEFluidStack(hoefl,l.count);
-								iinn[i] = UniversalStackFactory.wrap(stack);
-							}else{
-								//Shit...
-								throw new UserspaceLinkageException("Can't find: "+search[0]+":"+search[1]);
-							}
+							iinn[i] = UniversalStackFactory.wrap(l.getTarget(hoeflreg));
 						}
 					}
 					System.out.print("[IN:"+iinn.length+"]");
 					for(int i = 0 ; i < ioutt.length; i++){
 						UserspaceLink l = urp.out[i];
-						String[] search = filterSearchString(l.nodeName);
-						Item item = GameRegistry.findItem(search[0], search[1]);
-						if(item!=null){
-							//If item
-							ItemStack stack = new ItemStack(item,l.count,l.meta);
-							ioutt[i] = UniversalStackFactory.wrap(stack);
+						ItemStack oreCandidate = l.tryResolveOreDictFirst();
+						if(oreCandidate!=null){
+							ioutt[i] = UniversalStackFactory.wrap(oreCandidate);
 						}else{
-							//Trying with fluid
-							HOEFluid hoefl = hoeflreg.pop(search[1]);
-							if(hoefl!=null){
-								HOEFluidStack stack = new HOEFluidStack(hoefl,l.count);
-								ioutt[i] = UniversalStackFactory.wrap(stack);
-							}else{
-								//Shit...
-								throw new UserspaceLinkageException("Can't find: "+search[0]+":"+search[1]);
-							}
+							ioutt[i] = UniversalStackFactory.wrap(l.getTarget(hoeflreg));
 						}
 					}
 					System.out.print("[OUT:"+ioutt.length+"]");				

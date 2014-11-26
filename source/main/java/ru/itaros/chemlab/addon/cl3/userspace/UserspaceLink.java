@@ -1,10 +1,13 @@
 package ru.itaros.chemlab.addon.cl3.userspace;
 
+import java.util.ArrayList;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import ru.itaros.hoe.fluid.HOEFluid;
 import ru.itaros.hoe.fluid.HOEFluidStack;
 import ru.itaros.hoe.registries.HOEFluidRegistry;
@@ -50,6 +53,24 @@ public class UserspaceLink extends UserspaceContract {
 			}
 		}
 		
+	}
+
+	public ArrayList<ItemStack> tryResolveOreDict() {
+		if(oreDict!=null && oreDict.length>0){
+			return OreDictionary.getOres(oreDict[0]);
+		}else{
+			return null;
+		}
+		
+	}
+
+	public ItemStack tryResolveOreDictFirst() {
+		ArrayList<ItemStack> dicts = tryResolveOreDict();
+		if(dicts!=null){
+			return dicts.get(0);
+		}else{
+			return null;
+		}
 	}
 	
 }
