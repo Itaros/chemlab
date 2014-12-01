@@ -16,6 +16,7 @@ import ru.itaros.chemlab.blocks.machines.AirCollector;
 import ru.itaros.chemlab.blocks.machines.ArcFurnaceController;
 import ru.itaros.chemlab.blocks.machines.AutomaticDrawplate;
 import ru.itaros.chemlab.blocks.machines.Biogrinder;
+import ru.itaros.chemlab.blocks.machines.Bloomery;
 import ru.itaros.chemlab.blocks.machines.CatalyticTank;
 import ru.itaros.chemlab.blocks.machines.CentrifugalExtractor;
 import ru.itaros.chemlab.blocks.machines.Crusher;
@@ -71,6 +72,7 @@ public class BlockLoader {
 	public static GravMag gravmag;
 	//public static HVLCFiller hvlcfiller;
 	public static GasChimney gaschimney;
+	public static Bloomery bloomery;
 	
 	public static SyndicationHub syndicationhub;
 	public static SyndicationBus pipes_syndicationbus;
@@ -191,6 +193,10 @@ public class BlockLoader {
 		
 		controller_arcFurnace  = new ArcFurnaceController();
 		GameRegistry.registerBlock(controller_arcFurnace,controller_arcFurnace.getUnlocalizedName());
+		
+		bloomery  = new Bloomery();
+		GameRegistry.registerBlock(bloomery,bloomery.getUnlocalizedName());
+		
 		
 		//GameRegistry.registerBlock(,.getUnlocalizedNameRaw());
 		
