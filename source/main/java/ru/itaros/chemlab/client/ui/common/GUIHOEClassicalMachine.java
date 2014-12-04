@@ -14,6 +14,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 
+import ru.itaros.api.hoe.heat.Heat;
+import ru.itaros.api.hoe.heat.IHeatContainer;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.hoe.client.textures.TextureAccessor;
 import ru.itaros.hoe.data.machines.HOEMachineData;
@@ -221,6 +223,7 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 
 	protected void DrawGauges(HOEMachineData data, int mx, int my){
 		DrawPowerGauge(data);
+		drawTemperatureGauge(data);
 		DrawProgressbar(data);		
 	}
 	
@@ -242,6 +245,14 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 		this.drawTexturedModalRect(x+xl, y+yl, u, v, (int) (((double)percents/100D)*(double)prg_width), prg_height);
 	}
 		
+	private void drawTemperatureGauge(HOEMachineData data){
+		
+		if(data instanceof IHeatContainer){
+			Heat h = ((IHeatContainer)data).getHeat();
+			fontRendererObj.drawString("HEAT: "+h.getKelvins()+"K", 0+x+16+1, 0+y, CAPTIONCOLOR);//4210752
+		}
+		
+	}
 	
 
 	private void DrawPowerGauge(HOEMachineData data) {

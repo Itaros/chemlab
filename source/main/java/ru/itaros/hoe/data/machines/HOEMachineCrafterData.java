@@ -7,6 +7,8 @@ package ru.itaros.hoe.data.machines;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
+import ru.itaros.api.hoe.heat.Heat;
+import ru.itaros.api.hoe.heat.IHeatContainer;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
 import ru.itaros.hoe.data.IHOEMultiInventoryMachine;
@@ -23,7 +25,7 @@ import ru.itaros.hoe.utils.FluidStackTransferTuple;
 import ru.itaros.hoe.utils.ItemStackTransferTuple;
 import ru.itaros.hoe.utils.StackUtility;
 
-public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiInventoryMachine, ISynchroportItems, ISynchroportFluids{
+public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiInventoryMachine, IHeatContainer, ISynchroportItems, ISynchroportFluids{
 	private int incoming_slots,outcoming_slots;
 	//ALIGNED DATA
 	private IUniversalStack[] inbound;
@@ -78,6 +80,8 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 			HOEMachineCrafterData childd=(HOEMachineCrafterData) child;
 	
 			childd.hasWork=hasWork;
+			
+			heat.syncInto(childd.heat);
 			
 			childd.inbound = StackUtility.syncUniversalStacks(childd.inbound, inbound);
 			childd.outbound = StackUtility.syncUniversalStacks(childd.outbound, outbound);
@@ -142,12 +146,14 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 		super.readInventoryNBT(nbt);
 		inbound=StackUtility.readItemStacksFromNBT(inbound,nbt, "initem");
 		outbound=StackUtility.readItemStacksFromNBT(outbound,nbt, "outitem");
+		heat=Heat.readNBT(heat,nbt,"heat");
 	}
 	@Override
 	protected void writeInventoryNBT(NBTTagCompound nbt) {
 		super.writeInventoryNBT(nbt);
 		StackUtility.writeItemStacksToNBT(inbound, nbt, "initem");
 		StackUtility.writeItemStacksToNBT(outbound, nbt, "outitem");
+		Heat.writeNBT(heat,nbt,"heat");
 	}
 	/*
 	 * Client method to slightly lower network GUI congestion
@@ -275,6 +281,7 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 			cycleid++;
 			
 			recipe.performProduction(this);
+			getHeat().addEnergy(10000000L);
 			
 			reevaluateWork();
 			
@@ -398,6 +405,13 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 		boolean cache = isDirty;
 		isDirty=false;
 		return cache;
+	}
+	
+	protected Heat heat=new Heat(35390000L);
+	
+	@Override
+	public Heat getHeat() {
+		return heat;
 	}
 
 
