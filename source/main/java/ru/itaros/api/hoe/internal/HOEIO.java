@@ -40,7 +40,7 @@ public abstract class HOEIO {
 	}
 
 	public void tick(HOEData data, boolean doReal){
-		
+		data.getConnectome().refresh();
 	}
 	//TODO: HOE-style exception
 	public static IIORegistry getIORegistry(){

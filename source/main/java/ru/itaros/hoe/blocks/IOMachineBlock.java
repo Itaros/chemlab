@@ -18,7 +18,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import ru.itaros.api.chemlab.ISyndicationPipeConnectable;
+import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.ChemLabValues;
+import ru.itaros.hoe.connectome.ConnectomeController;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.tiles.IHOEInventorySyncable;
 import ru.itaros.hoe.tiles.IRedstoneControllable;
@@ -268,14 +270,21 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 				IRedstoneControllable irc = (IRedstoneControllable)te;
 				irc.setPowered(w.isBlockIndirectlyGettingPowered(x, y, z));
 			}
+			if(te instanceof MachineTileEntity){
+				HOEData data = ((MachineTileEntity)te).getServerData();
+				HOEData[] adjacent = ((MachineTileEntity) te).getAdjacentHOEDatas();
+				ConnectomeController hostConnectome = data.getConnectome();
+				for(HOEData adj : adjacent){
+					if(adj==null){continue;}
+					hostConnectome.tryToConnect(data, adj);
+				}
+			}
 		}
 		
 		super.onNeighborBlockChange(w, x, y, z,
 				block);
 	}
 
-	
-	
-	
+		
 	
 }

@@ -1,5 +1,7 @@
 package ru.itaros.api.hoe.internal;
 
+import ru.itaros.hoe.connectome.ConnectomeController;
+
 
 public abstract class HOEData {
 	
@@ -56,6 +58,12 @@ public abstract class HOEData {
 	public boolean isSkipEventNotified(){
 		return skipEventNotified;
 	}
+	
+	private ConnectomeController connectome = new ConnectomeController();
+	public ConnectomeController getConnectome(){
+		return connectome;
+	}
+	
 	
 }
 

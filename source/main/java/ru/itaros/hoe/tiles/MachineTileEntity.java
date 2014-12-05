@@ -26,6 +26,7 @@ import ru.itaros.chemlab.tiles.syndication.SyndicationPipingTileEntity;
 import ru.itaros.hoe.ContextDetector;
 import ru.itaros.hoe.HOE;
 import ru.itaros.hoe.addon.ae.power.IHOEVolatileAEPowerCache;
+import ru.itaros.hoe.blocks.IOMachineBlock;
 import ru.itaros.hoe.blocks.IRotationSolver;
 import ru.itaros.hoe.blocks.RotatableBlockUtility;
 import ru.itaros.hoe.data.machines.HOEMachineData;
@@ -464,6 +465,13 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 			}
 			//server.sync();
 
+			//HOE Connectome reconnection
+			Block b = worldObj.getBlock(xCoord, yCoord, zCoord);
+			if(b instanceof IOMachineBlock){
+				IOMachineBlock iomb = (IOMachineBlock)b;
+				iomb.onNeighborBlockChange(worldObj, xCoord, yCoord, zCoord, b);
+			}
+			
 		}else{
 			//Client configuration is simplier	
 			//It just WAITS for it to be passed over network
@@ -490,6 +498,9 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 		return client;
 	}
 	public HOEMachineData getServerData() {
+		if(server==null){
+			onPostLoad();//Enforce postload(demand)
+		}
 		return server;
 	}	
 	
@@ -779,6 +790,26 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 	@Override
 	public ForgeDirection[] getRotationChain() {
 		return rotationChain;
+	}
+
+
+	public HOEData[] getAdjacentHOEDatas() {
+		//Collecting raw
+		HOEData[] adjRaw = new HOEData[ForgeDirection.VALID_DIRECTIONS.length];
+		for(int i = 0 ; i < ForgeDirection.VALID_DIRECTIONS.length ; i++){
+			ForgeDirection d = ForgeDirection.VALID_DIRECTIONS[i];
+			TileEntity te = worldObj.getTileEntity(xCoord+d.offsetX, yCoord+d.offsetY, zCoord+d.offsetZ);
+			if(te!=null){
+				if(te instanceof MachineTileEntity){
+					MachineTileEntity mte = (MachineTileEntity)te;
+					HOEData data = mte.getServerData();
+					adjRaw[i]=data;
+				}
+			}
+		}
+		
+		return adjRaw;
+
 	}	
 	
 }

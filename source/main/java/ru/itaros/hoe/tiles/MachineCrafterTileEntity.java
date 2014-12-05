@@ -333,10 +333,10 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	
 	//Wrappers
 	private HOEMachineCrafterData getCrafterClient(){
-		return (HOEMachineCrafterData)client;
+		return (HOEMachineCrafterData)getClientData();
 	}
 	private HOEMachineCrafterData getCrafterServer(){
-		return (HOEMachineCrafterData)server;
+		return (HOEMachineCrafterData)getServerData();
 	}
 	
 	//Fluids	
