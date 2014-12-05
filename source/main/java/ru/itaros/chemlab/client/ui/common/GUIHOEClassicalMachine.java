@@ -222,6 +222,12 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 
 
 	protected void DrawGauges(HOEMachineData data, int mx, int my){
+		
+		new_time=System.nanoTime();
+		long timediff = new_time-last_time;
+		tcom+=timediff;
+		thcom+=timediff;
+		
 		DrawPowerGauge(data);
 		drawTemperatureGauge(data);
 		DrawProgressbar(data);		
@@ -249,6 +255,26 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 		
 		if(data instanceof IHeatContainer){
 			Heat h = ((IHeatContainer)data).getHeat();
+			
+			double heat = h.getKelvins();
+			//timers
+			//->
+			if(heatSmoothed<0D){heatSmoothed=heat;}
+			if(thcom>TIMEOFFSET){
+				thcom-=TIMEOFFSET;
+				heatSmoothed=(heatSmoothed+heat)/2D;
+			}
+			//<-
+			
+			double heatMax = 20L;//Kelvins	
+			
+			double diff = heatSmoothed/(double)heatMax;
+			int offset = (int) (66D*diff);
+			int inverted = 66-offset;
+			drawTexturedModalRect(x+147+HOEContainer.xOffset, y+13+inverted, 177, 2+inverted, 9+1, offset);
+			
+			
+			
 			fontRendererObj.drawString("HEAT: "+h.getKelvins()+"K", 0+x+16+1, 0+y, CAPTIONCOLOR);//4210752
 		}
 		
@@ -256,9 +282,6 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 	
 
 	private void DrawPowerGauge(HOEMachineData data) {
-		
-		new_time=System.nanoTime();
-		tcom+=new_time-last_time;
 		
 		//TIME
 		
@@ -297,11 +320,20 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 	private int tcom;
 	private double energySmoothed;
 	private double aeSmoothed;
+	
+	private double heatSmoothed;
+	private int thcom;
+	
 	private void resetEyeCandy() {
 		energySmoothed=-1;
 		aeSmoothed=-1;
 		
+		heatSmoothed=-1;
+		
 		tcom=0;
+		
+		thcom=0;
+		
 		last_time=System.nanoTime();
 	}
 	
