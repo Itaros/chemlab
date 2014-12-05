@@ -48,17 +48,5 @@ public class ServiceBay extends IOMachineBlock {
 		icons.Register(0, "chemlab", new String[]{"machine_base","machine_base","machine_base","machine_servicebay_face","machine_base","machine_base"}, reg);
 	}
 
-	@Override
-	public void onNeighborBlockChange(World w, int x,
-			int y, int z, Block block) {
-		
-		ServiceBayTileEntity sbte = (ServiceBayTileEntity) w.getTileEntity(x, y, z);
-		sbte.updateConnectome();
-		
-	}	
-
-	
-	
-	
 	
 }

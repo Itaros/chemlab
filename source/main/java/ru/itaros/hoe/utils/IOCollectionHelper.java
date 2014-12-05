@@ -1,4 +1,4 @@
-package ru.itaros.hoe.io;
+package ru.itaros.hoe.utils;
 
 import java.util.Hashtable;
 

@@ -1,13 +1,9 @@
 package ru.itaros.api.hoe.internal;
 
-import ru.itaros.hoe.io.HOEBiPolarSocket;
-
-
 
 public abstract class HOEData {
 	
 	public HOEData(){
-		connectivity = new HOEBiPolarSocket();
 	}
 	
 	protected HOEData child;
@@ -52,18 +48,6 @@ public abstract class HOEData {
 	public boolean isRunning(){
 		return isRunning;
 	}
-	
-	
-	//================Intercomms================
-	HOEBiPolarSocket connectivity;
-
-	public void executeIntercoms(HOEData data) {
-		connectivity.operate(data);
-	}
-	public HOEBiPolarSocket getIntercomSocket(){
-		return connectivity;
-	}
-	//==========================================
 	
 	private boolean skipEventNotified=false;
 	public void notifySkipEvent() {

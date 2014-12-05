@@ -13,7 +13,7 @@ import ru.itaros.chemlab.tiles.syndication.SyndicationEMFGeneratorTileEntity;
 import ru.itaros.chemlab.tiles.syndication.SyndicationHubTileEntity;
 import ru.itaros.chemlab.tiles.syndication.SyndicationItemPortTileEntity;
 import ru.itaros.chemlab.tiles.syndication.SyndicationPipingTileEntity;
-import ru.itaros.hoe.io.IOCollectionHelper;
+import ru.itaros.hoe.utils.IOCollectionHelper;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class TileEntityLoader {
