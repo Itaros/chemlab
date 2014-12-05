@@ -146,7 +146,7 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 				
 				//Vanilla notations
 				
-				fontRendererObj.drawString(this.getMachineUnlocalizedName(), HOEContainer.xOffset+x+8, y+6, CAPTIONCOLOR);//4210752
+				fontRendererObj.drawString(this.getMachineUnlocalizedName(), HOEContainer.xOffset+x+8, y+6-1, CAPTIONCOLOR);//4210752
 				
 				fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), HOEContainer.xOffset+x+8, y+ySize - 96 + 2 + 2, CAPTIONCOLOR);
 				
@@ -230,6 +230,9 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 		
 		DrawPowerGauge(data);
 		drawTemperatureGauge(data);
+		
+		setUnderlyingContext();//Progress bars should be in their own atlas
+		
 		DrawProgressbar(data);		
 	}
 	
