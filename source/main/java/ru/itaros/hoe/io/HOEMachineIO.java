@@ -47,4 +47,6 @@ public abstract class HOEMachineIO extends HOEIO {
 	
 	protected abstract void produce(HOEData data, boolean doReal);
 
+	public abstract long getMeltdownTemperature();
+
 }

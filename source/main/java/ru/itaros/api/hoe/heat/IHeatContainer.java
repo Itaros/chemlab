@@ -9,4 +9,6 @@ public interface IHeatContainer {
 
 	public void updateDistribution();
 	
+	public long getMeltdownPoint();
+	
 }

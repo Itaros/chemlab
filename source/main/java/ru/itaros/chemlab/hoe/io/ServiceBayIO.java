@@ -40,7 +40,10 @@ public class ServiceBayIO extends HOEMachineIO {
 		}
 	}
 
-
+	@Override
+	public long getMeltdownTemperature() {
+		return 600L;
+	}
 
 
 

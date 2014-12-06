@@ -28,4 +28,9 @@ public class GasChimneyIO extends HOEMachineIO {
 		d.produce(doReal);
 	}
 
+	@Override
+	public long getMeltdownTemperature() {
+		return 1200L;
+	}
+	
 }

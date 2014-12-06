@@ -99,12 +99,16 @@ public class BloomeryData extends HOEMachineData implements ISynchroportItems,
 	protected void readInventoryNBT(NBTTagCompound nbt) {
 		super.readInventoryNBT(nbt);
 		heat=Heat.readNBT(heat, nbt, "heat");
+		inbound = StackUtility.readUniversalStackFromNBT(nbt, "inbound");
+		outbound = StackUtility.readUniversalStackFromNBT(nbt, "outbound");
 	}
 
 	@Override
 	protected void writeInventoryNBT(NBTTagCompound nbt) {
 		super.writeInventoryNBT(nbt);
 		Heat.writeNBT(heat, nbt, "heat");
+		StackUtility.writeItemStackToNBT(inbound, nbt, "inbound");
+		StackUtility.writeItemStackToNBT(outbound, nbt, "outbound");
 	}
 
 	@Override
@@ -113,8 +117,24 @@ public class BloomeryData extends HOEMachineData implements ISynchroportItems,
 		if(isSucceded){
 			BloomeryData childd = (BloomeryData)child;
 			heat.syncInto(childd.heat);
+			
+			childd.inbound = StackUtility.syncUniversalStacks(childd.inbound, inbound);
+			childd.outbound = StackUtility.syncUniversalStacks(childd.outbound, outbound);
 		}
 		return isSucceded;
+	}
+
+	public IUniversalStack get_in() {
+		return inbound;
+	}
+
+	public IUniversalStack get_out() {
+		return outbound;
+	}
+
+	@Override
+	public long getMeltdownPoint() {
+		return io.getMeltdownTemperature();
 	}
 
 	

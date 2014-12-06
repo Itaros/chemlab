@@ -28,5 +28,10 @@ public class SyndicationEMFGeneratorIO extends HOEMachineIO {
 	@Override
 	protected void produce(HOEData data, boolean doReal) {
 	}
+	
+	@Override
+	public long getMeltdownTemperature() {
+		return 600L;
+	}
 
 }

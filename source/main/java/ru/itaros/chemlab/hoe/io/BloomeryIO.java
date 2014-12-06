@@ -1,14 +1,13 @@
 package ru.itaros.chemlab.hoe.io;
 
 import ru.itaros.api.hoe.internal.HOEData;
-import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.chemlab.hoe.data.BloomeryData;
 import ru.itaros.hoe.io.HOEMachineIO;
 
 public class BloomeryIO extends HOEMachineIO {
 
 
-	public static final int MAXPOWER = ChemLabValues.ENERGY_FRACTION*100*2;
+	public static final int MAXPOWER = 0;
 	public static final int INCOMING_PORTS		=	2;
 	public static final int OUTCOMING_PORTS	=	1;
 	
@@ -28,7 +27,12 @@ public class BloomeryIO extends HOEMachineIO {
 		machine.setConfigured();
 	}
 
-
+	@Override
+	public long getMeltdownTemperature() {
+		return 1600L;
+	}
+	
+	
 	@Override
 	protected boolean isMachineActive(HOEData data) {
 		// TODO Auto-generated method stub

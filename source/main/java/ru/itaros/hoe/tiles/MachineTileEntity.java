@@ -198,7 +198,10 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 	}
 	
 	protected volatile double localAEPower=0;
-	protected static double localAEPowerMax = 1000;
+	
+	protected double getLocalAEMaxPower(){
+		return 1000D;
+	}
 	
 	@Override
 	public double extractAEPower(double amt, Actionable mode) {
@@ -234,7 +237,7 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 
 	@Override
 	public double getAEMaxPower() {
-		return localAEPowerMax;
+		return getLocalAEMaxPower();
 	}
 
 

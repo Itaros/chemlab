@@ -112,6 +112,10 @@ public class SyndicationHubIO extends HOEMachineIO {
 
 	}
 	
+	@Override
+	public long getMeltdownTemperature() {
+		return 600L;
+	}
 	
 	
 }

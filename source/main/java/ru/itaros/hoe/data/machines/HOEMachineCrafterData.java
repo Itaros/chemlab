@@ -425,7 +425,11 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 		}
 		
 	}
-
+	
+	@Override
+	public long getMeltdownPoint() {
+		return io.getMeltdownTemperature();
+	}
 
 	
 }

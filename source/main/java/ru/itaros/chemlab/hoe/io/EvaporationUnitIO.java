@@ -33,5 +33,9 @@ public class EvaporationUnitIO extends HOEMachineCrafterIO {
 		machine.setConfigured();
 	}
 
+	@Override
+	public long getMeltdownTemperature() {
+		return 600L;
+	}
 
 }

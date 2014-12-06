@@ -28,4 +28,9 @@ public class SyndicationItemPortIO extends HOEMachineIO {
 	protected void produce(HOEData data, boolean doReal) {
 	}
 
+	@Override
+	public long getMeltdownTemperature() {
+		return 600L;
+	}
+	
 }

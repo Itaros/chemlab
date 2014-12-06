@@ -6,7 +6,6 @@ import net.minecraftforge.common.MinecraftForge;
 import ru.itaros.api.hoe.internal.HOEIO;
 import ru.itaros.chemlab.addon.cl3.userspace.CL3AddonLoader;
 import ru.itaros.chemlab.addon.cl3.userspace.CollectorsLinker;
-import ru.itaros.chemlab.addon.cl3.userspace.ContractCollector;
 import ru.itaros.chemlab.client.ui.common.GUIHandler;
 import ru.itaros.chemlab.events.SyndicationSystemPipingProtection;
 import ru.itaros.chemlab.loader.BlockLoader;
@@ -20,7 +19,7 @@ import ru.itaros.chemlab.loader.TileEntityLoader;
 import ru.itaros.chemlab.network.ChemLabChannel;
 import ru.itaros.chemlab.network.IPacketCodecDescriptor;
 import ru.itaros.chemlab.proxy.Proxy;
-import ru.itaros.hoe.HOE;
+import ru.itaros.chemlab.tiles.BloomeryTileEntity;
 import ru.itaros.hoe.tiers.TierRegistry;
 import ru.itaros.hoe.utils.IOCollectionHelper;
 import cpw.mods.fml.common.Mod;
@@ -128,6 +127,8 @@ public class ChemLab
 		RecipesLoader.load();
 		
 		cl3addonsLinker.deployPost();
+		
+		BloomeryTileEntity.linkToOreDict();
 		
 		HOEIO.getIORegistry().claimOwnership();
 		

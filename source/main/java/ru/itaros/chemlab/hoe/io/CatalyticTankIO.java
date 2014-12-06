@@ -33,4 +33,11 @@ public class CatalyticTankIO extends HOEMachineCrafterIO {
 		machine.setConfigured();
 	}
 
+	@Override
+	public long getMeltdownTemperature() {
+		return 600L;
+	}
+	
+	
+
 }

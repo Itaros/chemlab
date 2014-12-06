@@ -32,5 +32,10 @@ public class GravMagIO extends HOEMachineCrafterIO {
 		machine.setMachine(this);
 		machine.setConfigured();
 	}
+	
+	@Override
+	public long getMeltdownTemperature() {
+		return 600L;
+	}
 
 }

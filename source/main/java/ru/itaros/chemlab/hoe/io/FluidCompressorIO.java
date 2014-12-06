@@ -33,4 +33,9 @@ public class FluidCompressorIO extends HOEMachineCrafterIO {
 		machine.setConfigured();
 	}
 
+	@Override
+	public long getMeltdownTemperature() {
+		return 600L;
+	}
+	
 }

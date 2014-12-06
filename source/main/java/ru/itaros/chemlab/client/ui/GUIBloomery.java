@@ -26,5 +26,11 @@ public class GUIBloomery extends GUIHOEClassicalMachine {
 	protected void DrawGauges(HOEMachineData data, int mx, int my) {
 		super.DrawGauges(data, mx, my);
 	}
+	@Override
+	protected String getUITexturePath() {
+		return "textures/gui/bloomeryhoemachine.png";
+	}
+	
+	
 	
 }

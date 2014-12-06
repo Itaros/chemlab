@@ -58,17 +58,25 @@ public final class Heat {
 	}
 
 	public void exchange(Heat heat) {
-		Heat hot = heat.energy>energy?heat:this;
-		Heat cold =heat.energy>energy?this:heat; 
+		//Heat hot = heat.energy>energy?heat:this;
+		//Heat cold =heat.energy>energy?this:heat; 
 		//long hot = heat.energy>energy?heat.energy:energy;
 		//long cold = heat.energy>energy?energy:heat.energy;
 		//if(hot.energy==cold){return;}//No exchange
 		
 		
-		long diff=(hot.energy-cold.energy)/2L;
+		long TGradient = getKelvins()-heat.getKelvins();
+		long halfGrad = TGradient/2L;
 		
-		hot.energy-=diff;
-		cold.energy+=diff;
+		long energyReqToRampUp = halfGrad*heat.heatCapacity/2L;//Time split
+		
+		//long diff=(hot.energy-cold.energy)/2L;
+		
+		energy-=energyReqToRampUp;
+		heat.energy+=energyReqToRampUp;
+		
+		//hot.energy-=diff;
+		//cold.energy+=diff;
 		
 	}
 

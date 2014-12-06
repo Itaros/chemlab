@@ -254,10 +254,11 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 		this.drawTexturedModalRect(x+xl, y+yl, u, v, (int) (((double)percents/100D)*(double)prg_width), prg_height);
 	}
 		
-	private void drawTemperatureGauge(HOEMachineData data){
+	protected void drawTemperatureGauge(HOEMachineData data){
 		
 		if(data instanceof IHeatContainer){
-			Heat h = ((IHeatContainer)data).getHeat();
+			IHeatContainer ihc = (IHeatContainer)data;
+			Heat h = ihc.getHeat();
 			
 			double heat = h.getKelvins();
 			//timers
@@ -269,23 +270,21 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 			}
 			//<-
 			
-			double heatMax = 20L;//Kelvins	
+			double heatMax = ihc.getMeltdownPoint();//Kelvins	
 			
 			double diff = heatSmoothed/(double)heatMax;
 			int offset = (int) (66D*diff);
 			int inverted = 66-offset;
 			drawTexturedModalRect(x+147+HOEContainer.xOffset, y+13+inverted, 177, 2+inverted, 9+1, offset);
 			
-			
-			
-			fontRendererObj.drawString("HEAT: "+h.getKelvins()+"K, E:"+h.getEnergy(), 0+x+16+1, 0+y, CAPTIONCOLOR);//4210752
+			//fontRendererObj.drawString("HEAT: "+h.getKelvins()+"K, E:"+h.getEnergy(), 0+x+16+1, 0+y, CAPTIONCOLOR);//4210752
 		}
 		
 	}
 	
 
 	private void DrawPowerGauge(HOEMachineData data) {
-		
+		if(tile.getAEMaxPower()==0){return;}
 		//TIME
 		
 		//HOE POWER

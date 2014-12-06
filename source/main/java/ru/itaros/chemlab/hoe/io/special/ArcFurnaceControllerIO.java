@@ -31,4 +31,9 @@ public class ArcFurnaceControllerIO extends HOEMachineIO {
 		arc.putCurrent();
 	}
 
+	@Override
+	public long getMeltdownTemperature() {
+		return 2600L;
+	}
+	
 }
