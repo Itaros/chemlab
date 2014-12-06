@@ -6,5 +6,7 @@ package ru.itaros.api.hoe.heat;
 public interface IHeatContainer {
 
 	public Heat getHeat();
+
+	public void updateDistribution();
 	
 }

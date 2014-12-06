@@ -413,6 +413,17 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 	public Heat getHeat() {
 		return heat;
 	}
+	@Override
+	public void updateDistribution() {
+		HOEData[] exchangables = this.getConnectome().getConnected();
+		for(HOEData c : exchangables){
+			if(c instanceof IHeatContainer){
+				IHeatContainer heatContainer = (IHeatContainer)c;
+				heatContainer.getHeat().exchange(getHeat());
+			}
+		}
+		
+	}
 
 
 	

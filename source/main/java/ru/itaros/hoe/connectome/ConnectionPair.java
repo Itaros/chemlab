@@ -44,4 +44,8 @@ public final class ConnectionPair{
 			recipient.getConnectome().detach(this);
 		}		
 	}
+	public ConnectionPair reversedCopy() {
+		ConnectionPair rev = new ConnectionPair(recipient,initiator);
+		return rev;
+	}
 }

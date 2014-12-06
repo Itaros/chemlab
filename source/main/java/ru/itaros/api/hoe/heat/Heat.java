@@ -52,6 +52,21 @@ public final class Heat {
 		}
 		
 	}
+
+	public void exchange(Heat heat) {
+		Heat hot = heat.energy>energy?heat:this;
+		Heat cold =heat.energy>energy?this:heat; 
+		//long hot = heat.energy>energy?heat.energy:energy;
+		//long cold = heat.energy>energy?energy:heat.energy;
+		//if(hot.energy==cold){return;}//No exchange
+		
+		
+		long diff=(hot.energy-cold.energy)/2L;
+		
+		hot.energy-=diff;
+		cold.energy+=diff;
+		
+	}
 	
 	
 }

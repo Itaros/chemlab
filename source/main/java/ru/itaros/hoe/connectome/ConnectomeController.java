@@ -3,8 +3,6 @@ package ru.itaros.hoe.connectome;
 import java.util.ArrayList;
 
 import ru.itaros.api.hoe.internal.HOEData;
-import ru.itaros.hoe.tiles.MachineTileEntity;
-import net.minecraft.tileentity.TileEntity;
 
 /*
  * This class monitors active connections
@@ -41,7 +39,7 @@ public final class ConnectomeController {
 		hostData.getConnectome().forceRegister(pair);
 		
 		//Now we need to call remote to register us to make linkage loop so they can communicate
-		remoteData.getConnectome().forceRegister(pair);
+		remoteData.getConnectome().forceRegister(pair.reversedCopy());
 		
 		
 			
@@ -63,6 +61,15 @@ public final class ConnectomeController {
 
 	public void detach(ConnectionPair connectionPair) {
 		connections.remove(connectionPair);
+	}
+
+	public HOEData[] getConnected() {
+		HOEData[] r = new HOEData[connections.size()];//Should be precached
+		for(int i = 0 ; i < connections.size(); i++){
+			ConnectionPair cp = connections.get(i);
+			r[i] = cp.recipient;
+		}
+		return r;
 	}
 
 	
