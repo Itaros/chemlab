@@ -278,7 +278,7 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 			
 			
 			
-			fontRendererObj.drawString("HEAT: "+h.getKelvins()+"K", 0+x+16+1, 0+y, CAPTIONCOLOR);//4210752
+			fontRendererObj.drawString("HEAT: "+h.getKelvins()+"K, E:"+h.getEnergy(), 0+x+16+1, 0+y, CAPTIONCOLOR);//4210752
 		}
 		
 	}

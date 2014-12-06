@@ -3,6 +3,7 @@ package ru.itaros.chemlab.client.ui;
 import net.minecraft.entity.player.InventoryPlayer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.tiles.BloomeryTileEntity;
+import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.tiles.MachineTileEntity;
 
 public class GUIBloomery extends GUIHOEClassicalMachine {
@@ -21,4 +22,9 @@ public class GUIBloomery extends GUIHOEClassicalMachine {
 		return "Bloomery";
 	}	
 
+	@Override
+	protected void DrawGauges(HOEMachineData data, int mx, int my) {
+		super.DrawGauges(data, mx, my);
+	}
+	
 }

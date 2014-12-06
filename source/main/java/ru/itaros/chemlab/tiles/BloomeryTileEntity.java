@@ -2,11 +2,14 @@ package ru.itaros.chemlab.tiles;
 
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.HOELinker;
-import ru.itaros.hoe.io.HOEMachineCrafterIO;
+import ru.itaros.chemlab.hoe.data.BloomeryData;
+import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.data.utils.HOEDataFingerprint;
 import ru.itaros.hoe.io.HOEMachineIO;
-import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
+import ru.itaros.hoe.jobs.HOEMachines;
+import ru.itaros.hoe.tiles.MachineTileEntity;
 
-public class BloomeryTileEntity extends MachineCrafterTileEntity {
+public class BloomeryTileEntity extends MachineTileEntity {
 
 	@Override
 	public HOELinker getLinker() {
@@ -15,7 +18,18 @@ public class BloomeryTileEntity extends MachineCrafterTileEntity {
 
 	@Override
 	public HOEMachineIO getSuperIO() {
-		return (HOEMachineCrafterIO) ChemLab.getIOCollection().getHOEIO("BloomeryIO");
+		return (HOEMachineIO) ChemLab.getIOCollection().getHOEIO("BloomeryIO");
 	}
+
+	@Override
+	protected HOEMachineData acquareData(HOEMachines machines,
+			HOEDataFingerprint fingerprint) {
+		BloomeryData data = new BloomeryData();
+		machines.injectCustomData(data);
+		data.setOwnerFingerprint(fingerprint);
+		return data;
+	}
+
+
 
 }

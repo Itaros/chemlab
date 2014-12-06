@@ -2,11 +2,10 @@ package ru.itaros.chemlab.hoe.io;
 
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.ChemLabValues;
-import ru.itaros.hoe.data.machines.HOEMachineCrafterData;
-import ru.itaros.hoe.io.HOEMachineCrafterIO;
-import ru.itaros.hoe.recipes.RecipesCollection;
+import ru.itaros.chemlab.hoe.data.BloomeryData;
+import ru.itaros.hoe.io.HOEMachineIO;
 
-public class BloomeryIO extends HOEMachineCrafterIO {
+public class BloomeryIO extends HOEMachineIO {
 
 
 	public static final int MAXPOWER = ChemLabValues.ENERGY_FRACTION*100*2;
@@ -14,28 +13,34 @@ public class BloomeryIO extends HOEMachineCrafterIO {
 	public static final int OUTCOMING_PORTS	=	1;
 	
 	
-	private static RecipesCollection recipes=new RecipesCollection();
-	
-	@Override
-	public RecipesCollection getRecipesCollection() {
-		return recipes;
-	}	
-	
 	public BloomeryIO(){
 		this.setReq(INCOMING_PORTS, OUTCOMING_PORTS);
 		this.allowToStart();
-		recipes.register();
 	}
 
 
 	
 	@Override
 	public void configureData(HOEData data) {
-		HOEMachineCrafterData machine=(HOEMachineCrafterData) data;
+		BloomeryData machine=(BloomeryData) data;
 		machine.setMaxPower(MAXPOWER);
-		machine.setDepots(INCOMING_PORTS, OUTCOMING_PORTS);
 		machine.setMachine(this);
 		machine.setConfigured();
+	}
+
+
+	@Override
+	protected boolean isMachineActive(HOEData data) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	protected void produce(HOEData data, boolean doReal) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

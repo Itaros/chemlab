@@ -2,10 +2,10 @@ package ru.itaros.chemlab.client.ui;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
-import ru.itaros.chemlab.client.ui.common.HOECrafterContainer;
+import ru.itaros.chemlab.client.ui.common.HOEContainer;
 import ru.itaros.hoe.tiles.MachineTileEntity;
 
-public class BloomeryContainer extends HOECrafterContainer {
+public class BloomeryContainer extends HOEContainer {
 	
 	public BloomeryContainer(InventoryPlayer playerInv, MachineTileEntity tile) {
 		super(playerInv, tile);
@@ -14,5 +14,11 @@ public class BloomeryContainer extends HOECrafterContainer {
 	public static Class<? extends GUIHOEClassicalMachine> getGUIType() {
 		return GUIBloomery.class;
 	}	
+	
+	@Override
+	public void bindSlots() {
+		super.bindSlots();
+		
+	}
 	
 }

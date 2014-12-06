@@ -14,6 +14,10 @@ public final class Heat {
 	
 	protected long heatCapacity=1;// Joules/Kelvin
 	
+	public long getEnergy() {
+		return energy;
+	}	
+	
 	public int getKelvins(){
 		return (int)(energy/heatCapacity);
 	}
@@ -67,6 +71,8 @@ public final class Heat {
 		cold.energy+=diff;
 		
 	}
+
+
 	
 	
 }
