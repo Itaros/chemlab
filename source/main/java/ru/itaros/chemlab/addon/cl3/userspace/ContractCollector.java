@@ -18,6 +18,12 @@ public class ContractCollector {
 	@XmlElement(name="gridCrafting")
 	public UserspaceGridCrafting[] gridCraftings;		
 	
+	@XmlElement(name="HOEChemicalCompound")
+	public UserspaceCompound[] hoeChemicalCompounds;
+	
+	@XmlElement(name="HOEChemicalReaction")
+	public UserspaceReaction[] hoeChemicalReactions;	
+	
 	@XmlTransient
 	public String groupName;
 	

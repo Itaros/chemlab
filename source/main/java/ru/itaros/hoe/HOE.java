@@ -4,6 +4,8 @@ package ru.itaros.hoe;
 import net.minecraftforge.common.MinecraftForge;
 import ru.itaros.api.hoe.IHOEInterfacer;
 import ru.itaros.hoe.client.ExternalTextureStitcher;
+import ru.itaros.hoe.framework.chemistry.registries.CompoundDatabase;
+import ru.itaros.hoe.framework.chemistry.registries.Mendeleev;
 import ru.itaros.hoe.interfacer.HOEInterfacer;
 import ru.itaros.hoe.proxy.HOEProxy;
 import ru.itaros.hoe.registries.HOEFluidRegistry;
@@ -74,6 +76,10 @@ public class HOE {
     private ContextDetector contextdetector;
     private HOEKeepAliveMonitorInternalized keepalive;
     //===========================
+    //===========CHEM============
+    private Mendeleev mendeleev;
+    private CompoundDatabase compounds;
+    //===========================
     //============AHT============
     private HOEExecutor hoeexec;
     //===========================
@@ -100,6 +106,9 @@ public class HOE {
     	contextdetector = new ContextDetector();
     	
     	ForgeFixer.forgeOreDictFix();
+    	
+    	mendeleev = new Mendeleev();
+    	compounds = new CompoundDatabase();
     	
     	hoefluidregistry=new HOEFluidRegistry();
     	ioregistry =new HOEIORegistry();

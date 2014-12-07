@@ -9,6 +9,8 @@ import ru.itaros.chemlab.items.ChemLabItem;
 import ru.itaros.hoe.fluid.HOEFluid;
 import ru.itaros.hoe.fluid.HOEFluid.HOEFluidState;
 import ru.itaros.hoe.fluid.HOEFluidStack;
+import ru.itaros.hoe.framework.chemistry.ChemicalCompound;
+import ru.itaros.hoe.framework.chemistry.registries.CompoundDatabase;
 import ru.itaros.hoe.io.HOEMachineCrafterIO;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.itemhandling.UniversalStackFactory;
@@ -31,11 +33,29 @@ public class CollectorsLinker {
 	}
 
 	public void deployPre(){
+		executeHOEChemistryQueries();
 		executeRegistrationQueries();
 	}
+
 	public void deployPost(){
 		executeRecipeRegistrationQueries();
 	}
+	
+	private void executeHOEChemistryQueries() {
+		System.out.println("Registering Compounds:...");
+		
+		for(ContractCollector cc : collectors){
+			if(cc.hoeChemicalCompounds!=null){
+				for(UserspaceCompound uc : cc.hoeChemicalCompounds){
+					ChemicalCompound compound = new ChemicalCompound(uc.stoichiometric);
+					CompoundDatabase.getInstance().addCompound(compound);
+					System.out.println(compound.toString()+" is registered!");
+				}
+			}
+		}
+		
+		System.out.println("...Done!");
+	}	
 
 	private void executeRecipeRegistrationQueries() {
 		System.out.println("Inspecting recipe queries:");

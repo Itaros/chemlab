@@ -49,7 +49,8 @@ public class TileEntityLoader {
     			new MetalFormationMachineIO().setHostBlock(BlockLoader.metformer),
     			new WireCoatingExtruderIO().setHostBlock(BlockLoader.wcextruder),
     			new ArcFurnaceControllerIO().setHostBlock(BlockLoader.controller_arcFurnace),
-    			new BloomeryIO().setHostBlock(BlockLoader.bloomery)
+    			new BloomeryIO().setHostBlock(BlockLoader.bloomery),
+    			new HeatingFurnaceIO().setHostBlock(BlockLoader.heatingFurnace)
     			);
 		iocollection.registerInHOE();
 		
@@ -76,6 +77,7 @@ public class TileEntityLoader {
 		//GameRegistry.registerTileEntity(HVLCFillerTileEntity.class,HVLCFillerTileEntity.class.getName());
 		GameRegistry.registerTileEntity(GasChimneyTileEntity.class,GasChimneyTileEntity.class.getName());
 		GameRegistry.registerTileEntity(BloomeryTileEntity.class,BloomeryTileEntity.class.getName());
+		GameRegistry.registerTileEntity(HeatingFurnaceTileEntity.class,HeatingFurnaceTileEntity.class.getName());
 		
 		GameRegistry.registerTileEntity(SyndicationHubTileEntity.class,SyndicationHubTileEntity.class.getName());
 		

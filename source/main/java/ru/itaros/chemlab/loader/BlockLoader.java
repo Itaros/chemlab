@@ -25,6 +25,7 @@ import ru.itaros.chemlab.blocks.machines.EvaporationUnit;
 import ru.itaros.chemlab.blocks.machines.FluidCompressor;
 import ru.itaros.chemlab.blocks.machines.GasChimney;
 import ru.itaros.chemlab.blocks.machines.GravMag;
+import ru.itaros.chemlab.blocks.machines.HeatingFurnace;
 import ru.itaros.chemlab.blocks.machines.HiResistantMixer;
 import ru.itaros.chemlab.blocks.machines.HiTFurnace;
 import ru.itaros.chemlab.blocks.machines.Impregnator;
@@ -73,6 +74,7 @@ public class BlockLoader {
 	//public static HVLCFiller hvlcfiller;
 	public static GasChimney gaschimney;
 	public static Bloomery bloomery;
+	public static HeatingFurnace heatingFurnace;
 	
 	public static SyndicationHub syndicationhub;
 	public static SyndicationBus pipes_syndicationbus;
@@ -197,6 +199,8 @@ public class BlockLoader {
 		bloomery  = new Bloomery();
 		GameRegistry.registerBlock(bloomery,bloomery.getUnlocalizedName());
 		
+		heatingFurnace = new HeatingFurnace();
+		GameRegistry.registerBlock(heatingFurnace,heatingFurnace.getUnlocalizedName());
 		
 		//GameRegistry.registerBlock(,.getUnlocalizedNameRaw());
 		
