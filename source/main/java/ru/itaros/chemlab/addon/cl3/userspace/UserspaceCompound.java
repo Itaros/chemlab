@@ -6,4 +6,6 @@ public class UserspaceCompound extends UserspaceNode {
 	
 	public String classicalName;
 	
+	public long formationEnthalpy;
+	
 }

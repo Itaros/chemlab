@@ -22,7 +22,10 @@ public class ContractCollector {
 	public UserspaceCompound[] hoeChemicalCompounds;
 	
 	@XmlElement(name="HOEChemicalReaction")
-	public UserspaceReaction[] hoeChemicalReactions;	
+	public UserspaceReaction[] hoeChemicalReactions;
+	
+	@XmlElement(name="chemicalItem")
+	public UserspaceChemicalItemContract[] chemicalItems;	
 	
 	@XmlTransient
 	public String groupName;

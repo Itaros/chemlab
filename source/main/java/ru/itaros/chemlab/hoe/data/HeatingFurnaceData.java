@@ -1,12 +1,15 @@
 package ru.itaros.chemlab.hoe.data;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.heat.Heat;
 import ru.itaros.api.hoe.heat.IHeatContainer;
 import ru.itaros.api.hoe.internal.HOEData;
+import ru.itaros.chemlab.items.ChemLabChemicalItem;
 import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.framework.chemistry.ChemicalReaction;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.itemhandling.UniversalItemStack;
 import ru.itaros.hoe.itemhandling.UniversalStackUtils;
@@ -31,6 +34,7 @@ public class HeatingFurnaceData extends HOEMachineData implements
 	
 	private IUniversalStack inbound,outbound;
 	
+	
 	protected boolean ignoreInboundMetadata=false;
 	
 	protected boolean isDirty=false;
@@ -45,7 +49,7 @@ public class HeatingFurnaceData extends HOEMachineData implements
 		return cache;
 	}
 
-	private Heat heat = new Heat(5000000L);
+	private Heat heat = new Heat(1670000L*840L);
 	
 	@Override
 	public Heat getHeat() {
@@ -138,4 +142,49 @@ public class HeatingFurnaceData extends HOEMachineData implements
 	}
 
 
+	//Reaction Framework
+	private ChemicalReaction ongoingReaction;
+	
+	public boolean isReactionOngoing() {
+		if(ongoingReaction==null){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	public void tryPickReaction() {
+		if(inbound!=null){
+			if(inbound.getProxy()==null){inbound=null;return;}//invalid stack
+			Object itemObject = inbound.getItem();
+			if(itemObject instanceof ChemLabChemicalItem){
+				ChemLabChemicalItem clci = (ChemLabChemicalItem)itemObject;
+				ongoingReaction = clci.getAtmospericCombustionReaction();
+				evalReactionTime();
+			}
+		}
+	}
+
+	private void evalReactionTime() {
+		if(ongoingReaction!=null){
+			this.ticksRequared=100;
+		}
+	}
+
+	public void performReaction() {
+		if(inbound==null || inbound.getProxy()==null){cancelReaction();return;}
+		//It is heating furnace. All is destroyed. CL4 might change that
+		getHeat().addEnergy(-1L*ongoingReaction.getReactionEnthalpy()/12L*2260000L/9L);
+		inbound.decrement(1);//HACK: Decremental amount should be scaled to stoichiometry
+		inbound=StackUtility.verify(inbound);
+	}
+
+	private void cancelReaction() {
+		ongoingReaction=null;
+		this.ticksRequared=100;
+	}
+
+	
+	
+	
 }

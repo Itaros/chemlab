@@ -27,7 +27,7 @@ public final class CompoundDatabase {
 	}
 	
 	private void registerInLookupTables(ChemicalCompound cc) {
-		symbolicLookup.put(cc.symbolicName, cc);
+		symbolicLookup.put(cc.getSymbolicName(), cc);
 	}
 
 	/*

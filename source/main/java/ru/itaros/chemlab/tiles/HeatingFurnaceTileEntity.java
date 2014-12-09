@@ -3,7 +3,6 @@ package ru.itaros.chemlab.tiles;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 import ru.itaros.chemlab.ChemLab;
 import ru.itaros.chemlab.HOELinker;
 import ru.itaros.chemlab.hoe.data.HeatingFurnaceData;
@@ -125,25 +124,10 @@ public class HeatingFurnaceTileEntity extends MachineTileEntity implements
 	@Override
 	public void closeInventory() {
 	}
-
-	private static int oreDictID_IRON_ORE;
-	public static void linkToOreDict(){
-		oreDictID_IRON_ORE = OreDictionary.getOreID("oreIron");
-	}
 	
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
-		if(slot==0){
-			int[] ids = OreDictionary.getOreIDs(stack);
-			for(int id : ids){
-				if(id==oreDictID_IRON_ORE){
-					return true;
-				}
-			}
-			return false;
-		}else{
-			return false;
-		}
+		return true;
 	}
 
 	public IUniversalStack getStackInHOERemoteSlot(int slot){

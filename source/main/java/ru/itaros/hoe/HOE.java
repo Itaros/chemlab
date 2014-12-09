@@ -6,6 +6,7 @@ import ru.itaros.api.hoe.IHOEInterfacer;
 import ru.itaros.hoe.client.ExternalTextureStitcher;
 import ru.itaros.hoe.framework.chemistry.registries.CompoundDatabase;
 import ru.itaros.hoe.framework.chemistry.registries.Mendeleev;
+import ru.itaros.hoe.framework.chemistry.registries.ReactionDatabase;
 import ru.itaros.hoe.interfacer.HOEInterfacer;
 import ru.itaros.hoe.proxy.HOEProxy;
 import ru.itaros.hoe.registries.HOEFluidRegistry;
@@ -79,6 +80,7 @@ public class HOE {
     //===========CHEM============
     private Mendeleev mendeleev;
     private CompoundDatabase compounds;
+    private ReactionDatabase reactions;
     //===========================
     //============AHT============
     private HOEExecutor hoeexec;
@@ -109,6 +111,7 @@ public class HOE {
     	
     	mendeleev = new Mendeleev();
     	compounds = new CompoundDatabase();
+    	reactions = new ReactionDatabase();
     	
     	hoefluidregistry=new HOEFluidRegistry();
     	ioregistry =new HOEIORegistry();

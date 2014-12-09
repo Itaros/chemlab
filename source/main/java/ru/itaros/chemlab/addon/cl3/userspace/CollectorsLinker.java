@@ -1,16 +1,21 @@
 package ru.itaros.chemlab.addon.cl3.userspace;
 
+import java.util.ArrayList;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import ru.itaros.api.hoe.internal.HOEIO;
 import ru.itaros.chemlab.fluids.hoe.UserspaceHOEFluid;
+import ru.itaros.chemlab.items.ChemLabChemicalItem;
 import ru.itaros.chemlab.items.ChemLabItem;
 import ru.itaros.hoe.fluid.HOEFluid;
 import ru.itaros.hoe.fluid.HOEFluid.HOEFluidState;
 import ru.itaros.hoe.fluid.HOEFluidStack;
 import ru.itaros.hoe.framework.chemistry.ChemicalCompound;
+import ru.itaros.hoe.framework.chemistry.ChemicalReaction;
 import ru.itaros.hoe.framework.chemistry.registries.CompoundDatabase;
+import ru.itaros.hoe.framework.chemistry.registries.ReactionDatabase;
 import ru.itaros.hoe.io.HOEMachineCrafterIO;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.itemhandling.UniversalStackFactory;
@@ -38,9 +43,36 @@ public class CollectorsLinker {
 	}
 
 	public void deployPost(){
+		executeHOEChemistryRectionQueries();
 		executeRecipeRegistrationQueries();
+		evaluateChemGraphs();
 	}
 	
+	private ArrayList<ChemLabChemicalItem> graphEvalQueue = new ArrayList<ChemLabChemicalItem>();
+	
+	private void evaluateChemGraphs() {
+		System.out.println("Evaluating ChemGraphs index:...");
+		for(ChemLabChemicalItem clci : graphEvalQueue){
+			System.out.println("Evaluating "+clci.getUnlocalizedName()+"...");
+			clci.buildReactiveIndex();
+		}
+		System.out.println("...Done!");
+	}	
+
+	private void executeHOEChemistryRectionQueries() {
+		System.out.println("Registering Reactions:...");
+		for(ContractCollector cc : collectors){
+			if(cc.hoeChemicalReactions!=null){
+				for(UserspaceReaction ur : cc.hoeChemicalReactions){
+					ChemicalReaction reaction = new ChemicalReaction(ur.equation);
+					reaction.calculateReactionEnthalpy();
+					ReactionDatabase.getInstance().register(reaction);
+				}
+			}
+		}
+		System.out.println("...Done!");
+	}
+
 	private void executeHOEChemistryQueries() {
 		System.out.println("Registering Compounds:...");
 		
@@ -48,6 +80,8 @@ public class CollectorsLinker {
 			if(cc.hoeChemicalCompounds!=null){
 				for(UserspaceCompound uc : cc.hoeChemicalCompounds){
 					ChemicalCompound compound = new ChemicalCompound(uc.stoichiometric);
+					compound.setConventionalName(uc.classicalName);
+					compound.setFormationEnthalpy(uc.formationEnthalpy);
 					CompoundDatabase.getInstance().addCompound(compound);
 					System.out.println(compound.toString()+" is registered!");
 				}
@@ -142,6 +176,24 @@ public class CollectorsLinker {
 							OreDictionary.registerOre(s, new ItemStack(item));
 						}
 					}
+					System.out.println("[ACCEPTED]");
+				}
+			}
+			System.out.println("(ChemicalItems)");
+			if(cc.chemicalItems!=null){
+				for(UserspaceChemicalItemContract ucic : cc.chemicalItems){
+					System.out.print(cc.groupName+"."+ucic.nodeName);
+					ChemLabChemicalItem item = new ChemLabChemicalItem(cc.groupName,ucic.nodeName,ucic.getCompounds());
+					if(FMLCommonHandler.instance().getEffectiveSide()==Side.CLIENT){
+						item.setIcon(invoker);
+					}
+					GameRegistry.registerItem(item, item.getInternalName());
+					graphEvalQueue.add(item);
+					if(ucic.oreDict!=null && ucic.oreDict.length>0){
+						for(String s : ucic.oreDict){
+							OreDictionary.registerOre(s, new ItemStack(item));
+						}
+					}					
 					System.out.println("[ACCEPTED]");
 				}
 			}

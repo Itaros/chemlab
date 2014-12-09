@@ -13,7 +13,9 @@ public class ChemicalCompound {
 		generateStoichiometry();
 	}
 
-	public String symbolicName;
+	private String symbolicName;
+	private String conventionalName;
+	private long formationEnthalpy;
 	
 	public StoichiometricComposition[] composition;
 	
@@ -52,6 +54,31 @@ public class ChemicalCompound {
 		}
 		return r+"@"+this.hashCode();
 	}
+
+	public String getConventionalName() {
+		return conventionalName;
+	}
+
+	public void setConventionalName(String conventionalName) {
+		this.conventionalName = conventionalName;
+	}
+
+	/*
+	 * Gets formation enthalpy in Joules/mole
+	 * !!!NOT kJ/mole!!!
+	 */
+	public long getFormationEnthalpy() {
+		return formationEnthalpy;
+	}
+
+	public void setFormationEnthalpy(long joulesPerMole) {
+		this.formationEnthalpy = joulesPerMole;
+	}
+
+	public String getSymbolicName() {
+		return symbolicName;
+	}
+	
 	
 	
 	

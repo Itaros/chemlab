@@ -34,16 +34,21 @@ public class HeatingFurnaceIO extends HOEMachineIO {
 	
 	@Override
 	protected boolean isMachineActive(HOEData data) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 
 
 	@Override
 	protected void produce(HOEData data, boolean doReal) {
-		// TODO Auto-generated method stub
-		
+		HeatingFurnaceData hfd = (HeatingFurnaceData)data;
+		if(hfd.isReactionOngoing()){
+			hfd.performReaction();
+		}else{
+			hfd.tryPickReaction();
+		}
 	}
+
+
 
 }

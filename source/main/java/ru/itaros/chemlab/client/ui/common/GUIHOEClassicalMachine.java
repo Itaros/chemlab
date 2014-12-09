@@ -277,7 +277,7 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 			int inverted = 66-offset;
 			drawTexturedModalRect(x+147+HOEContainer.xOffset, y+13+inverted, 177, 2+inverted, 9+1, offset);
 			
-			//fontRendererObj.drawString("HEAT: "+h.getKelvins()+"K, E:"+h.getEnergy(), 0+x+16+1, 0+y, CAPTIONCOLOR);//4210752
+			fontRendererObj.drawString("HEAT: "+h.getKelvins()+"K, E:"+h.getEnergy(), 0+x+16+1, 0+y, CAPTIONCOLOR);//4210752
 		}
 		
 	}
