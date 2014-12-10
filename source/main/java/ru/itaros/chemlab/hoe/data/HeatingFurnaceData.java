@@ -176,7 +176,7 @@ public class HeatingFurnaceData extends HOEMachineData implements
 	public void performReaction() {
 		if(inbound==null || inbound.getProxy()==null){cancelReaction();return;}
 		//It is heating furnace. All is destroyed. CL4 might change that
-		getHeat().addEnergy(-1L*ongoingReaction.getReactionEnthalpy()/12L*2260000L/9L);
+		getHeat().addEnergy(-1L*ongoingReaction.getReactionEnthalpy()/12L*2260000L);
 		inbound.decrement(1);//HACK: Decremental amount should be scaled to stoichiometry
 		inbound=StackUtility.verify(inbound);
 	}

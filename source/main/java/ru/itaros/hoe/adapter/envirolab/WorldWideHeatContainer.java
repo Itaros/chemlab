@@ -8,7 +8,7 @@ public final class WorldWideHeatContainer implements IHeatContainer {
 	private Heat heat = new Heat(500000000L);//World-wide capacitance lol
 	
 	public WorldWideHeatContainer(){
-		heat.setSplitRatio(2L*24L*1000L);
+		heat.setSplitRatio(2L*24L*10L);
 	}
 	
 	@Override
