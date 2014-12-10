@@ -7,6 +7,7 @@ import ru.itaros.api.hoe.heat.Heat;
 import ru.itaros.api.hoe.heat.IHeatContainer;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.items.ChemLabChemicalItem;
+import ru.itaros.hoe.adapter.HOEAdapters;
 import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.framework.chemistry.ChemicalReaction;
@@ -65,6 +66,7 @@ public class HeatingFurnaceData extends HOEMachineData implements
 				heatContainer.getHeat().exchange(getHeat());
 			}
 		}
+		getHeat().exchange(HOEAdapters.getInstance().getEnviroLab().getEnviromentalHeat());
 	}
 
 	ItemStackTransferTuple transferItemStackTuple = new ItemStackTransferTuple();

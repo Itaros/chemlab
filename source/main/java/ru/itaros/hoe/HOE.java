@@ -3,6 +3,7 @@ package ru.itaros.hoe;
 
 import net.minecraftforge.common.MinecraftForge;
 import ru.itaros.api.hoe.IHOEInterfacer;
+import ru.itaros.hoe.adapter.HOEAdapters;
 import ru.itaros.hoe.client.ExternalTextureStitcher;
 import ru.itaros.hoe.framework.chemistry.registries.CompoundDatabase;
 import ru.itaros.hoe.framework.chemistry.registries.Mendeleev;
@@ -91,13 +92,15 @@ public class HOE {
     //===========CLIENT==========
     private ExternalTextureStitcher stitcher;
     //===========================
-    
+    private HOEAdapters adapters;
     
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
     	config = new Config().loadConfig(event);
+    	
+    	adapters = new HOEAdapters();
     	
     	if(config.threading_keepalive){
     		keepalive = new HOEKeepAliveMonitorInternalized();
