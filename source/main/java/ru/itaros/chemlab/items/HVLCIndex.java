@@ -43,6 +43,7 @@ public class HVLCIndex {
 		if(reg instanceof TextureMap){
 			TextureMap map = (TextureMap)reg;
 			TextureAtlasSprite tas = (TextureAtlasSprite) icon;
+			if(tas==null){return;}//No icon, sorry.
 			map.setTextureEntry(tas.getIconName(), tas);
 		}
 		//icon=register.registerIcon(texname);
