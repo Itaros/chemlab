@@ -196,7 +196,7 @@ public class GUIToolProgrammer extends GuiScreen {
 	private int totalPages = 0;
 	private int currentPage = 0;
 	private void drawRecipes(int operation, int x2, int y2) {
-		//opertation:
+		//operation:
 		//0 = DRAW
 		//1 = CLICKSIGN
 		
@@ -207,6 +207,15 @@ public class GUIToolProgrammer extends GuiScreen {
 			//TODO: If there is no col - show "NO RECIPES AVAILABLE. THIS IS A BUG!"
 			
 			int recipesAmount = repcol.getRecipesAmount();
+			if(recipesAmount==0){
+				if(operation == 0){
+					GL11.glDisable(GL11.GL_LIGHTING);
+					String noav = "No recipes available!";
+					int strw = fontRendererObj.getStringWidth(noav);
+					fontRendererObj.drawString(noav, x+xSize/2-strw/2, y+ySize/2-fontRendererObj.FONT_HEIGHT/2-18, 0x00FF00);
+				}
+				return;
+			}
 			totalPages = recipesAmount/3;//3 is amount per page
 			if(recipesAmount % 3 == 0){
 				totalPages--;
