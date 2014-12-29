@@ -11,6 +11,7 @@ import ru.itaros.api.hoe.heat.Heat;
 import ru.itaros.api.hoe.heat.IHeatContainer;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.api.hoe.registries.IHOERecipeRegistry;
+import ru.itaros.hoe.adapter.HOEAdapters;
 import ru.itaros.hoe.data.IHOEMultiInventoryMachine;
 import ru.itaros.hoe.data.ISynchroportFluids;
 import ru.itaros.hoe.data.ISynchroportItems;
@@ -408,7 +409,7 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 		return cache;
 	}
 	
-	protected Heat heat=new Heat(35390000L);
+	protected Heat heat=new Heat(1402800000L);
 	
 	@Override
 	public Heat getHeat() {
@@ -423,7 +424,7 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 				heatContainer.getHeat().exchange(getHeat());
 			}
 		}
-		
+		getHeat().exchange(HOEAdapters.getInstance().getEnviroLab().getEnviromentalHeat());
 	}
 	
 	@Override

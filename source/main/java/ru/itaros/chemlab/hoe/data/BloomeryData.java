@@ -5,6 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.heat.Heat;
 import ru.itaros.api.hoe.heat.IHeatContainer;
 import ru.itaros.api.hoe.internal.HOEData;
+import ru.itaros.hoe.adapter.HOEAdapters;
 import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
@@ -45,7 +46,7 @@ public class BloomeryData extends HOEMachineData implements ISynchroportItems,
 		return cache;
 	}
 
-	private Heat heat = new Heat(5000000L);
+	private Heat heat = new Heat(1402800000L);
 	
 	@Override
 	public Heat getHeat() {
@@ -61,6 +62,7 @@ public class BloomeryData extends HOEMachineData implements ISynchroportItems,
 				heatContainer.getHeat().exchange(getHeat());
 			}
 		}
+		getHeat().exchange(HOEAdapters.getInstance().getEnviroLab().getEnviromentalHeat());
 	}
 
 	ItemStackTransferTuple transferItemStackTuple = new ItemStackTransferTuple();
