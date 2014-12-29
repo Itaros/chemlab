@@ -10,6 +10,10 @@ public class UserspaceLinkageException extends RuntimeException {
 		super(e);
 	}
 
+	public UserspaceLinkageException(String string, Exception e) {
+		super("Unable to find suitable candidate for: "+string,e);
+	}
+
 	/**
 	 * 
 	 */

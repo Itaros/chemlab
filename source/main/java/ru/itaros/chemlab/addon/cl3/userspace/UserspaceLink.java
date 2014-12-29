@@ -67,7 +67,11 @@ public class UserspaceLink extends UserspaceContract {
 	public ItemStack tryResolveOreDictFirst() {
 		ArrayList<ItemStack> dicts = tryResolveOreDict();
 		if(dicts!=null){
-			return dicts.get(0);
+			try{
+				return dicts.get(0);
+			}catch(IndexOutOfBoundsException e){
+				throw new UserspaceLinkageException("Can't find oredict: "+oreDict[0],e);
+			}
 		}else{
 			return null;
 		}
