@@ -24,6 +24,7 @@ public class BloomeryIO extends HOEMachineIO {
 		BloomeryData machine=(BloomeryData) data;
 		machine.setMaxPower(MAXPOWER);
 		machine.setMachine(this);
+		machine.ticksRequared=100;
 		machine.setConfigured();
 	}
 
@@ -35,16 +36,16 @@ public class BloomeryIO extends HOEMachineIO {
 	
 	@Override
 	protected boolean isMachineActive(HOEData data) {
-		// TODO Auto-generated method stub
-		return false;
+		BloomeryData bdata = (BloomeryData)data;
+		return bdata.getHeat().getKelvins()>1400L;
 	}
 
 
 
 	@Override
 	protected void produce(HOEData data, boolean doReal) {
-		// TODO Auto-generated method stub
-		
+		BloomeryData bdata = (BloomeryData)data;
+		bdata.produce();
 	}
 
 }

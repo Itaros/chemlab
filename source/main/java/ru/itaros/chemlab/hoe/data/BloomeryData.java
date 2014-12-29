@@ -2,6 +2,7 @@ package ru.itaros.chemlab.hoe.data;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.oredict.OreDictionary;
 import ru.itaros.api.hoe.heat.Heat;
 import ru.itaros.api.hoe.heat.IHeatContainer;
 import ru.itaros.api.hoe.internal.HOEData;
@@ -10,6 +11,7 @@ import ru.itaros.hoe.data.ISynchroportItems;
 import ru.itaros.hoe.data.machines.HOEMachineData;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.itemhandling.UniversalItemStack;
+import ru.itaros.hoe.itemhandling.UniversalStackFactory;
 import ru.itaros.hoe.itemhandling.UniversalStackUtils;
 import ru.itaros.hoe.utils.ItemStackTransferTuple;
 import ru.itaros.hoe.utils.StackUtility;
@@ -72,6 +74,7 @@ public class BloomeryData extends HOEMachineData implements ISynchroportItems,
 	}
 	@Override
 	public ItemStack tryToPutItemsIn(ItemStack source, ItemStack filter) {
+		filter = ironOreFilter;
 		//There is no hope if this is not an item. But really, this is a mess...
 		if(inbound instanceof UniversalItemStack || inbound==null){
 			transferItemStackTuple.fill((ItemStack) UniversalStackUtils.getSafeProxy(inbound), source);
@@ -82,6 +85,9 @@ public class BloomeryData extends HOEMachineData implements ISynchroportItems,
 		return source;
 	}
 
+	ItemStack ironOreFilter = OreDictionary.getOres("oreIron").get(0);
+	ItemStack ironBloomProto = OreDictionary.getOres("bloomIron").get(0);
+	
 	@Override
 	public ItemStack tryToGetItemsOut(ItemStack target) {
 		return tryToGetItemsOut(target, null);
@@ -137,6 +143,19 @@ public class BloomeryData extends HOEMachineData implements ISynchroportItems,
 	@Override
 	public long getMeltdownPoint() {
 		return io.getMeltdownTemperature();
+	}
+
+	public void produce() {
+		if(inbound!=null || inbound.getProxy()!=null){
+			inbound.decrement(1);
+			inbound=StackUtility.verify(inbound);
+			
+			if(outbound==null || outbound.getProxy()==null){
+				outbound=UniversalStackFactory.wrap(ironBloomProto.copy());
+			}else{
+				outbound.increment(1);
+			}
+		}
 	}
 
 	
