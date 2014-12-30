@@ -37,9 +37,9 @@ public class ForgeSidedFluidBlock extends BlockFluidFinite {
 
 	@Override
 	public void registerBlockIcons(IIconRegister registry) {
-		String hostmod = fnative.getUnlocalizedName().split(":")[0];
-        stillIcon = registry.registerIcon(hostmod+":fluid_"+fluidName);
-        flowingIcon = registry.registerIcon(hostmod+":fluid_"+fluidName);
+		String texname = fnative.getUnlocalizedName();
+        stillIcon = registry.registerIcon("chemlab:"+texname);
+        flowingIcon = registry.registerIcon("chemlab:"+texname);
         
         getFluid().setIcons(stillIcon, flowingIcon);
 	}

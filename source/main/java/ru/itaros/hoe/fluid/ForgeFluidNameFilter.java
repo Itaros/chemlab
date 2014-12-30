@@ -1,6 +1,7 @@
 package ru.itaros.hoe.fluid;
 
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import ru.itaros.hoe.fluid.HOEFluid.HOEFluidState;
 
 
@@ -8,9 +9,9 @@ public class ForgeFluidNameFilter {
 
 	
 	public Fluid process(HOEFluid f){
-		//if(f instanceof Water){
-		//	return FluidRegistry.WATER;
-		//}
+		if(f.getCommonName().equals("fluid.water")){
+			return FluidRegistry.WATER;
+		}
 		//TODO: Railcraft Steam
 		
 		String name = processName(f.getCommonName());//Fuck TiCo

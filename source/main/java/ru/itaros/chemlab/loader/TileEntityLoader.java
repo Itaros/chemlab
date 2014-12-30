@@ -2,6 +2,7 @@ package ru.itaros.chemlab.loader;
 
 import ru.itaros.chemlab.blocks.multiblock.MultiblockPointerTileEntity;
 import ru.itaros.chemlab.hoe.io.*;
+import ru.itaros.chemlab.hoe.io.special.*;
 import ru.itaros.chemlab.hoe.io.special.ArcFurnaceControllerIO;
 import ru.itaros.chemlab.hoe.io.special.GasChimneyIO;
 import ru.itaros.chemlab.hoe.io.syndication.SyndicationEMFGeneratorIO;
@@ -38,7 +39,7 @@ public class TileEntityLoader {
     			new HiResistantMixerIO().setHostBlock(BlockLoader.hiresistmixer),
     			new ServiceBayIO().setHostBlock(BlockLoader.servicebay),
     			new GravMagIO().setHostBlock(BlockLoader.gravmag),
-    			//new HVLCFillerIO().setHostBlock(BlockLoader.hvlcfiller),
+    			new HVLCFillerIO().setHostBlock(BlockLoader.hvlcfiller),
     			new GasChimneyIO().setHostBlock(BlockLoader.gaschimney),
     			new SyndicationHubIO().setHostBlock(BlockLoader.syndicationhub),
     			new SyndicationEMFGeneratorIO().setHostBlock(BlockLoader.syndication_emfgenerator),
@@ -74,7 +75,7 @@ public class TileEntityLoader {
 		GameRegistry.registerTileEntity(HiResistantMixerTileEntity.class,HiResistantMixerTileEntity.class.getName());
 		GameRegistry.registerTileEntity(ServiceBayTileEntity.class,ServiceBayTileEntity.class.getName());
 		GameRegistry.registerTileEntity(GravMagTileEntity.class,GravMagTileEntity.class.getName());
-		//GameRegistry.registerTileEntity(HVLCFillerTileEntity.class,HVLCFillerTileEntity.class.getName());
+		GameRegistry.registerTileEntity(HVLCFillerTileEntity.class,HVLCFillerTileEntity.class.getName());
 		GameRegistry.registerTileEntity(GasChimneyTileEntity.class,GasChimneyTileEntity.class.getName());
 		GameRegistry.registerTileEntity(BloomeryTileEntity.class,BloomeryTileEntity.class.getName());
 		GameRegistry.registerTileEntity(HeatingFurnaceTileEntity.class,HeatingFurnaceTileEntity.class.getName());

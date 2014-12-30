@@ -27,7 +27,7 @@ public class GUILoader {
 				CatalyticTankContainer.class,
 				HiResistantMixerContainer.class,
 				GravMagContainer.class,
-				//HVLCFillerContainer.class,
+				HVLCFillerContainer.class,
 				GasChimneyContainer.class,
 				SyndicationHubContainer.class,
 				SyndicationItemPortContainer.class,
