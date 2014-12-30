@@ -146,7 +146,7 @@ public class BloomeryData extends HOEMachineData implements ISynchroportItems,
 	}
 
 	public void produce() {
-		if(inbound!=null || inbound.getProxy()!=null){
+		if(inbound!=null && inbound.getProxy()!=null){
 			inbound.decrement(1);
 			inbound=StackUtility.verify(inbound);
 			
