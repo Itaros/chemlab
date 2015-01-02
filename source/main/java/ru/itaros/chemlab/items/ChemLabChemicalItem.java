@@ -1,5 +1,9 @@
 package ru.itaros.chemlab.items;
 
+import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import ru.itaros.hoe.framework.chemistry.ChemicalCompound;
 import ru.itaros.hoe.framework.chemistry.ChemicalReaction;
 import ru.itaros.hoe.framework.chemistry.StoichiometricCoefficient;
@@ -20,6 +24,30 @@ public class ChemLabChemicalItem extends ChemLabItem {
 		reactiveIndexAsResource = ReactionDatabase.getInstance().getReactionsForResources(composition);
 	}
 	
+	
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player,
+			List list, boolean whatever) {
+		
+		//list.add("Composition:");
+		
+		if(composition!=null && composition.length>0){
+			String formulae="";
+			for(int i = 0 ; i < composition.length; i++){
+				ChemicalCompound cc = composition[i];
+				formulae+=cc.getStoichiometryString();
+				if(composition.length-1>i){
+					formulae+=",";
+				}
+			}
+			list.add(formulae);
+		}
+		
+		super.addInformation(stack, player, list, whatever);
+	}
+
 	/*
 	 * This method is SLOW AS HELL. Beware!
 	 * (Must be superseded by lookup pool)

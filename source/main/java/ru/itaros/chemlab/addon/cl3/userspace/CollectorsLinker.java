@@ -81,6 +81,9 @@ public class CollectorsLinker {
 				for(UserspaceCompound uc : cc.hoeChemicalCompounds){
 					ChemicalCompound compound = new ChemicalCompound(uc.stoichiometric);
 					compound.setConventionalName(uc.classicalName);
+					if(uc.functionalName!=null){
+						compound.setStoichiometryString(uc.functionalName);
+					}
 					compound.setFormationEnthalpy(uc.formationEnthalpy);
 					CompoundDatabase.getInstance().addCompound(compound);
 					System.out.println(compound.toString()+" is registered!");

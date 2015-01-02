@@ -44,8 +44,10 @@ public class ChemicalCompound {
 			int elementAmount = Integer.parseInt(elementAmountString);
 			composition[i]=new StoichiometricComposition(element,elementAmount);
 		}
+		
+		
 	}
-
+	
 	@Override
 	public String toString() {
 		String r="";
@@ -80,6 +82,12 @@ public class ChemicalCompound {
 	}
 	
 	
-	
+	private String stoichiometryString="";
+	public String getStoichiometryString(){
+		return stoichiometryString;
+	}
+	public void setStoichiometryString(String string){
+		stoichiometryString=string;
+	}
 	
 }
