@@ -1,5 +1,9 @@
 package ru.itaros.chemlab.loader;
 
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import ru.itaros.chemlab.addon.cl3.userspace.CL3AddonLoader;
 import ru.itaros.chemlab.items.CIOWrench;
 import ru.itaros.chemlab.items.HVLCIndex;
@@ -57,8 +61,24 @@ public class ItemLoader {
 		
 		hiVolumeLiquidCellAutoloader(addonLoader);
 		
+		fixForgeOreDict();
+		
 	}
 	
+	private static void fixForgeOreDict() {
+		Block clay = Blocks.clay;
+		int[] ids = OreDictionary.getOreIDs(new ItemStack(clay));
+		boolean approved=true;
+		for(int i : ids){
+			if(OreDictionary.getOreName(i).equals("clay")){
+				approved=false;
+			}
+		}
+		if(approved){
+			OreDictionary.registerOre("clay", clay);
+		}
+	}
+
 	private static void hiVolumeLiquidCellAutoloader(CL3AddonLoader addonLoader) {
 		HOEFluid[] all = HOEFluid.getFluidRegistry().all();
 		HVLCIndex[] index = new HVLCIndex[all.length];
