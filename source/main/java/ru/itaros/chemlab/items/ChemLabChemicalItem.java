@@ -37,6 +37,7 @@ public class ChemLabChemicalItem extends ChemLabItem {
 			String formulae="";
 			for(int i = 0 ; i < composition.length; i++){
 				ChemicalCompound cc = composition[i];
+				if(cc==null){continue;}// Ewh. Something is broken. Fail silently :/
 				formulae+=cc.getStoichiometryString();
 				if(composition.length-1>i){
 					formulae+=",";
