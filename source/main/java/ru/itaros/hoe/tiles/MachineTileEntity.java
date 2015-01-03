@@ -2,6 +2,11 @@ package ru.itaros.hoe.tiles;
 
 import java.util.EnumSet;
 
+import com.itszuvalex.femtocraft.api.EnumTechLevel;
+import com.itszuvalex.femtocraft.api.power.IPowerTileContainer;
+import com.itszuvalex.femtocraft.api.power.PowerContainer;
+
+import cpw.mods.fml.common.Optional;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -18,6 +23,7 @@ import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.chemlab.HOELinker;
 import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold;
+import ru.itaros.chemlab.addon.femtocraft.PowerContainerQuery;
 import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.chemlab.tiles.syndication.ISyndicationPiping;
 import ru.itaros.chemlab.tiles.syndication.SyndicationControllerDescriptorContainer;
@@ -51,7 +57,8 @@ import appeng.api.util.AEColor;
 import appeng.api.util.DimensionalCoord;
 import appeng.util.Platform;
 
-public abstract class MachineTileEntity extends TileEntity implements ISecured, ISyndicationPiping, IRotationSolver, IGridHost, IGridBlock, IHOEVolatileAEPowerCache, IHOEInventorySyncable{
+@Optional.Interface(iface="com.itszuvalex.femtocraft.api.power.IPowerTileContainer", modid="Femtocraft", striprefs=true)
+public abstract class MachineTileEntity extends TileEntity implements ISecured, ISyndicationPiping, IRotationSolver, IGridHost, IGridBlock, IHOEVolatileAEPowerCache, IHOEInventorySyncable, IPowerTileContainer{
 
 	@Override
 	public AECableType getCableConnectionType(ForgeDirection arg0) {
@@ -491,6 +498,8 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 	public MachineTileEntity() {
 		super();
 		
+		PowerContainerQuery.providePowerContainer(this);
+		
 		syndicationDescriptor = new SyndicationControllerDescriptorContainer(this);
 		
 		HOE.getInstance().getTEPostLoadManager().pushTile(this);
@@ -555,11 +564,16 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 		//Power Transfer
 		revalidatePowerStatus();
 		
+		if(PowerContainerQuery.isFemtoCraftAvailable()){
+			mergeFemtocraftPowerPool();
+		}
+		
 		HOEMachineData c = getServerData();
 		if(c==null){return;}
 		double overflow = c.incrementPower(getAECurrentPower());
 		this.localAEPower=overflow;
 	}
+
 
 
 	@Override
@@ -813,6 +827,102 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 		
 		return adjRaw;
 
+	}
+
+	
+	//Femtocraft Power
+
+	private PowerContainer femtoPower;
+	
+	@Optional.Method(modid = "Femtocraft")
+	public void setFemtocraftPowerCell(PowerContainer pc){
+		femtoPower=pc;
+	}
+	
+	@Optional.Method(modid = "Femtocraft")
+	@Override
+	public boolean canAcceptPowerOfLevel(EnumTechLevel arg0, ForgeDirection arg1) {
+		//return femtoPower.canAcceptPowerOfLevel(arg0);
+		return true;//Every kind of power
+	}
+
+	@Optional.Method(modid = "Femtocraft")
+	@Override
+	public boolean canCharge(ForgeDirection arg0) {
+		return femtoPower.canCharge();
+	}
+
+	@Optional.Method(modid = "Femtocraft")
+	@Override
+	public boolean canConnect(ForgeDirection arg0) {
+		return true;
+	}
+
+	@Optional.Method(modid = "Femtocraft")
+	@Override
+	public int charge(ForgeDirection arg0, int arg1) {
+		return femtoPower.charge(arg1);
+	}
+
+	@Optional.Method(modid = "Femtocraft")
+	@Override
+	public boolean consume(int arg0) {
+		return femtoPower.consume(arg0);
+	}
+
+	@Optional.Method(modid = "Femtocraft")
+	@Override
+	public int getCurrentPower() {
+		return femtoPower.getCurrentPower();
+	}
+
+	@Optional.Method(modid = "Femtocraft")
+	@Override
+	public float getFillPercentage() {
+		return femtoPower.getFillPercentage();
+	}
+
+	@Optional.Method(modid = "Femtocraft")
+	@Override
+	public float getFillPercentageForCharging(ForgeDirection arg0) {
+		return femtoPower.getFillPercentageForCharging();
+	}
+
+	@Optional.Method(modid = "Femtocraft")
+	@Override
+	public float getFillPercentageForOutput(ForgeDirection arg0) {
+		return femtoPower.getFillPercentageForOutput();
+	}
+
+	@Optional.Method(modid = "Femtocraft")
+	@Override
+	public int getMaxPower() {
+		return femtoPower.getMaxPower();
+	}
+
+	@Optional.Method(modid = "Femtocraft")
+	@Override
+	public EnumTechLevel getTechLevel(ForgeDirection arg0) {
+		return femtoPower.getTechLevel();
 	}	
+	
+	@Optional.Method(modid = "Femtocraft")
+	private void mergeFemtocraftPowerPool() 
+	{
+		double powerdiff = getAEMaxPower()-getAECurrentPower();
+		if((powerdiff-PowerContainerQuery.FEMTO_TO_AE_RATIO_DOUBLED)>0){
+			int femtopower = femtoPower.getCurrentPower();
+			int scaledfemto = femtopower * PowerContainerQuery.FEMTO_TO_AE_RATIO;
+			int lower;
+			if(powerdiff>scaledfemto){
+				lower = femtopower;
+			}else{
+				lower = (int)powerdiff;
+			}
+			if(femtoPower.consume(lower)){
+				this.localAEPower+=lower * PowerContainerQuery.FEMTO_TO_AE_RATIO;
+			}
+		}
+	}
 	
 }

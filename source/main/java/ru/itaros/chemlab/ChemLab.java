@@ -6,6 +6,7 @@ import net.minecraftforge.common.MinecraftForge;
 import ru.itaros.api.hoe.internal.HOEIO;
 import ru.itaros.chemlab.addon.cl3.userspace.CL3AddonLoader;
 import ru.itaros.chemlab.addon.cl3.userspace.CollectorsLinker;
+import ru.itaros.chemlab.addon.femtocraft.PowerContainerQuery;
 import ru.itaros.chemlab.client.ui.common.GUIHandler;
 import ru.itaros.chemlab.events.SyndicationSystemPipingProtection;
 import ru.itaros.chemlab.loader.BlockLoader;
@@ -79,6 +80,8 @@ public class ChemLab
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+    	PowerContainerQuery.inspectFML();
+    	
     	versioncheck = new VersionCheckerIntegration().startPolling();
     	
     	tier_registry=new TierRegistry();
