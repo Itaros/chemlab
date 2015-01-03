@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import ru.itaros.chemlab.addon.cl3.userspace.CL3AddonLoader;
 import ru.itaros.chemlab.items.CIOWrench;
+import ru.itaros.chemlab.items.CraftingHammer;
 import ru.itaros.chemlab.items.HVLCIndex;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.items.HiVolumeLiquidCellEmpty;
@@ -21,6 +22,8 @@ public class ItemLoader {
 	public static Programmer programmer;
 	public static PipeWrench wrench;
 	public static CIOWrench ciowrench;
+	
+	public static CraftingHammer craftingHammer;
 	
 	public static HiVolumeLiquidCellEmpty emptyhvlc;
 
@@ -44,20 +47,6 @@ public class ItemLoader {
 		ipai_fluids= new ItemPortApplianceItem("fluids",PortType.FLUID);
 		GameRegistry.registerItem(ipai_items,ipai_items.getUnlocalizedName());
 		GameRegistry.registerItem(ipai_fluids,ipai_fluids.getUnlocalizedName());
-		
-		//TOOLS
-		programmer = new Programmer();
-		GameRegistry.registerItem(programmer,programmer.getUnlocalizedName());
-		
-		wrench = new PipeWrench();
-		GameRegistry.registerItem(wrench,wrench.getUnlocalizedName());
-		
-		ciowrench = new CIOWrench();
-		GameRegistry.registerItem(ciowrench,ciowrench.getUnlocalizedName());
-		
-		emptyhvlc = new HiVolumeLiquidCellEmpty();
-		GameRegistry.registerItem(emptyhvlc,emptyhvlc.getUnlocalizedName());
-		
 		
 		hiVolumeLiquidCellAutoloader(addonLoader);
 		
@@ -91,6 +80,24 @@ public class ItemLoader {
 		HiVolumeLiquidCell hvlc = new HiVolumeLiquidCell(index);
 		hvlc.setIcon(addonLoader);
 		GameRegistry.registerItem(hvlc, hvlc.getUnlocalizedName());
+	}
+
+	public static void loadTools() {
+		programmer = new Programmer();
+		GameRegistry.registerItem(programmer,programmer.getUnlocalizedName());
+		
+		wrench = new PipeWrench();
+		GameRegistry.registerItem(wrench,wrench.getUnlocalizedName());
+		
+		ciowrench = new CIOWrench();
+		GameRegistry.registerItem(ciowrench,ciowrench.getUnlocalizedName());
+		
+		emptyhvlc = new HiVolumeLiquidCellEmpty();
+		GameRegistry.registerItem(emptyhvlc,emptyhvlc.getUnlocalizedName());
+		
+		craftingHammer = new CraftingHammer();
+		GameRegistry.registerItem(craftingHammer, craftingHammer.getUnlocalizedName());
+		
 	}	
 	
 

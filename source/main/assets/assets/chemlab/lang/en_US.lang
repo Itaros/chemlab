@@ -3,6 +3,7 @@ itemGroup.ChemLab=ChemLab Common
 item.programmer.name=Hardware Programmer
 item.pipewrench.name=Pipe Wrench
 item.iomultitool.name=IO Multitool
+item.crafting.hammer.name=Forging Hammer
 
 tile.component.machinecasing.name=Machine Casing
 

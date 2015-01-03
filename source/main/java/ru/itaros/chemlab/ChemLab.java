@@ -93,6 +93,8 @@ public class ChemLab
     	
     	new ChemLabCreativeTab();//There is forgebug somewhere close
     	
+    	ItemLoader.loadTools();
+    	
 		//CL3 Addons
 		cl3addons = new CL3AddonLoader(event.getModConfigurationDirectory());
 		cl3addonsLinker = new CollectorsLinker(cl3addons);
