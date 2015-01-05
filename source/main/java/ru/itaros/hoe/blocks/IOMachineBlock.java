@@ -30,6 +30,8 @@ import ru.itaros.hoe.tiles.ioconfig.IConfigurableIO;
 import ru.itaros.hoe.tiles.ioconfig.IconsLibrary;
 import ru.itaros.hoe.tiles.ioconfig.PortInfo;
 import ru.itaros.hoe.utils.MetaIconFolder;
+import ru.itaros.hoe.utils.euclideanspace.Transformations;
+import ru.itaros.hoe.utils.euclideanspace.Vector3;
 
 public abstract class IOMachineBlock extends Block implements IRotatableBlock, ITileEntityProvider, ISyndicationPipeConnectable{
 
@@ -132,12 +134,16 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 	@Override
 	public void rotate(World w, int x, int y, int z) {
 		int off = RotatableBlockUtility.calculateSpinIncrement(w.getBlockMetadata(x, y, z),rotationChain.length);
-		w.setBlockMetadataWithNotify(x, y, z, off, 1+2);
+		setRotationTo(w, x, y, z, off);
+	}
+	protected void setRotationTo(World world, int x, int y, int z,
+			int rotationmeta) {
+		world.setBlockMetadataWithNotify(x, y, z, rotationmeta, 1+2);
 		//After setting metadata we need to cache meta into TE
-		TileEntity te = w.getTileEntity(x, y, z);
+		TileEntity te = world.getTileEntity(x, y, z);
 		if(te instanceof MachineTileEntity){
 			MachineTileEntity mte = (MachineTileEntity)te;
-			mte.setBlockMeta(off);
+			mte.setBlockMeta(rotationmeta);
 		}
 	}
 	public static final ForgeDirection[] rotationChain={ForgeDirection.SOUTH,ForgeDirection.EAST,ForgeDirection.NORTH,ForgeDirection.WEST};
@@ -145,6 +151,16 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 	@Override
 	public ForgeDirection[] getRotationChain() {
 		return rotationChain;
+	}
+	
+	protected final int getMetaFromRotationChain(ForgeDirection expected){
+		for(int i = 0; i < rotationChain.length ; i ++){
+			ForgeDirection query = rotationChain[i];
+			if(query==expected){
+				return i;
+			}
+		}
+		return -1;//No rotation in chain. This is a block configuration bug
 	}
 	
 //GFX
@@ -243,6 +259,8 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 			int y, int z, EntityLivingBase host,
 			ItemStack stack) {
 		
+		//IOPorts restorer
+		
 		TileEntity te = world.getTileEntity(x, y, z);
 		if(te instanceof IConfigurableIO){
 			IConfigurableIO io = (IConfigurableIO)te;
@@ -251,6 +269,16 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 			}
 		}		
 		
+		if(!world.isRemote){
+			//Rotation
+			Vector3 blockvector = Transformations.getVectorFromBlock(x, y, z);
+			Vector3 playerpos = new Vector3(host.posX,host.posZ,host.posY);
+			Vector3 radial = Transformations.getRadialPoint(blockvector, playerpos);
+			ForgeDirection expectedDir = Transformations.getDirectionFromRadialPoint(radial);
+			
+			int meta = getMetaFromRotationChain(expectedDir);
+			this.setRotationTo(world, x, y, z, meta);
+		}
 		
 	}
 	
@@ -284,6 +312,8 @@ public abstract class IOMachineBlock extends Block implements IRotatableBlock, I
 		super.onNeighborBlockChange(w, x, y, z,
 				block);
 	}
+
+	
 
 		
 	
