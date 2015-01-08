@@ -41,6 +41,7 @@ public class BlockLoader {
 	public static GasChimney gaschimney;
 	public static Bloomery bloomery;
 	public static HeatingFurnace heatingFurnace;
+	public static FrothCell frothCell;
 	
 	public static SyndicationHub syndicationhub;
 	public static SyndicationBus pipes_syndicationbus;
@@ -168,7 +169,10 @@ public class BlockLoader {
 		heatingFurnace = new HeatingFurnace();
 		GameRegistry.registerBlock(heatingFurnace,heatingFurnace.getUnlocalizedName());
 		
-		//GameRegistry.registerBlock(,.getUnlocalizedNameRaw());
+		frothCell = new FrothCell();
+		GameRegistry.registerBlock(frothCell,frothCell.getUnlocalizedName());
+		
+		//GameRegistry.registerBlock(,.getUnlocalizedName());
 		
 		
 		syndicationhub = new SyndicationHub();

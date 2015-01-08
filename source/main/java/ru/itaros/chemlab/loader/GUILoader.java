@@ -38,7 +38,8 @@ public class GUILoader {
 				WireCoatingExtruderContainer.class,
 				ArcFurnaceContainer.class,
 				BloomeryContainer.class,
-				HeatingFurnaceContainer.class
+				HeatingFurnaceContainer.class,
+				FrothCellContainer.class
 				);
 	}
 	

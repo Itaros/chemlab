@@ -51,7 +51,8 @@ public class TileEntityLoader {
     			new WireCoatingExtruderIO().setHostBlock(BlockLoader.wcextruder),
     			new ArcFurnaceControllerIO().setHostBlock(BlockLoader.controller_arcFurnace),
     			new BloomeryIO().setHostBlock(BlockLoader.bloomery),
-    			new HeatingFurnaceIO().setHostBlock(BlockLoader.heatingFurnace)
+    			new HeatingFurnaceIO().setHostBlock(BlockLoader.heatingFurnace),
+    			new FrothCellIO().setHostBlock(BlockLoader.frothCell)
     			);
 		iocollection.registerInHOE();
 		
@@ -79,6 +80,7 @@ public class TileEntityLoader {
 		GameRegistry.registerTileEntity(GasChimneyTileEntity.class,GasChimneyTileEntity.class.getName());
 		GameRegistry.registerTileEntity(BloomeryTileEntity.class,BloomeryTileEntity.class.getName());
 		GameRegistry.registerTileEntity(HeatingFurnaceTileEntity.class,HeatingFurnaceTileEntity.class.getName());
+		GameRegistry.registerTileEntity(FrothCellTileEntity.class,FrothCellTileEntity.class.getName());
 		
 		GameRegistry.registerTileEntity(SyndicationHubTileEntity.class,SyndicationHubTileEntity.class.getName());
 		
