@@ -12,7 +12,11 @@ public abstract class HOEMachineCrafterIO extends HOEMachineIO{
 	public abstract RecipesCollection getRecipesCollection();
 
 	@Override
-	public abstract void configureData(HOEData data);
+	public void configureData(HOEData data){
+		HOEMachineCrafterData machine = (HOEMachineCrafterData) data;
+		machine.setDepots(getInputReq(), getOutputReq());
+		machine.setConfigured();
+	}
 
 
 	@Override
@@ -42,9 +46,17 @@ public abstract class HOEMachineCrafterIO extends HOEMachineIO{
 	public void claimOwnership() {
 		super.claimOwnership();
 		
+		int maxIncoming = 0;
+		int maxOutcoming= 0;
+		
 		for(Recipe r:getRecipesCollection().getRecipes()){
 			r.claim(this);
+			int incoming = r.getIncomingSlots();
+			int outcoming = r.getOutcomingSlots();
+			maxIncoming=maxIncoming>incoming?maxIncoming:incoming;
+			maxOutcoming=maxOutcoming>outcoming?maxOutcoming:outcoming;
 		}
+		this.setReq(maxIncoming, maxOutcoming);
 	}
 	
 	

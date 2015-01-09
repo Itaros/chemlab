@@ -10,8 +10,6 @@ import ru.itaros.hoe.recipes.RecipesCollection;
 public class CrusherIO extends HOEMachineCrafterIO {
 
 	public static final int MAXPOWER = ChemLabValues.ENERGY_FRACTION*100*2;
-	public static final int INCOMING_PORTS		=	1;
-	public static final int OUTCOMING_PORTS	=	1;
 	
 	
 	@Override
@@ -20,7 +18,6 @@ public class CrusherIO extends HOEMachineCrafterIO {
 	}	
 	
 	public CrusherIO(){
-		this.setReq(INCOMING_PORTS, OUTCOMING_PORTS);
 		this.allowToStart();
 	}
 
@@ -30,9 +27,8 @@ public class CrusherIO extends HOEMachineCrafterIO {
 	public void configureData(HOEData data) {
 		HOEMachineCrafterData machine=(HOEMachineCrafterData) data;
 		machine.setMaxPower(MAXPOWER);
-		machine.setDepots(INCOMING_PORTS, OUTCOMING_PORTS);
 		machine.setMachine(this);
-		machine.setConfigured();
+		super.configureData(data);
 	}
 	
 	@Override

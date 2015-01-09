@@ -9,8 +9,6 @@ import ru.itaros.hoe.recipes.RecipesCollection;
 public class AutomaticDrawplateIO extends HOEMachineCrafterIO {
 
 	public static final int MAXPOWER = 2000;
-	public static final int INCOMING_PORTS		=	1;
-	public static final int OUTCOMING_PORTS	=	2;
 	
 	
 	@Override
@@ -19,7 +17,6 @@ public class AutomaticDrawplateIO extends HOEMachineCrafterIO {
 	}	
 	
 	public AutomaticDrawplateIO(){
-		this.setReq(INCOMING_PORTS, OUTCOMING_PORTS);
 		this.allowToStart();
 	}
 
@@ -31,9 +28,8 @@ public class AutomaticDrawplateIO extends HOEMachineCrafterIO {
 		machine.setIgnoreInboundMetadata();
 		
 		machine.setMaxPower(MAXPOWER);
-		machine.setDepots(INCOMING_PORTS, OUTCOMING_PORTS);
 		machine.setMachine(this);
-		machine.setConfigured();
+		super.configureData(data);
 	}
 	
 	@Override

@@ -8,8 +8,6 @@ import ru.itaros.hoe.recipes.RecipesCollection;
 
 public class CentrifugalExtractorIO extends HOEMachineCrafterIO {
 	public static final int MAXPOWER = 1000;
-	public static final int INCOMING_PORTS		=	3;
-	public static final int OUTCOMING_PORTS	=	2;
 	
 	
 	@Override
@@ -18,7 +16,6 @@ public class CentrifugalExtractorIO extends HOEMachineCrafterIO {
 	}	
 	
 	public CentrifugalExtractorIO(){
-		this.setReq(INCOMING_PORTS, OUTCOMING_PORTS);
 		this.allowToStart();
 	}
 
@@ -27,9 +24,8 @@ public class CentrifugalExtractorIO extends HOEMachineCrafterIO {
 	public void configureData(HOEData data) {
 		HOEMachineCrafterData machine=(HOEMachineCrafterData) data;
 		machine.setMaxPower(MAXPOWER);
-		machine.setDepots(INCOMING_PORTS, OUTCOMING_PORTS);
 		machine.setMachine(this);
-		machine.setConfigured();
+		super.configureData(data);
 	}
 
 	@Override

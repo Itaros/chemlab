@@ -9,8 +9,6 @@ public class FrothCellIO extends HOEMachineCrafterIO {
 
 
 	public static final int MAXPOWER = 1000;
-	public static final int INCOMING_PORTS		=	1;
-	public static final int OUTCOMING_PORTS	=	3;
 	
 	
 	private static RecipesCollection recipes;
@@ -24,7 +22,6 @@ public class FrothCellIO extends HOEMachineCrafterIO {
 		recipes = new RecipesCollection();
 		recipes.register();
 		
-		this.setReq(INCOMING_PORTS, OUTCOMING_PORTS);
 		this.allowToStart();
 	}
 
@@ -33,9 +30,8 @@ public class FrothCellIO extends HOEMachineCrafterIO {
 	public void configureData(HOEData data) {
 		HOEMachineCrafterData machine=(HOEMachineCrafterData) data;
 		machine.setMaxPower(MAXPOWER);
-		machine.setDepots(INCOMING_PORTS, OUTCOMING_PORTS);
 		machine.setMachine(this);
-		machine.setConfigured();
+		super.configureData(data);
 	}
 	
 	@Override

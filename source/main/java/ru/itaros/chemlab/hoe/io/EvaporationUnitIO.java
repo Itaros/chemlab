@@ -9,8 +9,6 @@ import ru.itaros.hoe.recipes.RecipesCollection;
 public class EvaporationUnitIO extends HOEMachineCrafterIO {
 
 	public static final int MAXPOWER = 100;
-	public static final int INCOMING_PORTS		=	2;
-	public static final int OUTCOMING_PORTS	=	3;
 	
 	
 	@Override
@@ -19,7 +17,6 @@ public class EvaporationUnitIO extends HOEMachineCrafterIO {
 	}	
 	
 	public EvaporationUnitIO(){
-		this.setReq(INCOMING_PORTS, OUTCOMING_PORTS);
 		this.allowToStart();
 	}
 
@@ -28,9 +25,8 @@ public class EvaporationUnitIO extends HOEMachineCrafterIO {
 	public void configureData(HOEData data) {
 		HOEMachineCrafterData machine=(HOEMachineCrafterData) data;
 		machine.setMaxPower(MAXPOWER);
-		machine.setDepots(INCOMING_PORTS, OUTCOMING_PORTS);
 		machine.setMachine(this);
-		machine.setConfigured();
+		super.configureData(data);
 	}
 
 	@Override
