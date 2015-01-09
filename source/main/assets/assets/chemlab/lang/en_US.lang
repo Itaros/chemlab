@@ -40,6 +40,7 @@ tile.machine.turboexpander.name=Turboexpander
 tile.machine.washer.name=Industrial Washer
 tile.machine.wcextruder.name=Wire Coating Extruder
 tile.machine.bloomery.name=Stone Bloomery
+tile.machine.frothcell.name=Froth Flotation Cell
 
 tile.syndication.bus.name=Syndication Bus Multipipe
 tile.syndication.utilities.capacitor.name=Syndication EMF Capacitor
