@@ -63,8 +63,6 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	//INVENTORY	
 	
 	ItemStack in, out;
-	FluidTank fin = new FluidTank(1000);
-	FluidTank fout = new FluidTank(1000);
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
@@ -303,7 +301,6 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	public void pushToHOE() {		
 		//Main Inventory
 		in=TileEntityHelper.HOEItemPush(this, in);
-		fin.setFluid(TileEntityHelper.HOEFluidPush(this,fin.getFluid()));
 		super.pushToHOE();
 	}
 
@@ -342,17 +339,36 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 	//Fluids	
 	
 	@Override
-	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-		FluidStack fl = fin.getFluid();
-		if(fl==null){return fin.fill(resource, doFill);}
-		
-		if(fl.getFluid()==resource.getFluid()){
-			return fin.fill(resource, doFill);
-		}else{
-			if(fl.amount==0){
-				fin.setFluid(new FluidStack(resource.getFluid(),0));
-				return fin.fill(resource, doFill);
+	public int fill(ForgeDirection side, FluidStack resource, boolean doFill) {
+		int realside = getRealSide(side.ordinal(),getBlockMeta());
+		int maxin = 1000;
+		PortInfo pi = ports[realside];
+		if(pi!=null && pi.isFluidSocket()){
+			FluidStack flst = (FluidStack)pi.getStack();
+			if(flst==null || flst.amount==0){
+				//Empty
+				int pick = resource.amount>maxin?maxin:resource.amount;
+				FluidStack acquired = resource.copy();
+				acquired.amount=pick;
+				if(doFill){
+					pi.setStack(acquired);
+				}
+				return pick;
+			}else{
+				//Non-empty
+				if(flst.fluidID==resource.fluidID){
+					int freespace = maxin - flst.amount;
+					int pick = resource.amount>freespace?freespace:resource.amount;
+					if(doFill){
+						flst.amount+=pick;
+						pi.setStack(flst);//Return back
+					}
+					return pick;
+				}else{
+					return 0;//Fuck off
+				}
 			}
+		}else{
 			return 0;
 		}
 	}
@@ -365,8 +381,9 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 
 	@Override
 	public FluidStack drain(ForgeDirection side, int maxDrain, boolean doDrain) {
-		PortInfo pi = ports[side.ordinal()];
-		if(pi.isFluidSocket()){
+		int realside = getRealSide(side.ordinal(),getBlockMeta());
+		PortInfo pi = ports[realside];
+		if(pi!=null && pi.isFluidSocket()){
 			FluidStack flst = (FluidStack)pi.getStack();
 			if(flst!=null && flst.amount>0){
 				FluidStack drain;
