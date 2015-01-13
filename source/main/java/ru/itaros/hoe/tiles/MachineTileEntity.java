@@ -379,6 +379,8 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 			readServerState(nbt.getCompoundTag("hoemdata"));
 		}
 		
+		blockMetaCache=nbt.getInteger("metaCache");
+		
 		localAEPower=nbt.getDouble("ae");
 		
 		security.readFromNBT(nbt, "security");
@@ -400,6 +402,8 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 				nbt.setTag("hoemdata",cachedPayload);//Writeback(unfinished)
 			}
 		}
+		
+		nbt.setInteger("metaCache", blockMetaCache);
 		
 		nbt.setDouble("ae", localAEPower);
 		
