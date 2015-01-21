@@ -554,8 +554,12 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 			if(pushToHOECIOSequence<pis.length){
 				PortInfo p = pis[pushToHOECIOSequence];
 				if(p!=null){
-					if(p.isItemSocket() && p.isInput()){
-						p.setStack(TileEntityHelper.HOEItemPush(this, (ItemStack)p.getStack()));
+					if(p.isInput()){
+						if(p.isItemSocket()){
+							p.setStack(TileEntityHelper.HOEItemPush(this, (ItemStack)p.getStack()));
+						}else if(p.isFluidSocket()){
+							p.setStack(TileEntityHelper.HOEFluidPush(this, (FluidStack)p.getStack()));
+						}
 					}
 				}
 				pushToHOECIOSequence++;
