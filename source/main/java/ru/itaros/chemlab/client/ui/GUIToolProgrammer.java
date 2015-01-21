@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -196,6 +197,10 @@ public class GUIToolProgrammer extends GuiScreen {
 	private int totalPages = 0;
 	private int currentPage = 0;
 	private void drawRecipes(int operation, int x2, int y2) {
+		
+        int mx = Mouse.getEventX() * this.width / this.mc.displayWidth;
+        int my = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+		
 		//operation:
 		//0 = DRAW
 		//1 = CLICKSIGN
@@ -236,6 +241,9 @@ public class GUIToolProgrammer extends GuiScreen {
 			int i=-1;
 			for(int xp = rangeStart; xp < rangeEnd; xp++){
 				i++;
+				
+				int yoffset = (ystep*i);
+				
 				if(operation == 0){
 					GL11.glDisable(GL11.GL_LIGHTING);
 					GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -258,39 +266,15 @@ public class GUIToolProgrammer extends GuiScreen {
 					GL11.glColorMask(true, true, true, true);
 	
 					GL11.glPushMatrix();
-			       // int k = this.guiLeft;
-			       // int l = this.guiTop;
-			       // GL11.glTranslatef((float)k, (float)l, 0.0F);
-					
+
 					//TODO: This shit should be all precached
 					//Drawing incomings
-					int inc_offset=-1;
-					for(IUniversalStack stack_inc : r.getIncomingStricttypes()){
-						inc_offset++;
-						if(stack_inc instanceof UniversalItemStack){
-							RenderingUtils.drawItemStack((ItemStack) stack_inc.getProxy(), x+xi+60-10-(inc_offset*(16+2)), y+yi+18+(ystep*i), null, this.zLevel, this.itemRender, this.fontRendererObj);
-						}
-						if(stack_inc instanceof UniversalFluidStack){
-							UniversalFluidStack ufs = (UniversalFluidStack)stack_inc;
-							ItemStack hvlcWrap = HiVolumeLiquidCell.getByFluid((HOEFluid)ufs.getItem());
-							hvlcWrap.stackSize=ufs.getStackSize();
-							RenderingUtils.drawItemStack(hvlcWrap, x+xi+60-10-(inc_offset*(16+2)), y+yi+18+(ystep*i), null, this.zLevel, this.itemRender, this.fontRendererObj);
-						}
-					}
+					renderStacksLine(r.getIncomingStricttypes(), xi, yi, yoffset, 65, true);
+					//if(mx>sx && mx<sx+16 && my>sy && my<sy+16){
+					//	this.renderToolTip(tooltipProvider, mx, my);
+					//}					
 					//Drawing outcomings
-					int out_offset=-1;
-					for(IUniversalStack stack_out : r.getOutcomingStricttypes()){
-						out_offset++;
-						if(stack_out instanceof UniversalItemStack){
-							RenderingUtils.drawItemStack((ItemStack) stack_out.getProxy(), x+xi+97+10+(out_offset*(16+2)), y+yi+18+(ystep*i), null, this.zLevel, this.itemRender, this.fontRendererObj);
-						}
-						if(stack_out instanceof UniversalFluidStack){
-							UniversalFluidStack ufs = (UniversalFluidStack)stack_out;
-							ItemStack hvlcWrap = HiVolumeLiquidCell.getByFluid((HOEFluid)ufs.getItem());
-							hvlcWrap.stackSize=ufs.getStackSize();
-							RenderingUtils.drawItemStack(hvlcWrap, x+xi+97+10+(out_offset*(16+2)), y+yi+18+(ystep*i), null, this.zLevel, this.itemRender, this.fontRendererObj);
-						}
-					}	
+					renderStacksLine(r.getOutcomingStricttypes(), xi, yi, yoffset, 107, false);
 					
 					RenderHelper.enableStandardItemLighting();
 					
@@ -332,9 +316,36 @@ public class GUIToolProgrammer extends GuiScreen {
 		
 	}
 
+
+	protected void renderStacksLine(IUniversalStack[] list, int xi, int yi, int yoffset,
+			int stepOffset, boolean isShiftNegative) {
+		int stepping=-1;
+		for(IUniversalStack stack_inc : list){
+			stepping++;
+			int sx = x+xi+stepOffset-10+(stepping*(16+2)*(isShiftNegative?-1:1));
+			int sy = y+yi+18+yoffset;
+			ItemStack representation = getRepresentationOfStack(stack_inc);
+			RenderingUtils.drawItemStack(representation, sx, sy, null, this.zLevel, this.itemRender, this.fontRendererObj);
+		}
+	}
+
 	
 	
 	
+	private static ItemStack getRepresentationOfStack(IUniversalStack stack_inc) {
+		if(stack_inc instanceof UniversalItemStack){
+			return (ItemStack)stack_inc.getProxy();
+		}
+		if(stack_inc instanceof UniversalFluidStack){
+			UniversalFluidStack ufs = (UniversalFluidStack)stack_inc;
+			ItemStack hvlcWrap = HiVolumeLiquidCell.getByFluid((HOEFluid)ufs.getItem());
+			hvlcWrap.stackSize=ufs.getStackSize();
+			return hvlcWrap;
+		}
+		return (ItemStack)null;
+	}
+
+
 	@Override
 	public void onGuiClosed() {
 		this.mc.getSoundHandler().stopSounds();
