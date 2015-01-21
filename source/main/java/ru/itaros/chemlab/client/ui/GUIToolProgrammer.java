@@ -245,13 +245,16 @@ public class GUIToolProgrammer extends GuiScreen {
 				int yoffset = (ystep*i);
 				
 				if(operation == 0){
+					
 					GL11.glDisable(GL11.GL_LIGHTING);
 					GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 					this.mc.renderEngine.bindTexture(overlay);
 					this.drawTexturedModalRect(xi+x, yi+y+(ystep*i), 0, 0, osx, osy);
-					GL11.glEnable(GL11.GL_LIGHTING);
 					
 					Recipe r = repcol.getRecipes()[xp];
+					fontRendererObj.drawString(r.getLocalizedName(), xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);
+					
+					GL11.glEnable(GL11.GL_LIGHTING);
 					
 					 GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 					//What the hell is that?
@@ -267,23 +270,26 @@ public class GUIToolProgrammer extends GuiScreen {
 	
 					GL11.glPushMatrix();
 
+					//First pass(itemstacks)
+					
 					//TODO: This shit should be all precached
 					//Drawing incomings
-					renderStacksLine(r.getIncomingStricttypes(), xi, yi, yoffset, 65, true);
-					//if(mx>sx && mx<sx+16 && my>sy && my<sy+16){
-					//	this.renderToolTip(tooltipProvider, mx, my);
-					//}					
+					renderStacksLine(r.getIncomingStricttypes(), xi, yi, yoffset, 65, true);			
 					//Drawing outcomings
 					renderStacksLine(r.getOutcomingStricttypes(), xi, yi, yoffset, 107, false);
 					
 					RenderHelper.enableStandardItemLighting();
+					
+					//Second pass(tooltips)
+					
+					renderTooltipsLine(r.getIncomingStricttypes(), xi, yi, yoffset, 65, true,mx,my);
+					renderTooltipsLine(r.getOutcomingStricttypes(), xi, yi, yoffset, 107, false,mx,my);
 					
 					GL11.glPopMatrix();
 					
 					RenderHelper.disableStandardItemLighting();
 					GL11.glDisable(GL11.GL_LIGHTING);
 					
-					fontRendererObj.drawString(r.getLocalizedName(), xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);
 					
 				}else if(operation==1){
 					int ox = x2-x;
@@ -314,6 +320,21 @@ public class GUIToolProgrammer extends GuiScreen {
 		//60/18
 		}
 		
+	}
+
+
+	private void renderTooltipsLine(IUniversalStack[] list, int xi, int yi, int yoffset,
+			int stepOffset, boolean isShiftNegative, int mx, int my) {
+		int stepping=-1;
+		for(IUniversalStack stack_inc : list){
+			stepping++;
+			int sx = x+xi+stepOffset-10+(stepping*(16+2)*(isShiftNegative?-1:1));
+			int sy = y+yi+18+yoffset;
+			if(mx>sx && mx<sx+16 && my>sy && my<sy+16){
+				ItemStack representation = getRepresentationOfStack(stack_inc);
+				this.renderToolTip(representation, mx, my);
+			}	
+		}
 	}
 
 
