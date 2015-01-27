@@ -26,6 +26,7 @@ import ru.itaros.hoe.io.HOEMachineIO;
 import ru.itaros.hoe.itemhandling.IUniversalStack;
 import ru.itaros.hoe.itemhandling.UniversalFluidStack;
 import ru.itaros.hoe.itemhandling.UniversalItemStack;
+import ru.itaros.hoe.itemhandling.UniversalStackUtils;
 import ru.itaros.hoe.recipes.Recipe;
 import ru.itaros.hoe.recipes.RecipesCollection;
 import ru.itaros.hoe.tiles.ISecured;
@@ -331,7 +332,7 @@ public class GUIToolProgrammer extends GuiScreen {
 			int sx = x+xi+stepOffset-10+(stepping*(16+2)*(isShiftNegative?-1:1));
 			int sy = y+yi+18+yoffset;
 			if(mx>sx && mx<sx+16 && my>sy && my<sy+16){
-				ItemStack representation = getRepresentationOfStack(stack_inc);
+				ItemStack representation = UniversalStackUtils.getRepresentationOfStack(stack_inc);
 				this.renderToolTip(representation, mx, my);
 			}	
 		}
@@ -345,25 +346,9 @@ public class GUIToolProgrammer extends GuiScreen {
 			stepping++;
 			int sx = x+xi+stepOffset-10+(stepping*(16+2)*(isShiftNegative?-1:1));
 			int sy = y+yi+18+yoffset;
-			ItemStack representation = getRepresentationOfStack(stack_inc);
+			ItemStack representation = UniversalStackUtils.getRepresentationOfStack(stack_inc);
 			RenderingUtils.drawItemStack(representation, sx, sy, null, this.zLevel, this.itemRender, this.fontRendererObj);
 		}
-	}
-
-	
-	
-	
-	private static ItemStack getRepresentationOfStack(IUniversalStack stack_inc) {
-		if(stack_inc instanceof UniversalItemStack){
-			return (ItemStack)stack_inc.getProxy();
-		}
-		if(stack_inc instanceof UniversalFluidStack){
-			UniversalFluidStack ufs = (UniversalFluidStack)stack_inc;
-			ItemStack hvlcWrap = HiVolumeLiquidCell.getByFluid((HOEFluid)ufs.getItem());
-			hvlcWrap.stackSize=ufs.getStackSize();
-			return hvlcWrap;
-		}
-		return (ItemStack)null;
 	}
 
 

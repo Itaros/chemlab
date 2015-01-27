@@ -1,6 +1,8 @@
 package ru.itaros.hoe.itemhandling;
 
 import ru.itaros.api.hoe.exceptions.HOEInvalidUniStackFactory;
+import ru.itaros.chemlab.items.HiVolumeLiquidCell;
+import ru.itaros.hoe.fluid.HOEFluid;
 import ru.itaros.hoe.fluid.HOEFluidStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -85,5 +87,21 @@ public class UniversalStackUtils {
 		return comparable==null?true:comparable.getProxy()==null;
 	}
 	
+	
+	/*
+	 * Gets representing vanilla stack
+	 */
+	public static ItemStack getRepresentationOfStack(IUniversalStack stack_inc) {
+		if(stack_inc instanceof UniversalItemStack){
+			return (ItemStack)stack_inc.getProxy();
+		}
+		if(stack_inc instanceof UniversalFluidStack){
+			UniversalFluidStack ufs = (UniversalFluidStack)stack_inc;
+			ItemStack hvlcWrap = HiVolumeLiquidCell.getByFluid((HOEFluid)ufs.getItem());
+			hvlcWrap.stackSize=ufs.getStackSize();
+			return hvlcWrap;
+		}
+		return (ItemStack)null;
+	}
 	
 }
