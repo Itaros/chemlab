@@ -413,19 +413,22 @@ public abstract class MachineCrafterTileEntity extends MachineTileEntity impleme
 
 	@Override
 	public boolean canFill(ForgeDirection side, Fluid fluid) {
-		PortInfo pi = ports[side.ordinal()];
+		int realside = getRealSide(side.ordinal(),getBlockMeta());
+		PortInfo pi = ports[realside];
 		return pi.isFluidSocket() && pi.isInput();
 	}
 
 	@Override
 	public boolean canDrain(ForgeDirection side, Fluid fluid) {
-		PortInfo pi = ports[side.ordinal()];
+		int realside = getRealSide(side.ordinal(),getBlockMeta());
+		PortInfo pi = ports[realside];
 		return pi.isFluidSocket() && pi.isOutput();
 	}
 
 	@Override
 	public FluidTankInfo[] getTankInfo(ForgeDirection side) {
-		PortInfo pi = ports[side.ordinal()];
+		int realside = getRealSide(side.ordinal(),getBlockMeta());
+		PortInfo pi = ports[realside];
 		if(pi!=null && pi.isFluidSocket()){
 			FluidStack flst = (FluidStack)pi.getStack();
 			return new FluidTankInfo[]{new FluidTankInfo(flst,flst!=null?FluidToHOE.get(flst.getFluid()).getMaxStack():250)};
