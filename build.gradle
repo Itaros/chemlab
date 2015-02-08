@@ -24,11 +24,11 @@ archivesBaseName = "ChemLab"
 dependencies {
 	compile files('devmods/appliedenergistics2-rv2-alpha-23-dev.jar')
 	compile files('devmods/NotEnoughItems-1.7.10-1.0.3.67-dev.jar')
-	compile files('devmods/femtocraft-api-1.7.10-0.3.0-6-dev.jar')
+	compile files('devmods/femtocraft-api-1.7.10-0.3.0-10-dev.jar')
 }
 
 minecraft {
-    version = "1.7.10-10.13.2.1236"
+    version = "1.7.10-10.13.2.1291"
     assetDir = "eclipse/assets"
 }
 
