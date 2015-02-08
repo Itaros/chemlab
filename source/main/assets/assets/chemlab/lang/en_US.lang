@@ -13,6 +13,10 @@ item.tool.pickaxe.wrought.name=Wrought Iron Pickaxe
 item.tool.shovel.wrought.name=Wrought Iron Shovel
 item.tool.sword.wrought.name=Wrought Iron Sword
 
+item.ipai.fluids.name=Fluids PA
+item.ipai.items.name=Items PA
+item.ipai.component.panel.name=Cover PA
+
 tile.machine.aircollector.name=Air Collector
 tile.machine.gravmag.name=Gravimagnetic Separator
 tile.machine.biogrinder.name=Biogrinder
