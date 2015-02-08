@@ -28,7 +28,7 @@ public class CL3AddonLoader {
 	
 	public CL3AddonLoader(File cfgdir){
 		File root = cfgdir.getAbsoluteFile().getParentFile();
-		File addons = new File(root.getPath()+"\\chemlab_addons");
+		File addons = new File(root.getPath()+"/chemlab_addons");
 		if(!addons.exists()){
 			addons.mkdir();
 		}
