@@ -136,7 +136,7 @@ public abstract class HOEContainer extends Container {
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int slotid) {
-		int OUTPUT=3;
+		int OUTPUT=7;
 		
 		ItemStack itemstack = null;
 		Slot slot = (Slot)this.inventorySlots.get(slotid);
