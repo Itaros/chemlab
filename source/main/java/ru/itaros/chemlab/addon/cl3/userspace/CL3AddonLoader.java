@@ -96,7 +96,7 @@ public class CL3AddonLoader {
 			coll.groupName=consolidateName(Paths.get(zf.getName()).getFileName().toString());
 			collector.add(coll);
 		} catch (JAXBException e) {
-			throw new UserspaceLinkageException(e);
+			throw new UserspaceLinkageException(e,zf);
 		}
 		
 		//AutoItems
