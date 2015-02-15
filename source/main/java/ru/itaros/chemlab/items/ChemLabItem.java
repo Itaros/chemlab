@@ -1,5 +1,7 @@
 package ru.itaros.chemlab.items;
 
+import java.util.List;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -12,6 +14,8 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import ru.itaros.chemlab.ChemLabCreativeTab;
 import ru.itaros.chemlab.addon.cl3.userspace.CL3AddonLoader;
+import ru.itaros.chemlab.addon.cl3.userspace.UserspaceTooltip;
+import ru.itaros.hoe.client.TextTooltip;
 
 public class ChemLabItem extends Item {
 
@@ -64,6 +68,28 @@ public class ChemLabItem extends Item {
 	@Override
 	public IIcon getIcon(ItemStack stack, int pass) {
 		return super.getIcon(stack, pass);
+	}
+	
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_,
+			List list, boolean p_77624_4_) {
+		
+		if(tooltip!=null){
+			list.add(tooltip.getText());
+		}
+		
+		super.addInformation(p_77624_1_, p_77624_2_, list, p_77624_4_);
+	}
+
+	@SideOnly(Side.CLIENT)
+	TextTooltip tooltip;
+	
+	@SideOnly(Side.CLIENT)
+	public void trySetUserspaceTooltip(UserspaceTooltip tooltip) {
+		if(tooltip==null){return;}
+		this.tooltip = tooltip.getTooltip();
 	}
 
 	

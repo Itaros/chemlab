@@ -171,6 +171,8 @@ public class CollectorsLinker {
 					System.out.print(cc.groupName+"."+ugic.nodeName);
 					ChemLabItem item = new ChemLabItem(cc.groupName,ugic.nodeName);
 					if(FMLCommonHandler.instance().getEffectiveSide()==Side.CLIENT){
+						ugic.registerClientData();
+						item.trySetUserspaceTooltip(ugic.tooltip);
 						item.setIcon(invoker);
 					}
 					GameRegistry.registerItem(item, item.getInternalName());
