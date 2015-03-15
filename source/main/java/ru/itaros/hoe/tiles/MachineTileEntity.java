@@ -271,7 +271,11 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 			HOEMachineIO io = client.getIO();
 			if(io!=null){
 				//CLIENTSIDE TICK in MTA
-				io.tick(client, doReal);
+					//Clientside power receptacle
+				if(isCharging){
+					client.incrementPower(getIdlePowerUsage());
+				}
+				io.tick(client, false);
 			}
 		}	
 	}
@@ -575,6 +579,7 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 		if(PowerContainerQuery.isFemtoCraftAvailable()){
 			mergeFemtocraftPowerPool();
 		}
+		
 		
 		HOEMachineData c = getServerData();
 		if(c==null){return;}
