@@ -1,5 +1,6 @@
 package ru.itaros.hoe.gui;
 
+import ru.itaros.chemlab.loader.ItemLoader;
 import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
 import ru.itaros.hoe.tiles.ioconfig.IConfigurableIO;
 import ru.itaros.hoe.tiles.ioconfig.PortInfo;
@@ -41,6 +42,12 @@ public class MachineSlot extends Slot {
 				}
 			}else{
 				return false;
+			}
+		}else if(type==HOESlotType.OUTPUT){
+			if(stack!=null){
+				return stack.getItem()==ItemLoader.panel;
+			}else{
+				return false;//Why do I care about empty stack?
 			}
 		}else{
 			return super.isItemValid(stack);
