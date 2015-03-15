@@ -323,23 +323,26 @@ public class StackUtility {
 		//ItemStack tuple.stack1, ItemStack tuple.stack2
 		if(tuple.stack1==null){
 			if(tuple.stack2==null){
+				//Well. nothing to transfer.
+				tuple.markSuccess();
 				return null;
 			}
 			if(filter!=null && !tuple.stack2.isItemEqual(filter)){return null;}
+			//Target is empty. Copy-transfer
 			ItemStack tmp = tuple.stack2.copy();
-			//tuple.stack2.stackSize=0;
 			tuple.stack2=null;
-			//tuple.stack2=verify(tuple.stack2);
+			tuple.markSuccess();
 			return tmp;//verify(tmp);
 		}else{
 			if(tuple.stack2==null){
 				//No items to transfer
+				tuple.markSuccess();
 				return tuple.stack1;
 			}
 			if(filter!=null && !tuple.stack2.isItemEqual(filter)){return tuple.stack1;}
 			if(tuple.stack1.isItemEqual(tuple.stack2)){
 				StackUtility.mergeInto(tuple.stack1, tuple.stack2);
-				
+				tuple.markSuccess();
 				return tuple.stack1;
 			}else{
 				return tuple.stack1;

@@ -371,8 +371,11 @@ public class HOEMachineCrafterData extends HOEMachineData implements IHOEMultiIn
 			//FIXME: NPE On line below. Null outbound[outboundslotItems]? No idea
 			outbound[outboundslotItems].setProxy(StackUtility.verify(transferItemStackTuple.retr2()));
 			this.markDirty();
+			//Iterate over if outflow is possible
+			if(transferItemStackTuple.isSucceded()){
+				outboundslotItems++;
+			}
 		}
-		outboundslotItems++;
 		return target;
 	}
 	
