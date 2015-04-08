@@ -3,14 +3,19 @@ package ru.itaros.chemlab.hoe.data;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidStack;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.loader.ItemLoader;
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid.HOEFluidState;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackTransferTuple;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackUtility;
-import ru.itaros.toolkit.hoe.machines.interfaces.ISynchroportItems;
+import ru.itaros.hoe.data.ISynchroportItems;
+import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.fluid.HOEFluid;
+import ru.itaros.hoe.fluid.HOEFluid.HOEFluidState;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalItemStack;
+import ru.itaros.hoe.itemhandling.UniversalStackUtils;
+import ru.itaros.hoe.utils.ItemStackTransferTuple;
+import ru.itaros.hoe.utils.StackUtility;
 
 public class GasChimneyData extends HOEMachineData implements ISynchroportItems {
 
@@ -35,11 +40,11 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 	}
 
 	
-	private ItemStack inbound,outbound;
-	public ItemStack get_cell_in(){
+	private IUniversalStack inbound,outbound;
+	public IUniversalStack get_cell_in(){
 		return inbound;
 	}
-	public ItemStack get_cell_out(){
+	public IUniversalStack get_cell_out(){
 		return outbound;
 	}	
 	//=======WORK TRIGGER=======
@@ -66,12 +71,12 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 		hasWork=checkWork();
 	}
 	private boolean checkWork(){
-		if(outbound!=null && outbound.stackSize>=64){
+		if(outbound!=null && outbound.getStackSize()>=64){
 			return false;
 		}
 		if(inbound==null){
 			return false;
-		}else if(inbound.stackSize<1){
+		}else if(inbound.getStackSize()<1){
 			return false;
 		}
 		return true;
@@ -81,15 +86,14 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 	 */
 	public void produce(boolean doReal) {
 		if(checkWork()){
-			Item i = inbound.getItem();
-			if(isItemValid(i)){
-				inbound.stackSize--;
+			if(isItemValid(inbound)){
+				inbound.decrement(1);
 				inbound=StackUtility.verify(inbound);
 				
 				if(outbound==null){
-					outbound = new ItemStack(ItemLoader.emptyhvlc,1);
+					outbound = UniversalStackUtils.convert(new ItemStack(ItemLoader.emptyhvlc,1));
 				}else{
-					outbound.stackSize++;
+					outbound.increment(1);
 				}
 				//Smoke
 				chimneyAccumulatedSmoke+=this.ticksRequared*5;
@@ -98,7 +102,7 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 				}
 			}else{
 				if(outbound==null){
-					ItemStack temp = inbound;
+					IUniversalStack temp = inbound;
 					inbound=null;
 					outbound=temp.copy();
 				}
@@ -109,10 +113,13 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 			}
 		}
 	}
-	private boolean isItemValid(Item i) {
-		if(i instanceof HiVolumeLiquidCell){
-			HiVolumeLiquidCell cell = (HiVolumeLiquidCell)i;
-			return cell.getFluid().getState()==HOEFluidState.GAS;
+	private boolean isItemValid(IUniversalStack stack) {
+		Object pre = stack.getItem();
+		if(pre instanceof HiVolumeLiquidCell){
+			HiVolumeLiquidCell cell = (HiVolumeLiquidCell)pre;
+			return cell.getFluid(stack).getState()==HOEFluidState.GAS;
+		}else if(pre instanceof HOEFluid){
+			return ((HOEFluid) pre).getState()==HOEFluidState.GAS;
 		}else{
 			return false;
 		}
@@ -122,36 +129,45 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 	
 	
 	
-	StackTransferTuple transferTuple = new StackTransferTuple();
+	ItemStackTransferTuple transferTuple = new ItemStackTransferTuple();
 	
-	public ItemStack tryToPutIn(ItemStack source){
-		return tryToPutIn(source, null);
+	public ItemStack tryToPutItemsIn(ItemStack source){
+		return tryToPutItemsIn(source, null);
 	}
 
-	public ItemStack tryToPutIn(ItemStack source, ItemStack filter){
-		transferTuple.fill(inbound, source);
-		source=StackUtility.tryToPutIn(transferTuple,false,null);
-		inbound=transferTuple.retr1();
-		this.markDirty();
+	@Override
+	public ItemStack tryToPutItemsIn(ItemStack source, ItemStack filter) {
+		//There is no hope if this is not an item. But really, this is a mess...
+		if(inbound instanceof UniversalItemStack || inbound==null){
+			transferTuple.fill((ItemStack) UniversalStackUtils.getSafeProxy(inbound), source);
+			source=StackUtility.tryToPutIn(transferTuple,false,filter);
+			inbound=UniversalStackUtils.setSafeProxy(inbound,transferTuple.retr1());
+			this.markDirty();
+		}
 		return source;
 	}
-	public ItemStack tryToGetOut(ItemStack target){
-		return tryToGetOut(target, null);
+	public ItemStack tryToGetItemsOut(ItemStack target){
+		return tryToGetItemsOut(target, null);
 	}
 
-	public ItemStack tryToGetOut(ItemStack target, ItemStack filter){
-		transferTuple.fill(target, outbound);
-		target = StackUtility.tryToGetOut(transferTuple,null);
-		outbound=StackUtility.verify(transferTuple.retr2());
-		this.markDirty();
+	@Override
+	public ItemStack tryToGetItemsOut(ItemStack target, ItemStack filter) {
+		//There is no hope if this is not an item. But really, this is a mess...
+		if(outbound instanceof UniversalItemStack){
+			transferTuple.fill(target, (ItemStack) outbound.getProxy());
+			target = StackUtility.tryToGetOut(transferTuple,filter);
+			outbound.setProxy(StackUtility.verify(transferTuple.retr2()));
+			outbound=outbound.verifyProxy();
+			this.markDirty();
+		}
 		return target;
-	}	
+	}
 	
 	@Override
 	protected void readInventoryNBT(NBTTagCompound nbt) {
 		super.readInventoryNBT(nbt);
-		inbound=StackUtility.readItemStackFromNBT(nbt, "initem");
-		outbound=StackUtility.readItemStackFromNBT(nbt, "outitem");		
+		inbound=StackUtility.readUniversalStackFromNBT(nbt, "initem");
+		outbound=StackUtility.readUniversalStackFromNBT(nbt, "outitem");		
 	}
 
 	@Override
@@ -162,15 +178,21 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 	}
 
 	@Override
-	public void sync() {
-		super.sync();
-		
-		GasChimneyData childd=(GasChimneyData) child;
-		
-		childd.hasWork=hasWork;
-		
-		childd.inbound = StackUtility.syncItemStacks(childd.inbound, inbound);
-		childd.outbound = StackUtility.syncItemStacks(childd.outbound, outbound);
+	public boolean sync() {
+		if(super.sync()){
+			
+			GasChimneyData childd=(GasChimneyData) child;
+			
+			childd.hasWork=hasWork;
+			
+			childd.inbound = StackUtility.syncUniversalStacks(childd.inbound, inbound);
+			childd.outbound = StackUtility.syncUniversalStacks(childd.outbound, outbound);
+			
+			return true;
+			
+		}else{
+			return false;
+		}
 		
 	}
 
@@ -187,7 +209,5 @@ public class GasChimneyData extends HOEMachineData implements ISynchroportItems 
 		isDirty=false;
 		return cache;
 	}
-	
-	
 	
 }

@@ -1,7 +1,7 @@
 package ru.itaros.chemlab.addon.nei;
 
 import ru.itaros.chemlab.ChemLab;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
+import ru.itaros.hoe.recipes.Recipe;
 import static codechicken.nei.api.API.*;
 import codechicken.nei.api.IConfigureNEI;
 

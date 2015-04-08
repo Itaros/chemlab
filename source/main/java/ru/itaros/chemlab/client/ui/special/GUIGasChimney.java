@@ -2,9 +2,9 @@ package ru.itaros.chemlab.client.ui.special;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
-import ru.itaros.chemlab.minecraft.tileentity.GasChimneyTileEntity;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+import ru.itaros.chemlab.tiles.GasChimneyTileEntity;
+import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.tiles.MachineTileEntity;
 
 public class GUIGasChimney extends GUIHOEClassicalMachine {
 
@@ -37,7 +37,7 @@ public class GUIGasChimney extends GUIHOEClassicalMachine {
 	//Rect inputRect,tankRect;
 	
 	@Override
-	protected void DrawGauges(HOEMachineData data) {
+	protected void DrawGauges(HOEMachineData data, int mx, int my) {
 		DrawProgressbar(data);
 	}
 	

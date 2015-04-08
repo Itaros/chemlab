@@ -6,14 +6,12 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
 import ru.itaros.chemlab.hoe.data.HVLCFillerData;
-import ru.itaros.chemlab.loader.HOEFluidLoader;
-import ru.itaros.chemlab.minecraft.tileentity.HVLCFillerTileEntity;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
-import ru.itaros.toolkit.hoe.facilities.fluid.containment.HOEFluidDepot;
-import ru.itaros.toolkit.hoe.facilities.fluid.containment.HOEFluidTank;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.Rect;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.UIUtility;
+import ru.itaros.chemlab.tiles.HVLCFillerTileEntity;
+import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.fluid.HOEFluidTank;
+import ru.itaros.hoe.tiles.MachineTileEntity;
+import ru.itaros.hoe.utils.Rect;
+import ru.itaros.hoe.utils.UIUtility;
 
 public class GUIHVLCFiller extends GUIHOEClassicalMachine {
 
@@ -26,15 +24,16 @@ public class GUIHVLCFiller extends GUIHOEClassicalMachine {
 		this.tile=tile;
 		
 		//EYE
-		HVLCFillerTileEntity htile = (HVLCFillerTileEntity)tile;
-		fluid_input_eye=htile.getInputTank().getFluidAmount();
+		//HVLCFillerTileEntity htile = (HVLCFillerTileEntity)tile;
+		//HVLCFillerData hdata = (HVLCFillerData)htile.getClientData();
+		//fluid_input_eye=hdata.get_in(HVLCFillerData.SLOT_FLUID).getStackSize();
 	}
 	
 	@Override
 	public void initGui() {
 		super.initGui();
-		inputRect = new Rect(133+x,20+y,16,51);
-		tankRect = new Rect(48+x,18+y,16,51);
+		//inputRect = new Rect(133+x,20+y,16,51);
+		//tankRect = new Rect(48+x,18+y,16,51);
 	}
 	
 	
@@ -48,24 +47,25 @@ public class GUIHVLCFiller extends GUIHOEClassicalMachine {
 	}
 	
 
-	float fluid_input_eye;
-	Rect inputRect,tankRect;
+	//float fluid_input_eye;
+	//Rect inputRect,tankRect;
 	
 	@Override
-	protected void DrawGauges(HOEMachineData data) {
-		//HVLCFillerData fd = (HVLCFillerData)data;
-		HVLCFillerTileEntity htile = (HVLCFillerTileEntity)tile;
-		FluidTank info = htile.getInputTank();
-		fluid_input_eye=(fluid_input_eye+info.getFluidAmount())/2F;
-		UIUtility.drawFluidGauge(this, info.getFluid(), fluid_input_eye, info.getCapacity() , inputRect);
-		
-		HVLCFillerData fd = (HVLCFillerData)data;
-		HOEFluidDepot depot = fd.getFluidDepot();
-		HOEFluidTank tank = depot.getCorrespondingTank(HOEFluidLoader.water_natural);
-		if(tank!=null){
-			UIUtility.drawFluidGauge(this, info.getFluid(), tank.getAmount(), tank.getCapacity() , tankRect);
-		}
-		
+	protected void DrawGauges(HOEMachineData data, int mx, int my) {
+		super.DrawGauges(data,mx,my);
+//		//HVLCFillerData fd = (HVLCFillerData)data;
+//		HVLCFillerTileEntity htile = (HVLCFillerTileEntity)tile;
+//		FluidTank info = htile.getInputTank();
+//		fluid_input_eye=(fluid_input_eye+info.getFluidAmount())/2F;
+//		UIUtility.drawFluidGauge(this, info.getFluid(), fluid_input_eye, info.getCapacity() , inputRect);
+//		
+//		HVLCFillerData fd = (HVLCFillerData)data;
+//		HOEFluidDepot depot = fd.getFluidDepot();
+//		HOEFluidTank tank = depot.getCorrespondingTank(HOEFluidLoader.water_natural);
+//		if(tank!=null){
+//			UIUtility.drawFluidGauge(this, info.getFluid(), tank.getAmount(), tank.getCapacity() , tankRect);
+//		}
+//		
 	}
 	
 	

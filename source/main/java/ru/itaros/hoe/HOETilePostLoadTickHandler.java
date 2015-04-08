@@ -3,7 +3,7 @@ package ru.itaros.hoe;
 import java.util.LinkedList;
 
 import net.minecraftforge.event.world.WorldEvent;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
+import ru.itaros.hoe.tiles.MachineTileEntity;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;

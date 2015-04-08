@@ -10,15 +10,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import ru.itaros.chemlab.ChemLab;
-import ru.itaros.chemlab.client.fx.ChimneySmoke;
+import ru.itaros.chemlab.ChemLabCreativeTab;
+import ru.itaros.chemlab.client.tesr.ChimneySmoke;
 import ru.itaros.chemlab.client.ui.common.HOEContainer;
 import ru.itaros.chemlab.client.ui.special.GasChimneyContainer;
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
-import ru.itaros.chemlab.minecraft.tileentity.GasChimneyTileEntity;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
-import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.blocks.IOMachineBlock;
-import ru.itaros.toolkit.hoe.machines.interfaces.tileentity.ITileEntityParticleManager;
+import ru.itaros.chemlab.tiles.GasChimneyTileEntity;
+import ru.itaros.hoe.blocks.IOMachineBlock;
+import ru.itaros.hoe.tiles.ITileEntityParticleManager;
+import ru.itaros.hoe.tiles.MachineTileEntity;
+import ru.itaros.hoe.utils.MetaIconFolder;
 
 public class GasChimney extends IOMachineBlock {
 
@@ -49,6 +49,7 @@ public class GasChimney extends IOMachineBlock {
 
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
+		super.registerBlockIcons(reg, "chemlab");
 		icons = new MetaIconFolder(METADATA_VARIATIONS);
 		icons.Register(0, "chemlab", new String[]{"machine_gaschimney_bottom","machine_gaschimney_top","machine_gaschimney_side","machine_gaschimney_side","machine_gaschimney_side","machine_gaschimney_side"}, reg);
 	}

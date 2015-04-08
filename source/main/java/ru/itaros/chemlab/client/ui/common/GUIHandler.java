@@ -8,8 +8,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import ru.itaros.chemlab.ChemLab;
-import ru.itaros.hoe.vanilla.tiles.MachineCrafterTileEntity;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
+import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
+import ru.itaros.hoe.tiles.MachineTileEntity;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 

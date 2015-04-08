@@ -1,24 +1,26 @@
 package ru.itaros.chemlab.loader;
 
 import ru.itaros.chemlab.loader.recipes.AirCollectorRecipes;
+import ru.itaros.chemlab.loader.recipes.AutomaticDrawplateRecipes;
 import ru.itaros.chemlab.loader.recipes.CatalyticTankRecipes;
 import ru.itaros.chemlab.loader.recipes.CrusherRecipes;
 import ru.itaros.chemlab.loader.recipes.DiaphragmalElectrolyzerRecipes;
 import ru.itaros.chemlab.loader.recipes.EvaporationUnitRecipes;
 import ru.itaros.chemlab.loader.recipes.FluidCompressorRecipes;
+import ru.itaros.chemlab.loader.recipes.GravMagRecipes;
+import ru.itaros.chemlab.loader.recipes.HiRMixerRecipes;
 import ru.itaros.chemlab.loader.recipes.HiTFurnaceRecipes;
+import ru.itaros.chemlab.loader.recipes.MetalFormationMachineRecipes;
 import ru.itaros.chemlab.loader.recipes.MixerRecipes;
+import ru.itaros.chemlab.loader.recipes.QuenchingChamberRecipes;
 import ru.itaros.chemlab.loader.recipes.TurboexpanderRecipes;
-import ru.itaros.chemlab.loader.recipes.VanillaCraftingRecipes;
 import ru.itaros.chemlab.loader.recipes.WasherRecipes;
+import ru.itaros.chemlab.loader.recipes.WireCoatingExtruderRecipes;
 import ru.itaros.chemlab.loader.recipes.WoodChainRecipes;
-import ru.itaros.chemlab.loader.recipes.bc.BCRecipesLoader;
-import ru.itaros.chemlab.loader.recipes.*;
 
 
 public class RecipesLoader {
 	public static void load(){
-		VanillaCraftingRecipes.load();
 		
 		CrusherRecipes.load();
 		HiTFurnaceRecipes.load();
@@ -44,7 +46,7 @@ public class RecipesLoader {
 		
 		WireCoatingExtruderRecipes.load();
 		
-		BCRecipesLoader.load();
+		GravMagRecipes.load();
 		
 	}
 

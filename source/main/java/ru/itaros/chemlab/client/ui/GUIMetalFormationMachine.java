@@ -2,8 +2,8 @@ package ru.itaros.chemlab.client.ui;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import ru.itaros.chemlab.client.ui.common.GUIHOEClassicalMachine;
-import ru.itaros.chemlab.minecraft.tileentity.MetalFormationMachineTileEntity;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
+import ru.itaros.chemlab.tiles.MetalFormationMachineTileEntity;
+import ru.itaros.hoe.tiles.MachineTileEntity;
 import ru.itaros.chemlab.client.ui.MetalFormationMachineContainer;
 
 public class GUIMetalFormationMachine extends GUIHOEClassicalMachine {

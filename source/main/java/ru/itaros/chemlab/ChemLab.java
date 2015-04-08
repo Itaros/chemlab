@@ -4,30 +4,28 @@ import java.util.EnumMap;
 
 import net.minecraftforge.common.MinecraftForge;
 import ru.itaros.api.hoe.internal.HOEIO;
+import ru.itaros.chemlab.addon.cl3.userspace.CL3AddonLoader;
+import ru.itaros.chemlab.addon.cl3.userspace.CollectorsLinker;
+import ru.itaros.chemlab.addon.femtocraft.PowerContainerQuery;
 import ru.itaros.chemlab.client.ui.common.GUIHandler;
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
-import ru.itaros.chemlab.events.SyndicationSystemPipingProtection;
 import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.chemlab.loader.DamageSourceLoader;
 import ru.itaros.chemlab.loader.GUILoader;
-import ru.itaros.chemlab.loader.HOEFluidLoader;
 import ru.itaros.chemlab.loader.ItemLoader;
+import ru.itaros.chemlab.loader.MultiblockLoader;
 import ru.itaros.chemlab.loader.RecipesLoader;
 import ru.itaros.chemlab.loader.TierLoader;
-import ru.itaros.chemlab.loader.recipes.optional.VanillaTweaks;
-import ru.itaros.chemlab.loader.tileentity.TileEntityLoader;
-import ru.itaros.chemlab.minecraft.achievements.ChemLabAchievements;
+import ru.itaros.chemlab.loader.TileEntityLoader;
 import ru.itaros.chemlab.network.ChemLabChannel;
 import ru.itaros.chemlab.network.IPacketCodecDescriptor;
 import ru.itaros.chemlab.proxy.Proxy;
-import ru.itaros.hoe.HOE;
+import ru.itaros.chemlab.tiles.BloomeryTileEntity;
 import ru.itaros.hoe.tiers.TierRegistry;
-import ru.itaros.toolkit.hoe.io.IOCollectionHelper;
+import ru.itaros.hoe.utils.IOCollectionHelper;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
@@ -37,7 +35,7 @@ import cpw.mods.fml.common.network.FMLOutboundHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = ChemLab.MODID, version = ChemLab.VERSION, dependencies="required-after:hoelib;required-after:BuildCraft|Core")
+@Mod(modid = ChemLab.MODID, version = ChemLab.VERSION, dependencies="required-after:hoelib")//;required-after:
 public class ChemLab
 {
 	public ChemLab(){
@@ -74,10 +72,15 @@ public class ChemLab
     	return cfg;
     }
     
+    private CL3AddonLoader cl3addons;
+    private CollectorsLinker cl3addonsLinker;
+    
     VersionCheckerIntegration versioncheck;
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+    	PowerContainerQuery.inspectFML();
+    	
     	versioncheck = new VersionCheckerIntegration().startPolling();
     	
     	tier_registry=new TierRegistry();
@@ -85,32 +88,32 @@ public class ChemLab
     	
     	cfg = new Config().loadConfig(event);
     	
+    	
     	channels = NetworkRegistry.INSTANCE.newChannel("chemlabchannel", new ChemLabChannel());
     	
     	GUILoader.loadGUIs();
     	
     	new ChemLabCreativeTab();//There is forgebug somewhere close
-    
-    	HOEFluidLoader.load();
+    	
+    	ItemLoader.loadTools();
+    	
+		//CL3 Addons
+		cl3addons = new CL3AddonLoader(event.getModConfigurationDirectory());
+		cl3addonsLinker = new CollectorsLinker(cl3addons);
+		cl3addonsLinker.deployPre(); 	
     	
  		BlockLoader.loadBlocks();
- 		ItemLoader.loadItems();
+ 		ItemLoader.loadItems(cl3addons);
 		iocollection = TileEntityLoader.load();   
+		MultiblockLoader.load();
 		
 		DamageSourceLoader.load();
 		
 		//GFX
 		proxy.registerGFX();
 		
-		//Tweaks
-		VanillaTweaks.tweakIron();
-		VanillaTweaks.createWroughtIronTools();
-		
-		//Block Breaking Events
-		MinecraftForge.EVENT_BUS.register(new SyndicationSystemPipingProtection());
-		
 		//Achievements
-		ChemLabAchievements.load();
+		//ChemLabAchievements.load();
     	
     }     
     @EventHandler
@@ -118,12 +121,16 @@ public class ChemLab
     {
     	versioncheck.makeFinal();
     	
-    	HOE.getInstance().getHOEExecutor().execute(cfg.worldgenerator_clid);
     }
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
 		RecipesLoader.load();
+		
+		cl3addonsLinker.deployPost();
+		
+		BloomeryTileEntity.linkToOreDict();
+		
 		HOEIO.getIORegistry().claimOwnership();
 		
 		new GUIHandler();

@@ -3,13 +3,13 @@ package ru.itaros.chemlab.blocks.machines;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import ru.itaros.chemlab.ChemLab;
+import ru.itaros.chemlab.ChemLabCreativeTab;
 import ru.itaros.chemlab.client.ui.common.HOEContainer;
 import ru.itaros.chemlab.client.ui.special.HVLCFillerContainer;
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
-import ru.itaros.chemlab.minecraft.tileentity.HVLCFillerTileEntity;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
-import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.blocks.IOMachineBlock;
+import ru.itaros.chemlab.tiles.HVLCFillerTileEntity;
+import ru.itaros.hoe.blocks.IOMachineBlock;
+import ru.itaros.hoe.tiles.MachineTileEntity;
+import ru.itaros.hoe.utils.MetaIconFolder;
 
 public class HVLCFiller extends IOMachineBlock {
 
@@ -42,6 +42,7 @@ public class HVLCFiller extends IOMachineBlock {
 
 	@Override
 	public void registerBlockIcons(IIconRegister reg) {
+		super.registerBlockIcons(reg, "chemlab");
 		icons = new MetaIconFolder(METADATA_VARIATIONS);
 		icons.Register(0, "chemlab", new String[]{"machine_base","machine_part_iosocket","machine_hvlcfiller_side","machine_hvlcfiller_face","machine_hvlcfiller_side","machine_hvlcfiller_side"}, reg);
 	}

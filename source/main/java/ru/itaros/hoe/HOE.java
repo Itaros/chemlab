@@ -1,17 +1,22 @@
 package ru.itaros.hoe;
 
 
+import net.minecraftforge.common.MinecraftForge;
 import ru.itaros.api.hoe.IHOEInterfacer;
+import ru.itaros.hoe.adapter.HOEAdapters;
+import ru.itaros.hoe.client.ExternalTextureStitcher;
+import ru.itaros.hoe.framework.chemistry.registries.CompoundDatabase;
+import ru.itaros.hoe.framework.chemistry.registries.Mendeleev;
+import ru.itaros.hoe.framework.chemistry.registries.ReactionDatabase;
 import ru.itaros.hoe.interfacer.HOEInterfacer;
 import ru.itaros.hoe.proxy.HOEProxy;
 import ru.itaros.hoe.registries.HOEFluidRegistry;
 import ru.itaros.hoe.registries.HOEIORegistry;
 import ru.itaros.hoe.registries.HOERecipeRegistry;
 import ru.itaros.hoe.signatures.HOEExecutor;
+import ru.itaros.hoe.threading.HOEKeepAliveMonitorInternalized;
 import ru.itaros.hoe.threading.HOEThreadController;
-import ru.itaros.hoe.threading.monitor.HOEKeepAliveMonitorInternalized;
-import ru.itaros.hoe.toolkit.worldgen.HOEWorldGenerator;
-import ru.itaros.hoe.vanilla.registries.WorldGenRegistry;
+import appeng.core.features.registries.WorldGenRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -48,10 +53,6 @@ public class HOE {
     	return instance;
     }
     
-    public WorldGenRegistry getRegistryWorldGen(){
-    	return worldgenregistry;
-    }
-    
     public HOEExecutor getHOEExecutor(){
     	return hoeexec;
     }
@@ -64,6 +65,11 @@ public class HOE {
     	return config;
     }
     
+    public ExternalTextureStitcher getExternalStitcher(){
+    	return stitcher;
+    }
+
+    
     //============MTA============
     private HOEFluidRegistry hoefluidregistry;
     private HOEIORegistry ioregistry;
@@ -72,20 +78,29 @@ public class HOE {
     private ContextDetector contextdetector;
     private HOEKeepAliveMonitorInternalized keepalive;
     //===========================
+    //===========CHEM============
+    private Mendeleev mendeleev;
+    private CompoundDatabase compounds;
+    private ReactionDatabase reactions;
+    //===========================
     //============AHT============
     private HOEExecutor hoeexec;
     //===========================
     //============VMC============
-    private WorldGenRegistry worldgenregistry;
     private Config config;
     //===========================
-    
+    //===========CLIENT==========
+    private ExternalTextureStitcher stitcher;
+    //===========================
+    private HOEAdapters adapters;
     
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
     	config = new Config().loadConfig(event);
+    	
+    	adapters = new HOEAdapters();
     	
     	if(config.threading_keepalive){
     		keepalive = new HOEKeepAliveMonitorInternalized();
@@ -97,7 +112,9 @@ public class HOE {
     	
     	ForgeFixer.forgeOreDictFix();
     	
-    	worldgenregistry=new WorldGenRegistry();
+    	mendeleev = new Mendeleev();
+    	compounds = new CompoundDatabase();
+    	reactions = new ReactionDatabase();
     	
     	hoefluidregistry=new HOEFluidRegistry();
     	ioregistry =new HOEIORegistry();
@@ -115,11 +132,6 @@ public class HOE {
     	return  synchroop_tickhandler;
     }
     
-    private HOEWorldGenerator worldgen;
-    public HOEWorldGenerator getHOEWorldGenerator(){
-    	return worldgen;
-    }
-    
     @EventHandler
     public void Init(FMLInitializationEvent event)
     {   
@@ -129,8 +141,6 @@ public class HOE {
     	synchroop_tickhandler = new HOESynchroportOperationsTickHandler();
     	FMLCommonHandler.instance().bus().register(synchroop_tickhandler);
     	
-    	worldgen = new HOEWorldGenerator();
-    	GameRegistry.registerWorldGenerator(worldgen, 100);
     }
     
     

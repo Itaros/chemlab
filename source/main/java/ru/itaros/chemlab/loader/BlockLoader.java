@@ -2,18 +2,19 @@ package ru.itaros.chemlab.loader;
 
 import net.minecraft.block.Block;
 import net.minecraftforge.oredict.OreDictionary;
-import cpw.mods.fml.common.registry.GameRegistry;
 import ru.itaros.chemlab.addon.bc.builder.SchematicChemLabMachine;
 import ru.itaros.chemlab.addon.bc.builder.SchematicSyndicationBus;
-import ru.itaros.chemlab.blocks.MachineCasing;
-import ru.itaros.chemlab.blocks.MachineItemBlock;
+import ru.itaros.chemlab.blocks.*;
+import ru.itaros.chemlab.blocks.AdvancedComponentBlock.AdvancedComponentBlockType;
+import ru.itaros.chemlab.blocks.StructuralBlock.StructuralBlockType;
+import ru.itaros.chemlab.blocks.items.*;
 import ru.itaros.chemlab.blocks.machines.*;
-import ru.itaros.chemlab.blocks.machines.syndication.*;
-import ru.itaros.chemlab.blocks.ore.AsbestosMineral;
-import ru.itaros.chemlab.blocks.ore.OreHalite;
-import ru.itaros.chemlab.blocks.ore.OreMetal;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockLoader {
+	
+	public static StructuralBlock structblock;
+	public static AdvancedComponentBlock advcompblock;
 	
 	public static MachineCasing casing;
 	
@@ -34,15 +35,12 @@ public class BlockLoader {
 	public static CatalyticTank cattank;
 	public static HiResistantMixer hiresistmixer;
 	public static ServiceBay servicebay;
+	public static GravMag gravmag;
 	public static HVLCFiller hvlcfiller;
 	public static GasChimney gaschimney;
-	
-	public static SyndicationHub syndicationhub;
-	public static SyndicationBus pipes_syndicationbus;
-	
-	public static SyndicationCapacitor syndication_util_capacitor;
-	public static SyndicationEMFGenerator syndication_emfgenerator;
-	public static SyndicationItemPort syndication_itemport;
+	public static Bloomery bloomery;
+	public static HeatingFurnace heatingFurnace;
+	public static FrothCell frothCell;
 	
 	public static Mixer mixer;
 	public static AutomaticDrawplate automaticdrawplate;
@@ -51,17 +49,26 @@ public class BlockLoader {
 	
 	public static WireCoatingExtruder wcextruder;
 	
-	public static OreHalite oreHalite;
-	public static OreMetal orePlatinum;
-	public static OreMetal orePyrite;
-	public static OreMetal oreMetaAnthracite;
+	public static ArcFurnaceController controller_arcFurnace;
 	
-	public static OreMetal oreLimestone;
-	public static OreMetal oreHematite;
+	//public static OreHalite oreHalite;
+	//public static OreMetal orePlatinum;
+	//public static OreMetal orePyrite;
+	//public static OreMetal oreMetaAnthracite;
 	
-	public static OreMetal orePericlase;//MgO
+	//public static OreMetal oreLimestone;
+	//public static OreMetal oreHematite;
+	
+	//public static OreMetal orePericlase;//MgO
 	
 	public static void loadBlocks(){
+		
+		structblock = new StructuralBlock(new StructuralBlockType[]{StructuralBlockType.HeatResistantBricks,StructuralBlockType.HeatResistantConcrete});
+		GameRegistry.registerBlock(structblock, StructuralItemBlock.class,structblock.getUnlocalizedName());
+		
+		advcompblock = new AdvancedComponentBlock(new AdvancedComponentBlockType[]{AdvancedComponentBlockType.ArcFurnaceElectrodes});
+		GameRegistry.registerBlock(advcompblock,AdvancedComponentItemBlock.class,advcompblock.getUnlocalizedName());
+				
 		
 		casing = new MachineCasing();
 		GameRegistry.registerBlock(casing,casing.getUnlocalizedName());
@@ -70,124 +77,124 @@ public class BlockLoader {
 		
 		//Machines
 		biogrinder = new Biogrinder();
-		GameRegistry.registerBlock(biogrinder ,MachineItemBlock.class, biogrinder.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(biogrinder ,MachineItemBlock.class, biogrinder.getUnlocalizedName());
 		
 		centriextractor = new CentrifugalExtractor();
-		GameRegistry.registerBlock(centriextractor ,MachineItemBlock.class, centriextractor.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(centriextractor ,MachineItemBlock.class, centriextractor.getUnlocalizedName());
 		
 		washer = new Washer();
-		GameRegistry.registerBlock(washer ,MachineItemBlock.class, washer.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(washer ,MachineItemBlock.class, washer.getUnlocalizedName());
 		
 		impregnator = new Impregnator();
-		GameRegistry.registerBlock(impregnator ,MachineItemBlock.class, impregnator.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(impregnator ,MachineItemBlock.class, impregnator.getUnlocalizedName());
 			
 		press = new Press();
-		GameRegistry.registerBlock(press ,MachineItemBlock.class, press.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(press ,MachineItemBlock.class, press.getUnlocalizedName());
 			
 		steamboiler = new SteamBoiler();
-		GameRegistry.registerBlock(steamboiler,MachineItemBlock.class, steamboiler.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(steamboiler,MachineItemBlock.class, steamboiler.getUnlocalizedName());
 		
 		steamexplosionunit = new SteamExplosionUnit();
-		GameRegistry.registerBlock(steamexplosionunit,MachineItemBlock.class, steamexplosionunit.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(steamexplosionunit,MachineItemBlock.class, steamexplosionunit.getUnlocalizedName());
 		
 		crusher = new Crusher();
-		GameRegistry.registerBlock(crusher,MachineItemBlock.class, crusher.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(crusher,MachineItemBlock.class, crusher.getUnlocalizedName());
 		
 		diaphragmalelectrolyzer = new DiaphragmalElectrolyzer();
-		GameRegistry.registerBlock(diaphragmalelectrolyzer,MachineItemBlock.class, diaphragmalelectrolyzer.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(diaphragmalelectrolyzer,MachineItemBlock.class, diaphragmalelectrolyzer.getUnlocalizedName());
 		
 		furnace = new HiTFurnace();
-		GameRegistry.registerBlock(furnace, MachineItemBlock.class, furnace.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(furnace, MachineItemBlock.class, furnace.getUnlocalizedName());
 		
 		aircollector = new AirCollector();
-		GameRegistry.registerBlock(aircollector,MachineItemBlock.class, aircollector.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(aircollector,MachineItemBlock.class, aircollector.getUnlocalizedName());
 		
 		fluidcompressor = new FluidCompressor();
-		GameRegistry.registerBlock(fluidcompressor,MachineItemBlock.class, fluidcompressor.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(fluidcompressor,MachineItemBlock.class, fluidcompressor.getUnlocalizedName());
 		
 		turboexpander= new Turboexpander();
-		GameRegistry.registerBlock(turboexpander, MachineItemBlock.class, turboexpander.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(turboexpander, MachineItemBlock.class, turboexpander.getUnlocalizedName());
 		
 		evaporationunit = new EvaporationUnit();
-		GameRegistry.registerBlock(evaporationunit, MachineItemBlock.class, evaporationunit.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(evaporationunit, MachineItemBlock.class, evaporationunit.getUnlocalizedName());
 		
 		cattank = new CatalyticTank();
-		GameRegistry.registerBlock(cattank,MachineItemBlock.class, cattank.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(cattank,MachineItemBlock.class, cattank.getUnlocalizedName());
 		
 		hiresistmixer = new HiResistantMixer();
-		GameRegistry.registerBlock(hiresistmixer, MachineItemBlock.class, hiresistmixer.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(hiresistmixer, MachineItemBlock.class, hiresistmixer.getUnlocalizedName());
 		
 		servicebay = new ServiceBay();
-		GameRegistry.registerBlock(servicebay, MachineItemBlock.class, servicebay.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(servicebay, MachineItemBlock.class, servicebay.getUnlocalizedName());
+		
+		gravmag = new GravMag();
+		GameRegistry.registerBlock(gravmag, MachineItemBlock.class, gravmag.getUnlocalizedName());
 		
 		hvlcfiller = new HVLCFiller();
 		GameRegistry.registerBlock(hvlcfiller,MachineItemBlock.class, hvlcfiller.getUnlocalizedNameRaw());
 		
 		gaschimney = new GasChimney();
-		GameRegistry.registerBlock(gaschimney,MachineItemBlock.class, gaschimney.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(gaschimney,MachineItemBlock.class, gaschimney.getUnlocalizedName());
 		
 		mixer = new Mixer();
-		GameRegistry.registerBlock(mixer,MachineItemBlock.class, mixer.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(mixer,MachineItemBlock.class, mixer.getUnlocalizedName());
 		
 		automaticdrawplate = new AutomaticDrawplate();
-		GameRegistry.registerBlock(automaticdrawplate,MachineItemBlock.class, automaticdrawplate.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(automaticdrawplate,MachineItemBlock.class, automaticdrawplate.getUnlocalizedName());
 		
 		quencher = new QuenchingChamber();
-		GameRegistry.registerBlock(quencher,MachineItemBlock.class, quencher.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(quencher,MachineItemBlock.class, quencher.getUnlocalizedName());
 		
 		metformer = new MetalFormationMachine();
-		GameRegistry.registerBlock(metformer,MachineItemBlock.class, metformer.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(metformer,MachineItemBlock.class, metformer.getUnlocalizedName());
 		
 		wcextruder = new WireCoatingExtruder();
-		GameRegistry.registerBlock(wcextruder,MachineItemBlock.class, wcextruder.getUnlocalizedNameRaw());
-		
-		//GameRegistry.registerBlock(,.getUnlocalizedNameRaw());
+		GameRegistry.registerBlock(wcextruder,MachineItemBlock.class, wcextruder.getUnlocalizedName());
 		
 		
-		syndicationhub = new SyndicationHub();
-		GameRegistry.registerBlock(syndicationhub,MachineItemBlock.class, syndicationhub.getUnlocalizedNameRaw());
+		controller_arcFurnace  = new ArcFurnaceController();
+		GameRegistry.registerBlock(controller_arcFurnace,controller_arcFurnace.getUnlocalizedName());
 		
-		pipes_syndicationbus = new SyndicationBus();
-		GameRegistry.registerBlock(pipes_syndicationbus,pipes_syndicationbus.getUnlocalizedName());
+		bloomery  = new Bloomery();
+		GameRegistry.registerBlock(bloomery,bloomery.getUnlocalizedName());
 		
-		syndication_util_capacitor = new SyndicationCapacitor();
-		GameRegistry.registerBlock(syndication_util_capacitor,MachineItemBlock.class, syndication_util_capacitor.getUnlocalizedName());
+		heatingFurnace = new HeatingFurnace();
+		GameRegistry.registerBlock(heatingFurnace,heatingFurnace.getUnlocalizedName());
 		
-		syndication_emfgenerator = new SyndicationEMFGenerator();
-		GameRegistry.registerBlock(syndication_emfgenerator,MachineItemBlock.class, syndication_emfgenerator.getUnlocalizedName());
+		frothCell = new FrothCell();
+		GameRegistry.registerBlock(frothCell,frothCell.getUnlocalizedName());
 		
-		syndication_itemport = new SyndicationItemPort();
-		GameRegistry.registerBlock(syndication_itemport,MachineItemBlock.class, syndication_itemport.getUnlocalizedName());
+		//GameRegistry.registerBlock(,.getUnlocalizedName());
 		
 		//Ores
 		
-		oreHalite = new OreHalite();
-		GameRegistry.registerBlock(oreHalite, oreHalite.getUnlocalizedName());
+		//oreHalite = new OreHalite();
+		//GameRegistry.registerBlock(oreHalite, oreHalite.getUnlocalizedName());
 		
-		orePlatinum = new OreMetal("Platinum");
-		GameRegistry.registerBlock(orePlatinum,orePlatinum.getUnlocalizedName());
-		OreDictionary.registerOre("orePlatinum", orePlatinum);
+		//orePlatinum = new OreMetal("Platinum");
+		//GameRegistry.registerBlock(orePlatinum,orePlatinum.getUnlocalizedName());
+		//OreDictionary.registerOre("orePlatinum", orePlatinum);
 		
 		
-		orePyrite = new OreMetal("Pyrite");
-		GameRegistry.registerBlock(orePyrite,orePyrite.getUnlocalizedName());
-		OreDictionary.registerOre("orePyrite", orePyrite);
+		//orePyrite = new OreMetal("Pyrite");
+		//GameRegistry.registerBlock(orePyrite,orePyrite.getUnlocalizedName());
+		//OreDictionary.registerOre("orePyrite", orePyrite);
 		
-		oreMetaAnthracite = new OreMetal("MetaAnthracite");
-		GameRegistry.registerBlock(oreMetaAnthracite,oreMetaAnthracite.getUnlocalizedName());
-		OreDictionary.registerOre("oreMetaAnthracite", oreMetaAnthracite);
+		//oreMetaAnthracite = new OreMetal("MetaAnthracite");
+		//GameRegistry.registerBlock(oreMetaAnthracite,oreMetaAnthracite.getUnlocalizedName());
+		//OreDictionary.registerOre("oreMetaAnthracite", oreMetaAnthracite);
 		
-		oreLimestone = new OreMetal("Limestone");
-		GameRegistry.registerBlock(oreLimestone, oreLimestone.getUnlocalizedName());
-		OreDictionary.registerOre("oreLimestone",oreLimestone);
+		//oreLimestone = new OreMetal("Limestone");
+		//GameRegistry.registerBlock(oreLimestone, oreLimestone.getUnlocalizedName());
+		//OreDictionary.registerOre("oreLimestone",oreLimestone);
 		
-		oreHematite = new OreMetal("Hematite");
-		GameRegistry.registerBlock(oreHematite,oreHematite.getUnlocalizedName());
-		OreDictionary.registerOre("oreHematite", oreHematite);
+		//oreHematite = new OreMetal("Hematite");
+		//GameRegistry.registerBlock(oreHematite,oreHematite.getUnlocalizedName());
+		//OreDictionary.registerOre("oreHematite", oreHematite);
 		
-		orePericlase = new OreMetal("Periclase");
-		GameRegistry.registerBlock(orePericlase,orePericlase.getUnlocalizedName());
-		OreDictionary.registerOre("orePericlase", orePericlase);
+		//orePericlase = new OreMetal("Periclase");
+		//GameRegistry.registerBlock(orePericlase,orePericlase.getUnlocalizedName());
+		//OreDictionary.registerOre("orePericlase", orePericlase);
 		
 		
 		registerBCBuilderSchematics();
@@ -202,32 +209,28 @@ public class BlockLoader {
 				press,steamboiler,steamexplosionunit,crusher,
 				diaphragmalelectrolyzer,furnace,aircollector,
 				fluidcompressor,turboexpander,evaporationunit,
-				cattank,hiresistmixer,servicebay,hvlcfiller,
-				gaschimney,syndicationhub,
-				syndication_util_capacitor,
-				syndication_emfgenerator,syndication_itemport,
-				mixer,automaticdrawplate,quencher,
+				cattank,hiresistmixer,servicebay,//hvlcfiller,
+				gaschimney, mixer,automaticdrawplate,quencher,
 				metformer,wcextruder
 			};
 		SchematicChemLabMachine.init(hoeblocks);
-		SchematicSyndicationBus.init(pipes_syndicationbus);
 	}
 
 
-	public static AsbestosMineral  asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite,asbestos_serpentite;
+	//public static AsbestosMineral  asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite,asbestos_serpentite;
 	
 	private static void loadAsbestosMinerals() {
 		
-		asbestos_crocidolite 	= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Crocidolite);
-		asbestos_tremolite		= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Tremolite);
-		asbestos_anthophyllite	= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Anthophyllite);
-		asbestos_actinolite		= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Actinolite);
-		asbestos_serpentite		= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Serpentinite);
+		//asbestos_crocidolite 	= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Crocidolite);
+		//asbestos_tremolite		= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Tremolite);
+		//asbestos_anthophyllite	= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Anthophyllite);
+		//asbestos_actinolite		= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Actinolite);
+		//asbestos_serpentite		= new AsbestosMineral(AsbestosMineral.AsbestosMineralType.Serpentinite);
 		
-		HelperRegisterBlocks(asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite,asbestos_serpentite);
-		HelperRegisterAllinOreDict("oreAsbestos",asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite,asbestos_serpentite);
-		HelperRegisterAllinOreDict("oreSerpentineAsbestos",asbestos_serpentite);
-		HelperRegisterAllinOreDict("oreAmphiboleAsbestos",asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite);
+		//HelperRegisterBlocks(asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite,asbestos_serpentite);
+		//HelperRegisterAllinOreDict("oreAsbestos",asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite,asbestos_serpentite);
+		//HelperRegisterAllinOreDict("oreSerpentineAsbestos",asbestos_serpentite);
+		//HelperRegisterAllinOreDict("oreAmphiboleAsbestos",asbestos_crocidolite,asbestos_tremolite,asbestos_anthophyllite,asbestos_actinolite);
 	}
 	
 	private static void HelperRegisterAllinOreDict(String oredictname,Block... items){

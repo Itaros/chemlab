@@ -6,9 +6,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
-import ru.itaros.chemlab.loader.HOEFluidLoader;
-import ru.itaros.toolkit.hoe.facilities.fluid.HOEFluid;
+import net.minecraftforge.fluids.BlockFluidFinite;
+import ru.itaros.chemlab.ChemLabCreativeTab;
 
 public class HiVolumeLiquidCellEmpty extends Item {
 	public static final String EMPTY_TOKEN = "empty";
@@ -35,21 +34,25 @@ public class HiVolumeLiquidCellEmpty extends Item {
 		if(target==Block.getBlockFromName("water")){
 
 			
-			HOEFluid water = HOEFluidLoader.water_natural;
-			//TODO: This needed to be cached too
-			HiVolumeLiquidCell cell = HiVolumeLiquidCell.getByFluid(water);
-
+//			HOEFluid water = HOEFluidLoader.water_natural;
+//			//TODO: This needed to be cached too
+//			HiVolumeLiquidCell cell = HiVolumeLiquidCell.getByFluid(water);
+//
+//			
+//			if(--stack.stackSize<=0){
+//				return new ItemStack(cell,1);
+//			}else{
+//				ItemStack rslt = new ItemStack(cell,1);
+//				player.inventory.addItemStackToInventory(rslt);				
+//				return stack;
+//			}			
 			
-			if(--stack.stackSize<=0){
-				return new ItemStack(cell,1);
-			}else{
-				ItemStack rslt = new ItemStack(cell,1);
-				player.inventory.addItemStackToInventory(rslt);				
-				return stack;
-			}			
 			
-			
-		}		
+		}else if(target instanceof BlockFluidFinite){
+			BlockFluidFinite f = (BlockFluidFinite)target;
+			//HOEFluid hoefl = FluidToHOE.get(f.getFluid());
+			//There is nothing to do. BFF is fragmented thingie :(
+		}
 		
 		return stack;
 	    }

@@ -9,20 +9,29 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import ru.itaros.chemlab.ChemLab;
+import ru.itaros.chemlab.items.HiVolumeLiquidCell;
 import ru.itaros.chemlab.network.packets.SetHOEMachineRecipePacket;
-import ru.itaros.hoe.toolkit.ui.Tab;
-import ru.itaros.hoe.vanilla.tiles.MachineCrafterTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineCrafterIO;
-import ru.itaros.toolkit.hoe.machines.basic.io.HOEMachineIO;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.Recipe;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.recipes.RecipesCollection;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.tileentity.services.ISecured;
+import ru.itaros.hoe.fluid.HOEFluid;
+import ru.itaros.hoe.gui.Tab;
+import ru.itaros.hoe.io.HOEMachineCrafterIO;
+import ru.itaros.hoe.io.HOEMachineIO;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalFluidStack;
+import ru.itaros.hoe.itemhandling.UniversalItemStack;
+import ru.itaros.hoe.itemhandling.UniversalStackUtils;
+import ru.itaros.hoe.recipes.Recipe;
+import ru.itaros.hoe.recipes.RecipesCollection;
+import ru.itaros.hoe.tiles.ISecured;
+import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
+import ru.itaros.hoe.utils.RenderingUtils;
 
 public class GUIToolProgrammer extends GuiScreen {
 
@@ -163,8 +172,8 @@ public class GUIToolProgrammer extends GuiScreen {
 			String powerPrefix_cur = LanguageRegistry.instance().getStringLocalization("ui.prefix.power.cur");
 			String powerPostfix = LanguageRegistry.instance().getStringLocalization("ui.postfix");
 			
-			
-			fontRendererObj.drawString(namePrefix+"UNDEFINED", xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);		
+			String machinename = mio.getHostBlock().getLocalizedName();
+			fontRendererObj.drawString(namePrefix+machinename, xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);		
 			i++;
 			ISecured secte = (ISecured) tile;
 			fontRendererObj.drawString(ownerPrefix+secte.getSecurity().getOwnerName(), xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);		
@@ -189,7 +198,11 @@ public class GUIToolProgrammer extends GuiScreen {
 	private int totalPages = 0;
 	private int currentPage = 0;
 	private void drawRecipes(int operation, int x2, int y2) {
-		//opertation:
+		
+        int mx = Mouse.getEventX() * this.width / this.mc.displayWidth;
+        int my = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+		
+		//operation:
 		//0 = DRAW
 		//1 = CLICKSIGN
 		
@@ -200,6 +213,15 @@ public class GUIToolProgrammer extends GuiScreen {
 			//TODO: If there is no col - show "NO RECIPES AVAILABLE. THIS IS A BUG!"
 			
 			int recipesAmount = repcol.getRecipesAmount();
+			if(recipesAmount==0){
+				if(operation == 0){
+					GL11.glDisable(GL11.GL_LIGHTING);
+					String noav = "No recipes available!";
+					int strw = fontRendererObj.getStringWidth(noav);
+					fontRendererObj.drawString(noav, x+xSize/2-strw/2, y+ySize/2-fontRendererObj.FONT_HEIGHT/2-18, 0x00FF00);
+				}
+				return;
+			}
 			totalPages = recipesAmount/3;//3 is amount per page
 			if(recipesAmount % 3 == 0){
 				totalPages--;
@@ -220,14 +242,20 @@ public class GUIToolProgrammer extends GuiScreen {
 			int i=-1;
 			for(int xp = rangeStart; xp < rangeEnd; xp++){
 				i++;
+				
+				int yoffset = (ystep*i);
+				
 				if(operation == 0){
+					
 					GL11.glDisable(GL11.GL_LIGHTING);
 					GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 					this.mc.renderEngine.bindTexture(overlay);
 					this.drawTexturedModalRect(xi+x, yi+y+(ystep*i), 0, 0, osx, osy);
-					GL11.glEnable(GL11.GL_LIGHTING);
 					
 					Recipe r = repcol.getRecipes()[xp];
+					fontRendererObj.drawString(r.getLocalizedName(), xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);
+					
+					GL11.glEnable(GL11.GL_LIGHTING);
 					
 					 GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 					//What the hell is that?
@@ -242,32 +270,27 @@ public class GUIToolProgrammer extends GuiScreen {
 					GL11.glColorMask(true, true, true, true);
 	
 					GL11.glPushMatrix();
-			       // int k = this.guiLeft;
-			       // int l = this.guiTop;
-			       // GL11.glTranslatef((float)k, (float)l, 0.0F);
+
+					//First pass(itemstacks)
 					
 					//TODO: This shit should be all precached
 					//Drawing incomings
-					int inc_offset=-1;
-					for(ItemStack stack_inc : r.getIncomingStricttypes()){
-						inc_offset++;
-						drawItemStack(stack_inc, x+xi+60-10-(inc_offset*(16+2)), y+yi+18+(ystep*i), null);
-					}
+					renderStacksLine(r.getIncomingStricttypes(), xi, yi, yoffset, 65, true);			
 					//Drawing outcomings
-					int out_offset=-1;
-					for(ItemStack stack_out : r.getOutcomingStricttypes()){
-						out_offset++;
-						drawItemStack(stack_out, x+xi+97+10+(out_offset*(16+2)), y+yi+18+(ystep*i), null);
-					}	
+					renderStacksLine(r.getOutcomingStricttypes(), xi, yi, yoffset, 107, false);
 					
 					RenderHelper.enableStandardItemLighting();
+					
+					//Second pass(tooltips)
+					
+					renderTooltipsLine(r.getIncomingStricttypes(), xi, yi, yoffset, 65, true,mx,my);
+					renderTooltipsLine(r.getOutcomingStricttypes(), xi, yi, yoffset, 107, false,mx,my);
 					
 					GL11.glPopMatrix();
 					
 					RenderHelper.disableStandardItemLighting();
 					GL11.glDisable(GL11.GL_LIGHTING);
 					
-					fontRendererObj.drawString(r.getLocalizedName(), xi+x+2, yi+y+(ystep*i)+1, 0x00FF00);
 					
 				}else if(operation==1){
 					int ox = x2-x;
@@ -300,9 +323,35 @@ public class GUIToolProgrammer extends GuiScreen {
 		
 	}
 
-	
-	
-	
+
+	private void renderTooltipsLine(IUniversalStack[] list, int xi, int yi, int yoffset,
+			int stepOffset, boolean isShiftNegative, int mx, int my) {
+		int stepping=-1;
+		for(IUniversalStack stack_inc : list){
+			stepping++;
+			int sx = x+xi+stepOffset-10+(stepping*(16+2)*(isShiftNegative?-1:1));
+			int sy = y+yi+18+yoffset;
+			if(mx>sx && mx<sx+16 && my>sy && my<sy+16){
+				ItemStack representation = UniversalStackUtils.getRepresentationOfStack(stack_inc);
+				this.renderToolTip(representation, mx, my);
+			}	
+		}
+	}
+
+
+	protected void renderStacksLine(IUniversalStack[] list, int xi, int yi, int yoffset,
+			int stepOffset, boolean isShiftNegative) {
+		int stepping=-1;
+		for(IUniversalStack stack_inc : list){
+			stepping++;
+			int sx = x+xi+stepOffset-10+(stepping*(16+2)*(isShiftNegative?-1:1));
+			int sy = y+yi+18+yoffset;
+			ItemStack representation = UniversalStackUtils.getRepresentationOfStack(stack_inc);
+			RenderingUtils.drawItemStack(representation, sx, sy, null, this.zLevel, this.itemRender, this.fontRendererObj);
+		}
+	}
+
+
 	@Override
 	public void onGuiClosed() {
 		this.mc.getSoundHandler().stopSounds();
@@ -313,22 +362,6 @@ public class GUIToolProgrammer extends GuiScreen {
 	public boolean doesGuiPauseGame() {
 		return false;
 	}
-
-
-	//Mojangcode
-    private void drawItemStack(ItemStack stack, int x, int y, String stackSizeOverride)
-    {
-        GL11.glTranslatef(0.0F, 0.0F, 32.0F);
-        this.zLevel = 100.0F;
-        itemRender.zLevel = 100.0F;
-        FontRenderer font = null;
-        if (stack != null) font = stack.getItem().getFontRenderer(stack);
-        if (font == null) font = fontRendererObj;
-        itemRender.renderItemAndEffectIntoGUI(font, this.mc.getTextureManager(), stack, x, y);
-        itemRender.renderItemOverlayIntoGUI(font, this.mc.getTextureManager(), stack, x, y - 0, stackSizeOverride);//0 or 8
-        this.zLevel = 0.0F;
-        itemRender.zLevel = 0.0F;
-    }
 
 	@Override
 	protected void mouseMovedOrUp(int x2, int y2,

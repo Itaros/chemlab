@@ -1,19 +1,23 @@
 package ru.itaros.chemlab.client.ui.common;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import ru.itaros.chemlab.minecraft.achievements.ChemLabAchievements;
-import ru.itaros.hoe.vanilla.tiles.MachineCrafterTileEntity;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.CopierSlot;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.MachineSlot;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ProgrammerSlot;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.gui.ReadonlySlot;
+import ru.itaros.hoe.gui.CopierSlot;
+import ru.itaros.hoe.gui.HOESlotType;
+import ru.itaros.hoe.gui.MachineSlot;
+import ru.itaros.hoe.gui.ProgrammerSlot;
+import ru.itaros.hoe.gui.UniversalSlot;
+import ru.itaros.hoe.tiles.MachineCrafterTileEntity;
+import ru.itaros.hoe.tiles.MachineTileEntity;
+import ru.itaros.hoe.tiles.ioconfig.IConfigurableIO;
 
 public abstract class HOEContainer extends Container {
 
@@ -31,6 +35,8 @@ public abstract class HOEContainer extends Container {
 	
 	protected MachineTileEntity tile;
 	
+	public static int xOffset=42;
+	
 	public HOEContainer(InventoryPlayer playerInv, MachineTileEntity tile){
 		//this(playerInv,(BiogrinderTileEntity)tile);
 		
@@ -42,7 +48,22 @@ public abstract class HOEContainer extends Container {
 	}
 	
 	
-	public abstract void bindSlots();
+	public void bindSlots(){
+		hoeslots = new LinkedList<UniversalSlot>();
+		
+		
+		//Adding CIO slots
+		if(this.tile instanceof IConfigurableIO){
+			int yo=0;
+			int xo=0;
+			for(int i = 0 ; i < 6; i++){
+				Slot s = new MachineSlot((IInventory) tile,MachineCrafterTileEntity.PORTS_SHIFT+i,xOffset+0-34+(xo*(16+3)),0+17+(yo*(16+3)),HOESlotType.AUX);
+				addSlotToContainer(s);
+				yo++;
+				if(yo>2){yo=0;xo++;}
+			}
+		}
+	}
 
 
 	@Override
@@ -51,6 +72,14 @@ public abstract class HOEContainer extends Container {
 	}
 
 	
+	private LinkedList<UniversalSlot> hoeslots;
+	
+	protected void addHOESlotToContainer(UniversalSlot slot) {
+		hoeslots.push(slot);
+	}
+	public Iterator<UniversalSlot> getHOESlotsIterator(){
+		return hoeslots.iterator();
+	}	
 	
 	
     @Override
@@ -63,7 +92,7 @@ public abstract class HOEContainer extends Container {
 	    	if(s!=null){
 	    		//Achievements
 	    		ItemStack poken = s.getStack();
-	    		ChemLabAchievements.testForItem(player,poken,s);
+	    		//ChemLabAchievements.testForItem(player,poken,s);
 	    	}    		
     		return super.slotClick(slotid, button, par3, player);
     	}	
@@ -95,19 +124,19 @@ public abstract class HOEContainer extends Container {
         for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 9; j++) {
                         addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,
-                                        8 + j * 18, 84 + i * 18));
+                        		xOffset+8 + j * 18, 84 + 1 + i * 18));
                 }
         }
 
         for (int i = 0; i < 9; i++) {
-                addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 142));
+                addSlotToContainer(new Slot(inventoryPlayer, i, xOffset+8 + i * 18, 142 + 1));
         }
     }
 
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int slotid) {
-		int OUTPUT=3;
+		int OUTPUT=7;
 		
 		ItemStack itemstack = null;
 		Slot slot = (Slot)this.inventorySlots.get(slotid);
@@ -155,7 +184,9 @@ public abstract class HOEContainer extends Container {
     
     
     
-    
+    public MachineTileEntity getTile(){
+    	return tile;
+    }
 
     
 

@@ -1,6 +1,5 @@
 package ru.itaros.chemlab.network;
 
-import ru.itaros.chemlab.network.packets.ChemLabSyndicationHubCommand;
 import ru.itaros.chemlab.network.packets.SetHOEMachineRecipePacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -15,9 +14,6 @@ public class ChemLabChannel extends FMLIndexedMessageToMessageCodec<IPacketCodec
 	//Important
 	public ChemLabChannel(){
 		this.addDiscriminator(SetHOEMachineRecipePacket.getInternalCodecID(),SetHOEMachineRecipePacket.class);
-		this.addDiscriminator(ChemLabSyndicationHubCommand.getInternalCodecID(), ChemLabSyndicationHubCommand.class);
-		
-		
 		
 	}
 	
@@ -37,11 +33,6 @@ public class ChemLabChannel extends FMLIndexedMessageToMessageCodec<IPacketCodec
 			//TODO: Integrated server trick
 			if(FMLCommonHandler.instance().getEffectiveSide()!=Side.SERVER){return;}
 			SetHOEMachineRecipePacket p = (SetHOEMachineRecipePacket)msg;
-			p.execute();
-		}
-		if(msg instanceof ChemLabSyndicationHubCommand){
-			//if(FMLCommonHandler.instance().getEffectiveSide()!=Side.SERVER){return;}
-			ChemLabSyndicationHubCommand p = (ChemLabSyndicationHubCommand)msg;
 			p.execute();
 		}
 		

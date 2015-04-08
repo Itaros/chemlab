@@ -1,7 +1,7 @@
 package ru.itaros.chemlab.blocks;
 
-import ru.itaros.chemlab.convenience.ChemLabCreativeTab;
-import ru.itaros.toolkit.hoe.facilities.client.textures.MetaIconFolder;
+import ru.itaros.chemlab.ChemLabCreativeTab;
+import ru.itaros.hoe.utils.MetaIconFolder;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;

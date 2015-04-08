@@ -3,7 +3,7 @@ package ru.itaros.chemlab.hoe.data;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import ru.itaros.api.hoe.internal.HOEData;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
+import ru.itaros.hoe.data.machines.HOEMachineData;
 
 public class ServiceBayData extends HOEMachineData {
 
@@ -37,19 +37,23 @@ public class ServiceBayData extends HOEMachineData {
 	}
 
 	@Override
-	public void sync() {
-		super.sync();
-		ServiceBayData childd = (ServiceBayData)child;
-		if(injectables==null){childd.injectables=null;}
-		if(childd.injectables==null && injectables!=null){
-			childd.bindChildToParent(this);
-		}
-		if(childd.injectables!=null && injectables!=null){
-			if(childd.injectables.getItem()==injectables.getItem()){
-				childd.injectables.stackSize=injectables.stackSize;
-			}else{
+	public boolean sync() {
+		if(super.sync()){
+			ServiceBayData childd = (ServiceBayData)child;
+			if(injectables==null){childd.injectables=null;}
+			if(childd.injectables==null && injectables!=null){
 				childd.bindChildToParent(this);
 			}
+			if(childd.injectables!=null && injectables!=null){
+				if(childd.injectables.getItem()==injectables.getItem()){
+					childd.injectables.stackSize=injectables.stackSize;
+				}else{
+					childd.bindChildToParent(this);
+				}
+			}
+			return true;
+		}else{
+			return false;
 		}
 	}
 

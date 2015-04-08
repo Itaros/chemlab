@@ -3,16 +3,27 @@ package ru.itaros.chemlab.hoe.data;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
+import ru.itaros.api.hoe.heat.Heat;
+import ru.itaros.api.hoe.heat.IHeatContainer;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.items.HiVolumeLiquidCell;
-import ru.itaros.chemlab.loader.HOEFluidLoader;
-import ru.itaros.toolkit.hoe.facilities.fluid.containment.HOEFluidDepot;
-import ru.itaros.toolkit.hoe.machines.basic.HOEMachineData;
-import ru.itaros.toolkit.hoe.machines.basic.data.facilities.IHasLiquidStorage;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackTransferTuple;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.helpers.StackUtility;
+import ru.itaros.chemlab.loader.ItemLoader;
+import ru.itaros.hoe.data.IHOEMultiInventoryMachine;
+import ru.itaros.hoe.data.ISynchroportFluids;
+import ru.itaros.hoe.data.ISynchroportItems;
+import ru.itaros.hoe.data.machines.HOEMachineData;
+import ru.itaros.hoe.fluid.HOEFluid;
+import ru.itaros.hoe.fluid.HOEFluidStack;
+import ru.itaros.hoe.itemhandling.IUniversalStack;
+import ru.itaros.hoe.itemhandling.UniversalFluidStack;
+import ru.itaros.hoe.itemhandling.UniversalItemStack;
+import ru.itaros.hoe.itemhandling.UniversalStackFactory;
+import ru.itaros.hoe.itemhandling.UniversalStackUtils;
+import ru.itaros.hoe.utils.FluidStackTransferTuple;
+import ru.itaros.hoe.utils.ItemStackTransferTuple;
+import ru.itaros.hoe.utils.StackUtility;
 
-public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage {
+public class HVLCFillerData extends HOEMachineData implements IHOEMultiInventoryMachine, IHeatContainer, ISynchroportItems, ISynchroportFluids{
 
 	/*
 	 * Reflection autocaster
@@ -25,139 +36,215 @@ public class HVLCFillerData extends HOEMachineData implements IHasLiquidStorage 
 		super();
 	}
 	
+	ItemStackTransferTuple transferTuple = new ItemStackTransferTuple();
+	FluidStackTransferTuple transferFluidTuple = new FluidStackTransferTuple();	
 	
-	
-	public FluidStack tryToPutIn(FluidStack source){
-		if(source==null){
-			return source;
+	public ItemStack tryToPutItemsIn(ItemStack source){
+		return tryToPutItemsIn(source, null);
+	}
+
+	@Override
+	public ItemStack tryToPutItemsIn(ItemStack source, ItemStack filter) {
+		//There is no hope if this is not an item. But really, this is a mess...
+		if(inbound[SLOT_CELLS] instanceof UniversalItemStack || inbound[SLOT_CELLS]==null){
+			transferTuple.fill((ItemStack) UniversalStackUtils.getSafeProxy(inbound[SLOT_CELLS]), source);
+			source=StackUtility.tryToPutIn(transferTuple,false,filter);
+			inbound[SLOT_CELLS]=UniversalStackUtils.setSafeProxy(inbound[SLOT_CELLS],transferTuple.retr1());
+			this.markDirty();
 		}
-		int accepted = fluidDepot.inject(HOEFluidLoader.water_natural, source.amount, true);
-		source.amount-=accepted;
-		return source;
-		//return FluidUtility.tryToPutIn(target, source, cap);
-	}
-	
-	StackTransferTuple transferTuple = new StackTransferTuple();
-	
-	public ItemStack tryToPutIn(ItemStack source){
-		transferTuple.fill(exemplar_cell_in, source);
-		source=StackUtility.tryToPutIn(transferTuple,false,null);
-		exemplar_cell_in=transferTuple.retr1();
 		return source;
 	}
-	public ItemStack tryToGetOut(ItemStack target){
-		transferTuple.fill(target, exemplar_cell_out);
-		target = StackUtility.tryToGetOut(transferTuple,null);
-		exemplar_cell_out=transferTuple.retr2();
+	public ItemStack tryToGetItemsOut(ItemStack target){
+		return tryToGetItemsOut(target, null);
+	}
+
+	@Override
+	public ItemStack tryToGetItemsOut(ItemStack target, ItemStack filter) {
+		//There is no hope if this is not an item. But really, this is a mess...
+		if(outbound[SLOT_CELLS] instanceof UniversalItemStack){
+			transferTuple.fill(target, (ItemStack) outbound[SLOT_CELLS].getProxy());
+			target = StackUtility.tryToGetOut(transferTuple,filter);
+			outbound[SLOT_CELLS].setProxy(StackUtility.verify(transferTuple.retr2()));
+			outbound[SLOT_CELLS]=outbound[SLOT_CELLS].verifyProxy();
+			this.markDirty();
+		}
 		return target;
 	}
 	
-	private ItemStack exemplar_cell_in;
+	public final static int SLOT_CELLS = 0;
+	public final static int SLOT_FLUID = 1;
 	
-	public final ItemStack getExemplar_cell_in() {
-		return exemplar_cell_in;
-	}
-
-	public final ItemStack getExemplar_cell_out() {
-		return exemplar_cell_out;
-	}
-
-	private ItemStack exemplar_cell_out;
-	
-	public static final int DEPOT_CAPACITY=10000;//mb
-	HOEFluidDepot fluidDepot = new HOEFluidDepot(DEPOT_CAPACITY);
-	
-	@Override
-	public HOEFluidDepot getFluidDepot() {
-		return fluidDepot;
-	}
+	private IUniversalStack[] inbound=new IUniversalStack[2],outbound=new IUniversalStack[2];
 
 	@Override
-	public void configureDepot() {
-		fluidDepot.configureDepot(HOEFluidLoader.water_natural);
-	}
-
-	@Override
-	public boolean isDepotReconfigurable() {
+	public boolean sync() {
+		if(super.sync()){
+			HVLCFillerData childd=(HVLCFillerData) child;
+			
+			childd.inbound=StackUtility.syncUniversalStacks(childd.inbound, inbound);
+			childd.outbound=StackUtility.syncUniversalStacks(childd.outbound, outbound);
+			
+			return true;
+		}
 		return false;
-		//return fluidDepot.isDeportReconfigurable();
-	}
-
-	
-	public boolean isThereSpareCell(){
-		if(exemplar_cell_in==null){return false;}
-		if(exemplar_cell_in.stackSize>0){
-			return true;
-		}else{return false;}
-	}
-	public int getCellsCount() {
-		if(exemplar_cell_out==null){return 0;}
-		return exemplar_cell_out.stackSize;
-	}
-
-	public boolean decrementEmptyCells(){
-		if(isThereSpareCell()){
-			exemplar_cell_in.stackSize--;
-			return true;
-		}else{
-			return false;
-		}
-	}
-	
-	public void incrementCellsCount() {
-		if(exemplar_cell_out==null){
-			exemplar_cell_out = new ItemStack(HiVolumeLiquidCell.getByFluid(HOEFluidLoader.water_natural));
-		}
-		exemplar_cell_out.stackSize++;
-	}
-
-	@Override
-	public void sync() {
-		super.sync();
-		
-		HVLCFillerData childd=(HVLCFillerData) child;
-		
-		childd.exemplar_cell_in=StackUtility.syncItemStacks(childd.exemplar_cell_in, exemplar_cell_in);
-		childd.exemplar_cell_out=StackUtility.syncItemStacks(childd.exemplar_cell_out, exemplar_cell_out);
-
-		//Should I do that?
-		childd.fluidDepot=fluidDepot;
-	}
-
-	@Override
-	public void readNBT(NBTTagCompound nbt) {
-		super.readNBT(nbt);
-		
-		fluidDepot.readFromNBT(nbt,"fluiddepot");
-	}
-
-	@Override
-	public void writeNBT(NBTTagCompound nbt) {
-		super.writeNBT(nbt);
-		
-		fluidDepot.writeToNBT(nbt,"fluiddepot");
 	}
 
 	@Override
 	protected void readInventoryNBT(NBTTagCompound nbt) {
 		super.readInventoryNBT(nbt);
-		exemplar_cell_in=StackUtility.readItemStackFromNBT(nbt, "in");
-		exemplar_cell_out=StackUtility.readItemStackFromNBT(nbt, "out");
+		inbound=StackUtility.readItemStacksFromNBT(inbound,nbt, "in");
+		outbound=StackUtility.readItemStacksFromNBT(outbound,nbt, "out");
 	}
 
 	@Override
 	protected void writeInventoryNBT(NBTTagCompound nbt) {
 		super.writeInventoryNBT(nbt);
-		StackUtility.writeItemStackToNBT(exemplar_cell_in, nbt, "in");
-		StackUtility.writeItemStackToNBT(exemplar_cell_out, nbt, "out");
+		StackUtility.writeItemStacksToNBT(inbound, nbt, "in");
+		StackUtility.writeItemStacksToNBT(outbound, nbt, "out");
+	}
+
+	
+	//Synchromanager(visual inventory sync)
+	protected boolean isDirty=false;
+	@Override
+	public void markDirty() {
+		isDirty=true;
+	}
+	@Override
+	public boolean pollDirty() {
+		boolean cache = isDirty;
+		isDirty=false;
+		return cache;
+	}	
+	
+	
+	
+	@Override
+	public FluidStack tryToPutFluidsIn(FluidStack source) {
+		return tryToPutFluidsIn(source, null);
+	}
+	@Override
+	public FluidStack tryToPutFluidsIn(FluidStack source, FluidStack filter) {
+		if(inbound[SLOT_FLUID] instanceof UniversalFluidStack || inbound[SLOT_FLUID]==null){
+			transferFluidTuple.fill((HOEFluidStack) UniversalStackUtils.getSafeProxy(inbound[SLOT_FLUID]), source);
+			int max = 5000;
+			source=StackUtility.tryToPutIn(transferFluidTuple,filter,max);
+			inbound[SLOT_FLUID]=UniversalStackUtils.setSafeProxy(inbound[SLOT_FLUID],transferFluidTuple.retr1());
+			this.markDirty();			
+		}
+		return source;
+	}
+
+	@Override
+	public void produce(boolean doReal) {
+		IUniversalStack in = inbound[SLOT_CELLS];
+		IUniversalStack infl = inbound[SLOT_FLUID];
+		IUniversalStack out = outbound[SLOT_CELLS];
+		
+		if((infl!=null && infl.getProxy()!=null && infl.getStackSize()>=1000) && (in!=null && in.getProxy()!=null)){
+			if(in.getStackSize()>0){
+				if(out!=null && out.getProxy()!=null && out.getStackSize()>=64){
+					return;
+				}
+				
+				in.decrement(1);
+				in=StackUtility.verify(in);
+				
+				addFilledHVLC((HOEFluidStack)infl.getProxy());
+				
+			}
+		}
+		
+	}
+
+	private void addFilledHVLC(HOEFluidStack hoeFluidStack) {
+		
+		HOEFluid fluid = hoeFluidStack.type;
+		
+		if(outbound[SLOT_CELLS]==null){
+			
+			ItemStack stack = HiVolumeLiquidCell.getByFluid(fluid);
+			outbound[SLOT_CELLS] = UniversalStackFactory.wrap(stack);
+			
+		}else{
+			outbound[SLOT_CELLS].increment(1);
+		}
+		
+	}
+
+	@Override
+	public boolean checkStorage() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean hasWork() {
+		if(inbound[SLOT_FLUID]!=null && inbound[SLOT_FLUID].getProxy()!=null){
+			return inbound[SLOT_FLUID].getStackSize()>=1000;
+		}else{
+			return false;
+		}
+	}
+
+	@Override
+	public FluidStack tryToGetFluidsOut(FluidStack fluid) {
+		return null;
+	}
+
+	@Override
+	public FluidStack tryToGetFluidsOut(FluidStack fluid, FluidStack filter) {
+		return null;
+	}
+
+	private Heat heat = new Heat(100L);
+	
+	@Override
+	public Heat getHeat() {
+		return heat;
+	}
+
+	@Override
+	public void updateDistribution() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public long getMeltdownPoint() {
+		return io.getMeltdownTemperature();
+	}
+
+
+	public IUniversalStack get_in(int i){
+		return i==0?inbound[SLOT_CELLS]:inbound[SLOT_FLUID];
+	}
+	public IUniversalStack get_out(int i){
+		return i==0?outbound[SLOT_CELLS]:outbound[SLOT_FLUID];
+	}	
+	public IHOEMultiInventoryMachine set_in(int i, IUniversalStack stack){
+		if(i==0){
+			inbound[SLOT_CELLS]=stack;
+		}else{
+			inbound[SLOT_FLUID]=stack;
+		}
+		return this;
+	}
+	public IHOEMultiInventoryMachine set_out(int i, IUniversalStack stack){
+		if(i==0){
+			outbound[SLOT_CELLS]=stack;
+		}else{
+			outbound[SLOT_FLUID]=stack;
+		}
+		return this;
+	}
+	public IUniversalStack[] get_in(){
+		return inbound;
+	}
+	public IUniversalStack[] get_out(){
+		return outbound;
 	}		
 	
-	
-	
-	
-	
-	
-
 	
 	
 }

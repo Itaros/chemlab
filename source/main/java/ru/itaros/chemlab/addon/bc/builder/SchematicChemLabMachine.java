@@ -2,21 +2,20 @@ package ru.itaros.chemlab.addon.bc.builder;
 
 import java.util.LinkedList;
 
-import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold.ManifoldFilter;
-import ru.itaros.chemlab.loader.BlockLoader;
-import ru.itaros.chemlab.minecraft.tileentity.syndication.SyndicationHubTileEntity;
-import ru.itaros.hoe.vanilla.tiles.MachineTileEntity;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.blocks.IRotatableBlock;
-import ru.itaros.toolkit.hoe.machines.basic.io.minecraft.blocks.RotatableBlockUtility;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
+import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold.ManifoldFilter;
+import ru.itaros.chemlab.loader.BlockLoader;
+import ru.itaros.hoe.blocks.IRotatableBlock;
+import ru.itaros.hoe.blocks.RotatableBlockUtility;
+import ru.itaros.hoe.tiles.MachineTileEntity;
+import buildcraft.api.blueprints.BuilderAPI;
 import buildcraft.api.blueprints.BuildingPermission;
 import buildcraft.api.blueprints.IBuilderContext;
 import buildcraft.api.blueprints.MappingNotFoundException;
 import buildcraft.api.blueprints.MappingRegistry;
-import buildcraft.api.blueprints.SchematicRegistry;
 import buildcraft.api.blueprints.SchematicTile;
 
 public class SchematicChemLabMachine extends SchematicTile {
@@ -28,7 +27,7 @@ public class SchematicChemLabMachine extends SchematicTile {
 	private boolean isSyndicated=false;
 	
 	@Override
-	public void writeToBlueprint(IBuilderContext context, int x, int y,
+	public void initializeFromObjectAt(IBuilderContext context, int x, int y,
 			int z) {
 
 		MachineTileEntity tile = (MachineTileEntity)context.world().getTileEntity(x, y, z);
@@ -40,7 +39,7 @@ public class SchematicChemLabMachine extends SchematicTile {
 	}
 
 	@Override
-	public void writeToWorld(IBuilderContext context, int x, int y,
+	public void placeInWorld(IBuilderContext context, int x, int y,
 			int z, LinkedList<ItemStack> stacks) {
 		//super.writeToWorld(context, x, y, z, stacks);
 
@@ -69,16 +68,16 @@ public class SchematicChemLabMachine extends SchematicTile {
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound nbt, MappingRegistry registry) {
+	public void writeSchematicToNBT(NBTTagCompound nbt, MappingRegistry registry) {
 		nbt.setInteger("blockId", registry.getIdForBlock(block));
 		nbt.setInteger("blockMeta", meta);
 		
-		manifold.filter(ManifoldFilter.BCSCHEMATICS,(block != BlockLoader.syndicationhub));
+		manifold.filter(ManifoldFilter.BCSCHEMATICS,true);
 		manifold.mergeInto(nbt);
 	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound nbt, MappingRegistry registry) {
+	public void readSchematicFromNBT(NBTTagCompound nbt, MappingRegistry registry) {
 		try {
 			block = registry.getBlockForId(nbt.getInteger("blockId"));
 		} catch (MappingNotFoundException e) {
@@ -89,17 +88,11 @@ public class SchematicChemLabMachine extends SchematicTile {
 		meta = nbt.getInteger("blockMeta");
 		
 		manifold = HOENBTManifold.deploy(nbt);
-		if(block == BlockLoader.syndicationhub)
-		{
-			NBTTagCompound syndicationData=manifold.holdSyndication();
-			isSyndicated=syndicationData.getBoolean("isSyndicated");
-			manifold.filter(ManifoldFilter.BCSCHEMATICS,true);
-		}
 	}	
 
 	
 	@Override
-	public void writeRequirementsToBlueprint(IBuilderContext context, int x,
+	public void storeRequirements(IBuilderContext context, int x,
 			int y, int z) {
 		
 	}
@@ -107,7 +100,7 @@ public class SchematicChemLabMachine extends SchematicTile {
 	
 
 	@Override
-	public void writeRequirementsToWorld(IBuilderContext arg0,
+	public void getRequirementsForPlacement(IBuilderContext arg0,
 			LinkedList<ItemStack> requirements) {
 		requirements.add(new ItemStack(block, 1));
 	}
@@ -117,16 +110,14 @@ public class SchematicChemLabMachine extends SchematicTile {
 		super.postProcessing(context, x, y, z);
 		if(isSyndicated){
 			MachineTileEntity tile = (MachineTileEntity) context.world().getTileEntity(x, y, z);
-			if(tile instanceof SyndicationHubTileEntity){
-				SyndicationHubTileEntity t2 = (SyndicationHubTileEntity)tile;
-				t2.engageSyndicationInspection();
-			}
 		}
 	}
 
 	public static void init(Block...blocks){
 		for(Block b:blocks){
-			SchematicRegistry.registerSchematicBlock(b, SchematicChemLabMachine.class);
+			if(BuilderAPI.schematicRegistry!=null){
+				BuilderAPI.schematicRegistry.registerSchematicBlock(b, SchematicChemLabMachine.class);
+			}
 		}
 	}
 
