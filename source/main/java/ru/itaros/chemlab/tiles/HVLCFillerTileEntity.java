@@ -317,7 +317,7 @@ public class HVLCFillerTileEntity extends MachineTileEntity implements ISidedInv
 		}else{
 			ports[side]=null;
 		}
-		this.getWorld().markBlockForUpdate(xCoord, yCoord, zCoord);
+		this.getWorldObj().markBlockForUpdate(xCoord, yCoord, zCoord);
 		
 		markPortsDirty();
 		

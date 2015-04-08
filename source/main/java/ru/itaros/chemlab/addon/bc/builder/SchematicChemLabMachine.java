@@ -8,7 +8,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold.ManifoldFilter;
 import ru.itaros.chemlab.loader.BlockLoader;
-import ru.itaros.chemlab.tiles.syndication.SyndicationHubTileEntity;
 import ru.itaros.hoe.blocks.IRotatableBlock;
 import ru.itaros.hoe.blocks.RotatableBlockUtility;
 import ru.itaros.hoe.tiles.MachineTileEntity;
@@ -73,7 +72,7 @@ public class SchematicChemLabMachine extends SchematicTile {
 		nbt.setInteger("blockId", registry.getIdForBlock(block));
 		nbt.setInteger("blockMeta", meta);
 		
-		manifold.filter(ManifoldFilter.BCSCHEMATICS,(block != BlockLoader.syndicationhub));
+		manifold.filter(ManifoldFilter.BCSCHEMATICS,true);
 		manifold.mergeInto(nbt);
 	}
 	
@@ -89,12 +88,6 @@ public class SchematicChemLabMachine extends SchematicTile {
 		meta = nbt.getInteger("blockMeta");
 		
 		manifold = HOENBTManifold.deploy(nbt);
-		if(block == BlockLoader.syndicationhub)
-		{
-			NBTTagCompound syndicationData=manifold.holdSyndication();
-			isSyndicated=syndicationData.getBoolean("isSyndicated");
-			manifold.filter(ManifoldFilter.BCSCHEMATICS,true);
-		}
 	}	
 
 	
@@ -117,10 +110,6 @@ public class SchematicChemLabMachine extends SchematicTile {
 		super.postProcessing(context, x, y, z);
 		if(isSyndicated){
 			MachineTileEntity tile = (MachineTileEntity) context.world().getTileEntity(x, y, z);
-			if(tile instanceof SyndicationHubTileEntity){
-				SyndicationHubTileEntity t2 = (SyndicationHubTileEntity)tile;
-				t2.engageSyndicationInspection();
-			}
 		}
 	}
 

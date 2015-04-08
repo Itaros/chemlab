@@ -17,7 +17,6 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import ru.itaros.api.chemlab.ISyndicationPipeConnectable;
 import ru.itaros.api.hoe.internal.HOEData;
 import ru.itaros.chemlab.ChemLabValues;
 import ru.itaros.hoe.connectome.ConnectomeController;
@@ -33,7 +32,7 @@ import ru.itaros.hoe.utils.MetaIconFolder;
 import ru.itaros.hoe.utils.euclideanspace.Transformations;
 import ru.itaros.hoe.utils.euclideanspace.Vector3;
 
-public abstract class IOMachineBlock extends Block implements IRotatableBlock, ITileEntityProvider, ISyndicationPipeConnectable{
+public abstract class IOMachineBlock extends Block implements IRotatableBlock, ITileEntityProvider{
 
 
 

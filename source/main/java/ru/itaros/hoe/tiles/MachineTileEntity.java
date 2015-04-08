@@ -25,10 +25,6 @@ import ru.itaros.chemlab.HOELinker;
 import ru.itaros.chemlab.addon.bc.builder.HOENBTManifold;
 import ru.itaros.chemlab.addon.femtocraft.PowerContainerQuery;
 import ru.itaros.chemlab.loader.BlockLoader;
-import ru.itaros.chemlab.tiles.syndication.ISyndicationPiping;
-import ru.itaros.chemlab.tiles.syndication.SyndicationControllerDescriptorContainer;
-import ru.itaros.chemlab.tiles.syndication.SyndicationHubTileEntity;
-import ru.itaros.chemlab.tiles.syndication.SyndicationPipingTileEntity;
 import ru.itaros.hoe.ContextDetector;
 import ru.itaros.hoe.HOE;
 import ru.itaros.hoe.addon.ae.power.IHOEVolatileAEPowerCache;
@@ -58,7 +54,7 @@ import appeng.api.util.DimensionalCoord;
 import appeng.util.Platform;
 
 @Optional.Interface(iface="com.itszuvalex.femtocraft.api.power.IPowerTileContainer", modid="Femtocraft", striprefs=true)
-public abstract class MachineTileEntity extends TileEntity implements ISecured, ISyndicationPiping, IRotationSolver, IGridHost, IGridBlock, IHOEVolatileAEPowerCache, IHOEInventorySyncable, IPowerTileContainer{
+public abstract class MachineTileEntity extends TileEntity implements ISecured, IRotationSolver, IGridHost, IGridBlock, IHOEVolatileAEPowerCache, IHOEInventorySyncable, IPowerTileContainer{
 
 	@Override
 	public AECableType getCableConnectionType(ForgeDirection arg0) {
@@ -246,12 +242,6 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 	public double getAEMaxPower() {
 		return getLocalAEMaxPower();
 	}
-
-
-
-	
-
-	protected SyndicationControllerDescriptorContainer syndicationDescriptor;
 	
 	protected HOEMachineIO hoeio;
 
@@ -389,8 +379,6 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 		
 		security.readFromNBT(nbt, "security");
 		
-		syndicationDescriptor.readFromNBT(nbt);
-		
 		if(ContextDetector.getInstance().getContext()==FMLContext.CLIENT){
 			this.onPostLoad();
 		}
@@ -413,7 +401,6 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 		
 		security.writeToNBT(nbt, "security");
 		
-		syndicationDescriptor.writeToNBT(nbt);
 	}
 	
 	public HOENBTManifold writeBlueprintNBT(){
@@ -507,8 +494,6 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 		super();
 		
 		PowerContainerQuery.providePowerContainer(this);
-		
-		syndicationDescriptor = new SyndicationControllerDescriptorContainer(this);
 		
 		HOE.getInstance().getTEPostLoadManager().pushTile(this);
 		
@@ -625,11 +610,7 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 		}
 	}
 
-	@Override
-	public World getWorld() {
-		return this.worldObj;
-	}	
-	
+
 	
 	//HOE Interop
 
@@ -695,89 +676,6 @@ public abstract class MachineTileEntity extends TileEntity implements ISecured, 
 		client=(HOEMachineData) server.getChild();
 		isDataAlreadyInjected=true;
 	}
-	
-	
-	
-	
-	//ISyndicationPiping
-	public ISyndicationPiping setBlockMetadata() {
-		//Does nothing in blocks
-		return this;
-	}
-	@Override
-	public int getX() {
-		return this.xCoord;
-	}
-	@Override
-	public int getY() {
-		return this.yCoord;
-	}
-	@Override
-	public int getZ() {
-		return this.zCoord;
-	}
-	@Override
-	public PipingMode getMode() {
-		return syndicationDescriptor.getMode();
-	}
-	@Override
-	public ISyndicationPiping setMode(PipingMode mode) {
-		syndicationDescriptor.setMode(mode);
-		return this;
-	}
-	@Override
-	public int getHeat() {
-		return syndicationDescriptor.getHeat();
-	}
-	@Override
-	public ISyndicationPiping setHeat(int heat) {
-		syndicationDescriptor.setHeat(heat);
-		return this;
-	}
-	@Override
-	public ISyndicationPiping setController(SyndicationHubTileEntity controller) {
-		syndicationDescriptor.setController(controller);
-		return this;
-	}
-	@Override
-	public int getController_x() {
-		return syndicationDescriptor.getController_x();
-	}
-	@Override
-	public int getController_y() {
-		return syndicationDescriptor.getController_y();
-	}
-	@Override
-	public int getController_z() {
-		return syndicationDescriptor.getController_z();
-	}
-	//TODO: possible derp. Is that world needed? We can acces it from TE
-	//...but... it can be in another world. Oh god...
-	@Override
-	public SyndicationHubTileEntity getController(World world) {
-		return syndicationDescriptor.getController(world);
-	}
-	@Override
-	public ISyndicationPiping setClear() {
-		syndicationDescriptor.setClear();
-		return this;
-	}
-	@Override
-	public ISyndicationPiping setAdHoc() {
-		syndicationDescriptor.setAdHoc();
-		return this;
-	}	
-	
-	
-	@Override
-	public boolean askControllerToDie(EntityPlayer player){
-		return SyndicationPipingTileEntity.utility_askControllerToDie(player, this);
-	}	
-	@Override
-	public void setControllerOverloaded(){
-		SyndicationPipingTileEntity.utility_setControllerOverloaded(this);
-	}
-
 
 	public void enforceBlockUpdate() {
 		Block b = this.worldObj.getBlock(xCoord, yCoord, zCoord);

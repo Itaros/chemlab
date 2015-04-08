@@ -8,7 +8,6 @@ import ru.itaros.chemlab.addon.cl3.userspace.CL3AddonLoader;
 import ru.itaros.chemlab.addon.cl3.userspace.CollectorsLinker;
 import ru.itaros.chemlab.addon.femtocraft.PowerContainerQuery;
 import ru.itaros.chemlab.client.ui.common.GUIHandler;
-import ru.itaros.chemlab.events.SyndicationSystemPipingProtection;
 import ru.itaros.chemlab.loader.BlockLoader;
 import ru.itaros.chemlab.loader.DamageSourceLoader;
 import ru.itaros.chemlab.loader.GUILoader;
@@ -112,9 +111,6 @@ public class ChemLab
 		
 		//GFX
 		proxy.registerGFX();
-		
-		//Block Breaking Events
-		MinecraftForge.EVENT_BUS.register(new SyndicationSystemPipingProtection());
 		
 		//Achievements
 		//ChemLabAchievements.load();

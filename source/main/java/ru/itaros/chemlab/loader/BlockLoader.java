@@ -9,7 +9,6 @@ import ru.itaros.chemlab.blocks.AdvancedComponentBlock.AdvancedComponentBlockTyp
 import ru.itaros.chemlab.blocks.StructuralBlock.StructuralBlockType;
 import ru.itaros.chemlab.blocks.items.*;
 import ru.itaros.chemlab.blocks.machines.*;
-import ru.itaros.chemlab.blocks.machines.syndication.*;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockLoader {
@@ -42,13 +41,6 @@ public class BlockLoader {
 	public static Bloomery bloomery;
 	public static HeatingFurnace heatingFurnace;
 	public static FrothCell frothCell;
-	
-	public static SyndicationHub syndicationhub;
-	public static SyndicationBus pipes_syndicationbus;
-	
-	public static SyndicationCapacitor syndication_util_capacitor;
-	public static SyndicationEMFGenerator syndication_emfgenerator;
-	public static SyndicationItemPort syndication_itemport;
 	
 	public static Mixer mixer;
 	public static AutomaticDrawplate automaticdrawplate;
@@ -174,22 +166,6 @@ public class BlockLoader {
 		
 		//GameRegistry.registerBlock(,.getUnlocalizedName());
 		
-		
-		syndicationhub = new SyndicationHub();
-		GameRegistry.registerBlock(syndicationhub,MachineItemBlock.class, syndicationhub.getUnlocalizedName());
-		
-		pipes_syndicationbus = new SyndicationBus();
-		GameRegistry.registerBlock(pipes_syndicationbus,pipes_syndicationbus.getUnlocalizedName());
-		
-		syndication_util_capacitor = new SyndicationCapacitor();
-		GameRegistry.registerBlock(syndication_util_capacitor,MachineItemBlock.class, syndication_util_capacitor.getUnlocalizedName());
-		
-		syndication_emfgenerator = new SyndicationEMFGenerator();
-		GameRegistry.registerBlock(syndication_emfgenerator,MachineItemBlock.class, syndication_emfgenerator.getUnlocalizedName());
-		
-		syndication_itemport = new SyndicationItemPort();
-		GameRegistry.registerBlock(syndication_itemport,MachineItemBlock.class, syndication_itemport.getUnlocalizedName());
-		
 		//Ores
 		
 		//oreHalite = new OreHalite();
@@ -234,14 +210,10 @@ public class BlockLoader {
 				diaphragmalelectrolyzer,furnace,aircollector,
 				fluidcompressor,turboexpander,evaporationunit,
 				cattank,hiresistmixer,servicebay,//hvlcfiller,
-				gaschimney,syndicationhub,
-				syndication_util_capacitor,
-				syndication_emfgenerator,syndication_itemport,
-				mixer,automaticdrawplate,quencher,
+				gaschimney, mixer,automaticdrawplate,quencher,
 				metformer,wcextruder
 			};
 		SchematicChemLabMachine.init(hoeblocks);
-		SchematicSyndicationBus.init(pipes_syndicationbus);
 	}
 
 

@@ -156,7 +156,7 @@ public class ArcFurnaceControllerTileEntity extends MachineTileEntity implements
 		}else{
 			ports[side]=null;
 		}
-		this.getWorld().markBlockForUpdate(xCoord, yCoord, zCoord);
+		this.getWorldObj().markBlockForUpdate(xCoord, yCoord, zCoord);
 		
 		markPortsDirty();
 		

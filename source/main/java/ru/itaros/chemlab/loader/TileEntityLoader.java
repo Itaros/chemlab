@@ -5,15 +5,7 @@ import ru.itaros.chemlab.hoe.io.*;
 import ru.itaros.chemlab.hoe.io.special.*;
 import ru.itaros.chemlab.hoe.io.special.ArcFurnaceControllerIO;
 import ru.itaros.chemlab.hoe.io.special.GasChimneyIO;
-import ru.itaros.chemlab.hoe.io.syndication.SyndicationEMFGeneratorIO;
-import ru.itaros.chemlab.hoe.io.syndication.SyndicationHubIO;
-import ru.itaros.chemlab.hoe.io.syndication.SyndicationItemPortIO;
 import ru.itaros.chemlab.tiles.*;
-import ru.itaros.chemlab.tiles.syndication.SyndicationCapacitorTileEntity;
-import ru.itaros.chemlab.tiles.syndication.SyndicationEMFGeneratorTileEntity;
-import ru.itaros.chemlab.tiles.syndication.SyndicationHubTileEntity;
-import ru.itaros.chemlab.tiles.syndication.SyndicationItemPortTileEntity;
-import ru.itaros.chemlab.tiles.syndication.SyndicationPipingTileEntity;
 import ru.itaros.hoe.utils.IOCollectionHelper;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -41,9 +33,6 @@ public class TileEntityLoader {
     			new GravMagIO().setHostBlock(BlockLoader.gravmag),
     			new HVLCFillerIO().setHostBlock(BlockLoader.hvlcfiller),
     			new GasChimneyIO().setHostBlock(BlockLoader.gaschimney),
-    			new SyndicationHubIO().setHostBlock(BlockLoader.syndicationhub),
-    			new SyndicationEMFGeneratorIO().setHostBlock(BlockLoader.syndication_emfgenerator),
-    			new SyndicationItemPortIO().setHostBlock(BlockLoader.syndication_itemport),
     			new MixerIO().setHostBlock(BlockLoader.mixer),
     			new AutomaticDrawplateIO().setHostBlock(BlockLoader.automaticdrawplate),
     			new QuenchingChamberIO().setHostBlock(BlockLoader.quencher),
@@ -81,14 +70,6 @@ public class TileEntityLoader {
 		GameRegistry.registerTileEntity(BloomeryTileEntity.class,BloomeryTileEntity.class.getName());
 		GameRegistry.registerTileEntity(HeatingFurnaceTileEntity.class,HeatingFurnaceTileEntity.class.getName());
 		GameRegistry.registerTileEntity(FrothCellTileEntity.class,FrothCellTileEntity.class.getName());
-		
-		GameRegistry.registerTileEntity(SyndicationHubTileEntity.class,SyndicationHubTileEntity.class.getName());
-		
-		
-		GameRegistry.registerTileEntity(SyndicationPipingTileEntity.class,SyndicationPipingTileEntity.class.getName());
-		GameRegistry.registerTileEntity(SyndicationCapacitorTileEntity.class,SyndicationCapacitorTileEntity.class.getName());
-		GameRegistry.registerTileEntity(SyndicationEMFGeneratorTileEntity.class,SyndicationEMFGeneratorTileEntity.class.getName());
-		GameRegistry.registerTileEntity(SyndicationItemPortTileEntity.class,SyndicationItemPortTileEntity.class.getName());
 
 		GameRegistry.registerTileEntity(MixerTileEntity.class,MixerTileEntity.class.getName());
 		GameRegistry.registerTileEntity(AutomaticDrawplateTileEntity.class,AutomaticDrawplateTileEntity.class.getName());
