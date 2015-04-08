@@ -40,7 +40,7 @@ public class Config {
 		
 		threading_keepalive=cfg.get(CAT_THREADING, "keepalive", threading_keepalive, THREADING_KEEPALIVE_COMMENTARY).getBoolean(threading_keepalive);
 		
-		threading_retentionPolicy=ThreadRetentionPolicy.valueOf(cfg.getString(CAT_THREADING,"threadRetention",threading_retentionPolicy.toString(),THREADING_RETENTION_COMMENTARY));
+		threading_retentionPolicy=ThreadRetentionPolicy.valueOf(cfg.getString("threadRetention",CAT_THREADING,threading_retentionPolicy.toString(),THREADING_RETENTION_COMMENTARY));
 		
 		cfg.save();
 		return this;
