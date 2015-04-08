@@ -63,6 +63,18 @@ public class UniversalSlot {
 			 }
 		 }
 	}
+	
+	public void checkAndRenderTooltip(int x, int y, int mx, int my, GUIHOEClassicalMachine screen){
+		int rx = xDisplayPosition+x-1;
+		int ry = yDisplayPosition+y-1;
+		
+		if((mx>rx & mx<rx+16) && (my>ry & my<ry+16)){
+			ItemStack representation = UniversalStackUtils.getRepresentationOfStack(inv.getStackInHOERemoteSlot(slotid));
+			if(representation==null){return;}
+			screen.renderComplexTooltip(representation, mx, my);
+		}
+		
+	}
 
 	
     protected void drawGradientRect(int x1, int y1, int x2, int y2, int color1, int color2, double zlevel)

@@ -7,11 +7,13 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import ru.itaros.api.hoe.heat.Heat;
@@ -209,6 +211,11 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 
 
 	private void drawHOESlots() {
+		
+		int mx = Mouse.getEventX() * this.width / this.mc.displayWidth;
+        int my = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+		
+        //PASS ONE: SLOTS
 		RenderingUtils.elevateItemRenderingContext();
 		
 		Iterator<UniversalSlot> i = ((HOEContainer)this.inventorySlots).getHOESlotsIterator();
@@ -218,8 +225,18 @@ public abstract class GUIHOEClassicalMachine extends GuiContainer {
 		}
 		
 		RenderingUtils.relieveItemRenderingContext();
+		//PASS TWO: Tooltips
+		i = ((HOEContainer)this.inventorySlots).getHOESlotsIterator();
+		while(i.hasNext()){
+			UniversalSlot c = i.next();
+			c.checkAndRenderTooltip(x, y, mx, my, this);
+		}
 	}
 
+	
+	public void renderComplexTooltip(ItemStack item, int mx, int my){
+		this.renderToolTip(item, mx, my);
+	}
 
 	protected void DrawGauges(HOEMachineData data, int mx, int my){
 		
