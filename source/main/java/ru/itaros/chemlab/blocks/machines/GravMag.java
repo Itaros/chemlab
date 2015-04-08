@@ -45,7 +45,7 @@ public class GravMag extends IOMachineBlock {
 	public void registerBlockIcons(IIconRegister reg) {
 		super.registerBlockIcons(reg, "chemlab");
 		icons = new MetaIconFolder(METADATA_VARIATIONS);
-		icons.Register(0, "chemlab", new String[]{"machine_base","machine_base","machine_base","machine_gravmag_face","machine_base","machine_base"}, reg);
+		icons.Register(0, "chemlab", new String[]{"machine_base","machine_base","machine_gravmag_side","machine_gravmag_face","machine_gravmag_side","machine_gravmag_side"}, reg);
 	}
 
 }
