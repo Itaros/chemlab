@@ -39,11 +39,32 @@ public class HOESynchroportOperationsTickHandler {
 	}
 
 	private void process() {
-		movePointer();
-		MachineTileEntity s = select();
-		if(s!=null){
-			if(!isValid(s)){unregister(s);pointer--;return;}//Fallback
-			s.onSynchroOperationsUpdate();
+		long timeTaken = 0;
+		long maxPullTime = HOE.getInstance().getConfig().interop_pushpulltime;
+		boolean homogeneousHOESOPTime = HOE.getInstance().getConfig().interop_hoeshomo;
+		
+		boolean startEncounter=false;
+		
+		long mstart = System.currentTimeMillis();
+		while(timeTaken < maxPullTime){
+			if(!homogeneousHOESOPTime){
+				if(startEncounter){
+					if(pointer == 0){break;}
+				}else{
+					if(pointer == 0){startEncounter=true;}
+				}
+			}
+			
+			movePointer();
+			MachineTileEntity s = select();
+			if(s!=null){
+				if(!isValid(s)){unregister(s);pointer--;return;}//Fallback
+				s.onSynchroOperationsUpdate();
+			}
+			long mend = System.currentTimeMillis();
+			long mdif = mend - mstart;
+			//if(mdif == 0){mdif=1;}
+			timeTaken = mdif;
 		}
 	}
 
